@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+}
+.landingPage{
+    max-width: 100%;        
+    margin-top: -6vw;
+    top: 0;
+    position: relative;
+    text-align: center;
+    color: white;
+    z-index: -1;
+    
+}
+.landingTitle{
+    font-size: 10vw;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+}
+.landingTitle p{
+    font-size: 1.1vw;
+}
+.landingPage img{
+    width: 100%;
+    height: auto;
+}

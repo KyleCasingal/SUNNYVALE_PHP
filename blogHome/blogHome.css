@@ -1,0 +1,141 @@
+.blogHome{
+    width: 100%;
+}
+.blogPage{
+    font-size: 30px;
+    width: 60%;
+    margin-left: 5%;
+    margin-top: 20px;
+    padding-right: 10px;
+    font-family: 'Newsreader', serif;
+}
+
+.categoriesText{
+    margin-top: 20px;
+    margin-bottom: 50px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgb(241, 241, 241);
+    font-family: 'Newsreader', serif;
+}
+
+.schedTable{
+    background-color:rgb(241, 241, 241);
+    width: 100%;
+    border-collapse: collapse;
+    
+    font-size: 20px;
+}
+td{
+    text-align: center;
+    padding: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color:  rgb(210, 210, 210);
+}
+.sideContent{
+    height: 100%;
+    width: 30%;
+    position: fixed;
+    z-index: 0;
+    top: 0;
+    right: 0;
+    color: white;
+    overflow-x: hidden;
+    margin-top: 20px;
+    
+}    
+.sideText{
+    color: black;
+    font-size: 30px;
+    margin-top: 80px;
+    padding-right: 10px;
+    font-family: 'Newsreader', serif;
+    
+    
+}
+
+.blogPost {
+    width: 55%;
+    margin-left: 5%;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgb(241, 241, 241);
+    font-family: 'Newsreader', serif;
+}
+.blogTitle {
+    font-weight: bold;
+    font-family: 'Newsreader', serif;
+    margin-top: 10px;
+    font-size: 20px;
+}
+.blogBody{
+    text-indent: 50px;
+    margin-top: 10px;
+    text-align: justify;
+}
+
+.profileImg{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.blogProfile{
+    width: 100%;
+    display: flex;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-style: solid;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 1px solid rgb(210, 210, 210);
+    
+    
+}
+.profileText{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.profileName{
+    flex: 11;
+    font-size: 25px;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.profileDate{
+    flex: 2;
+    font-size: 15px;
+    align-self: flex-end;
+    justify-content: flex-end;
+}
+.postImg{
+    width: 100%;
+}
+.categoryList{
+    display: inline;
+    justify-content: flex-end;
+    margin-top: 5px;
+    margin-bottom: 0;
+    padding: 0;
+    list-style: none;
+}
+.categoryListItem{
+    margin-top: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.categoryListItem:hover{
+    color: rgb(89, 89, 89);
+    cursor: pointer;
+}
+.profileName:hover{
+    color: rgb(89, 89, 89);
+    cursor: pointer;
+}

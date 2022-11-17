@@ -1,0 +1,81 @@
+
+.loginPage {
+    
+    height: calc(100vh - 50px);
+    display: flex;
+    margin-top: -6vw;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-image:url("../img/landingBG.png");
+    font-family: "Poppins", sans-serif;
+    color: white;
+  }
+  
+  .loginTitle {
+    font-size: 3.5vw;
+  }
+  
+  .loginForm {
+    font-size: 1.5vw;
+    padding-top: 2vw;
+    padding-bottom: 3.5vw;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    border-radius: 0.8vw;
+    background-color: rgba(255, 255, 255, 0.15);
+    margin-top: px;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(5px);
+  }
+  
+  .loginForm > label {
+    margin: 10px 0;
+    
+  }
+  .loginForm label{
+    font-size: 1.5vw;
+  }
+  
+  .loginInput {
+    padding: 10px;
+    background-color: white;
+    border: none;
+    font-size: 1vw;
+  }
+  
+.loginButton{
+    margin-top: 1vw;
+    cursor: pointer;
+    background-color: lightcoral;
+    border: none;
+    color: white;
+    border-radius: 0.5vw;
+    padding: 0.6vw;
+    font-size: 1vw;
+  }
+  
+.loginBtn:disabled{
+    cursor: not-allowed;
+    background-color: rgb(252, 173, 173);
+  }
+  
+
+  input{
+    border-radius: 0.5vw;
+    height: 1vw;
+}
+
+.guestButtonLogin{
+    margin-top: 1vw;
+    cursor: pointer;
+    background-color: darkseagreen;
+    border: none;
+    color: white;
+    border-radius: 0.5vw;
+    padding: 0.6vw;
+    font-size: 1vw;
+}
+  
