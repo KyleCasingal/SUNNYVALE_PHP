@@ -14,12 +14,13 @@ if(empty($_SESSION))
 <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="topbar.css" media="screen">
     <meta name="theme-color" content="#000000" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
     <title>SUNNYVALE</title>
 </head>
+
+
 <body>
 <form method = "post">
 <div class='top'>
@@ -29,16 +30,16 @@ if(empty($_SESSION))
         </div>
         <div class="topCenter">
             <ul class="topList">
-              <li name="logout" onclick="location.href='../logout.php'" class="topListItem">HOME</li>
-              <li onclick="location.href='../amenities/amenities.php'" class="topListItem">AMENITIES</li>
-              <li onclick="location.href='../blogHome/blogHome.php'" class="topListItem"> BLOG</li>
-              <li onclick="location.href='../blogWrite/blogWrite.php'" class="topListItem" name="write" id="write">WRITE</li>
+              <li name="logout" onclick="location.href='../logout.php'" class="topListItem1">HOME</li>
+              <li onclick="location.href='../amenities/amenities.php'" class="topListItem1">AMENITIES</li>
+              <li onclick="location.href='../blogHome/blogHome.php'" class="topListItem1"> BLOG</li>
+              <li onclick="location.href='../blogWrite/blogWrite.php'" class="topListItem1" name="write" id="write">WRITE</li>
             </ul>
         </div>
         <div class="topRight">
         <div class='menu-trigger'>
         <img
-              class="topImg"
+              class="topImg1"
               <?php
               $row = $res->fetch_assoc();
                 $imageURL = '../media/displayPhotos/' . $row['display_picture'];
