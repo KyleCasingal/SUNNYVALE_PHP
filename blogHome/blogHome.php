@@ -20,8 +20,6 @@ $result = $con->query("SELECT * FROM post, user WHERE full_name = username") or 
   *{
     margin: 0;
   }
-  
- 
 </style>
 <body>
 <?php require '../topbar/topbar.php';?>

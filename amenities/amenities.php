@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="amenities.css" media="screen">
     <link rel="stylesheet" href="../footer/footer2.css" media="screen">
-    <link rel="stylesheet" href="../topbar/topbar.css" media="screen">
+    <link rel="stylesheet" href="../topbar/topbar1.css" media="screen">
     <meta name="theme-color" content="#000000" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">

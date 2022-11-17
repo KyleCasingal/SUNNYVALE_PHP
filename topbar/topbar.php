@@ -19,11 +19,9 @@ if(empty($_SESSION))
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
     <title>SUNNYVALE</title>
 </head>
-
-
 <body>
 <form method = "post">
-<div class='top'>
+<div class='top1'>
         <div class="topLeft">
           <img src="..\img\logoSVgray.png" alt="" />
             <i class="topIcon">SUNNYVALE</i>
