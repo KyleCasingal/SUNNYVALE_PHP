@@ -15,17 +15,20 @@ if(empty($_SESSION))
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
+    <link rel="stylesheet" href="../topbar/topBar.css">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
     <title>SUNNYVALE</title>
 </head>
 <body>
-<form method = "post">
-<div class='top1'>
+
+<div class='nav'>
+  
         <div class="topLeft">
           <img src="..\img\logoSVgray.png" alt="" />
             <i class="topIcon">SUNNYVALE</i>
         </div>
+        <form class="topbarNav" method = "post">
         <div class="topCenter">
             <ul class="topList">
               <li name="logout" onclick="location.href='../logout.php'" class="topListItem1">HOME</li>
@@ -45,7 +48,7 @@ if(empty($_SESSION))
               src="<?=$imageURL?>" alt=""/>
         </div>
         </div>
-
+        </form>
         <!-- <div class={`dropdown-menu ${open? 'active' : 'inactive'}`} >
           <h3>Nene Yashiro<br/><span>Member</span></h3>
           <ul>
@@ -69,8 +72,8 @@ if(empty($_SESSION))
             </div>
           </ul>
         </div> -->
-
+      
     </div>
-    </form>
+    
 </body>
 </html>

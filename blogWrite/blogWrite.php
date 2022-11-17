@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="blogWrite.css" media="screen">
+    <link rel="stylesheet" href="blogWrite.css">
     <link rel="stylesheet" href="../topbar/topbar1.css" media="screen">
     <link rel="stylesheet" href="../footer/footer.css" media="screen">
     <meta name="theme-color" content="#000000" />
@@ -19,7 +19,7 @@
         <div class="formBlog">
             <label class="writeText">Add Photos</label>
               <input class="attInput" type="file" name="image" id="image" accept="image/*" onchange="preview()"></input>
-              <img class="imagePrev1" id="imagePreview" src=# alt=""  /> 
+              <img class="imagePrev" id="imagePreview" src=# alt=""  /> 
             <label for="image" class="upload">Upload Photo</label>
             <br></br>
             <label>Title</label>
