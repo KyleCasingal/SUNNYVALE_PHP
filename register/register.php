@@ -1,8 +1,3 @@
-<?php 
-if (session_status() == PHP_SESSION_ACTIVE) {
-  header("Location: ../blogHome/blogHome.php");
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
