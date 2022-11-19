@@ -1,0 +1,52 @@
+.verifyPage {
+  height: calc(100vh - 50px);
+  display: flex;
+  margin-top: -6vw;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-image: url("../img/landingBG.png");
+  font-family: "Poppins", sans-serif;
+  color: white;
+}
+
+.verifyForm {
+  font-size: 1.5vw;
+  padding-top: 2vw;
+  padding-bottom: 3.5vw;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  border-radius: 0.8vw;
+  background-color: rgba(255, 255, 255, 0.15);
+  margin-top: px;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(5px);
+}
+
+.verifyForm > label {
+  margin: 10px 0;
+}
+.verifyForm label {
+  font-size: 1.5vw;
+}
+
+input {
+  padding: 10px;
+  background-color: white;
+  border: none;
+  border-radius: 0.5vw;
+  font-size: 1vw;
+}
+
+.verifyButton {
+  margin-top: 1vw;
+  cursor: pointer;
+  background-color: lightcoral;
+  border: none;
+  color: white;
+  border-radius: 0.5vw;
+  padding: 0.6vw;
+  font-size: 1vw;
+}

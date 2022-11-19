@@ -1,0 +1,107 @@
+input {
+  padding: 0.5vw;
+  max-width: 50vw;
+  height: 2vw;
+  font-size: 1.2vw;
+  border: 0;
+  border-radius: 0.8vw;
+  font-family: "Newsreader", serif;
+  margin-bottom: 1vw;
+}
+select {
+  margin-right: 2vw;
+  width: 15vw;
+  max-width: 15vw;
+  height: 2vw;
+  font-size: 1.2vw;
+  border: 0;
+  border-radius: 0.8vw;
+  font-family: "Newsreader", serif;
+  margin-bottom: 1vw;
+}
+input[type="file"] {
+  display: none;
+}
+label {
+  margin-right: 0.5vw;
+  font-size: max(1.5vw, min(10px));
+  padding: 0.5vw;
+}
+thead {
+  top: 0;
+  position: sticky;
+  text-align: center;
+  background-color: rgb(251, 250, 244);
+}
+
+th,
+td {
+  padding: 0.8vw;
+  border: 1px solid lightgray;
+}
+
+.table-responsive {
+  font-size: max(1vw, min(10px));
+  max-height: 500px;
+  min-height: 20vw;
+}
+
+.table {
+  margin-top: 2vw;
+  margin-bottom: 2vw;
+  overflow-y: scroll;
+  align-items: center;
+  justify-self: center;
+  margin: 2vw;
+  max-width: 95%;
+}
+.treasurer {
+  width: 100%;
+  display: flex;
+}
+.treasurerForm {
+  display: flex;
+  justify-content: center;
+  padding: 2vw;
+  margin: 1.5vw;
+  width: 70%;
+  border-radius: 1vw;
+  flex-direction: column;
+  background-color: rgba(234, 232, 199, 0.2);
+  font-family: "Newsreader", serif;
+}
+
+.imagePrev {
+  max-width: 30vw;
+  max-height: 20vw;
+  margin-bottom: 1vw;
+}
+.treasurerPanel {
+  flex: 8;
+  width: 100%;
+  overflow-y: scroll;
+}
+.facilityRenting {
+  display: block;
+  width: 95%;
+}
+.amenitiesForm {
+  width: 100%;
+}
+
+.btnSubmitPost {
+  background-color: darkseagreen;
+  border: 0;
+  padding: 0.5vw;
+  max-width: 50vw;
+  width: 15vw;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.5vw;
+  margin-top: 2vw;
+  color: white;
+  border-radius: 0.8vw;
+  cursor: pointer;
+}
+.btnSubmitPost:hover {
+  background-color: rgba(167, 197, 167);
+}
