@@ -18,104 +18,85 @@
   }
 
   input {
-    padding: 0.5vw;
-    max-width: 50vw;
-    height: 2vw;
-    font-size: 1.2vw;
-    border: 0;
-    border-radius: 0.8vw;
-    font-family: 'Newsreader', serif;
-    margin-bottom: 1vw;
-  }
+  max-width: 50vw;
+  height: 2vw;
+  font-size: 1vw;
+  border: 0;
+  border-radius: 0.8vw;
+  font-family: "Poppins", sans-serif;
+}
+input[type="file"] {
+  display: none;
+}
+label {
+  font-size: 1vw;
+  margin: 0;
+}
+textarea {
+  padding: 0.5vw;
+  font-size: 1.2vw;
+  border: 0;
+  border-radius: 0.8vw;
+  max-width: 50vw;
+  min-height: 1vw;
+  height: 4vw;
+  overflow-x: auto;
+  resize: vertical;
+  font-family: "Poppins", sans-serif;
+}
+.upload {
+  text-align: center;
+  background-color: rgb(248, 186, 55);
+  border: 0;
+  padding: 0.5vw;
+  max-width: 50vw;
+  width: 10vw;
+  font-family: "Poppins", sans-sans-serif;
+  font-size: 1vw;
+  color: white;
+  border-radius: 0.8vw;
+  cursor: pointer;
+  
+}
+.upload:hover {
+  background-color: rgb(253, 200, 86);
+}
+.formBlog {
+  display: flex;
+  justify-content: center;
+  padding: 2vw;
+  width: 90%;
+  border-radius: 1vw;
+  flex-direction: column;
+  background-color: rgba(234, 232, 199, 0.2);
+  font-family: "Poppins", sans-serif;
+}
 
-  input[type="file"] {
-    display: none;
-  }
+.attInput {
+  height: 4vw;
+  border-radius: 0;
+}
 
-  label {
-    font-size: 2vw;
-    padding: 0.5vw;
-  }
+.btnSubmitPost {
+  background-color: darkseagreen;
+  border: 0;
+  max-width: 50vw;
+  width: 6vw;
+  font-family: "Poppins", sans-sans-serif;
+  font-size: 1vw;
+  color: white;
+  border-radius: 0.5vw;
+  cursor: pointer;
+}
+.btnSubmitPost:hover {
+  background-color: rgb(167, 197, 167);
+}
+.imagePrev {
+  margin-top: 0;
+  max-width: 60vw;
+  max-height: 20vw;
+}
 
-  textarea {
-    margin-bottom: 1vw;
-    padding: 0.5vw;
-    font-size: 1.2vw;
-    border: 1;
-    border-radius: 0.8vw;
-    max-width: 50vw;
-    min-height: 1vw;
-    height: 4vw;
-    overflow-x: auto;
-    resize: vertical;
-    font-family: 'Newsreader', serif;
-  }
-
-  .upload1 {
-    text-align: center;
-    background-color: rgb(248, 186, 55);
-    border: 0;
-    padding: 0.5vw;
-    max-width: 50vw;
-    width: 15vw;
-    font-family: "Poppins", sans-serif;
-    font-size: 1.5vw;
-    color: white;
-    border-radius: 0.8vw;
-    cursor: pointer;
-    margin-top: 0.5vw;
-    margin-bottom: 0.5vw;
-  }
-
-  .upload:hover {
-    background-color: rgb(253, 200, 86);
-  }
-
-  .formBlog {
-    display: flex;
-    justify-content: center;
-    padding: 2vw;
-    width: 95%;
-    border-radius: 1vw;
-    flex-direction: column;
-    background-color: rgba(234, 232, 199, 0.2);
-    font-family: 'Newsreader', serif;
-  }
-
-  .blogWritePage {
-    margin-left: 3vw;
-
-  }
-
-  .attInput {
-    height: 4vw;
-    border-radius: 0;
-
-  }
-
-  .btnSubmitPost {
-    background-color: darkseagreen;
-    border: 0;
-    padding: 0.5vw;
-    max-width: 50vw;
-    width: 15vw;
-    font-family: "Poppins", sans-serif;
-    font-size: 1.5vw;
-    margin-top: 2vw;
-    color: white;
-    border-radius: 0.8vw;
-    cursor: pointer;
-  }
-
-  .btnSubmitPost:hover {
-    background-color: rgb(167, 197, 167);
-  }
-
-  .imagePrev {
-    max-width: 60vw;
-    max-height: 20vw;
-    margin-bottom: 2vw;
-  }
 </style>
 
 <body>
@@ -127,19 +108,13 @@
           <input class="attInput" type="file" name="image" id="image" accept="image/*" onchange="preview()"></input>
           <img class="imagePrev" id="imagePreview" src=# alt="" />
           <label for="image" class="upload">Upload Photo</label>
-          <br></br>
           <label>Title</label>
           <input type="text" name="title" id="title" />
-          <br></br>
           <label>Description</label>
-          <br></br>
           <textarea class="descInput" type="text" name="content" id="content" maxLength={255}></textarea>
-          <br></br>
           <label>Tags</label>
           <input type="text" />
-          <br></br>
           <button class="btnSubmitPost" name="submitPost" id="submitPost">Submit</button>
-          <br></br>
         </div>
       </div>
     </div>
@@ -148,7 +123,7 @@
 
 </html>
 
-// SCRIPTS
+<!-- SCRIPTS -->
 <script type="text/javascript">
   if (window.history.replaceState) {
     window.history.replaceState(null, null, window.location.href);

@@ -21,23 +21,46 @@ $result = $con->query("SELECT * FROM post, user WHERE full_name = username") or 
   <title>SUNNYVALE</title>
 </head>
 <style>
-  .modal-body{
+  .mdl-body {
     margin: 0;
+    font-style: 'Poppins', sans-serif;
+  }
+
+  .newPostBtn{
+    background-color: rgb(248, 186, 55);
+    color: white;
+    justify-self: flex-end;
+    font-size: 1.5vw;
+    height: 3vw;
+    width: 10vw;
+    border-radius: 0.5vw;
+    border: 0 none;
+  }
+  .blogHead{
+    display: flex;
+    width: 55%;
+  }
+  .headTxt{
+    flex: 1;
   }
 </style>
+
 <body>
   <?php require '../topbar/topbar.php'; ?>
   <div class='blogHome'>
     <div class="blogPage">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        Launch static backdrop modal
-      </button>
-      <p>Recent Posts</p>
+      <div class="blogHead">
+        <p class="headTxt">Recent Posts</p>
+        <button type="button" class="newPostBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+           + New Post
+        </button>
+      </div>
+
     </div>
     <?php while ($row = $result->fetch_assoc()) : ?>
       <div class="blogPost">
         <div class="blogProfile">
-          <img class="profileImg" <?php
+          <img class="avatarBlog" <?php
                                   $imageURL = '../media/displayPhotos/' . $row['display_picture'];
                                   ?> src="<?= $imageURL ?>" alt="" />
           <div class="profileText">
@@ -102,14 +125,13 @@ $result = $con->query("SELECT * FROM post, user WHERE full_name = username") or 
         <div class="sideText">
           <p>Categories</p>
           <div class="categoriesText">
-            <ul class="categoryList">
-              <li class="categoryListItem">LifeStyle</li>
-              <li class="categoryListItem">Food</li>
-              <li class="categoryListItem">Events</li>
-              <li class="categoryListItem">Sports</li>
+            <ul class="categoryList1">
+              <li class="categoryListItem1">LifeStyle</li>
+              <li class="categoryListItem1">Food</li>
+              <li class="categoryListItem1">Events</li>
+              <li class="categoryListItem1">Sports</li>
             </ul>
           </div>
-
         </div>
       </div>
   </div>
@@ -117,10 +139,10 @@ $result = $con->query("SELECT * FROM post, user WHERE full_name = username") or 
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+          <h5 class="modal-title" id="staticBackdropLabel">Add new post</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="mdl-body">
           <form method="post">
             <?php
             require '../blogWrite/blogWrite.php';
@@ -129,7 +151,7 @@ $result = $con->query("SELECT * FROM post, user WHERE full_name = username") or 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Understood</button>
+          <button type="button" class="btn btn-primary">Done</button>
         </div>
       </div>
     </div>

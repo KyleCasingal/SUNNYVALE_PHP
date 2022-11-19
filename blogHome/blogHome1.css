@@ -1,94 +1,87 @@
-body{
-    margin: 0;
-}
-.blogHome{
+:root {
+    --text: black;
+  }
+  
+  .blogHome {
     width: 100%;
-}
-.blogPage{
+    color: rgb(89, 89, 89);
+  }
+  .blogHead {
     font-size: 30px;
     width: 60%;
     margin-left: 5%;
     margin-top: 20px;
     padding-right: 10px;
-    font-family: 'Newsreader', serif;
-}
-
-.categoriesText{
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .categoriesText {
     margin-top: 20px;
     margin-bottom: 50px;
     padding: 10px;
     border-radius: 10px;
-    background-color: rgb(241, 241, 241);
-    font-family: 'Newsreader', serif;
-}
-
-.schedTable{
-    background-color:rgb(241, 241, 241);
-    width: 100%;
-    border-collapse: collapse;
-    
-    font-size: 20px;
-}
-td{
+    background-color: rgba(234, 232, 199, 0.2);
+    font-family: "Poppins", sans-serif;
+  }
+  
+  td {
     text-align: center;
     padding: 5px;
     border-width: 1px;
     border-style: solid;
-    border-color:  rgb(210, 210, 210);
-}
-.sideContent{
+    border-color: rgb(210, 210, 210);
+  }
+  .sideContent {
+    color: rgb(89, 89, 89);
     height: 100%;
     width: 30%;
     position: fixed;
     z-index: 0;
     top: 0;
     right: 0;
-    color: white;
     overflow-x: hidden;
     margin-top: 20px;
-    
-}    
-.sideText{
-    color: black;
+  }
+  .sideText {
     font-size: 30px;
     margin-top: 80px;
     padding-right: 10px;
-    font-family: 'Newsreader', serif;
-    
-    
-}
-
-.blogPost {
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .blogPost {
+    align-items: center;
+    justify-content: center;
     width: 55%;
     margin-left: 5%;
     margin-top: 20px;
     margin-bottom: 50px;
     padding: 10px;
     border-radius: 10px;
-    background-color: rgb(241, 241, 241);
-    font-family: 'Newsreader', serif;
-}
-.blogTitle {
+    background-color: rgba(234, 232, 199, 0.2);
+    font-family: "Poppins", sans-serif;
+  }
+  .blogTitle {
     font-weight: bold;
-    font-family: 'Newsreader', serif;
+    font-family: "Poppins", sans-serif;
     margin-top: 10px;
     font-size: 20px;
-}
-.blogBody{
+  }
+  .blogBody {
     text-indent: 50px;
     margin-top: 10px;
     text-align: justify;
-}
-
-.profileImg{
+  }
+  
+  .avatarBlog {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
     margin-right: 10px;
-}
-.blogProfile{
+  }
+  .blogProfile {
     width: 100%;
     display: flex;
     margin-bottom: 20px;
@@ -98,47 +91,132 @@ td{
     border-left: 0px;
     border-right: 0px;
     border-bottom: 1px solid rgb(210, 210, 210);
-    
-    
-}
-.profileText{
+  }
+  .profileText {
     display: flex;
     align-items: center;
     width: 100%;
-}
-.profileName{
+  }
+  .profileName {
     flex: 11;
     font-size: 25px;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
-}
-.profileDate{
+  }
+  .profileDate {
     flex: 2;
     font-size: 15px;
     align-self: flex-end;
     justify-content: flex-end;
-}
-.postImg{
-    width: 100%;
-}
-.categoryList{
+  }
+  .postImg {
+    max-width: 90%;
+    max-height: 40vw;
+
+  }
+  .categoryList1 {
+    
     display: inline;
     justify-content: flex-end;
     margin-top: 5px;
     margin-bottom: 0;
     padding: 0;
     list-style: none;
-}
-.categoryListItem{
+  }
+  .categoryListItem1 {
     margin-top: 10px;
     margin-left: 10px;
     cursor: pointer;
-}
-.categoryListItem:hover{
+  }
+  .categoryListItem1:hover {
     color: rgb(89, 89, 89);
     cursor: pointer;
-}
-.profileName:hover{
+  }
+  .profileName:hover {
     color: rgb(89, 89, 89);
     cursor: pointer;
-}
+  }
+  .darkmodeBtn {
+    height: 1.4vw;
+    align-items: center;
+    display: inline-flex;
+    margin-top: 2vw;
+    margin-left: 4vw;
+  }
+  .darkBtnTxt {
+    font-size: 1.5vw;
+    font-family: "Poppins", sans-serif;
+  }
+  input[type="checkbox"]:checked ~ .darkBtnTxt {
+    color: lightgray;
+    transition: ease-in 0.5s;
+  }
+  
+  input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    visibility: hidden;
+    display: none;
+  }
+  .check {
+    z-index: -999;
+    position: relative;
+    display: block;
+    width: 4vw;
+    height: 2vw;
+    border-radius: 2vw;
+    background: #141d26;
+    cursor: pointer;
+    overflow: hidden;
+    transition: ease-in 0.5s;
+  }
+  input[type="checkbox"]:checked ~ .check {
+    background: #fff;
+    box-shadow: 0 0 0 99999vw #141d26;
+  }
+  
+  .check:before {
+    content: "";
+    position: absolute;
+    top: 0.2vw;
+    left: 0.2vw;
+    background: #fff;
+    width: 1.6vw;
+    height: 1.6vw;
+    border-radius: 50%;
+    transition: 0.5s;
+  }
+  input[type="checkbox"]:checked ~ .check:before {
+    transform: translateX(-5vw);
+  }
+  .check:after {
+    content: "";
+    position: absolute;
+    top: 0.2vw;
+    right: 0.2vw;
+    background: #141d26;
+    width: 1.6vw;
+    height: 1.6vw;
+    border-radius: 50%;
+    transition: 0.5s;
+    transform: translateX(5vw);
+  }
+  input[type="checkbox"]:checked ~ .check:after {
+    transform: translateX(0vw);
+  }
+  .blogHome {
+    color: var(--text);
+  }
+  .categoriesText {
+    color: var(--text);
+  }
+  .categoryListItem {
+    color: var(--text);
+  }
+  .dark {
+    --text: lightgray;
+  }
+  .sideText {
+    color: var(--text);
+  }
+  
