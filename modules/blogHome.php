@@ -1,6 +1,6 @@
 <?php
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($mysqli));
-$result = $con->query("SELECT * FROM post, user WHERE full_name = username") or die($mysqli->error);
+$result = $con->query("SELECT * FROM post, user WHERE full_name = username ORDER BY post_id DESC") or die($mysqli->error);
 require '../marginals/topbar.php';
 ?>
 
