@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <title>SUNNYVALE</title>
+</head>
+<style>
+  body {
+    margin: 0;
+  }
+
+  input {
+    max-width: 50vw;
+    height: 2vw;
+    font-size: 1vw;
+    border: 0;
+    border-radius: 0.8vw;
+    font-family: "Poppins", sans-serif;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  label {
+    font-size: 1vw;
+    margin: 0;
+  }
+
+  textarea {
+    margin-bottom: 1vw;
+    padding: 0.5vw;
+    font-size: 1.2vw;
+    border: 0;
+    border-radius: 0.8vw;
+    max-width: 50vw;
+    min-height: 1vw;
+    height: 4vw;
+    overflow-x: auto;
+    resize: vertical;
+    font-family: "Newsreader", sans-serif;
+  }
+
+  .upload {
+    text-align: center;
+    background-color: rgb(248, 186, 55);
+    border: 0;
+    padding: 0.5vw;
+    max-width: 50vw;
+    width: 15vw;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.5vw;
+    color: white;
+    border-radius: 0.8vw;
+    cursor: pointer;
+    margin-top: 0.5vw;
+    margin-bottom: 0.5vw;
+  }
+
+  .upload:hover {
+    background-color: rgb(253, 200, 86);
+  }
+
+  .formBlog {
+    display: flex;
+    justify-content: center;
+    padding: 2vw;
+    margin: 1.5vw;
+    width: 90%;
+    border-radius: 1vw;
+    flex-direction: column;
+    background-color: rgba(234, 232, 199, 0.2);
+    font-family: "Newsreader", sans-serif;
+  }
+
+  .blogWritePage {
+    margin-left: 3vw;
+  }
+
+  .attInput {
+    height: 4vw;
+    border-radius: 0;
+  }
+
+  .btnSubmitPost {
+    background-color: darkseagreen;
+    border: 0;
+    padding: 0.5vw;
+    max-width: 50vw;
+    width: 6vw;
+    font-family: "Poppins", sans-sans-serif;
+    font-size: 1.5vw;
+    margin-top: 2vw;
+    color: white;
+    border-radius: 0.8vw;
+    cursor: pointer;
+  }
+
+  .btnSubmitPost:hover {
+    background-color: rgb(167, 197, 167);
+  }
+
+  .imagePrev {
+    margin-top: 0;
+    max-width: 60vw;
+    max-height: 20vw;
+    margin-bottom: 2vw;
+  }
+</style>
+
+<body>
+  <form method="post" enctype="multipart/form-data">
+    <div class="blogWrite">
+      <div class="blogWritePage">
+        <div class="formBlog">
+          <label class="writeText">Add Photos</label>
+          <input class="attInput" type="file" name="image" id="image" accept="image/*" onchange="preview()"></input>
+          <img class="imagePrev" id="imagePreview" src=# alt="" />
+          <label for="image" class="upload">Upload Photo</label>
+          <label>Title</label>
+          <input type="text" name="title" id="title" />
+          <label>Description</label>
+          <textarea class="descInput" type="text" name="content" id="content" maxLength={255}></textarea>
+          <label>Tags</label>
+          <input type="text" />
+          <button class="btnSubmitPost" name="submitPost" id="submitPost">Submit</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</body>
+
+</html>
+<!-- SCRIPTS -->
+<script>
+  function readURL(input, id) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        $('#' + id).attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#image").change(function() {
+    readURL(this, 'imagePreview');
+  });
+</script>
