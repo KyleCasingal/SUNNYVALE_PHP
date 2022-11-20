@@ -6,15 +6,15 @@ $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con
 
 //Redirect to register page when in index page
 if (isset($_POST['registerButtonLanding'])) {
-    header("Location: ./register/register.php");
+    header("Location: ./modules/register.php");
 }
 // Redirect to login page when in index page
 if (isset($_POST['loginButtonLanding'])) {
-    header("Location: ./login/login.php");
+    header("Location: ./modules/login.php");
 }
 //Redirect to register page when in login page
 if (isset($_POST['registerButtonTop'])) {
-    header("Location: ../register/register.php");
+    header("Location: ../modules/register.php");
 }
 //Redirect to index page when in login page
 if (isset($_POST['guestButtonLogin'])) {
@@ -22,23 +22,20 @@ if (isset($_POST['guestButtonLogin'])) {
 }
 //Redirect to login page when in register page
 if (isset($_POST['loginButtonReg'])) {
-    header("Location: ../login/login.php");
+    header("Location: ../modules/login.php");
 }
 //Redirect to index page when in register page
 if (isset($_POST['guestButtonRegister'])) {
     header("Location: ../index.php");
 }
-// // Redirect to treasurer facility renting page when in treasurer monthly dues page
-// if(isset($_POST['facility'])){
-//     header("Location: ../treasurerPanelFacility/treasurerPanelFacility.php");
-// }
-//Redirect to blogWrite when in blogHome page
-// if(isset($_POST['write'])){
-//     echo $_SESSION['username'] = $username;
-//     // header("Location: ../blogWrite/blogWrite.php");
-// }
-
-
+//Redirect to register page when in guest amenities page
+if (isset($_POST['registerButtonGuest'])) {
+    header("Location: ../modules/register.php");
+}
+//Redirect to login page when in guest amenities page
+if (isset($_POST['loginButtonGuest'])) {
+    header("Location: ../modules/login.php");
+}
 
 // REGISTER A NEW USER
 use PHPMailer\PHPMailer\PHPMailer;
@@ -78,7 +75,7 @@ if (isset($_POST['register'])) {
             $mail->send();
             $sql = "INSERT INTO user (username,password,user_type,email_address,account_status,verification_code,email_verified_at,display_picture) VALUES('$username', '$password','Homeowner','$email_address','Pending', '$verification_code', NULL,'default.png')";
             $result = mysqli_query($con, $sql);
-            header("Location: ../verify/verify.php?email_address=" . $email_address);
+            header("Location: ../modules/verify.php?email_address=" . $email_address);
             exit();
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
@@ -134,7 +131,7 @@ if (isset($_POST["emailVerify"])) {
             $mail->send();
             $sql = "UPDATE user SET verification_code =  '$verification_code' WHERE username = '" . $username . "'";
             $result = mysqli_query($con, $sql);
-            header("Location: ../verify/verify.php?email_address=" . $email_address);
+            header("Location: ../modules/verify.php?email_address=" . $email_address);
             exit();
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
@@ -143,19 +140,22 @@ if (isset($_POST["emailVerify"])) {
 }
 // LOGGING IN
 if (isset($_POST['login'])) {
-    $username = $_POST['username'];
+    $email_address = $_POST['email_address'];
     $password = $_POST['password'];
-    $sql = "SELECT * FROM user WHERE username = '$username' AND password = '$password' AND account_status = 'Active' ";
+    $sql = "SELECT * FROM user WHERE email_address = '$email_address' AND password = '$password' AND account_status = 'Active' ";
     $result = mysqli_query($con, $sql);
 
-    if (strlen($username and $password) == 0) {
+    if (strlen($email_address and $password) == 0) {
         echo "All fields required!";
     } else if (mysqli_num_rows($result) == 1) {
-        // $_SESSION
+        $sql = "SELECT username FROM user where email_address = '$email_address' ";
+        $result = mysqli_query($con, $sql);
+        $row = $result->fetch_assoc();
+        $username = $row['username'];
         $_SESSION['username'] = $username;
-        header("Location: ../blogHome/blogHome.php");
+        header("Location: ../modules/blogHome.php");
     } else {
-        echo "Wrong username or password!";
+        echo "Wrong email address or password!";
     }
     $con->close();
 }
@@ -176,5 +176,6 @@ if (isset($_POST['submitPost'])) {
     if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
         $sql = "INSERT INTO `post`(`full_name`, `title`, `content`, `published_at`, `content_image`) VALUES ('$username', '$title', '$content', now(), '$fileName')";
         mysqli_query($con, $sql);
+        header("Location: ../modules/blogHome.php");
     }
 }
