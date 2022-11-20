@@ -9,7 +9,9 @@
   <link rel="stylesheet" href="../footer/footer.css" media="screen">
   <meta name="theme-color" content="#000000" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap"
+    rel="stylesheet">
   <title>SUNNYVALE</title>
 </head>
 <style>
@@ -18,85 +20,102 @@
   }
 
   input {
-  max-width: 50vw;
-  height: 2vw;
-  font-size: 1vw;
-  border: 0;
-  border-radius: 0.8vw;
-  font-family: "Poppins", sans-serif;
-}
-input[type="file"] {
-  display: none;
-}
-label {
-  font-size: 1vw;
-  margin: 0;
-}
-textarea {
-  padding: 0.5vw;
-  font-size: 1.2vw;
-  border: 0;
-  border-radius: 0.8vw;
-  max-width: 50vw;
-  min-height: 1vw;
-  height: 4vw;
-  overflow-x: auto;
-  resize: vertical;
-  font-family: "Poppins", sans-serif;
-}
-.upload {
-  text-align: center;
-  background-color: rgb(248, 186, 55);
-  border: 0;
-  padding: 0.5vw;
-  max-width: 50vw;
-  width: 10vw;
-  font-family: "Poppins", sans-sans-serif;
-  font-size: 1vw;
-  color: white;
-  border-radius: 0.8vw;
-  cursor: pointer;
-  
-}
-.upload:hover {
-  background-color: rgb(253, 200, 86);
-}
-.formBlog {
-  display: flex;
-  justify-content: center;
-  padding: 2vw;
-  width: 90%;
-  border-radius: 1vw;
-  flex-direction: column;
-  background-color: rgba(234, 232, 199, 0.2);
-  font-family: "Poppins", sans-serif;
-}
+    max-width: 50vw;
+    height: 2vw;
+    font-size: 1vw;
+    border: 0;
+    border-radius: 0.8vw;
+    font-family: "Poppins", sans-serif;
+  }
 
-.attInput {
-  height: 4vw;
-  border-radius: 0;
-}
+  input[type="file"] {
+    display: none;
+  }
 
-.btnSubmitPost {
-  background-color: darkseagreen;
-  border: 0;
-  max-width: 50vw;
-  width: 6vw;
-  font-family: "Poppins", sans-sans-serif;
-  font-size: 1vw;
-  color: white;
-  border-radius: 0.5vw;
-  cursor: pointer;
-}
-.btnSubmitPost:hover {
-  background-color: rgb(167, 197, 167);
-}
-.imagePrev {
-  margin-top: 0;
-  max-width: 60vw;
-  max-height: 20vw;
-}
+  label {
+    font-size: 1vw;
+    margin: 0;
+  }
 
+  textarea {
+    margin-bottom: 1vw;
+    padding: 0.5vw;
+    font-size: 1.2vw;
+    border: 0;
+    border-radius: 0.8vw;
+    max-width: 50vw;
+    min-height: 1vw;
+    height: 4vw;
+    overflow-x: auto;
+    resize: vertical;
+    font-family: "Newsreader", sans-serif;
+  }
+
+  .upload {
+    text-align: center;
+    background-color: rgb(248, 186, 55);
+    border: 0;
+    padding: 0.5vw;
+    max-width: 50vw;
+    width: 15vw;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.5vw;
+    color: white;
+    border-radius: 0.8vw;
+    cursor: pointer;
+    margin-top: 0.5vw;
+    margin-bottom: 0.5vw;
+  }
+
+  .upload:hover {
+    background-color: rgb(253, 200, 86);
+  }
+
+  .formBlog {
+    display: flex;
+    justify-content: center;
+    padding: 2vw;
+    margin: 1.5vw;
+    width: 90%;
+    border-radius: 1vw;
+    flex-direction: column;
+    background-color: rgba(234, 232, 199, 0.2);
+    font-family: "Newsreader", sans-serif;
+  }
+
+  .blogWritePage {
+    margin-left: 3vw;
+  }
+
+  .attInput {
+    height: 4vw;
+    border-radius: 0;
+  }
+
+  .btnSubmitPost {
+    background-color: darkseagreen;
+    border: 0;
+    padding: 0.5vw;
+    max-width: 50vw;
+    width: 6vw;
+    font-family: "Poppins", sans-sans-serif;
+    font-size: 1.5vw;
+    margin-top: 2vw;
+    color: white;
+    border-radius: 0.8vw;
+    cursor: pointer;
+  }
+
+  .btnSubmitPost:hover {
+    background-color: rgb(167, 197, 167);
+  }
+
+  .imagePrev {
+    margin-top: 0;
+    max-width: 60vw;
+    max-height: 20vw;
+    margin-bottom: 2vw;
+  }
 </style>
 
 <body>

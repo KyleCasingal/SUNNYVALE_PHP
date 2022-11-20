@@ -2,6 +2,7 @@
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($mysqli));
 $result = $con->query("SELECT * FROM post, user WHERE full_name = username") or die($mysqli->error);
 ?>
+<?php require '../topbar/topbar.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,11 +22,13 @@ $result = $con->query("SELECT * FROM post, user WHERE full_name = username") or 
   <title>SUNNYVALE</title>
 </head>
 <style>
+  :root {
+    --text: black;
+  }
   .mdl-body {
     margin: 0;
     font-style: 'Poppins', sans-serif;
   }
-
   .newPostBtn{
     background-color: rgb(248, 186, 55);
     color: white;
@@ -37,16 +40,210 @@ $result = $con->query("SELECT * FROM post, user WHERE full_name = username") or 
     border: 0 none;
   }
   .blogHead{
+    font-size: 30px;
     display: flex;
     width: 55%;
+    margin-left: 5%;
+    margin-top: 20px;
+    padding-right: 10px;
+    font-family: "Poppins", sans-serif;
   }
   .headTxt{
     flex: 1;
   }
+  .blogHome {
+    width: 100%;
+    color: rgb(89, 89, 89);
+  }
+  .blogPost {
+    align-items: center;
+    justify-content: center;
+    width: 55%;
+    margin-left: 5%;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(234, 232, 199, 0.2);
+    font-family: "Poppins", sans-serif;
+  }
+  .blogProfile {
+    width: 100%;
+    display: flex;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-style: solid;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 1px solid rgb(210, 210, 210);
+  }
+  .avatarBlog {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  .profileText {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  .profileName {
+    flex: 11;
+    font-size: 25px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .profileName:hover {
+    color: rgb(89, 89, 89);
+    cursor: pointer;
+  }
+  .profileDate {
+    flex: 2;
+    font-size: 15px;
+    align-self: flex-end;
+    justify-content: flex-end;
+  }
+  .postImg {
+    max-width: 90%;
+    max-height: 40vw;
+  } 
+   .blogTitle {
+    font-weight: bold;
+    font-family: "Poppins", sans-serif;
+    margin-top: 10px;
+    font-size: 20px;
+  } 
+   .blogBody {
+    text-indent: 50px;
+    margin-top: 10px;
+    text-align: justify;
+  } 
+   .sideContent {
+    color: rgb(89, 89, 89);
+    height: 100%;
+    width: 30%;
+    position: fixed;
+    z-index: 0;
+    top: 0;
+    right: 0;
+    overflow-x: hidden;
+    margin-top: 20px;
+  } 
+   .sideText {
+    font-size: 30px;
+    margin-top: 80px;
+    padding-right: 10px;
+    font-family: "Poppins", sans-serif;
+    color: var(--text);
+  } 
+   .categoriesText {
+    color: var(--text);
+    margin-top: 20px;
+    margin-bottom: 50px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(234, 232, 199, 0.2);
+    font-family: "Poppins", sans-serif;
+  } 
+   .categoryList1 {
+    display: inline;
+    justify-content: flex-end;
+    margin-top: 5px;
+    margin-bottom: 0;
+    padding: 0;
+    list-style: none;
+  } 
+   .categoryListItem1 {
+    margin-top: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+  } 
+   .categoryListItem1:hover {
+    color: rgb(89, 89, 89);
+    cursor: pointer;
+  }
+  .darkmodeBtn {
+    height: 1.4vw;
+    align-items: center;
+    display: inline-flex;
+    margin-top: 2vw;
+    margin-left: 4vw;
+  }
+  .darkBtnTxt {
+    font-size: 1.5vw;
+    font-family: "Poppins", sans-serif;
+  }
+  input[type="checkbox"]:checked ~ .darkBtnTxt {
+    color: lightgray;
+    transition: ease-in 0.5s;
+  }
+  
+  input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    visibility: hidden;
+    display: none;
+  }
+  .check {
+    z-index: -999;
+    position: relative;
+    display: block;
+    width: 4vw;
+    height: 2vw;
+    border-radius: 2vw;
+    background: #141d26;
+    cursor: pointer;
+    overflow: hidden;
+    transition: ease-in 0.5s;
+  }
+  input[type="checkbox"]:checked ~ .check {
+    background: #fff;
+    box-shadow: 0 0 0 99999vw #141d26;
+  }
+  
+  .check:before {
+    content: "";
+    position: absolute;
+    top: 0.2vw;
+    left: 0.2vw;
+    background: #fff;
+    width: 1.6vw;
+    height: 1.6vw;
+    border-radius: 50%;
+    transition: 0.5s;
+  }
+  input[type="checkbox"]:checked ~ .check:before {
+    transform: translateX(-5vw);
+  }
+  .check:after {
+    content: "";
+    position: absolute;
+    top: 0.2vw;
+    right: 0.2vw;
+    background: #141d26;
+    width: 1.6vw;
+    height: 1.6vw;
+    border-radius: 50%;
+    transition: 0.5s;
+    transform: translateX(5vw);
+  }
+  input[type="checkbox"]:checked ~ .check:after {
+    transform: translateX(0vw);
+  }
+  .dark {
+    --text: lightgray;
+  }
+  .sideText {
+    
+  }
 </style>
 
 <body>
-  <?php require '../topbar/topbar.php'; ?>
+  
   <div class='blogHome'>
     <div class="blogPage">
       <div class="blogHead">

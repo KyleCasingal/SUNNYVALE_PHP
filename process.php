@@ -74,7 +74,7 @@ if (isset($_POST['register'])) {
             $mail->isHTML(true);
             $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
             $mail->Subject = 'Email verification';
-            $mail->Body    = '<p>Your verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
+            $mail->Body = '<p>Your verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
             $mail->send();
             $sql = "INSERT INTO user (username,password,user_type,email_address,account_status,verification_code,email_verified_at,display_picture) VALUES('$username', '$password','Homeowner','$email_address','Pending', '$verification_code', NULL,'default.png')";
             $result = mysqli_query($con, $sql);
@@ -95,7 +95,7 @@ if (isset($_POST["verify"])) {
 
     // mark email as verified
     $sql = "UPDATE user SET email_verified_at = NOW() WHERE email_address = '" . $email_address . "' AND verification_code = '" . $verification_code . "'";
-    $result  = mysqli_query($con, $sql);
+    $result = mysqli_query($con, $sql);
 
     if (mysqli_affected_rows($con) == 0) {
         echo "Verification code failed. Please try again.";
@@ -130,7 +130,7 @@ if (isset($_POST["emailVerify"])) {
             $mail->isHTML(true);
             $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
             $mail->Subject = 'Email verification';
-            $mail->Body    = '<p>Your new verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
+            $mail->Body = '<p>Your new verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
             $mail->send();
             $sql = "UPDATE user SET verification_code =  '$verification_code' WHERE username = '" . $username . "'";
             $result = mysqli_query($con, $sql);
