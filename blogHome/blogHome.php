@@ -237,9 +237,7 @@ $result = $con->query("SELECT * FROM post, user WHERE full_name = username") or 
   .dark {
     --text: lightgray;
   }
-  .sideText {
-    
-  }
+  
 </style>
 
 <body>
