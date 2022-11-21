@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#000000" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
   <title>SUNNYVALE</title>
 </head>
 <style>
@@ -23,7 +23,7 @@
     font-size: 1.2vw;
     border: 0;
     border-radius: 0.8vw;
-    font-family: 'Newsreader', serif;
+    font-family: 'Poppins', sans-serif;
     margin-bottom: 1vw;
   }
 
@@ -33,7 +33,7 @@
     font-size: 1.2vw;
     border: 0;
     border-radius: 0.8vw;
-    font-family: 'Newsreader', serif;
+    font-family: 'Poppins', sans-serif;
     margin-bottom: 1vw;
   }
 
@@ -60,7 +60,7 @@
     border-radius: 1vw;
     flex-direction: column;
     background-color: rgba(234, 232, 199, 0.2);
-    font-family: 'Newsreader', serif;
+    font-family: 'Poppins', sans-serif;
   }
 
   .paymentForm {
@@ -71,7 +71,7 @@
     border-radius: 1vw;
     flex-direction: column;
     background-color: rgba(234, 232, 199, 0.2);
-    font-family: 'Newsreader', serif;
+    font-family: 'Poppins', sans-serif;
   }
 
   .imagePrev {

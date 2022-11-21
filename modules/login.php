@@ -79,7 +79,7 @@
 
   input {
     border-radius: 0.5vw;
-    height: 2vw;
+    height: 1vw;
     margin-bottom: 1vw;
   }
 

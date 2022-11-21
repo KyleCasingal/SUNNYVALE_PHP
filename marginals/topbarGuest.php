@@ -7,7 +7,7 @@ include "../process.php";
     padding: 0;
     width: 100%;
     height: 6vw;
-    background-color: rgba(255, 253, 245, 0);
+    background-color: rgba(255, 253, 245, 0.767);
     position: sticky;
     top: 0;
     display: flex;
@@ -33,7 +33,7 @@ include "../process.php";
   .topIconLanding {
     font-size: 2.5vw;
     margin-right: 10px;
-    color: white;
+    color: rgb(89, 89, 89);
     font-family: "Poppins", sans-serif;
     font-style: normal;
     cursor: pointer;
@@ -85,7 +85,7 @@ include "../process.php";
   }
 
   .topListItemLanding {
-    color: white;
+    color: rgb(89, 89, 89);
     padding: 0.8vw;
     margin-right: 0.2vw;
     font-size: 1vw;
@@ -141,7 +141,7 @@ include "../process.php";
 
   <div class="topLanding">
     <div class="topLeftLanding">
-      <img src="..\img\logoSV.png" alt= />
+      <img src="..\img\logoSVgray.png" alt= />
       <i class="topIconLanding">SUNNYVALE</i>
     </div>
     <div class="topCenterLanding">

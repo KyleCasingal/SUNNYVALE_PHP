@@ -10,14 +10,16 @@
   <link rel="stylesheet" href="../topbarLanding/topbarLanding.css" media="screen">
   <meta name="theme-color" content="#000000" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
   <title>SUNNYVALE</title>
 </head>
 <style>
   * {
     margin: 0;
+  }
+  .topbar{
+    top: 0;
+    position: sticky;
   }
 
   input {
@@ -27,7 +29,7 @@
     font-size: 1.2vw;
     border: 0;
     border-radius: 0.8vw;
-    font-family: 'Newsreader', serif;
+    font-family: 'Poppins', sans-serif;
     margin-bottom: 1vw;
   }
 
@@ -37,7 +39,7 @@
     font-size: 1.2vw;
     border: 0;
     border-radius: 0.8vw;
-    font-family: 'Newsreader', serif;
+    font-family: 'Poppins', sans-serif;
     margin-bottom: 1vw;
   }
 
@@ -63,7 +65,7 @@
     border-radius: 1vw;
     flex-direction: column;
     background-color: rgba(234, 232, 199, 0.2);
-    font-family: 'Newsreader', serif;
+    font-family: 'Poppins', sans-serif;
   }
 
   .paymentForm {
@@ -74,7 +76,7 @@
     border-radius: 1vw;
     flex-direction: column;
     background-color: rgba(234, 232, 199, 0.2);
-    font-family: 'Newsreader', serif;
+    font-family: 'Poppins', sans-serif;
   }
 
   .imagePrev {
@@ -122,8 +124,9 @@
 </style>
 
 <body>
-  <?php include '../marginals/topbarGuest.php'; ?>
-
+  <div class="topbar">
+    <?php include '../marginals/topbarGuest.php'; ?>
+  </div>
   <form action="amenitiesGuest" method="post">
     <div class='amenities'>
       <div class="amenitiesForm">
@@ -166,8 +169,8 @@
     </div>
   </form>
   <?php
-    require '../marginals/footer2.php';
-    ?>
+  require '../marginals/footer2.php';
+  ?>
 </body>
 
 </html>
