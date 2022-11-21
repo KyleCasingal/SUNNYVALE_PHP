@@ -1,8 +1,7 @@
 <?php
 include "../process.php";
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($mysqli));
-$username = $_SESSION['username'];
-$res = $con->query("SELECT * FROM user WHERE username = '" . $username = $_SESSION['username'] . "'") or die($mysqli->error);
+$res = $con->query("SELECT * FROM homeowner_profile WHERE email_address = '" . $email_address = $_SESSION['email_address'] . "'") or die($mysqli->error);
 if (empty($_SESSION)) {
   header("Location: ../index.php");
 }

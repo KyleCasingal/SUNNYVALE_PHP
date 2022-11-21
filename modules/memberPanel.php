@@ -17,6 +17,7 @@ $row = $result->fetch_assoc();
   <meta name="theme-color" content="#000000" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>SUNNYVALE</title>
 </head>
 <style>
@@ -183,7 +184,7 @@ $row = $result->fetch_assoc();
             <tbody>
               <tr>
                 <td class="lbl">Name:</td>
-                <td class="data">Nene Yashiro</td>
+                <td class="data"><?php echo $row['first_name'] . " " . $row['middle_name']  . " " . $row['last_name']; ?></td>
                 <td class="editBtn">
                   <i class="fa-solid fa-pen fa-2x"></i>
                 </td>
@@ -194,31 +195,34 @@ $row = $result->fetch_assoc();
               </tr>
               <tr>
                 <td class="lbl">Gender:</td>
-                <td class="data">Female</td>
+                <td class="data"><?php echo $row['sex'] ?></td>
               </tr>
               <tr>
                 <td class="lbl">Residence Address:</td>
                 <td class="data">
-                  blk 1 lot 2 kingsroad st. Sunnyvale 2
-                </td>
+                  <?php echo $row['residence_address'] ?></ </td>
               </tr>
               <tr>
                 <td class="lbl">Business Address:</td>
                 <td class="data">
-                  blk 1 lot 2 kingsroad st. Sunnyvale 2
+                  <?php echo $row['business_address'] ?>
                 </td>
               </tr>
               <tr>
                 <td class="lbl">Occupation:</td>
-                <td class="data">None</td>
+                <td class="data"><?php echo $row['occupation'] ?></td>
+              </tr>
+              <tr>
+                <td class="lbl">Employer:</td>
+                <td class="data"><?php echo $row['employer'] ?></td>
               </tr>
               <tr>
                 <td class="lbl">Email:</td>
-                <td class="data">sample@gmail.com</td>
+                <td class="data"><?php echo $row['email_address'] ?></td>
               </tr>
               <tr>
                 <td class="lbl">Mobile Number:</td>
-                <td class="data">09123456789</td>
+                <td class="data"><?php echo $row['mobile_number'] ?></td>
               </tr>
             </tbody>
           </table>
