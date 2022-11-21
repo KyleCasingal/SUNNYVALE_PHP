@@ -43,8 +43,8 @@
     <div class="sideBar">
         <form method="post">
             <ul class="treasurerSideBar">
-                <li id="dues" onclick="location.href='../treasurerPanel/treasurerPanel.php'">Monthly Dues</li>
-                <li id="facility" onclick="location.href='../treasurerPanelFacility/treasurerPanelFacility.php'">
+                <li id="dues" onclick="location.href='../modules/treasurerPanel.php'">Monthly Dues</li>
+                <li id="facility" onclick="location.href='../modules/treasurerPanelFacility.php'">
                     Facility Renting</li>
             </ul>
         </form>
