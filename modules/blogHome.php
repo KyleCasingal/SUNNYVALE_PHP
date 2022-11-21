@@ -122,7 +122,7 @@ require '../marginals/topbar.php';
   .postImg {
     align-self: center;
   justify-self: center;
-  max-width: 55vw;
+  max-width: 40vw;
   max-height: 40vw;
   }
 
