@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Nov 21, 2022 at 03:57 PM
+-- Generation Time: Nov 21, 2022 at 11:08 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -64,34 +64,36 @@ INSERT INTO `homeowner_profile` (`homeowner_id`, `last_name`, `first_name`, `mid
 DROP TABLE IF EXISTS `post`;
 CREATE TABLE IF NOT EXISTS `post` (
   `post_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(20) NOT NULL,
   `full_name` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` varchar(255) NOT NULL,
   `published_at` datetime NOT NULL,
   `content_image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`post_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `post`
 --
 
-INSERT INTO `post` (`post_id`, `full_name`, `title`, `content`, `published_at`, `content_image`) VALUES
-(29, 'Mon Carlo Delima', 'bagong test', 'hehehe', '2022-11-20 18:17:38', 'Blank diagram.png'),
-(30, 'Mon Carlo Delima', 'asdasdas', 'asdasd', '2022-11-20 18:18:34', 'Software-Development-Cycle.jpg'),
-(28, 'Kyle Andrei Casingal', 'test', 'test', '2022-11-17 16:53:28', '313097255_1100729344140534_3602640388851360481_n.jpg'),
-(27, 'Mon Carlo Delima', 'qr', 'qr', '2022-11-17 12:17:48', 'qrcode.png'),
-(26, 'Mon Carlo Delima', 'tite ito', 'hahaha', '2022-11-16 18:18:07', '314637692_5392043370921096_8348706659662332474_n.jpg'),
-(25, 'Mon Carlo Delima', 'sdlc', 'sdlc bilog', '2022-11-15 23:27:58', 'Software-Development-Cycle.jpg'),
-(24, 'Mon Carlo Delima', 'Bong GO', '3123123', '2022-11-15 21:13:41', '241522086_206365484811292_6123461207224243682_n.jpg'),
-(23, 'Mon Carlo Delima', 'test', 'maganda si Krish sa pic na ito (sabi nya)', '2022-11-15 21:10:15', '241687233_241452884562043_2743427910860384322_n.jpg'),
-(31, 'Mon Carlo Delima', '123', '123', '2022-11-20 18:20:04', 'DELIMA_2x2.png'),
-(32, 'Mon Carlo Delima', 'asd', 'asd', '2022-11-20 18:20:25', 'URS Giants.png'),
-(33, 'Mon Carlo Delima', 'urs numba wan', 'hehehe', '2022-11-20 19:43:03', 'URS Logo.png'),
-(34, 'Mon Carlo Delima', 'pusang may sore eyes', 'hahaha', '2022-11-21 15:15:06', 'dutch_angle.png'),
-(35, 'Mon Carlo Delima', 'Country Road', 'Take me home', '2022-11-21 15:51:55', 'silhouette_final.png'),
-(36, 'Mon Carlo Delima', 'Hello there', 'I have the high ground', '2022-11-21 15:52:51', '05b.jpg'),
-(37, 'Kyle Andrei Casingal', 'aasdasd', 'asdasd', '2022-11-21 15:53:25', 'lockscreen.png');
+INSERT INTO `post` (`post_id`, `user_id`, `full_name`, `title`, `content`, `published_at`, `content_image`) VALUES
+(29, 28, 'Mon Carlo Delima', 'bagong test', 'hehehe', '2022-11-20 18:17:38', 'Blank diagram.png'),
+(30, 28, 'Mon Carlo Delima', 'asdasdas', 'asdasd', '2022-11-20 18:18:34', 'Software-Development-Cycle.jpg'),
+(28, 23, 'Kyle Andrei Casingal', 'test', 'test', '2022-11-17 16:53:28', '313097255_1100729344140534_3602640388851360481_n.jpg'),
+(27, 28, 'Mon Carlo Delima', 'qr', 'qr', '2022-11-17 12:17:48', 'qrcode.png'),
+(26, 28, 'Mon Carlo Delima', 'tite ito', 'hahaha', '2022-11-16 18:18:07', '314637692_5392043370921096_8348706659662332474_n.jpg'),
+(25, 28, 'Mon Carlo Delima', 'sdlc', 'sdlc bilog', '2022-11-15 23:27:58', 'Software-Development-Cycle.jpg'),
+(24, 28, 'Mon Carlo Delima', 'Bong GO', '3123123', '2022-11-15 21:13:41', '241522086_206365484811292_6123461207224243682_n.jpg'),
+(23, 28, 'Mon Carlo Delima', 'test', 'maganda si Krish sa pic na ito (sabi nya)', '2022-11-15 21:10:15', '241687233_241452884562043_2743427910860384322_n.jpg'),
+(31, 28, 'Mon Carlo Delima', '123', '123', '2022-11-20 18:20:04', 'DELIMA_2x2.png'),
+(32, 28, 'Mon Carlo Delima', 'asd', 'asd', '2022-11-20 18:20:25', 'URS Giants.png'),
+(33, 28, 'Mon Carlo Delima', 'urs numba wan', 'hehehe', '2022-11-20 19:43:03', 'URS Logo.png'),
+(34, 28, 'Mon Carlo Delima', 'pusang may sore eyes', 'hahaha', '2022-11-21 15:15:06', 'dutch_angle.png'),
+(35, 28, 'Mon Carlo Delima', 'Country Road', 'Take me home', '2022-11-21 15:51:55', 'silhouette_final.png'),
+(36, 28, 'Mon Carlo Delima', 'Hello there', 'I have the high ground', '2022-11-21 15:52:51', '05b.jpg'),
+(37, 23, 'Kyle Andrei Casingal', 'aasdasd', 'asdasd', '2022-11-21 15:53:25', 'lockscreen.png'),
+(38, 28, 'Mon Carlo Delima', 'asd', 'asd', '2022-11-21 22:29:50', 'sEt5ph.jpg');
 
 -- --------------------------------------------------------
 
@@ -102,7 +104,7 @@ INSERT INTO `post` (`post_id`, `full_name`, `title`, `content`, `published_at`, 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(20) NOT NULL AUTO_INCREMENT,
-  `username` varchar(30) NOT NULL,
+  `full_name` varchar(50) NOT NULL,
   `user_type` varchar(15) NOT NULL,
   `password` varchar(30) NOT NULL,
   `email_address` varchar(40) NOT NULL,
@@ -110,14 +112,14 @@ CREATE TABLE IF NOT EXISTS `user` (
   `verification_code` varchar(6) NOT NULL,
   `email_verified_at` datetime DEFAULT NULL,
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY `username` (`username`)
+  UNIQUE KEY `username` (`full_name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `username`, `user_type`, `password`, `email_address`, `account_status`, `verification_code`, `email_verified_at`) VALUES
+INSERT INTO `user` (`user_id`, `full_name`, `user_type`, `password`, `email_address`, `account_status`, `verification_code`, `email_verified_at`) VALUES
 (23, 'Kyle Andrei Casingal', 'Homeowner', 'password', 'kylecasingal36@gmail.com', 'Active', '943962', '2022-11-10 22:50:54'),
 (6, 'Nene Yashiro', 'Homeowner', '123', 'bogart@gmail.com', 'Active', '943962', NULL),
 (24, 'Jeune Paolus Flores', 'Homeowner', 'thisfeelsgud', 'floresjeunepaolus@gmail.com', 'Active', '943962', '2022-11-10 22:51:58'),
