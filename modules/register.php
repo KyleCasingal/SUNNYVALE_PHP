@@ -32,7 +32,7 @@
   }
 
   .registerTitle {
-    margin-top: 4vw;
+    margin-top: 4.5vw;
     font-size: 3vw;
   }
 
