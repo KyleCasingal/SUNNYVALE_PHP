@@ -1,5 +1,8 @@
 <?php
 include "./process.php";
+if (isset($_SESSION['user_id'])) {
+  header("Location: ./modules/blogHome.php");
+}
 ?>
 <style>
   .topLanding {

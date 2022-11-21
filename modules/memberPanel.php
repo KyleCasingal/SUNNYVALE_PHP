@@ -1,7 +1,7 @@
 <?php
 require '../marginals/topbar.php';
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($mysqli));
-$result = $con->query("SELECT * FROM homeowner_profile WHERE email_address = '" . $email_address = $_SESSION['email_address'] . "'") or die($mysqli->error);
+$result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
 ?>
 
@@ -191,7 +191,7 @@ $row = $result->fetch_assoc();
               </tr>
               <tr>
                 <td class="lbl">Date of Birth:</td>
-                <td class="data">January 1, 2001</td>
+                <td class="data"><?php echo $row['birthdate'] ?></td>
               </tr>
               <tr>
                 <td class="lbl">Gender:</td>

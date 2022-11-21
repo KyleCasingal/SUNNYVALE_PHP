@@ -1,7 +1,7 @@
 <?php
 include "../process.php";
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($mysqli));
-$res = $con->query("SELECT * FROM homeowner_profile WHERE email_address = '" . $email_address = $_SESSION['email_address'] . "'") or die($mysqli->error);
+$result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 if (empty($_SESSION)) {
   header("Location: ../index.php");
 }
@@ -224,7 +224,7 @@ if (empty($_SESSION)) {
       <div class="topRight">
         <div class='menu-trigger'>
           <img class="topImg1" <?php
-                                $row = $res->fetch_assoc();
+                                $row = $result->fetch_assoc();
                                 $imageURL = '../media/displayPhotos/' . $row['display_picture'];
                                 ?> src="<?= $imageURL ?>" alt="" onclick="location.href='../modules/memberPanel.php'" />
         </div>

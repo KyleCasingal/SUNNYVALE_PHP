@@ -51,12 +51,15 @@ if (isset($_POST['register'])) {
     $password = $_POST['password'];
     $email_address = $_POST['email_address'];
     $confirm_password = $_POST['confirm_password'];
+    $sql = "SELECT * FROM homeowner_profile WHERE first_name = '$first_name' AND last_name = '$last_name' AND email_address = '$email_address' ";
+    $result = mysqli_query($con, $sql);
 
-    if ($password !== $confirm_password) {
+    if (strlen($first_name and $last_name and $email_address and $password and $confirm_password) == 0) {
+        $_SESSION['register'] = "";
+    } else if ($password !== $confirm_password) {
         $_SESSION['password'] = "";
-    } else if (strlen($first_name and $last_name and $email_address and $password and $confirm_password) !== 0) {
+    } else if (mysqli_num_rows($result) == 1) {
         $mail = new PHPMailer(true);
-
         try {
             $mail->SMTPDebug = 2;
             $mail->isSMTP();
@@ -81,7 +84,7 @@ if (isset($_POST['register'])) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
     } else {
-        $_SESSION['register'] = "";
+        echo "The information that you have provided is not found in the homeowners' list. Please try again.";
     }
 }
 
@@ -148,13 +151,10 @@ if (isset($_POST['login'])) {
     if (strlen($email_address and $password) == 0) {
         echo "All fields required!";
     } else if (mysqli_num_rows($result) == 1) {
-        $sql = "SELECT * FROM user where email_address = '$email_address' ";
-        $result = mysqli_query($con, $sql);
+        $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
+        $result = $con->query($sql = "SELECT * FROM user WHERE email_address = '$email_address'");
         $row = $result->fetch_assoc();
-        $username = $row['username'];
-        $email_address = $row['email_address'];
-        $_SESSION['username'] = $username;
-        $_SESSION['email_address'] = $email_address;
+        $_SESSION['user_id'] = $row['user_id'];
         header("Location: ../modules/blogHome.php");
     } else {
         echo "Wrong email or password!";
@@ -169,14 +169,16 @@ if (isset($_POST['logout'])) {
 $targetDir = '../media/postsPhotos/';
 
 if (isset($_POST['submitPost'])) {
-    $username = $_SESSION['username'];
     $title = $_POST['title'];
     $content = $_POST['content'];
     $fileName = '' . $_FILES['image']['name'];
     $targetFilePath = $targetDir . $fileName;
-
+    $result = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
+    $row = $result->fetch_assoc();
+    $user_id = $row['user_id'];
+    $full_name = $row['full_name'];
     if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
-        $sql = "INSERT INTO `post`(`full_name`, `title`, `content`, `published_at`, `content_image`) VALUES ('$username', '$title', '$content', now(), '$fileName')";
+        $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, content_image) VALUES ('$user_id','$full_name', '$title', '$content', now(), '$fileName')";
         mysqli_query($con, $sql);
         header("Location: ../modules/blogHome.php");
     }

@@ -70,8 +70,3 @@
 </body>
 
 </html>
-<?php
-if (isset($_SESSION['username'])) {
-    header("Location: ./modules/blogHome.php");
-}
-?>
