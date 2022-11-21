@@ -1,7 +1,7 @@
 <?php
-$con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($mysqli));
-$result = $con->query("SELECT * FROM post, user WHERE full_name = username ORDER BY post_id DESC") or die($mysqli->error);
 require '../marginals/topbar.php';
+$con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($mysqli));
+$result = $con->query("SELECT * FROM post, user, homeowner_profile WHERE full_name = username AND username = CONCAT(first_name, ' ', last_name) ORDER BY post_id DESC") or die($mysqli->error);
 ?>
 
 <!DOCTYPE html>
@@ -121,22 +121,22 @@ require '../marginals/topbar.php';
 
   .postImg {
     align-self: center;
-  justify-self: center;
-  max-width: 40vw;
-  max-height: 40vw;
+    justify-self: center;
+    max-width: 40vw;
+    max-height: 40vw;
   }
 
   .blogTitle {
     font-weight: bold;
-  font-family: "Poppins", sans-serif;
-  margin-top: 1vw;
-  font-size: 1.5vw;
+    font-family: "Poppins", sans-serif;
+    margin-top: 1vw;
+    font-size: 1.5vw;
   }
 
   .blogBody {
     text-indent: 5vw;
-  margin-top: 1vw;
-  text-align: justify;
+    margin-top: 1vw;
+    text-align: justify;
   }
 
   .sideContent {
