@@ -33,7 +33,7 @@
   .memberSideBar {
     display: inline;
     justify-content: flex-end;
-    margin-top: 5px;
+    margin-top: 0.5vw;
     margin-bottom: 0;
     padding: 0;
     list-style: none;
