@@ -49,11 +49,6 @@
         background-color: rgb(236, 235, 226);
     }
 
-    .memberPanel {
-        flex: 8;
-        width: 100%;
-        overflow-x: hidden;
-    }
 
     thead {
         top: 0;
@@ -109,6 +104,7 @@
     }
 
     .inboxContainer {
+        margin: 2vw;
         padding: 2vw;
         padding-left: 0;
         padding-right: 0;
@@ -161,17 +157,19 @@
         font-size: 1.2vw;
     }
 
-    .inbox {
+    .inboxPanel {
+        flex: 8;
         width: 100%;
         display: block;
-        flex: 8;
+        
     }
 
     .inboxTitle {
+        margin-top: 1vw;
+        margin-left: 2vw;
         font-size: 2vw;
         font-family: "Poppins", sans-serif;
         padding: 0;
-        margin-bottom: 1vw;
         color: rgb(89, 89, 89);
         font-weight: 800;
     }
@@ -180,8 +178,11 @@
 <body>
     <?php require '../marginals/topbar.php'; ?>
     <div class="member">
-        <?php require '../marginals/sidebarMemberPanel.php'; ?>
-        <div class="inbox" id="inbox">
+        <div class="sideBar">
+            <?php require '../marginals/sidebarMemberPanel.php'; ?>
+    </div>
+        
+        <div class="inboxPanel" id="inbox">
             <label class="inboxTitle">Messages</label>
             <div class="inboxContainer">
                 <table class="tblMessage">
