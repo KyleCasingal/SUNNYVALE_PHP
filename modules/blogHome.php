@@ -93,6 +93,7 @@ require '../marginals/topbar.php';
   }
 
   .profileText {
+    color: var(--text);
     display: flex;
     align-items: center;
     width: 100%;
