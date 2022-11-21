@@ -14,7 +14,7 @@
         color: black;
     }
 
-    .treasurerSideBar {
+    .memberSideBar {
 
         display: inline;
         justify-content: flex-end;
@@ -24,7 +24,7 @@
         list-style: none;
     }
 
-    .treasurerSideBar li {
+    .memberSideBar li {
         color: black;
         font-family: 'Poppins', sans-serif;
         text-align: center;
@@ -34,7 +34,7 @@
         border-bottom: 1px solid lightgray;
     }
 
-    .treasurerSideBar li:hover {
+    .memberSideBar li:hover {
         background-color: rgb(236, 235, 226);
     }
 </Style>
@@ -42,10 +42,9 @@
 <body>
     <div class="sideBar">
         <form method="post">
-            <ul class="treasurerSideBar">
-                <li id="dues" onclick="location.href='../modules/treasurerPanel.php'">Monthly Dues</li>
-                <li id="facility" onclick="location.href='../modules/treasurerPanelFacility.php'">
-                    Facility Renting</li>
+            <ul class="memberSideBar">
+                <li id="dues" onclick="location.href='../modules/memberPanel.php'">Profile</li>
+                <li id="facility" onclick="location.href='../modules/inboxPanel.php'">Inbox</li>
             </ul>
         </form>
     </div>
