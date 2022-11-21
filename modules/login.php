@@ -110,7 +110,7 @@
   <div class="loginPage">
     <span class="loginTitle">Login</span>
     <form class="loginForm" method="post">
-      <label>Username</label>
+      <label>Email</label>
       <input type="text" name="email_address" id="email_address" class="loginInput" placeholder="Enter your email..." value="" />
       <label>Password</label>
       <input type="password" name="password" id="password" class="loginInput" placeholder="Enter your password..." value="" />

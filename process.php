@@ -155,7 +155,7 @@ if (isset($_POST['login'])) {
         $_SESSION['username'] = $username;
         header("Location: ../modules/blogHome.php");
     } else {
-        echo "Wrong email address or password!";
+        echo "Wrong email or password!";
     }
     $con->close();
 }
