@@ -14,7 +14,10 @@
   * {
     margin: 0;
   }
-
+  .topbar{
+    top: 0;
+    position: sticky;
+  }
   .register {
     height: calc(100vh - 50px);
     display: flex;
@@ -48,7 +51,7 @@
   }
 
   .registerForm>label {
-    margin: 10px 0;
+    margin: 1VW 0;
   }
 
   .registerForm label {
@@ -56,10 +59,10 @@
   }
 
   .registerInput {
-    padding: 10px;
+    padding: 1vw;
     background-color: white;
     border: none;
-    font-size: 15px;
+    font-size: 1vw;
   }
 
   .registerButton {
@@ -96,8 +99,9 @@
 </style>
 
 <body>
-
+  <div class="topbar">
   <?php require "../marginals/topbarRegister.php"; ?>
+  </div>
   <div class="register">
     <span class="registerTitle">Register your Account</span>
     <form class="registerForm" method="post">
