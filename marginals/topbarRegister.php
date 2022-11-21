@@ -53,15 +53,16 @@ if (isset($_SESSION['username'])) {
         color: white;
         flex: 1;
         display: flex;
+        padding-right: 2vw;
         flex-direction: column;
         align-items: flex-end;
         justify-content: flex-end;
-        padding-right: 30px;
 
     }
 
     .topRightRegister p {
-        font-size: 0.9vw;
+        font-size: 1vw;
+        margin: 0;
     }
 
 
@@ -74,15 +75,15 @@ if (isset($_SESSION['username'])) {
     .topIconRegister {
         color: white;
         font-size: 2.5vw;
-        margin-right: 10px;
+        margin-right: 1vw;
         font-family: "Poppins", sans-serif;
         font-style: normal;
         cursor: pointer;
     }
 
     .topImgRegister {
-        width: 40px;
-        height: 40px;
+        width: 4vw;
+        height: 4vw;
         border-radius: 50%;
         object-fit: cover;
         cursor: pointer;
@@ -98,8 +99,8 @@ if (isset($_SESSION['username'])) {
     }
 
     .topListItem {
-        margin-right: 20px;
-        font-size: 20px;
+        margin-right: 2vw;
+        font-size: 2vw;
         font-weight: 300;
         cursor: pointer;
     }
@@ -110,10 +111,10 @@ if (isset($_SESSION['username'])) {
     }
 
     .topSearchIcon {
-        font-size: 18px;
+        font-size: 1.8vw;
         color: rgb(89, 89, 89);
         cursor: pointer;
-        margin-left: 15px;
+        margin-left: 1.5vw;
     }
 
     .dropdown-menu {
@@ -204,12 +205,12 @@ if (isset($_SESSION['username'])) {
     }
 
     .loginButtonReg {
+        margin-top: 0;
         font-size: 0.9vw;
         cursor: pointer;
         background-color: darkseagreen;
         border: none;
         color: white;
-        border-radius: 10px;
         border-radius: 0.6vw;
         padding: 0.8em;
     }
