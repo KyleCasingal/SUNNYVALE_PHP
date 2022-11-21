@@ -266,6 +266,7 @@ require '../marginals/topbar.php';
     --text: lightgray;
   }
 </style>
+
 <body>
 
   <div class='blogHome'>
@@ -341,5 +342,5 @@ require '../marginals/footer2.php'
 
 </html>
 <script>
-  
+
 </script>

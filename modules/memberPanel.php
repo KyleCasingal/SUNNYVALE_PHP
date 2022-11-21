@@ -1,6 +1,12 @@
+<?php
+require '../marginals/topbar.php';
+$con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($mysqli));
+$result = $con->query("SELECT * FROM homeowner_profile WHERE email_address = '" . $email_address = $_SESSION['email_address'] . "'") or die($mysqli->error);
+$row = $result->fetch_assoc();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-<?php require '../marginals/topbar.php'; ?>
 
 <head>
   <meta charset="UTF-8">
@@ -10,9 +16,7 @@
   <link rel="stylesheet" href="../footer/footer.css" media="screen">
   <meta name="theme-color" content="#000000" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
   <title>SUNNYVALE</title>
 </head>
 <style>
@@ -164,18 +168,17 @@
 </style>
 
 <body>
-
   <div class="member">
     <div class="sideBar">
-
       <?php require '../marginals/sidebarMemberPanel.php'; ?>
     </div>
     <div class="memberPanel">
       <div class="profileMem" id="profile">
         <label class="lblProfile">Member Profile</label>
         <div class="profileForm">
-          <img class="profileImg" src="https://i.pinimg.com/736x/6a/6c/ca/6a6cca8ac5994554019c257af2b17b6a.jpg"
-            alt="" />
+          <img class="profileImg" <?php
+                                  $imageURL = '../media/displayPhotos/' . $row['display_picture'];
+                                  ?> src="<?= $imageURL ?>" alt="" />
           <table class="table tblProfile">
             <tbody>
               <tr>
@@ -267,7 +270,7 @@
   </div>
   <?php
   require '../marginals/footer2.php'
-    ?>
+  ?>
 </body>
 
 </html>

@@ -227,7 +227,7 @@ if (empty($_SESSION)) {
           <img class="topImg1" <?php
                                 $row = $res->fetch_assoc();
                                 $imageURL = '../media/displayPhotos/' . $row['display_picture'];
-                                ?> src="<?= $imageURL ?>" alt="" />
+                                ?> src="<?= $imageURL ?>" alt="" onclick="location.href='../modules/memberPanel.php'" />
         </div>
       </div>
     </form>

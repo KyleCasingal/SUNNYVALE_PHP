@@ -148,11 +148,13 @@ if (isset($_POST['login'])) {
     if (strlen($email_address and $password) == 0) {
         echo "All fields required!";
     } else if (mysqli_num_rows($result) == 1) {
-        $sql = "SELECT username FROM user where email_address = '$email_address' ";
+        $sql = "SELECT * FROM user where email_address = '$email_address' ";
         $result = mysqli_query($con, $sql);
         $row = $result->fetch_assoc();
         $username = $row['username'];
+        $email_address = $row['email_address'];
         $_SESSION['username'] = $username;
+        $_SESSION['email_address'] = $email_address;
         header("Location: ../modules/blogHome.php");
     } else {
         echo "Wrong email or password!";
