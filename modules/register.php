@@ -51,14 +51,16 @@
   }
 
   .registerForm>label {
-    margin: 1VW 0;
+    margin: 0;
   }
 
   .registerForm label {
+    margin-top: 0;
     font-size: 1vw;
   }
 
   .registerInput {
+    margin-bottom: 1vw;
     padding: 1vw;
     background-color: white;
     border: none;
@@ -85,7 +87,7 @@
     border-radius: 0.5vw;
     height: 1vw;
   }
-
+ 
   .guestButtonRegister {
     margin-top: 1vw;
     cursor: pointer;
