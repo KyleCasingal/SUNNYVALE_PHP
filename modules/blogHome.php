@@ -40,12 +40,13 @@ require '../marginals/topbar.php';
   }
 
   .blogHead {
-    font-size: 30px;
+    color: var(--text);
+    font-size: 2vw;
     display: flex;
     width: 55%;
     margin-left: 5%;
-    margin-top: 20px;
-    padding-right: 10px;
+    margin-top: 2vw;
+    padding-right: 1vw;
     font-family: "Poppins", sans-serif;
   }
 
@@ -119,21 +120,23 @@ require '../marginals/topbar.php';
   }
 
   .postImg {
-    max-width: 90%;
-    max-height: 40vw;
+    align-self: center;
+  justify-self: center;
+  max-width: 55vw;
+  max-height: 40vw;
   }
 
   .blogTitle {
     font-weight: bold;
-    font-family: "Poppins", sans-serif;
-    margin-top: 10px;
-    font-size: 20px;
+  font-family: "Poppins", sans-serif;
+  margin-top: 1vw;
+  font-size: 1.5vw;
   }
 
   .blogBody {
-    text-indent: 50px;
-    margin-top: 10px;
-    text-align: justify;
+    text-indent: 5vw;
+  margin-top: 1vw;
+  text-align: justify;
   }
 
   .sideContent {
@@ -149,8 +152,8 @@ require '../marginals/topbar.php';
   }
 
   .sideText {
-    font-size: 30px;
-    margin-top: 80px;
+    font-size: 2vw;
+    margin-top: 5vw;
     padding-right: 10px;
     font-family: "Poppins", sans-serif;
     color: var(--text);
@@ -158,10 +161,9 @@ require '../marginals/topbar.php';
 
   .categoriesText {
     color: var(--text);
-    margin-top: 20px;
-    margin-bottom: 50px;
-    padding: 10px;
-    border-radius: 10px;
+    margin-top: 2vw;
+    padding: 0.5vw;
+    border-radius: 1vw;
     background-color: rgba(234, 232, 199, 0.2);
     font-family: "Poppins", sans-serif;
   }
@@ -169,15 +171,16 @@ require '../marginals/topbar.php';
   .categoryList1 {
     display: inline;
     justify-content: flex-end;
-    margin-top: 5px;
     margin-bottom: 0;
     padding: 0;
     list-style: none;
   }
 
   .categoryListItem1 {
-    margin-top: 10px;
-    margin-left: 10px;
+    font-size: 1.5vw;
+    font-weight: normal;
+    margin-top: 0.5vw;
+    margin-left: 0.5vw;
     cursor: pointer;
   }
 
@@ -265,6 +268,11 @@ require '../marginals/topbar.php';
   .dark {
     --text: lightgray;
   }
+
+  .postContent {
+    display: flex;
+    flex-direction: column;
+  }
 </style>
 
 <body>
@@ -294,14 +302,16 @@ require '../marginals/topbar.php';
             </p>
           </div>
         </div>
-        <img class="postImg" <?php
-                              $imageURL = '../media/postsPhotos/' . $row['content_image'];
-                              ?> src="<?= $imageURL ?>" alt="">
-        </img>
-        <p class="blogTitle"><?php echo $row['title']; ?></p>
-        <p class="blogBody">
-          <?php echo $row['content']; ?>
-        </p>
+        <div class="postContent">
+          <img class="postImg" <?php
+                                $imageURL = '../media/postsPhotos/' . $row['content_image'];
+                                ?> src="<?= $imageURL ?>" alt="">
+          </img>
+          <p class="blogTitle"><?php echo $row['title']; ?></p>
+          <p class="blogBody">
+            <?php echo $row['content']; ?>
+          </p>
+        </div>
       </div>
       <div class="sideContent">
         <div class="sideText">

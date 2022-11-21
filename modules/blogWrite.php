@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#000000" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <title>SUNNYVALE</title>
 </head>
@@ -44,7 +44,7 @@
     height: 4vw;
     overflow-x: auto;
     resize: vertical;
-    font-family: "Newsreader", sans-serif;
+    font-family: "Poppins", sans-serif;
   }
 
   .upload {
@@ -53,9 +53,9 @@
     border: 0;
     padding: 0.5vw;
     max-width: 50vw;
-    width: 15vw;
+    width: 10vw;
     font-family: "Poppins", sans-serif;
-    font-size: 1.5vw;
+    font-size: 1vw;
     color: white;
     border-radius: 0.8vw;
     cursor: pointer;
@@ -76,7 +76,7 @@
     border-radius: 1vw;
     flex-direction: column;
     background-color: rgba(234, 232, 199, 0.2);
-    font-family: "Newsreader", sans-serif;
+    font-family: "Poppins", sans-serif;
   }
 
   .blogWritePage {
@@ -93,9 +93,9 @@
     border: 0;
     padding: 0.5vw;
     max-width: 50vw;
-    width: 6vw;
-    font-family: "Poppins", sans-sans-serif;
-    font-size: 1.5vw;
+    width: 5vw;
+    font-family: "Poppins", sans-serif;
+    font-size: 1vw;
     margin-top: 2vw;
     color: white;
     border-radius: 0.8vw;
@@ -108,7 +108,7 @@
 
   .imagePrev {
     margin-top: 0;
-    max-width: 60vw;
+    max-width: 40vw;
     max-height: 20vw;
     margin-bottom: 2vw;
   }

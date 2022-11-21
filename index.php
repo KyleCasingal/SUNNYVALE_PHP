@@ -14,7 +14,10 @@
     * {
         margin: 0;
     }
-
+    .topbar{
+        top: 0;
+        position: sticky;
+    }
     .landingPage {
         max-width: 100%;
         margin-top: -6vw;
@@ -49,9 +52,11 @@
 </style>
 
 <body>
+    <div class="topbar">
     <?php
     require './marginals/topbarLanding.php';
     ?>
+    </div>
     <div class="landingPage">
         <img src="./img/landingBG.png" alt="" />
         <div class="landingTitle">

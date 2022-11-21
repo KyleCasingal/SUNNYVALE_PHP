@@ -47,7 +47,7 @@
   }
 
   .loginForm>label {
-    margin: 10px 0;
+    margin: 0 0;
   }
 
   .loginForm label {
@@ -80,6 +80,7 @@
   input {
     border-radius: 0.5vw;
     height: 1vw;
+    margin-bottom: 1vw;
   }
 
   .guestButtonLogin {
