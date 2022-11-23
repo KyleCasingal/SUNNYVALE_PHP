@@ -373,14 +373,14 @@ $row = $result->fetch_assoc();
                             <?php endwhile; ?>
                         </table>
                     </div>
-                    <div class="btnArea">
+                    <!-- <div class="btnArea">
                         <button name="activate" <?php if ($status_filter == "Activated") { ?> disabled <?php   } ?> type="submit" class="btnSubmitReg">
                             Activate
                         </button>
                         <button name="deactivate" <?php if ($status_filter == "Deactivated") { ?> disabled <?php   } ?> type="submit" class="btnClearReg">
                             Deactivate
                         </button>
-                    </div>
+                    </div> -->
             </form>
         </div>
     </div>
