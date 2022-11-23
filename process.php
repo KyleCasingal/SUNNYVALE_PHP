@@ -169,8 +169,8 @@ if (isset($_POST['logout'])) {
 $targetDir = '../media/postsPhotos/';
 
 if (isset($_POST['submitPost'])) {
-    $title = $_POST['title'];
-    $content = $_POST['content'];
+    $title =mysqli_real_escape_string($con, $_POST['title']);
+    $content =mysqli_real_escape_string($con,  $_POST['content']);
     $fileName = '' . $_FILES['image']['name'];
     $targetFilePath = $targetDir . $fileName;
     $result = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
