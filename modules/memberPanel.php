@@ -189,7 +189,11 @@ $row = $result->fetch_assoc();
               </tr>
               <tr>
                 <td class="lbl">Date of Birth:</td>
-                <td class="data"><?php echo $row['birthdate'] ?></td>
+                <td class="data"><?php
+                                  $datetime = strtotime($row['birthdate']);
+                                  echo $phptime = date("F/d/Y", $datetime);
+                                  ?>
+                </td>
               </tr>
               <tr>
                 <td class="lbl">Gender:</td>

@@ -344,9 +344,7 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     </div>
   </div>
 <?php endwhile; ?>
-<?php
-require '../marginals/footer2.php'
-?>
+<?php require '../marginals/footer2.php' ?>
 </body>
 
 </html>

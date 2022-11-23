@@ -4,7 +4,6 @@ $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($mys
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,9 +12,8 @@ $row = $result->fetch_assoc();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>SUNNYVALE</title>
 </head>
 <style>
@@ -292,16 +290,47 @@ $row = $result->fetch_assoc();
     .complaintManagement {
         margin: 2vw;
     }
-    .lblFilter{
+
+    .lblFilter {
         margin-top: 1vw;
         font-size: 1vw;
         font-family: 'Poppins', sans-serif;
         margin-left: 2vw;
     }
-    .selectFilter{
+
+    .selectFilter {
         background-color: rgb(241, 241, 241);
     }
+
+    .hidetext {
+        -webkit-text-security: disc;
+    }
 </style>
+<script>
+    $(function() {
+        $('#select-all').click(function(event) {
+
+            var selected = this.checked;
+            // Iterate each checkbox
+            $(':checkbox').each(function() {
+                this.checked = selected;
+            });
+
+        });
+    });
+    $(function() {
+        $('#status_filter').change(function() {
+            var opt = $(this).val();
+            if (opt == 'pending') {
+                $('.monthly-btn').hide();
+                $('.annual-btn').show();
+            } else {
+                $('.monthly-btn').show();
+                $('.annual-btn').hide();
+            }
+        });
+    });
+</script>
 
 <body>
     <div class="secretary">
@@ -309,87 +338,54 @@ $row = $result->fetch_assoc();
             <?php require '../marginals/sidebarSecretaryPanel.php'; ?>
         </div>
         <div class="secretaryPanel">
-        <label class="lblRegistration">Account Management</label>
-             <div class="userManagement">
-                <label class="lblFilter">Filter By: </label>
-                <select name="" id="" class="selectFilter">
-                    <option value="Pending">Pending</option>
-                    <option value="Activated">Activated</option>
-                    <option value="Deactivated">Deactivated</option>
-                </select>
-        <div class="tblContainer">
-                <table class="tblUser">
-                    <thead>
-                        <th>User ID</th>
-                        <th>Fullname</th>
-                        <th>Password</th>
-                        <th>Email</th>
-                        <th>Account Status</th>
-                    </thead>
-                    <tr>
-                        <td>1</td>
-                        <td>Mon Carlo Delima</td>
-                        <td>********</td>
-                        <td>sample@gmail.com</td>
-                        <td>activated</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Mon Carlo Delima</td>
-                        <td>********</td>
-                        <td>sample@gmail.com</td>
-                        <td>activated</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Mon Carlo Delima</td>
-                        <td>********</td>
-                        <td>sample@gmail.com</td>
-                        <td>activated</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Mon Carlo Delima</td>
-                        <td>********</td>
-                        <td>sample@gmail.com</td>
-                        <td>activated</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Mon Carlo Delima</td>
-                        <td>********</td>
-                        <td>sample@gmail.com</td>
-                        <td>activated</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Mon Carlo Delima</td>
-                        <td>********</td>
-                        <td>sample@gmail.com</td>
-                        <td>activated</td>
-                    </tr>
-                </table>
+            <form method="post">
+                <label class="lblRegistration">Account Management</label>
+                <div class="userManagement">
+                    <label class="lblFilter">Filter By: </label>
+                    <select name="status_filter" id="status_filter" class="selectFilter">
+                        <option value="Pending" <?php if ($status_filter == "Pending") echo 'selected="selected"'; ?>>Pending</option>
+                        <option value="Activated" <?php if ($status_filter == "Activated") echo 'selected="selected"'; ?>>Activated</option>
+                        <option value="Deactivated" <?php if ($status_filter == "Deactivated") echo 'selected="selected"'; ?>>Deactivated</option>
+                    </select>
+                    <button name="filterButton" type="submit" class="btnSubmitReg">
+                        Filter
+                    </button>
+                    <div class="tblContainer">
 
-            </div>
-            <div class="btnArea">
-                <button type="submit" class="btnSubmitReg">
-                    Activate
-                </button>
-
-
-                <button type="reset" value="reset" class="btnClearReg">
-                    Deactivate
-                </button>
-            </div>
-
+                        <table class="tblUser">
+                            <thead>
+                                <th><input type="checkbox" name="select-all" id="select-all" /></th>
+                                <th>User ID</th>
+                                <th>Fullname</th>
+                                <th>Password</th>
+                                <th>Email</th>
+                                <th>Account Status</th>
+                            </thead>
+                            <?php while ($row = $res->fetch_assoc()) : ?>
+                                <tr>
+                                    <td><input type="checkbox" value=<?php echo $row['user_id']; ?> name="checkbox[]" id="checkbox"></td>
+                                    <td><?php echo $row['user_id']; ?> </td>
+                                    <td><?php echo $row['full_name']; ?></td>
+                                    <td class="hidetext"><?php echo $row['password']; ?></td>
+                                    <td><?php echo $row['email_address']; ?></td>
+                                    <td><?php echo $row['account_status']; ?></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </table>
+                    </div>
+                    <div class="btnArea">
+                        <button name="activate" <?php if ($status_filter == "Activated") { ?> disabled <?php   } ?> type="submit" class="btnSubmitReg">
+                            Activate
+                        </button>
+                        <button name="deactivate" <?php if ($status_filter == "Deactivated") { ?> disabled <?php   } ?> type="submit" class="btnClearReg">
+                            Deactivate
+                        </button>
+                    </div>
+            </form>
         </div>
-        
     </div>
-        </div>
-       
-        <?php
-    require '../marginals/footer2.php'
-        ?>
+    </div>
+    <?php require '../marginals/footer2.php'; ?>
 </body>
 
 </html>

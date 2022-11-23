@@ -1,9 +1,6 @@
 <?php
 session_start();
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
-
-//PREVENT USER FROM ACCESSING LOGIN AND INDEX WHEN LOGGED IN
-
 //Redirect to register page when in index page
 if (isset($_POST['registerButtonLanding'])) {
     header("Location: ./modules/register.php");
@@ -141,11 +138,12 @@ if (isset($_POST["emailVerify"])) {
         }
     }
 }
+
 // LOGGING IN
 if (isset($_POST['login'])) {
     $email_address = $_POST['email_address'];
     $password = $_POST['password'];
-    $sql = "SELECT * FROM user WHERE email_address = '$email_address' AND password = '$password' AND account_status = 'Active' ";
+    $sql = "SELECT * FROM user WHERE email_address = '$email_address' AND password = '$password' AND account_status = 'Activated' ";
     $result = mysqli_query($con, $sql);
 
     if (strlen($email_address and $password) == 0) {
@@ -161,10 +159,12 @@ if (isset($_POST['login'])) {
     }
     $con->close();
 }
+
 // LOGGING OUT
 if (isset($_POST['logout'])) {
     session_destroy();
 }
+
 // UPLOADING A POST
 $targetDir = '../media/postsPhotos/';
 
@@ -181,5 +181,48 @@ if (isset($_POST['submitPost'])) {
         $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, content_image) VALUES ('$user_id','$full_name', '$title', '$content', now(), '$fileName')";
         mysqli_query($con, $sql);
         header("Location: ../modules/blogHome.php");
+    }
+}
+
+//ACCOUNT MANAGEMENT SORT, ACTIVATE, DEACTIVATE
+$res = $con->query("SELECT * FROM user WHERE account_status = 'Pending' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+$status_filter = $_POST['status_filter'] ?? '';
+if (isset($_POST['filterButton'])) {
+    if ($status_filter == 'Pending') {
+        $res = $con->query("SELECT * FROM user WHERE account_status = 'Pending' AND email_verified_at IS NOT NULL ORDER  by user_id ASC") or die($mysqli->error);
+    } elseif ($status_filter == 'Activated') {
+        $res = $con->query("SELECT * FROM user WHERE account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+    } elseif ($status_filter == 'Deactivated') {
+        $res = $con->query("SELECT * FROM user WHERE account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+    }
+}
+
+if (isset($_POST['activate'])) {
+    if (isset($_POST['checkbox'])) {
+        foreach ($_POST['checkbox'] as $user_id) {
+            $sql = "UPDATE user SET account_status = 'Activated' WHERE user_id = '$user_id'";
+            $result = mysqli_query($con, $sql);
+        }
+        if ($status_filter == 'Pending') {
+            $res = $con->query("SELECT * FROM user WHERE account_status = 'Pending' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+        } else if ($status_filter == 'Activated') {
+            $res = $con->query("SELECT * FROM user WHERE account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+        } else if ($status_filter == 'Deactivated') {
+            $res = $con->query("SELECT * FROM user WHERE account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+        }
+    }
+} else if (isset($_POST['deactivate'])) {
+    if (isset($_POST['checkbox'])) {
+        foreach ($_POST['checkbox'] as $user_id) {
+            $sql = "UPDATE user SET account_status = 'Deactivated' WHERE user_id = '$user_id'";
+            $result = mysqli_query($con, $sql);
+        }
+    }
+    if ($status_filter == 'Pending') {
+        $res = $con->query("SELECT * FROM user WHERE account_status = 'Pending' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+    } else if ($status_filter == 'Activated') {
+        $res = $con->query("SELECT * FROM user WHERE account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+    } else if ($status_filter == 'Deactivated') {
+        $res = $con->query("SELECT * FROM user WHERE account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
     }
 }
