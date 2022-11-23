@@ -71,11 +71,19 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     font-family: "Poppins", sans-serif;
   }
 
+  .avatarBlog {
+    width: 4vw;
+    height: 4vw;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+
   .blogProfile {
     width: 100%;
     display: flex;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
+    margin-bottom: 2vw;
+    padding-bottom: 1vw;
     border-style: solid;
     border-top: 0px;
     border-left: 0px;
@@ -83,39 +91,26 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     border-bottom: 1px solid rgb(210, 210, 210);
   }
 
-  .avatarBlog {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    cursor: pointer;
-    margin-right: 10px;
-  }
-
   .profileText {
-    color: var(--text);
     display: flex;
-    align-items: center;
+    flex-direction: row;
     width: 100%;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .profileName {
-    flex: 11;
-    font-size: 25px;
-    align-items: center;
-    justify-content: flex-start;
-  }
-
-  .profileName:hover {
-    color: rgb(89, 89, 89);
-    cursor: pointer;
+    color: var(--text);
+    margin-left: 1vw;
+    text-align: left;
+    font-size: 1.5vw;
   }
 
   .profileDate {
-    flex: 2;
-    font-size: 15px;
-    align-self: flex-end;
-    justify-content: flex-end;
+    color: var(--text);
+    margin: 0;
+    text-align: right;
+    font-size: 1vw;
   }
 
   .postImg {
@@ -133,13 +128,13 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
   }
 
   .blogBody {
+    font-size: clamp(1vw, 10px, 5px);
     text-indent: 5vw;
-    margin-top: 1vw;
+    margin-top: 0;
     text-align: justify;
   }
 
   .sideContent {
-    color: rgb(89, 89, 89);
     height: 100%;
     width: 30%;
     position: fixed;
@@ -147,10 +142,12 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     top: 0;
     right: 0;
     overflow-x: hidden;
-    margin-top: 20px;
+    margin-top: 2vw;
   }
 
-  .sideText {
+  .sideText label{
+
+    font-weight: normal;
     font-size: 2vw;
     margin-top: 5vw;
     padding-right: 10px;
@@ -167,7 +164,8 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     font-family: "Poppins", sans-serif;
   }
 
-  .categoryList1 {
+  .categoryList {
+    font-weight: normal;
     display: inline;
     justify-content: flex-end;
     margin-bottom: 0;
@@ -175,15 +173,15 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     list-style: none;
   }
 
-  .categoryListItem1 {
+  .categoryListItem {
     font-size: 1.5vw;
-    font-weight: normal;
+    font-weight: normal !important;
     margin-top: 0.5vw;
     margin-left: 0.5vw;
     cursor: pointer;
   }
 
-  .categoryListItem1:hover {
+  .categoryListItem:hover {
     color: rgb(89, 89, 89);
     cursor: pointer;
   }
@@ -313,18 +311,19 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
         </div>
       </div>
       <div class="sideContent">
-        <div class="sideText">
-          <p>Categories</p>
-          <div class="categoriesText">
-            <ul class="categoryList1">
-              <li class="categoryListItem1">LifeStyle</li>
-              <li class="categoryListItem1">Food</li>
-              <li class="categoryListItem1">Events</li>
-              <li class="categoryListItem1">Sports</li>
-            </ul>
+            <div class="sideText">
+              <label>Categories</label>
+            </div>
+              <div class="categoriesText">
+                <ul class="categoryList">
+                  <li class="categoryListItem">LifeStyle</li>
+                  <li class="categoryListItem">Food</li>
+                  <li class="categoryListItem">Events</li>
+                  <li class="categoryListItem">Sports</li>
+                </ul>
+              </div>
+            
           </div>
-        </div>
-      </div>
   </div>
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
