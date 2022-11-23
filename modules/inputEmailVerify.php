@@ -1,3 +1,6 @@
+<?php
+require "../marginals/topbarVerify.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -71,7 +74,6 @@
 </style>
 
 <body>
-  <?php require "../marginals/topbarVerify.php"; ?>
   <div class="verifyPage">
     <form class="verifyForm" method="post">
       <label>Email verification</label>
