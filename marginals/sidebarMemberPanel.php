@@ -15,7 +15,6 @@
     }
 
     .memberSideBar {
-
         display: inline;
         justify-content: flex-end;
         margin-top: 5px;
@@ -43,8 +42,8 @@
     <div class="sideBar">
         <form method="post">
             <ul class="memberSideBar">
-                <li id="dues" onclick="location.href='../modules/memberPanel.php'">Profile</li>
-                <li id="facility" onclick="location.href='../modules/inboxPanel.php'">Inbox</li>
+                <li id="profile" onclick="location.href='../modules/memberPanel.php'">Profile</li>
+                <li id="inbox" onclick="location.href='../modules/inboxPanel.php'">Inbox</li>
             </ul>
         </form>
     </div>

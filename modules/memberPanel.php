@@ -12,8 +12,6 @@ $row = $result->fetch_assoc();
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="../topbar/topbar.css" media="screen">
-  <link rel="stylesheet" href="../footer/footer.css" media="screen">
   <meta name="theme-color" content="#000000" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
