@@ -205,14 +205,17 @@ if (isset($_SESSION['user_id'])) {
     }
 
     .loginButtonReg {
-        margin-top: 0;
         font-size: 0.9vw;
         cursor: pointer;
         background-color: darkseagreen;
         border: none;
         color: white;
+        border-radius: 10px;
         border-radius: 0.6vw;
         padding: 0.8em;
+    }
+    .loginButtonReg:focus{
+        outline: none;
     }
 </style>
 
