@@ -151,11 +151,8 @@
           <option value="Badminton Court">Badminton Court</option>
           <option value="Multi-purpose Hall">Multi-purpose Hall</option>
         </select>
-
         <label>Amount</label>
         <input type="text" readOnly />
-
-
         <button class="btnSubmitPost" name="submitPost" id="submitPost">Submit Reservation</button>
       </div>
       <div class="paymentForm">

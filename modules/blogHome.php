@@ -145,7 +145,7 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     margin-top: 2vw;
   }
 
-  .sideText label{
+  .sideText label {
 
     font-weight: normal;
     font-size: 2vw;
@@ -311,19 +311,18 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
         </div>
       </div>
       <div class="sideContent">
-            <div class="sideText">
-              <label>Categories</label>
-            </div>
-              <div class="categoriesText">
-                <ul class="categoryList">
-                  <li class="categoryListItem">LifeStyle</li>
-                  <li class="categoryListItem">Food</li>
-                  <li class="categoryListItem">Events</li>
-                  <li class="categoryListItem">Sports</li>
-                </ul>
-              </div>
-            
-          </div>
+        <div class="sideText">
+          <label>Categories</label>
+        </div>
+        <div class="categoriesText">
+          <ul class="categoryList">
+            <li class="categoryListItem">LifeStyle</li>
+            <li class="categoryListItem">Food</li>
+            <li class="categoryListItem">Events</li>
+            <li class="categoryListItem">Sports</li>
+          </ul>
+        </div>
+      </div>
   </div>
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
