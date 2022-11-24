@@ -62,18 +62,18 @@ $row = $result->fetch_assoc();
     overflow-x: hidden;
   }
 
-  .profileImg {
+  .profileForm img {
     width: 10vw;
     height: 10vw;
     border-radius: 50%;
-    margin: 0;
+    object-fit: cover;
     border: 0.3vw solid rgb(107, 105, 105);
   }
 
   .profileForm {
     display: flex;
     background-color: rgba(234, 232, 199, 0.2);
-    width: 80%;
+    width: 90%;
     padding: 2vw;
     margin: 2vw;
     border-radius: 1vw;
@@ -82,7 +82,7 @@ $row = $result->fetch_assoc();
   .tblProfile {
     color: rgb(89, 89, 89);
     margin: 0;
-    margin-left: 1vw;
+    margin-left: 2vw;
     font-family: "Poppins", sans-serif;
   }
 
@@ -175,9 +175,12 @@ $row = $result->fetch_assoc();
       <div class="profileMem" id="profile">
         <label class="lblProfile">Member Profile</label>
         <div class="profileForm">
-          <img class="profileImg" <?php
-                                  $imageURL = '../media/displayPhotos/' . $row['display_picture'];
-                                  ?> src="<?= $imageURL ?>" alt="" />
+          <div class="profileImg">
+            <img <?php
+                  $imageURL = '../media/displayPhotos/' . $row['display_picture'];
+                  ?> src="<?= $imageURL ?>" alt="" />
+          </div>
+
           <table class="table tblProfile">
             <tbody>
               <tr>
