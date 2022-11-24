@@ -146,9 +146,7 @@ if (isset($_POST['login'])) {
     $sql = "SELECT * FROM user WHERE email_address = '$email_address' AND password = '$password' AND account_status = 'Activated' ";
     $result = mysqli_query($con, $sql);
 
-    if (strlen($email_address and $password) == 0) {
-        echo "All fields required!";
-    } else if (mysqli_num_rows($result) == 1) {
+    if (mysqli_num_rows($result) == 1) {
         $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
         $result = $con->query($sql = "SELECT * FROM user WHERE email_address = '$email_address'");
         $row = $result->fetch_assoc();
@@ -167,7 +165,6 @@ if (isset($_POST['logout'])) {
 
 // UPLOADING A POST
 $targetDir = '../media/postsPhotos/';
-
 if (isset($_POST['submitPost'])) {
     $title = mysqli_real_escape_string($con, $_POST['title']);
     $content = mysqli_real_escape_string($con,  $_POST['content']);
@@ -187,17 +184,22 @@ if (isset($_POST['submitPost'])) {
 // REGISTRATION OF HOMEOWNERS
 if (isset($_POST['homeowner_submit'])) {
     $first_name = $_POST['first_name'];
-    $middle_name = $_POST['last_name'] ?? '';
+    $middle_name = $_POST['middle_name'];
     $last_name = $_POST['last_name'];
-    $residence_address = $_POST['residence_address'];
-    $bussiness_address = $_POST['business_address'] ?? '';
+    $suffix = $_POST['suffix'];
+    $street = $_POST['street'];
+    $subdivision = $_POST['subdivision'];
+    $barangay = $_POST['barangay'];
+    $residence_address = $street . " " . $subdivision . " " . $barangay;
+    $bussiness_address = $_POST['business_address'];
     $mobile_number = $_POST['mobile_number'];
-    $occupation = $_POST['occupation'] ?? '';
-    $employer = $_POST['employer'] ?? '';
-    $birthdate = $_POST['birthdate'];
+    $occupation = $_POST['occupation'];
+    $employer = $_POST['employer'];
+    $birthdate = strtotime($_POST['birthdate']);
+    $birthdate = date('Y-m-d', $birthdate);
     $sex = $_POST['sex'];
     $email_address = $_POST['email_address'];
-    // if(){
 
-    // }
+    $sql = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, residence_address, business_address, occupation, email_address, birthdate, mobile_number, employer, display_picture) VALUES ('$last_name','$first_name','$middle_name','$suffix','$sex','$residence_address','$bussiness_address','$occupation','$email_address','$birthdate','$mobile_number','$employer','default.png')";
+    $result = mysqli_query($con, $sql);
 }

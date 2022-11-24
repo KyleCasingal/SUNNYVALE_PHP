@@ -292,225 +292,235 @@ $row = $result->fetch_assoc();
     .complaintManagement {
         margin: 2vw;
     }
-    .lblNA{
+
+    .lblNA {
         margin: 0;
         color: gray;
         font-size: 0.8vw;
         text-align: center;
         font-style: italic;
     }
-    .NA{
+
+    .NA {
         vertical-align: bottom !important;
         text-align: center;
         padding-bottom: 0 !important;
     }
-    .NAemployer{
+
+    .NAemployer {
         margin: 0;
         padding-top: 2vw;
     }
 </style>
 
 <body>
-    <div class="secretary">
-        <div class="sideBar">
-            <?php require '../marginals/sidebarSecretaryPanel.php'; ?>
-        </div>
-        <div class="secretaryPanel">
-            <div class="homeownerRegistration">
-                <label class="lblRegistration">Registration</label>
-                <div class="regForm">
-                    <table class="tblForm">
-                        <tr>
-                            <td>First Name:</td>
-                            <td>
-                                <input type="text" name="" id="" placeholder="first name" />
-                            </td>
-                            <td>Date of Birth:</td>
-                            <td>
-                                <input type="date" name="" id="" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Middle Name:</td>
-                            <td>
-                                <input type="text" name="" id="" placeholder="middle name" />
-                            </td>
-                            <td>Sex</td>
-                            <td>
-                                <select name="" id="">
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Last Name:</td>
-                            <td>
-                                <input type="text" name="" id="" placeholder="last name" />
-                            </td>
-                            <td>Email:</td>
-                            <td>
-                                <input type="text" name="" id="" placeholder="email" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Residence Address:</td>
-                            <td>
-                                <input type="text" name="" id="" placeholder="Lot and Block" />
-                            </td>
-                            <td>
-                                <select name="" id="">
-                                    <option value="Sunnyvale 1">Sunnyvale 1</option>
-                                    <option value="Sunnyvale 2">Sunnyvale 2</option>
-                                    <option value="Sunnyvale 3">Sunnyvale 3</option>
-                                    <option value="Sunnyvale 4">Sunnyvale 4</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select name="" id="">
-                                    <option value="Palangoy">Palangoy</option>
-                                    <option value="Pantok">Pantok</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Business Address:</td>
-                            <td class="NA">
-                                <input type="text" name="" id="" placeholder="input business address" />
-                                <p class="lblNA">*write N/A if not applicable*</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Mobile Number</td>
-                            <td>
-                                <input type="text" name="" id="" placeholder="mobile no." />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Occupation:</td>
-                            <td class="NA">
-                                <input type="text" name="" id="" placeholder="occupation" />
-                                <p class="lblNA">*write N/A if not applicable*</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Employer:</td>
-                            <td class="NAemployer">
-                                <input type="text" name="" id="" placeholder="employer" />
-                                <p class="lblNA">*write N/A if not applicable*</p>
-                            </td>
-                            <td>
-                                <button name="homeowner_submit" type="submit" class="btnSubmitReg">
-                                    Submit
-                                </button>
-                            </td>
-                            <td>
-                                <button type="reset" value="reset" class="btnClearReg">
-                                    Clear
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <label class="lblRegistration">Registered Homeowners</label>
-                <div class="tblContainer">
-                    <table class="tblHomeowners table-hover">
-                        <thead>
-                            <th>Full Name</th>
-                            <th>Date of Birth</th>
-                            <th>Gender</th>
-                            <th>Email</th>
-                            <th>Residence Address</th>
-                            <th>Business Address</th>
-                            <th>Mobile Number</th>
-                            <th>Occupation</th>
-                            <th>Employer</th>
-                        </thead>
-                        <tr>
-                            <td>Elizabeth B. Mckinney</td>
-                            <td>Jan 1, 2001</td>
-                            <td>Female</td>
-                            <td>sample@gmail.com</td>
-                            <td>lot1 block2, Sunnyvale 1, Palangoy</td>
-                            <td>NA</td>
-                            <td>09123456789</td>
-                            <td>NA</td>
-                            <td>NA</td>
-                        </tr>
-                        <tr>
-                            <td>Elizabeth B. Mckinney</td>
-                            <td>Jan 1, 2001</td>
-                            <td>Female</td>
-                            <td>sample@gmail.com</td>
-                            <td>lot1 block2, Sunnyvale 1, Palangoy</td>
-                            <td>NA</td>
-                            <td>09123456789</td>
-                            <td>NA</td>
-                            <td>NA</td>
-                        </tr>
-                        <tr>
-                            <td>Elizabeth B. Mckinney</td>
-                            <td>Jan 1, 2001</td>
-                            <td>Female</td>
-                            <td>sample@gmail.com</td>
-                            <td>lot1 block2, Sunnyvale 1, Palangoy</td>
-                            <td>NA</td>
-                            <td>09123456789</td>
-                            <td>NA</td>
-                            <td>NA</td>
-                        </tr>
-                        <tr>
-                            <td>Elizabeth B. Mckinney</td>
-                            <td>Jan 1, 2001</td>
-                            <td>Female</td>
-                            <td>sample@gmail.com</td>
-                            <td>lot1 block2, Sunnyvale 1, Palangoy</td>
-                            <td>NA</td>
-                            <td>09123456789</td>
-                            <td>NA</td>
-                            <td>NA</td>
-                        </tr>
-                        <tr>
-                            <td>Elizabeth B. Mckinney</td>
-                            <td>Jan 1, 2001</td>
-                            <td>Female</td>
-                            <td>sample@gmail.com</td>
-                            <td>lot1 block2, Sunnyvale 1, Palangoy</td>
-                            <td>NA</td>
-                            <td>09123456789</td>
-                            <td>NA</td>
-                            <td>NA</td>
-                        </tr>
-                        <tr>
-                            <td>Elizabeth B. Mckinney</td>
-                            <td>Jan 1, 2001</td>
-                            <td>Female</td>
-                            <td>sample@gmail.com</td>
-                            <td>lot1 block2, Sunnyvale 1, Palangoy</td>
-                            <td>NA</td>
-                            <td>09123456789</td>
-                            <td>NA</td>
-                            <td>NA</td>
-                        </tr>
-                        <tr>
-                            <td>Elizabeth B. Mckinney</td>
-                            <td>Jan 1, 2001</td>
-                            <td>Female</td>
-                            <td>sample@gmail.com</td>
-                            <td>lot1 block2, Sunnyvale 1, Palangoy</td>
-                            <td>NA</td>
-                            <td>09123456789</td>
-                            <td>NA</td>
-                            <td>NA</td>
-                        </tr>
-                    </table>
-                </div>
+    <form method="post">
+        <div class="secretary">
+            <div class="sideBar">
+                <?php require '../marginals/sidebarSecretaryPanel.php'; ?>
             </div>
 
+            <div class="secretaryPanel">
+                <div class="homeownerRegistration">
+                    <label class="lblRegistration">Registration</label>
+                    <div class="regForm">
+                        <table class="tblForm">
+                            <tr>
+                                <td>First Name:</td>
+                                <td>
+                                    <input type="text" name="first_name" id="" placeholder="first name" />
+                                </td>
+                                <td>Date of Birth:</td>
+                                <td>
+                                    <input type="date" data-date-format="yyyy-mm-dd" name="birthdate" id="" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Middle Name:</td>
+                                <td>
+                                    <input type="text" name="middle_name" id="" placeholder="middle name" />
+                                </td>
+                                <td>Sex:</td>
+                                <td>
+                                    <select name="sex" id="">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Last Name:</td>
+                                <td>
+                                    <input type="text" name="last_name" id="" placeholder="last name" />
+                                </td>
+                                <td>Email:</td>
+                                <td>
+                                    <input type="text" name="email_address" id="" placeholder="email" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Suffix:</td>
+                                <td>
+                                    <input type="text" name="suffix" id="" placeholder="suffix" />
+                                </td>
+                                <td>Mobile Number:</td>
+                                <td>
+                                    <input type="text" name="mobile_number" id="" placeholder="mobile no." />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Residence Address:</td>
+                                <td>
+                                    <input type="text" name="street" id="" placeholder="Lot and Block" />
+                                </td>
+                                <td>
+                                    <select name="subdivision" id="">
+                                        <option value="Sunnyvale 1">Sunnyvale 1</option>
+                                        <option value="Sunnyvale 2">Sunnyvale 2</option>
+                                        <option value="Sunnyvale 3">Sunnyvale 3</option>
+                                        <option value="Sunnyvale 4">Sunnyvale 4</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="barangay" id="">
+                                        <option value="Palangoy">Palangoy</option>
+                                        <option value="Pantok">Pantok</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Business Address:</td>
+                                <td class="NA">
+                                    <input type="text" name="business_address" id="" placeholder="business address" />
+                                    <p class="lblNA">*write N/A if not applicable*</p>
+                                </td>
+                            </tr>
+                            <tr>
 
+                            </tr>
+                            <tr>
+                                <td>Occupation:</td>
+                                <td class="NA">
+                                    <input type="text" name="occupation" id="" placeholder="occupation" />
+                                    <p class="lblNA">*write N/A if not applicable*</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Employer:</td>
+                                <td class="NAemployer">
+                                    <input type="text" name="employer" id="" placeholder="employer" />
+                                    <p class="lblNA">*write N/A if not applicable*</p>
+                                </td>
+                                <td>
+                                    <button name="homeowner_submit" type="submit" class="btnSubmitReg">
+                                        Submit
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="reset" value="reset" class="btnClearReg">
+                                        Clear
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <label class="lblRegistration">Registered Homeowners</label>
+                    <div class="tblContainer">
+                        <table class="tblHomeowners table-hover">
+                            <thead>
+                                <th>Full Name</th>
+                                <th>Date of Birth</th>
+                                <th>Gender</th>
+                                <th>Email</th>
+                                <th>Residence Address</th>
+                                <th>Business Address</th>
+                                <th>Mobile Number</th>
+                                <th>Occupation</th>
+                                <th>Employer</th>
+                            </thead>
+                            <tr>
+                                <td>Elizabeth B. Mckinney</td>
+                                <td>Jan 1, 2001</td>
+                                <td>Female</td>
+                                <td>sample@gmail.com</td>
+                                <td>lot1 block2, Sunnyvale 1, Palangoy</td>
+                                <td>NA</td>
+                                <td>09123456789</td>
+                                <td>NA</td>
+                                <td>NA</td>
+                            </tr>
+                            <tr>
+                                <td>Elizabeth B. Mckinney</td>
+                                <td>Jan 1, 2001</td>
+                                <td>Female</td>
+                                <td>sample@gmail.com</td>
+                                <td>lot1 block2, Sunnyvale 1, Palangoy</td>
+                                <td>NA</td>
+                                <td>09123456789</td>
+                                <td>NA</td>
+                                <td>NA</td>
+                            </tr>
+                            <tr>
+                                <td>Elizabeth B. Mckinney</td>
+                                <td>Jan 1, 2001</td>
+                                <td>Female</td>
+                                <td>sample@gmail.com</td>
+                                <td>lot1 block2, Sunnyvale 1, Palangoy</td>
+                                <td>NA</td>
+                                <td>09123456789</td>
+                                <td>NA</td>
+                                <td>NA</td>
+                            </tr>
+                            <tr>
+                                <td>Elizabeth B. Mckinney</td>
+                                <td>Jan 1, 2001</td>
+                                <td>Female</td>
+                                <td>sample@gmail.com</td>
+                                <td>lot1 block2, Sunnyvale 1, Palangoy</td>
+                                <td>NA</td>
+                                <td>09123456789</td>
+                                <td>NA</td>
+                                <td>NA</td>
+                            </tr>
+                            <tr>
+                                <td>Elizabeth B. Mckinney</td>
+                                <td>Jan 1, 2001</td>
+                                <td>Female</td>
+                                <td>sample@gmail.com</td>
+                                <td>lot1 block2, Sunnyvale 1, Palangoy</td>
+                                <td>NA</td>
+                                <td>09123456789</td>
+                                <td>NA</td>
+                                <td>NA</td>
+                            </tr>
+                            <tr>
+                                <td>Elizabeth B. Mckinney</td>
+                                <td>Jan 1, 2001</td>
+                                <td>Female</td>
+                                <td>sample@gmail.com</td>
+                                <td>lot1 block2, Sunnyvale 1, Palangoy</td>
+                                <td>NA</td>
+                                <td>09123456789</td>
+                                <td>NA</td>
+                                <td>NA</td>
+                            </tr>
+                            <tr>
+                                <td>Elizabeth B. Mckinney</td>
+                                <td>Jan 1, 2001</td>
+                                <td>Female</td>
+                                <td>sample@gmail.com</td>
+                                <td>lot1 block2, Sunnyvale 1, Palangoy</td>
+                                <td>NA</td>
+                                <td>09123456789</td>
+                                <td>NA</td>
+                                <td>NA</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-
+    </form>
     <?php
     require '../marginals/footer2.php'
     ?>
