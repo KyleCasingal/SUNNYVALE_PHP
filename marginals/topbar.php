@@ -79,6 +79,7 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
 
   .topImg1 {
     width: 3vw;
+    height: 3vw;
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;

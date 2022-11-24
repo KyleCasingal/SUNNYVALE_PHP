@@ -114,6 +114,14 @@ $row = $result->fetch_assoc();
         background-color: rgb(93, 151, 93);
     }
 
+    .btnSubmitReg:disabled {
+        background-color: rgb(40, 68, 40);
+    }
+
+    .btnSubmitReg[disabled]:hover {
+        background-color: rgb(40, 68, 40);
+    }
+
     .btnClearReg {
         background-color: lightcoral;
         border: 0;
@@ -130,6 +138,14 @@ $row = $result->fetch_assoc();
 
     .btnClearReg:hover {
         background-color: rgb(180, 83, 83);
+    }
+
+    .btnClearReg:disabled {
+        background-color: rgb(97, 45, 45);
+    }
+
+    .btnClearReg[disabled]:hover {
+        background-color: rgb(97, 45, 45);
     }
 
     .lblRegistration {
@@ -307,29 +323,9 @@ $row = $result->fetch_assoc();
     }
 </style>
 <script>
-    $(function() {
-        $('#select-all').click(function(event) {
-
-            var selected = this.checked;
-            // Iterate each checkbox
-            $(':checkbox').each(function() {
-                this.checked = selected;
-            });
-
-        });
-    });
-    $(function() {
-        $('#status_filter').change(function() {
-            var opt = $(this).val();
-            if (opt == 'pending') {
-                $('.monthly-btn').hide();
-                $('.annual-btn').show();
-            } else {
-                $('.monthly-btn').show();
-                $('.annual-btn').hide();
-            }
-        });
-    });
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
 </script>
 
 <body>
@@ -373,14 +369,14 @@ $row = $result->fetch_assoc();
                             <?php endwhile; ?>
                         </table>
                     </div>
-                    <!-- <div class="btnArea">
+                    <div class="btnArea">
                         <button name="activate" <?php if ($status_filter == "Activated") { ?> disabled <?php   } ?> type="submit" class="btnSubmitReg">
                             Activate
                         </button>
                         <button name="deactivate" <?php if ($status_filter == "Deactivated") { ?> disabled <?php   } ?> type="submit" class="btnClearReg">
                             Deactivate
                         </button>
-                    </div> -->
+                    </div>
             </form>
         </div>
     </div>
