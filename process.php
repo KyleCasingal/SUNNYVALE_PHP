@@ -240,4 +240,7 @@ if (isset($_POST['homeowner_submit'])) {
     $birthdate = $_POST['birthdate'];
     $sex = $_POST['sex'];
     $email_address = $_POST['email_address'];
+    // if(){
+
+    // }
 }

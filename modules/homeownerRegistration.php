@@ -301,7 +301,7 @@ $row = $result->fetch_assoc();
         </div>
         <div class="secretaryPanel">
             <div class="homeownerRegistration">
-            <label class="lblRegistration">Registration</label>
+                <label class="lblRegistration">Registration</label>
                 <div class="regForm">
                     <table class="tblForm">
                         <tr>
