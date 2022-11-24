@@ -75,7 +75,7 @@ if (isset($_POST['register'])) {
             $mail->send();
             $sql = "INSERT INTO user (username,password,user_type,email_address,account_status,verification_code,email_verified_at,display_picture) VALUES('$username', '$password','Homeowner','$email_address','Pending', '$verification_code', NULL,'default.png')";
             $result = mysqli_query($con, $sql);
-            header("Location: ../modules/verify.php?email_address=" . $email_address);
+            header("Location: ../modules/verify.php? email_address=" . $email_address);
             exit();
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";

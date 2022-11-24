@@ -292,6 +292,22 @@ $row = $result->fetch_assoc();
     .complaintManagement {
         margin: 2vw;
     }
+    .lblNA{
+        margin: 0;
+        color: gray;
+        font-size: 0.8vw;
+        text-align: center;
+        font-style: italic;
+    }
+    .NA{
+        vertical-align: bottom !important;
+        text-align: center;
+        padding-bottom: 0 !important;
+    }
+    .NAemployer{
+        margin: 0;
+        padding-top: 2vw;
+    }
 </style>
 
 <body>
@@ -359,8 +375,9 @@ $row = $result->fetch_assoc();
                         </tr>
                         <tr>
                             <td>Business Address:</td>
-                            <td>
+                            <td class="NA">
                                 <input type="text" name="" id="" placeholder="input business address" />
+                                <p class="lblNA">*write N/A if not applicable*</p>
                             </td>
                         </tr>
                         <tr>
@@ -371,14 +388,16 @@ $row = $result->fetch_assoc();
                         </tr>
                         <tr>
                             <td>Occupation:</td>
-                            <td>
+                            <td class="NA">
                                 <input type="text" name="" id="" placeholder="occupation" />
+                                <p class="lblNA">*write N/A if not applicable*</p>
                             </td>
                         </tr>
                         <tr>
                             <td>Employer:</td>
-                            <td>
+                            <td class="NAemployer">
                                 <input type="text" name="" id="" placeholder="employer" />
+                                <p class="lblNA">*write N/A if not applicable*</p>
                             </td>
                             <td>
                                 <button name="homeowner_submit" type="submit" class="btnSubmitReg">

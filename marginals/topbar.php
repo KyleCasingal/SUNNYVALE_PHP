@@ -67,6 +67,7 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
     justify-content: flex-end;
     margin-right: 1vw;
   }
+
   .topCenter {
     flex: 60;
   }
@@ -79,7 +80,8 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
     font-style: normal;
     cursor: pointer;
   }
-  .menu-trigger{
+
+  .menu-trigger {
     display: flex;
     max-height: 4.5vw;
   }
@@ -215,6 +217,11 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
     max-width: 20vw;
     transition: var(--speed);
   }
+
+  .dropdownIMG {
+    background-color: rgb(89, 89, 89, 0);
+    border: none !important;
+  }
 </style>
 
 <body>
@@ -233,10 +240,26 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
       </div>
       <div class="topRight">
         <div class='menu-trigger'>
-          <img class="topImg1" <?php
-                                $row = $result->fetch_assoc();
-                                $imageURL = '../media/displayPhotos/' . $row['display_picture'];
-                                ?> src="<?= $imageURL ?>" alt="" onclick="location.href='../modules/memberPanel.php'" />
+          <div class="btn-group dropleft">
+            <button type="button" class="dropdownIMG" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img class="topImg1" <?php
+                                    $row = $result->fetch_assoc();
+                                    $imageURL = '../media/displayPhotos/' . $row['display_picture'];
+                                    ?> src="<?= $imageURL ?>" alt="" />
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="../modules/MemberPanel.php">Member Profile</a>
+              <a class="dropdown-item" href="../modules/inboxPanel.php">Inbox</a>
+              <a class="dropdown-item" href="#">Panel</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="../logout.php">Log Out</a>
+            </div>
+          </div>
+
+
+          <div class="dropdown-menu">
+            <!-- Dropdown menu links -->
+          </div>
         </div>
       </div>
     </form>
@@ -264,6 +287,9 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
           </ul>
         </div> -->
   </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 </html>

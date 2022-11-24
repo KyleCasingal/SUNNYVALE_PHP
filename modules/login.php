@@ -125,9 +125,9 @@
     <span class="loginTitle">Login</span>
     <form class="loginForm" method="post">
       <label>Email</label>
-      <input type="text" name="email_address" id="email_address" class="loginInput" placeholder="Enter your email..." value="" />
+      <input type="text" name="email_address" id="email_address" class="loginInput" placeholder="Enter your email..." value="" required/>
       <label>Password</label>
-      <input type="password" name="password" id="password" class="loginInput" placeholder="Enter your password..." value="" />
+      <input type="password" name="password" id="password" class="loginInput" placeholder="Enter your password..." value="" required/>
       <button class="loginButton" id="login" name="login">
         Login
       </button>
