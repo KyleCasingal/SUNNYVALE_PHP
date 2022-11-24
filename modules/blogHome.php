@@ -120,6 +120,7 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
   }
 
   .blogTitle {
+    color: black;
     font-weight: bold;
     font-family: "Poppins", sans-serif;
     margin-top: 1vw;
