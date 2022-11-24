@@ -29,6 +29,7 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
   }
 
   .nav {
+    margin-top: 0;
     margin-bottom: 0;
     padding: 0;
     width: 100%;
@@ -45,6 +46,8 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
 
 
   .topLeft {
+    max-height: 4.5vw;
+    margin-top: 0;
     flex: 3;
     display: flex;
     align-items: center;
@@ -57,13 +60,13 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
   }
 
   .topRight {
+    max-height: 4.5vw;
     flex: 3;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     margin-right: 1vw;
   }
-
   .topCenter {
     flex: 60;
   }
@@ -76,8 +79,14 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
     font-style: normal;
     cursor: pointer;
   }
+  .menu-trigger{
+    display: flex;
+    max-height: 4.5vw;
+  }
 
   .topImg1 {
+    max-height: 3vw;
+    max-width: 3vw;
     width: 3vw;
     height: 3vw;
     border-radius: 50%;
