@@ -1,6 +1,5 @@
 <?php
 require '../marginals/topbar.php';
-$con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($mysqli));
 $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) ORDER BY post_id DESC") or die($mysqli->error);
 ?>
 <!DOCTYPE html>

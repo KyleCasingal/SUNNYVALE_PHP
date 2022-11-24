@@ -77,7 +77,7 @@ require "../marginals/topbarVerify.php";
   <div class="verifyPage">
     <form class="verifyForm" method="post">
       <label>Email verification</label>
-      <input type="text" name="email_verify" id="email_verify" class="verifyInput" placeholder="Enter your email..." value="" />
+      <input type="text" name="email_verify" id="email_verify" class="verifyInput" placeholder="Enter your email..." value="" required/>
       <button class="verifyButton" id="emailVerify" name="emailVerify">
         Resend OTP
       </button>

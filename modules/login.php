@@ -131,7 +131,7 @@
       <button class="loginButton" id="login" name="login">
         Login
       </button>
-      <button class="guestButtonLogin" id="guestButtonLogin" name="guestButtonLogin">
+      <button class="guestButtonLogin" id="guestButtonLogin" name="guestButtonLogin" formnovalidate>
         Continue as Guest
       </button>
       <div class="verifyLinkLbl">

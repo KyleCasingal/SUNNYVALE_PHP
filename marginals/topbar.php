@@ -1,6 +1,5 @@
 <?php
 include "../process.php";
-$con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($mysqli));
 if (empty($_SESSION)) {
   header("Location: ../index.php");
 }

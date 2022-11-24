@@ -78,7 +78,7 @@
     <form class="verifyForm" method="post">
       <input type="hidden" name="email_address" value="<?php echo $_GET['email_address']; ?>" required>
       <label>Email verification</label>
-      <input type="text" name="verification_code" id="verification_code" class="verifyInput" placeholder="Enter your OTP..." value="" />
+      <input type="text" name="verification_code" id="verification_code" class="verifyInput" placeholder="Enter your OTP..." value="" required/>
       <button class="verifyButton" id="verify" name="verify">
         Verify
       </button>

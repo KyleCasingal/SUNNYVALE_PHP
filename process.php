@@ -51,9 +51,7 @@ if (isset($_POST['register'])) {
     $sql = "SELECT * FROM homeowner_profile WHERE first_name = '$first_name' AND last_name = '$last_name' AND email_address = '$email_address' ";
     $result = mysqli_query($con, $sql);
 
-    if (strlen($first_name and $last_name and $email_address and $password and $confirm_password) == 0) {
-        echo 'All fields required';
-    } else if ($password !== $confirm_password) {
+    if ($password !== $confirm_password) {
         echo 'Passwords do not match!';
     } else if (mysqli_num_rows($result) == 1) {
         $mail = new PHPMailer(true);
@@ -94,11 +92,11 @@ if (isset($_POST["verify"])) {
     $sql = "UPDATE user SET email_verified_at = NOW() WHERE email_address = '" . $email_address . "' AND verification_code = '" . $verification_code . "'";
     $result = mysqli_query($con, $sql);
 
-    if (mysqli_affected_rows($con) == 0) {
-        echo "Verification code failed. Please try again.";
-    } else {
-        header("Location:../index.php");
+    if (mysqli_affected_rows($con) == 1) {
         echo "<p>Your email is now verified, wait for the admin to activate your account.</p>";
+        header("Location:../index.php");
+    } else {
+        echo "Verification code failed. Please try again.";
     }
 }
 
@@ -202,4 +200,10 @@ if (isset($_POST['homeowner_submit'])) {
 
     $sql = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, residence_address, business_address, occupation, email_address, birthdate, mobile_number, employer, display_picture) VALUES ('$last_name','$first_name','$middle_name','$suffix','$sex','$residence_address','$bussiness_address','$occupation','$email_address','$birthdate','$mobile_number','$employer','default.png')";
     $result = mysqli_query($con, $sql);
+}
+
+//HOMEOWNER REGISTRATION CLEAR
+if (isset($_POST['homeownerReset'])) {
+    echo 'test';
+    header("Location: homeownerRegistration.php");
 }

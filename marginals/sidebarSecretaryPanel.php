@@ -1,46 +1,4 @@
 <?php
-//ACCOUNT MANAGEMENT SORT, ACTIVATE, DEACTIVATE
-$res = $con->query("SELECT * FROM user WHERE account_status = 'Pending' AND email_verified_at IS NOT NULL ORDER  by user_id ASC") or die($mysqli->error);
-$status_filter = $_POST['status_filter'] ?? '';
-if (isset($_POST['filterButton'])) {
-    if ($status_filter == 'Pending') {
-        $res = $con->query("SELECT * FROM user WHERE account_status = 'Pending' AND email_verified_at IS NOT NULL ORDER  by user_id ASC") or die($mysqli->error);
-    } elseif ($status_filter == 'Activated') {
-        $res = $con->query("SELECT * FROM user WHERE account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
-    } elseif ($status_filter == 'Deactivated') {
-        $res = $con->query("SELECT * FROM user WHERE account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
-    }
-}
-
-if (isset($_POST['activate'])) {
-    if (isset($_POST['checkbox'])) {
-        foreach ($_POST['checkbox'] as $user_id) {
-            $sql = "UPDATE user SET account_status = 'Activated' WHERE user_id = '$user_id'";
-            $result = mysqli_query($con, $sql);
-        }
-        if ($status_filter == 'Pending') {
-            $res = $con->query("SELECT * FROM user WHERE account_status = 'Pending' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
-        } else if ($status_filter == 'Activated') {
-            $res = $con->query("SELECT * FROM user WHERE account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
-        } else if ($status_filter == 'Deactivated') {
-            $res = $con->query("SELECT * FROM user WHERE account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
-        }
-    }
-} else if (isset($_POST['deactivate'])) {
-    if (isset($_POST['checkbox'])) {
-        foreach ($_POST['checkbox'] as $user_id) {
-            $sql = "UPDATE user SET account_status = 'Deactivated' WHERE user_id = '$user_id'";
-            $result = mysqli_query($con, $sql);
-        }
-    }
-    if ($status_filter == 'Pending') {
-        $res = $con->query("SELECT * FROM user WHERE account_status = 'Pending' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
-    } else if ($status_filter == 'Activated') {
-        $res = $con->query("SELECT * FROM user WHERE account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
-    } else if ($status_filter == 'Deactivated') {
-        $res = $con->query("SELECT * FROM user WHERE account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
-    }
-}
 
 ?>
 <!DOCTYPE html>

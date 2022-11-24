@@ -1,8 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-$con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($mysqli));
-$result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
-$row = $result->fetch_assoc();
+$result = $con->query("SELECT * FROM homeowner_profile ORDER BY homeowner_id ASC") or die($mysqli->error);
 ?>
 
 <!DOCTYPE html>
@@ -312,6 +310,9 @@ $row = $result->fetch_assoc();
         padding-top: 2vw;
     }
 </style>
+<script>
+    $("#form_id").trigger("reset");
+</script>
 
 <body>
     <form method="post">
@@ -328,17 +329,17 @@ $row = $result->fetch_assoc();
                             <tr>
                                 <td>First Name:</td>
                                 <td>
-                                    <input type="text" name="first_name" id="" placeholder="first name" />
+                                    <input type="text" name="first_name" id="" placeholder="first name" required />
                                 </td>
                                 <td>Date of Birth:</td>
                                 <td>
-                                    <input type="date" data-date-format="yyyy-mm-dd" name="birthdate" id="" />
+                                    <input type="date" data-date-format="yyyy-mm-dd" name="birthdate" id="" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Middle Name:</td>
                                 <td>
-                                    <input type="text" name="middle_name" id="" placeholder="middle name" />
+                                    <input type="text" name="middle_name" id="" placeholder="middle name" required />
                                 </td>
                                 <td>Sex:</td>
                                 <td>
@@ -351,27 +352,27 @@ $row = $result->fetch_assoc();
                             <tr>
                                 <td>Last Name:</td>
                                 <td>
-                                    <input type="text" name="last_name" id="" placeholder="last name" />
+                                    <input type="text" name="last_name" id="" placeholder="last name" required />
                                 </td>
                                 <td>Email:</td>
                                 <td>
-                                    <input type="text" name="email_address" id="" placeholder="email" />
+                                    <input type="text" name="email_address" id="" placeholder="email" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Suffix:</td>
                                 <td>
-                                    <input type="text" name="suffix" id="" placeholder="suffix" />
+                                    <input type="text" name="suffix" id="" placeholder="suffix" required />
                                 </td>
                                 <td>Mobile Number:</td>
                                 <td>
-                                    <input type="text" name="mobile_number" id="" placeholder="mobile no." />
+                                    <input type="text" name="mobile_number" id="" placeholder="mobile no." required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Residence Address:</td>
                                 <td>
-                                    <input type="text" name="street" id="" placeholder="Lot and Block" />
+                                    <input type="text" name="street" id="" placeholder="Lot and Block" required />
                                 </td>
                                 <td>
                                     <select name="subdivision" id="">
@@ -391,7 +392,7 @@ $row = $result->fetch_assoc();
                             <tr>
                                 <td>Business Address:</td>
                                 <td class="NA">
-                                    <input type="text" name="business_address" id="" placeholder="business address" />
+                                    <input type="text" name="business_address" id="" placeholder="business address" required />
                                     <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
                             </tr>
@@ -401,14 +402,14 @@ $row = $result->fetch_assoc();
                             <tr>
                                 <td>Occupation:</td>
                                 <td class="NA">
-                                    <input type="text" name="occupation" id="" placeholder="occupation" />
+                                    <input type="text" name="occupation" id="" placeholder="occupation" required />
                                     <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Employer:</td>
                                 <td class="NAemployer">
-                                    <input type="text" name="employer" id="" placeholder="employer" />
+                                    <input type="text" name="employer" id="" placeholder="employer" required />
                                     <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
                                 <td>
@@ -417,7 +418,7 @@ $row = $result->fetch_assoc();
                                     </button>
                                 </td>
                                 <td>
-                                    <button type="reset" value="reset" class="btnClearReg">
+                                    <button type="button" value="" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         Clear
                                     </button>
                                 </td>
@@ -428,94 +429,66 @@ $row = $result->fetch_assoc();
                     <div class="tblContainer">
                         <table class="tblHomeowners table-hover">
                             <thead>
+                                <th>Homeowner ID</th>
                                 <th>Full Name</th>
                                 <th>Date of Birth</th>
-                                <th>Gender</th>
-                                <th>Email</th>
+                                <th>Sex</th>
                                 <th>Residence Address</th>
-                                <th>Business Address</th>
+                                <th>Email</th>
                                 <th>Mobile Number</th>
+                                <th>Business Address</th>
                                 <th>Occupation</th>
                                 <th>Employer</th>
                             </thead>
-                            <tr>
-                                <td>Elizabeth B. Mckinney</td>
-                                <td>Jan 1, 2001</td>
-                                <td>Female</td>
-                                <td>sample@gmail.com</td>
-                                <td>lot1 block2, Sunnyvale 1, Palangoy</td>
-                                <td>NA</td>
-                                <td>09123456789</td>
-                                <td>NA</td>
-                                <td>NA</td>
-                            </tr>
-                            <tr>
-                                <td>Elizabeth B. Mckinney</td>
-                                <td>Jan 1, 2001</td>
-                                <td>Female</td>
-                                <td>sample@gmail.com</td>
-                                <td>lot1 block2, Sunnyvale 1, Palangoy</td>
-                                <td>NA</td>
-                                <td>09123456789</td>
-                                <td>NA</td>
-                                <td>NA</td>
-                            </tr>
-                            <tr>
-                                <td>Elizabeth B. Mckinney</td>
-                                <td>Jan 1, 2001</td>
-                                <td>Female</td>
-                                <td>sample@gmail.com</td>
-                                <td>lot1 block2, Sunnyvale 1, Palangoy</td>
-                                <td>NA</td>
-                                <td>09123456789</td>
-                                <td>NA</td>
-                                <td>NA</td>
-                            </tr>
-                            <tr>
-                                <td>Elizabeth B. Mckinney</td>
-                                <td>Jan 1, 2001</td>
-                                <td>Female</td>
-                                <td>sample@gmail.com</td>
-                                <td>lot1 block2, Sunnyvale 1, Palangoy</td>
-                                <td>NA</td>
-                                <td>09123456789</td>
-                                <td>NA</td>
-                                <td>NA</td>
-                            </tr>
-                            <tr>
-                                <td>Elizabeth B. Mckinney</td>
-                                <td>Jan 1, 2001</td>
-                                <td>Female</td>
-                                <td>sample@gmail.com</td>
-                                <td>lot1 block2, Sunnyvale 1, Palangoy</td>
-                                <td>NA</td>
-                                <td>09123456789</td>
-                                <td>NA</td>
-                                <td>NA</td>
-                            </tr>
-                            <tr>
-                                <td>Elizabeth B. Mckinney</td>
-                                <td>Jan 1, 2001</td>
-                                <td>Female</td>
-                                <td>sample@gmail.com</td>
-                                <td>lot1 block2, Sunnyvale 1, Palangoy</td>
-                                <td>NA</td>
-                                <td>09123456789</td>
-                                <td>NA</td>
-                                <td>NA</td>
-                            </tr>
-                            <tr>
-                                <td>Elizabeth B. Mckinney</td>
-                                <td>Jan 1, 2001</td>
-                                <td>Female</td>
-                                <td>sample@gmail.com</td>
-                                <td>lot1 block2, Sunnyvale 1, Palangoy</td>
-                                <td>NA</td>
-                                <td>09123456789</td>
-                                <td>NA</td>
-                                <td>NA</td>
-                            </tr>
+                            <?php
+                            while ($row = $result->fetch_assoc()) :
+                                $suffix = $row['suffix'];
+                                if ($suffix == "N/A") {
+                                    $suffix = NULL;
+                                } else {
+                                    $suffix = " " . $row['suffix'];
+                                }
+                                $middle_name = $row['middle_name'];
+                                if ($middle_name == "N/A") {
+                                    $middle_name = NULL;
+                                } else {
+                                    $middle_name = " " . $row['middle_name'];
+                                }
+
+                            ?>
+                                <tr>
+                                    <td><?php echo $row['homeowner_id']; ?></td>
+                                    <td><?php echo $row['first_name'] . $middle_name . " " . $row['last_name'] . $suffix; ?></td>
+                                    <td><?php
+                                        $datetime = strtotime($row['birthdate']);
+                                        echo $phptime = date("m/d/Y", $datetime);
+                                        ?></td>
+                                    <td><?php echo $row['sex']; ?></td>
+                                    <td><?php echo $row['residence_address']; ?></td>
+                                    <td><?php echo $row['email_address']; ?></td>
+                                    <td><?php echo $row['mobile_number']; ?></td>
+                                    <td><?php echo $row['business_address']; ?></td>
+                                    <td><?php echo $row['occupation']; ?></td>
+                                    <td><?php echo $row['employer']; ?></td>
+                                </tr>
+                            <?php endwhile; ?>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        This will clear all fields!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" onclick="location.href='homeownerRegistration.php'">Clear</button>
                     </div>
                 </div>
             </div>

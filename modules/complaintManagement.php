@@ -1,6 +1,5 @@
 <?php
 require '../marginals/topbar.php';
-$con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($mysqli));
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
 ?>
