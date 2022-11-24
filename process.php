@@ -226,3 +226,21 @@ if (isset($_POST['activate'])) {
         $res = $con->query("SELECT * FROM user WHERE account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
     }
 }
+
+// REGISTRATION OF HOMEOWNERS
+if (isset($_POST['homeowner_submit'])){
+    $first_name = $_POST['first_name'];
+    $middle_name = $_POST['last_name'] ?? '';
+    $last_name = $_POST['last_name'];
+    $residence_address = $_POST['residence_address'];
+    $bussiness_address = $_POST['business_address'] ?? '';
+    $mobile_number = $_POST['mobile_number'];
+    $occupation = $_POST['occupation'] ?? '';
+    $employer = $_POST['employer'] ?? '';
+    $birthdate = $_POST['birthdate'];
+    $sex = $_POST['sex'];
+    $email_address = $_POST['email_address'];
+    
+
+    
+}

@@ -319,12 +319,11 @@ $row = $result->fetch_assoc();
                             <td>
                                 <input type="text" name="" id="" placeholder="middle name" />
                             </td>
-                            <td>Gender</td>
+                            <td>Sex</td>
                             <td>
                                 <select name="" id="">
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
                                 </select>
                             </td>
                         </tr>
@@ -382,7 +381,7 @@ $row = $result->fetch_assoc();
                                 <input type="text" name="" id="" placeholder="employer" />
                             </td>
                             <td>
-                                <button type="submit" class="btnSubmitReg">
+                                <button name="homeowner_submit" type="submit" class="btnSubmitReg">
                                     Submit
                                 </button>
                             </td>
