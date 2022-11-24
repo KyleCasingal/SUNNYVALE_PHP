@@ -139,6 +139,11 @@ if (isset($_SESSION['user_id'])) {
   .loginButtonLanding:hover {
     background-color: rgb(93, 151, 93);
   }
+  .topCenterLanding{
+    display: flex;
+    border: 1px solid black;
+    max-height: 4.5vw;
+  }
 </style>
 <form method='POST'>
 
