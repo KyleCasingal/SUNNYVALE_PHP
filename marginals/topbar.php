@@ -1,9 +1,9 @@
 <?php
 include "../process.php";
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($mysqli));
-// if (empty($_SESSION)) {
-//   header("Location: ../index.php");
-// }
+if (empty($_SESSION)) {
+  header("Location: ../index.php");
+}
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 ?>
 <!DOCTYPE html>
@@ -233,7 +233,7 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
     <form class="topbarNav" method="post">
       <div class="topCenter">
         <ul class="topList">
-          <li name="logout" onclick="location.href='../logout.php'" class="topListItem1">HOME</li>
+          <li name="logout" onclick="location.href='../logoutProcess.php'" class="topListItem1">HOME</li>
           <li onclick="location.href='../modules/amenities.php'" class="topListItem1">AMENITIES</li>
           <li onclick="location.href='../modules/blogHome.php'" class="topListItem1"> BLOG</li>
         </ul>
@@ -250,42 +250,18 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
             <div class="dropdown-menu">
               <a class="dropdown-item" href="../modules/MemberPanel.php">Member Profile</a>
               <a class="dropdown-item" href="../modules/inboxPanel.php">Inbox</a>
-              <a class="dropdown-item" href="#">Panel</a>
+              <?php
+              if ($row['user_type'] == 'Secretary') {
+                echo '<a class="dropdown-item" href="../modules/homeownerRegistration.php">Panel</a>';
+              }
+              ?>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="../logout.php">Log Out</a>
+              <a class="dropdown-item" href="../logoutProcess.php">Log Out</a>
             </div>
-          </div>
-
-
-          <div class="dropdown-menu">
-            <!-- Dropdown menu links -->
           </div>
         </div>
       </div>
     </form>
-    <!-- <div class={`dropdown-menu ${open? 'active' : 'inactive'}`} >
-          <h3>Nene Yashiro<br/><span>Member</span></h3>
-          <ul>
-            <div>
-              <DropdownItem img = {user} text = {"My Profile"}/>
-            </div>
-            <div>
-              <DropdownItem img = {edit} text = {"Edit Profile"}/>
-            </div>
-            <div>
-              <DropdownItem img = {inbox} text = {"Inbox"}/>
-            </div>
-            <div>
-              <DropdownItem img = {settings} text = {"Settings"}/>
-            </div>
-            <div>
-              <DropdownItem img = {help} text = {"Helps"}/>
-            </div>
-            <div >
-              <DropdownItem img = {logout} text = {"Logout"}/>
-            </div>
-          </ul>
-        </div> -->
   </div>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

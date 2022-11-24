@@ -3,6 +3,7 @@ require '../marginals/topbar.php';
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($mysqli));
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -331,7 +332,7 @@ $row = $result->fetch_assoc();
 <body>
     <div class="secretary">
         <div class="sideBar">
-            <?php require '../marginals/sidebarSecretaryPanel.php'; ?>
+            <?php require '../marginals/sidebarSecretaryPanel.php' ?>
         </div>
         <div class="secretaryPanel">
             <form method="post">
