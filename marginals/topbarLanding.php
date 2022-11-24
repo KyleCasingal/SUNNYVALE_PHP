@@ -141,7 +141,6 @@ if (isset($_SESSION['user_id'])) {
   }
   .topCenterLanding{
     display: flex;
-    border: 1px solid black;
     max-height: 4.5vw;
   }
 </style>
