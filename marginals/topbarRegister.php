@@ -214,30 +214,13 @@ if (isset($_SESSION['user_id'])) {
         border-radius: 0.6vw;
         padding: 0.8em;
     }
-    .loginButtonReg:focus{
+
+    .loginButtonReg:focus {
         outline: none;
     }
 </style>
 
 <body>
-    <?php if (isset($_SESSION['register'])) : ?>
-        <div class="alert alert-warning">
-            <strong> All Fields Required!</strong>
-            <?php
-            echo $_SESSION['register'];
-            unset($_SESSION['register']);
-            ?>
-        </div>
-    <?php endif ?>
-    <?php if (isset($_SESSION['password'])) : ?>
-        <div class="alert alert-warning">
-            <strong> Passwords do not match!</strong>
-            <?php
-            echo $_SESSION['password'];
-            unset($_SESSION['password']);
-            ?>
-        </div>
-    <?php endif ?>
     <form method="post">
         <div class="topRegister">
             <div class="topLeftRegister">

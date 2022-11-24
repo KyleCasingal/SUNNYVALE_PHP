@@ -44,7 +44,7 @@ require 'vendor/autoload.php';
 if (isset($_POST['register'])) {
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
-    $username = $first_name . " " . $last_name;
+    $full_name = $first_name . " " . $last_name;
     $password = $_POST['password'];
     $email_address = $_POST['email_address'];
     $confirm_password = $_POST['confirm_password'];
@@ -52,9 +52,9 @@ if (isset($_POST['register'])) {
     $result = mysqli_query($con, $sql);
 
     if (strlen($first_name and $last_name and $email_address and $password and $confirm_password) == 0) {
-        $_SESSION['register'] = "";
+        echo 'All fields required';
     } else if ($password !== $confirm_password) {
-        $_SESSION['password'] = "";
+        echo 'Passwords do not match!';
     } else if (mysqli_num_rows($result) == 1) {
         $mail = new PHPMailer(true);
         try {
@@ -67,13 +67,13 @@ if (isset($_POST['register'])) {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
             $mail->setFrom('sunnyvalesubdivision@gmail.com');
-            $mail->addAddress($email_address, $username);
+            $mail->addAddress($email_address, $full_name);
             $mail->isHTML(true);
             $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
             $mail->Subject = 'Email verification';
             $mail->Body = '<p>Your verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
             $mail->send();
-            $sql = "INSERT INTO user (username,password,user_type,email_address,account_status,verification_code,email_verified_at,display_picture) VALUES('$username', '$password','Homeowner','$email_address','Pending', '$verification_code', NULL,'default.png')";
+            $sql = "INSERT INTO user (full_name,password,user_type,email_address,account_status,verification_code,email_verified_at) VALUES('$full_name', '$password','Homeowner','$email_address','Pending', '$verification_code', NULL)";
             $result = mysqli_query($con, $sql);
             header("Location: ../modules/verify.php? email_address=" . $email_address);
             exit();
@@ -111,7 +111,7 @@ if (isset($_POST["emailVerify"])) {
     if (mysqli_num_rows($result) == 0) {
         echo "Your email is not registered with an existing account.";
     } else {
-        $full_name = $row['full_name']; 
+        $full_name = $row['full_name'];
         $mail = new PHPMailer(true);
         try {
             $mail->SMTPDebug = 2;
@@ -169,8 +169,8 @@ if (isset($_POST['logout'])) {
 $targetDir = '../media/postsPhotos/';
 
 if (isset($_POST['submitPost'])) {
-    $title =mysqli_real_escape_string($con, $_POST['title']);
-    $content =mysqli_real_escape_string($con,  $_POST['content']);
+    $title = mysqli_real_escape_string($con, $_POST['title']);
+    $content = mysqli_real_escape_string($con,  $_POST['content']);
     $fileName = '' . $_FILES['image']['name'];
     $targetFilePath = $targetDir . $fileName;
     $result = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
@@ -228,7 +228,7 @@ if (isset($_POST['activate'])) {
 }
 
 // REGISTRATION OF HOMEOWNERS
-if (isset($_POST['homeowner_submit'])){
+if (isset($_POST['homeowner_submit'])) {
     $first_name = $_POST['first_name'];
     $middle_name = $_POST['last_name'] ?? '';
     $last_name = $_POST['last_name'];
@@ -240,7 +240,7 @@ if (isset($_POST['homeowner_submit'])){
     $birthdate = $_POST['birthdate'];
     $sex = $_POST['sex'];
     $email_address = $_POST['email_address'];
+    // if(){
 
-
-    
+    // }
 }

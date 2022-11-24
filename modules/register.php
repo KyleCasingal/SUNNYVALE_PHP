@@ -1,3 +1,4 @@
+<?php require "../marginals/topbarRegister.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,10 +15,12 @@
   * {
     margin: 0;
   }
-  .topbar{
+
+  .topbar {
     top: 0;
     position: sticky;
   }
+
   .register {
     height: calc(100vh - 50px);
     display: flex;
@@ -87,7 +90,7 @@
     border-radius: 0.5vw;
     height: 1vw;
   }
- 
+
   .guestButtonRegister {
     margin-top: 1vw;
     cursor: pointer;
@@ -102,7 +105,6 @@
 
 <body>
   <div class="topbar">
-  <?php require "../marginals/topbarRegister.php"; ?>
   </div>
   <div class="register">
     <span class="registerTitle">Register your Account</span>
