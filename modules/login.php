@@ -99,7 +99,20 @@
     align-items: center;
     text-align: center;
     font-size: 1vw;
-    margin-top: 2vw;
+    height: auto;
+    text-decoration: none;
+    color: #F6E70C;
+  }
+  .verifyLinkLbl{
+    display: flex;
+    gap: 0.2vw;
+    align-items: baseline;
+    justify-content: center;
+  }
+
+  .verifyLinkLbl p{
+    font-size: 1vw;
+    margin-top: 1vw;
     text-decoration: none;
     color: white;
   }
@@ -121,7 +134,11 @@
       <button class="guestButtonLogin" id="guestButtonLogin" name="guestButtonLogin">
         Continue as Guest
       </button>
-      <a class="verifyLink" href="../inputEmailVerify/inputEmailVerify.php">Verify your account here</a>
+      <div class="verifyLinkLbl">
+        <p >Verify your account </p>
+        <a class="verifyLink" href="../inputEmailVerify/inputEmailVerify.php"> here</a>
+      </div>
+
     </form>
   </div>
   <?php
