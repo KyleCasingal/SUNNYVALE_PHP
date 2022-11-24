@@ -108,10 +108,10 @@ if (isset($_POST["emailVerify"])) {
     $sql = "SELECT * FROM user WHERE email_address = '$email_address' ";
     $result = mysqli_query($con, $sql);
     $row = $result->fetch_assoc();
-    $username = $row['username'];
     if (mysqli_num_rows($result) == 0) {
         echo "Your email is not registered with an existing account.";
     } else {
+        $full_name = $row['full_name']; 
         $mail = new PHPMailer(true);
         try {
             $mail->SMTPDebug = 2;
@@ -123,13 +123,13 @@ if (isset($_POST["emailVerify"])) {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
             $mail->setFrom('sunnyvalesubdivision@gmail.com');
-            $mail->addAddress($email_address, $username);
+            $mail->addAddress($email_address, $full_name);
             $mail->isHTML(true);
             $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
             $mail->Subject = 'Email verification';
             $mail->Body = '<p>Your new verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
             $mail->send();
-            $sql = "UPDATE user SET verification_code =  '$verification_code' WHERE username = '" . $username . "'";
+            $sql = "UPDATE user SET verification_code =  '$verification_code' WHERE full_name = '" . $full_name . "'";
             $result = mysqli_query($con, $sql);
             header("Location: ../modules/verify.php?email_address=" . $email_address);
             exit();
@@ -240,7 +240,7 @@ if (isset($_POST['homeowner_submit'])){
     $birthdate = $_POST['birthdate'];
     $sex = $_POST['sex'];
     $email_address = $_POST['email_address'];
-    
+
 
     
 }

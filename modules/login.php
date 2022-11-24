@@ -136,7 +136,7 @@
       </button>
       <div class="verifyLinkLbl">
         <p >Verify your account </p>
-        <a class="verifyLink" href="../inputEmailVerify/inputEmailVerify.php"> here</a>
+        <a class="verifyLink" href="../modules/inputEmailVerify.php"> here</a>
       </div>
 
     </form>

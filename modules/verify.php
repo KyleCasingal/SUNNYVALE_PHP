@@ -73,7 +73,7 @@
 </style>
 
 <body>
-  <?php require "../topbarVerify/topbarVerify.php"; ?>
+  <?php require "../marginals/topbarVerify.php"; ?>
   <div class="verifyPage">
     <form class="verifyForm" method="post">
       <input type="hidden" name="email_address" value="<?php echo $_GET['email_address']; ?>" required>

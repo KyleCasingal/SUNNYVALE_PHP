@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Nov 24, 2022 at 12:18 PM
+-- Generation Time: Nov 24, 2022 at 02:01 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -44,16 +44,17 @@ CREATE TABLE IF NOT EXISTS `homeowner_profile` (
   `employer` varchar(100) DEFAULT NULL,
   `display_picture` varchar(255) NOT NULL,
   PRIMARY KEY (`homeowner_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `homeowner_profile`
 --
 
 INSERT INTO `homeowner_profile` (`homeowner_id`, `last_name`, `first_name`, `middle_name`, `suffix`, `sex`, `residence_address`, `business_address`, `occupation`, `email_address`, `birthdate`, `mobile_number`, `employer`, `display_picture`) VALUES
-(1, 'Delima', 'Mon Carlo', 'Zonio', NULL, 'Male', 'sa bahay', NULL, NULL, 'dmoncarlo6@gmail.com', '2002-10-06', '09157189636', 'Jayson pogi', 'DELIMA_2x2.png'),
-(2, 'Casingal', 'Kyle Andrei', 'Morillo', NULL, 'Yes', 'sa tabi ng URS', 'Brgy. Hindi pinili, Sana ako na lang', 'Professional Front-end Developer', 'kylecasingal36@gmail.com', '2001-09-02', '09123456789', 'si Madam', '316495100_870517180796101_3304939871151226288_n.jpg'),
-(3, 'Flores', 'Jeune Paolus', 'Damaso', NULL, 'Male', 'hahahaha', NULL, 'magroll saka magsend ng bold, Gacha Addict', 'floresjeunepaolus@gmail.com', '2002-06-16', '09123123123', 'Inya', '316156823_3360766927514073_2770550987709432568_n.jpg');
+(1, 'Delima', 'Mon Carlo', 'Zonio', 'NA', 'Male', 'Taytay, Rizal', 'NA', 'NA', 'dmoncarlo6@gmail.com', '2002-10-06', '09157189636', 'NA', 'DELIMA_2x2.png'),
+(2, 'Casingal', 'Kyle Andrei', 'Morillo', 'NA', 'Male', 'Binangonan, Rizal', 'NA', 'NA', 'kylecasingal36@gmail.com', '2001-09-02', '09123456789', 'NA', '316495100_870517180796101_3304939871151226288_n.jpg'),
+(3, 'Flores', 'Jeune Paolus', 'Damaso', 'NA', 'Male', 'Binangonan, Rizal', 'NA', 'NA', 'floresjeunepaolus@gmail.com', '2002-06-16', '09123123123', 'Inya', '316156823_3360766927514073_2770550987709432568_n.jpg'),
+(4, 'Doe', 'John', 'Smith', 'NA', 'Male', 'Binangonan, Rizal', 'NA', 'Programmer', 'dmoncarlo@gmail.com', '2002-10-06', '09157189636', 'Mark Zuckerberg', 'default.png');
 
 -- --------------------------------------------------------
 
@@ -80,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `post` (
 INSERT INTO `post` (`post_id`, `user_id`, `full_name`, `title`, `content`, `published_at`, `content_image`) VALUES
 (1, 28, 'Mon Carlo Delima', 'The moon is beautiful, isn\'t it?', '', '2022-11-24 01:09:01', '315906640_1753081135077201_6331420859846659098_n.png'),
 (2, 24, 'Jeune Paolus Flores', 'Fascinating art created by nature.', '', '2022-11-24 09:59:54', '316218368_829271824950879_360246867658747215_n.png'),
-(3, 23, 'Kyle Andrei Casingal', 'Imagine seeing these astonishing cars, lively blue skies, and few waves of clouds in an upside-down world. Inconceivable, isn\'t it?', '', '2022-11-24 10:03:11', '316189223_691988422233113_5145406262467036356_n.png'),
+(3, 23, 'Kyle Andrei Casingal', 'Reflection', 'Imagine seeing these astonishing cars, lively blue skies, and few waves of clouds in an upside-down world. Inconceivable, isn\'t it?', '2022-11-24 10:03:11', '316189223_691988422233113_5145406262467036356_n.png'),
 (4, 23, 'Kyle Andrei Casingal', 'Windows of truth shows the real beauty of nature.', '', '2022-11-24 10:04:40', '313194508_684251046380877_4560164667618025920_n.png'),
 (5, 28, 'Mon Carlo Delima', 'Vintage mansion represents calm, warm, and peace.', '', '2022-11-24 10:05:22', '312140489_698881924813395_203606755662892340_n.png');
 
@@ -112,7 +113,7 @@ INSERT INTO `user` (`user_id`, `full_name`, `user_type`, `password`, `email_addr
 (6, 'Nene Yashiro', 'Homeowner', '123', 'bogart@gmail.com', 'Pending', '943962', NULL),
 (24, 'Jeune Paolus Flores', 'Homeowner', 'thisfeelsgud', 'floresjeunepaolus@gmail.com', 'Activated', '943962', '2022-11-10 22:51:58'),
 (25, 'Mon Kanor', 'Homeowner', 'monkanor', 'Crae0619@gmail.com', 'Deactivated', '943962', '2022-11-11 15:33:05'),
-(28, 'Mon Carlo Delima', 'Homeowner', '123', 'dmoncarlo6@gmail.com', 'Activated', '155306', '2022-11-18 17:13:20'),
+(28, 'Mon Carlo Delima', 'Homeowner', '123', 'dmoncarlo6@gmail.com', 'Activated', '286140', '2022-11-24 13:48:07'),
 (27, 'janwel castillo', 'Homeowner', 'dadada', 'janweljigycastillo20@gmail.com', 'Activated', '943962', '2022-11-15 20:43:59');
 COMMIT;
 
