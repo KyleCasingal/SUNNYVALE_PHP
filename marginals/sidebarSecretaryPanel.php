@@ -295,7 +295,7 @@
                     <li id="registration" onclick="location.href='../modules/homeownerRegistration.php'">Homeowner Registration</li>
                     <li id="approval" onclick="location.href='../modules/accManagement.php'">Approval of Accounts</li>
                     <li id="ticket" onclick="location.href='../modules/complaintManagement.php'">Complaint Tickets</li>
-                    <li id="settings" onclick="">Settings</li>
+                    <li id="settings" onclick="location.href='../modules/settings.php'">Settings</li>
                 </ul>
             </form>
         </div>
