@@ -1,4 +1,7 @@
-<?php require '../marginals/topbar.php'; ?>
+<?php
+require '../marginals/topbar.php';
+$result = $con->query("SELECT * FROM amenities") or die($mysqli->error);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -118,35 +121,114 @@
   }
 </style>
 
+
 <body>
   <form action="amenities" method="post">
+
     <div class='amenities'>
       <div class="amenitiesForm">
         <label>Name</label>
-        <input type="text" name="name" id="name" />
-
+        <input type="text" name="name" id="name" value="<?php echo $row['full_name'] ?>" readonly />
         <div class="timeinput">
           <label>Time</label>
-          <input type="time" name="time" id="time" min="6:00" max="21:00" required />
+          <select name="hrFrom" id="">
+            <option value="">hr</option>
+            <?php
+            for ($x = 1; $x <= 12; $x++) {
+              $x = sprintf("%02d", $x);
+              echo "<option value='$x'> $x </option>";
+            }
+            ?>
+          </select>
+          <select name="minsFrom" id="">
+            <option value="">mins</option>
+            <?php
+            for ($x = 0; $x <= 55; $x = $x + 5) {
+              $x = sprintf("%02d", $x);
+              echo "<option value='$x'> $x </option>";
+            }
+            ?>
+          </select>
+          <select name="ampmFrom" id="">
+            <option value="">am/pm</option>
+            <option value="am">am</option>
+            <option value="pm">pm</option>
+          </select>
           <label>To</label>
-          <input type="time" name="time2" id="time2" min="6:00:00" max="21:00:00" required />
+          <select name="hrTo" id="">
+            <option value="">hr</option>
+            <?php
+            for ($x = 1; $x <= 12; $x++) {
+              $x = sprintf("%02d", $x);
+              echo "<option value='$x'> $x </option>";
+            }
+            ?>
+          </select>
+          <select name="minsTo" id="">
+            <option value="">mins</option>
+            <?php
+            for ($x = 0; $x <= 55; $x = $x + 05) {
+              $x = sprintf("%02d", $x);
+              echo "<option value='$x'> $x </option>";
+            }
+            ?>
+          </select>
+          <select name="ampmTo" id="">
+            <option value="">am/pm</option>
+            <option value="am">am</option>
+            <option value="pm">pm</option>
+          </select>
           <label>6:00am to 9:00pm only</label>
         </div>
-
         <label>Date</label>
-        <input type="date" />
-
+        <input type="date" name="date" />
         <label>Amenity</label>
         <select name="amenity" id="amenity">
-          <option value="Basketball Court">Basketball Court</option>
-          <option value="Volleyball Court">Volleyball Court</option>
-          <option value="Badminton Court">Badminton Court</option>
-          <option value="Multi-purpose Hall">Multi-purpose Hall</option>
+          <option value="">Select...</option>
+          <?php
+          while ($row = $result->fetch_assoc()) :
+            $price =  $row['price']
+          ?>
+            <option><?php echo $row['amenity_name'] ?></option>
+          <?php endwhile; ?>
         </select>
-
         <label>Amount</label>
-        <input type="text" readOnly />
+        <?php
+        //COMPUTE AMOUNT AMENITY RESERVATION
+
+
+        ?>
+        <input type="text" id="price" readOnly <?php
+                                                if (isset($_POST['compute'])) {
+                                                  $amenity = $_POST['amenity'];
+                                                  function to_24_hour($hours, $minutes, $meridiem)
+                                                  {
+                                                    $hours = sprintf('%02d', (int) $hours);
+                                                    $minutes = sprintf('%02d', (int) $minutes);
+                                                    $meridiem = (strtolower($meridiem) == 'am') ? 'am' : 'pm';
+                                                    return date('H:i', strtotime("{$hours}:{$minutes} {$meridiem}"));
+                                                  }
+
+                                                  echo $name = $_POST['name'] . "\n";
+                                                  if (empty($_POST['hrFrom']) or empty($_POST['minsFrom']) or empty($_POST['ampmFrom']) or empty($_POST['hrTo']) or empty($_POST['minsTo']) or empty($_POST['ampmTo'])) {
+                                                    echo 'Please select a valid time! ';
+                                                  }
+                                                  $timeFrom = to_24_hour($_POST['hrFrom'], $_POST['minsFrom'], $_POST['ampmFrom']);
+                                                  $timeTo = to_24_hour($_POST['hrTo'], $_POST['minsTo'], $_POST['ampmTo']);
+                                                  $timeFrom = strtotime($timeFrom);
+                                                  $timeTo = strtotime($timeTo);
+                                                  $difference = ($timeTo - $timeFrom);
+                                                  $totalHrs = ($difference / 3600);
+                                                  $totalHrs = number_format((float)$totalHrs, 2, '.', '');
+                                                  $res = $con->query("SELECT * FROM amenities WHERE amenity_name = '$amenity'") or die($mysqli->error);
+                                                  $row = $res->fetch_assoc();
+                                                  $cost = $totalHrs * $row['price'];
+                                                  $date = $_POST['date'];
+                                                  echo "value = '$cost'";
+                                                }
+                                                ?> />
         <br>
+        <button name="compute">Compute</button>
         <button class="btnSubmitPost" name="submitPost" id="submitPost">Submit Reservation</button>
       </div>
       <div class="paymentForm">

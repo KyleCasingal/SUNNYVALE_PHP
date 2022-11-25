@@ -207,3 +207,4 @@ if (isset($_POST['homeownerReset'])) {
     echo 'test';
     header("Location: homeownerRegistration.php");
 }
+
