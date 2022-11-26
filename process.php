@@ -156,14 +156,9 @@ if (isset($_POST['login'])) {
     $con->close();
 }
 
-// LOGGING OUT
-if (isset($_POST['logout'])) {
-    session_destroy();
-}
-
 // UPLOADING A POST
-$targetDir = '../media/postsPhotos/';
 if (isset($_POST['submitPost'])) {
+    $targetDir = '../media/postsPhotos/';
     $title = mysqli_real_escape_string($con, $_POST['title']);
     $content = mysqli_real_escape_string($con,  $_POST['content']);
     $fileName = '' . $_FILES['image']['name'];
@@ -204,7 +199,32 @@ if (isset($_POST['homeowner_submit'])) {
 
 //HOMEOWNER REGISTRATION CLEAR
 if (isset($_POST['homeownerReset'])) {
-    echo 'test';
     header("Location: homeownerRegistration.php");
 }
 
+//FACILITY RENTING
+if (isset($_POST['submitReservation'])) {
+    function to_24_hour($hours, $minutes, $meridiem)
+    {
+        $hours = sprintf('%02d', (int) $hours);
+        $minutes = sprintf('%02d', (int) $minutes);
+        $meridiem = (strtolower($meridiem) == 'am') ? 'am' : 'pm';
+        return date('H:i', strtotime("{$hours}:{$minutes} {$meridiem}"));
+    }
+    $targetDir = '../media/paymentProof/';
+    $fileName = '' . $_FILES['image']['name'];
+    $targetFilePath = $targetDir . $fileName;
+    $amenity = $_POST['amenity'];
+    $name = $_POST['full_name'];
+    $cost = $_POST['cost'];
+    $timeFrom = to_24_hour($_POST['hrFrom'], $_POST['minsFrom'], $_POST['ampmFrom']);
+    $timeTo = to_24_hour($_POST['hrTo'], $_POST['minsTo'], $_POST['ampmTo']);
+    $date = $_POST['date'];
+    $dateTimeFrom = $date ." " . $timeFrom;
+    $dateTimeTo = $date . " " . $timeTo;
+    if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
+        $sql = "INSERT INTO facility_renting(amenity_name, renter_name, date_from, date_to, cost, payment_proof, marked_by, approved) VALUES ('$amenity','$name','$dateTimeFrom','$dateTimeTo','$cost','$fileName',NULL,'NOT YET')";
+        mysqli_query($con, $sql);
+    }
+
+}

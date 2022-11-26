@@ -121,7 +121,7 @@
         <div class="formBlog">
           <label class="writeText">Add Photos</label>
           <input class="attInput" type="file" name="image" id="image" accept="image/*" onchange="preview()"></input>
-          <img class="imagePrev" id="imagePreview" src=# alt="" />
+          <img class="imagePrev" id="imagePreview" src=# alt=""  />
           <label for="image" class="upload">Upload Photo</label>
           <label>Title</label>
           <input type="text" name="title" id="title" />
