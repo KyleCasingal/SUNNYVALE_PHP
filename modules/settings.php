@@ -331,12 +331,11 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                             Do you really want to update this amenity?
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="amenityUpdate" onclick="location.href = '#addAmenity'" type="submit" class="btn btn-primary">Save changes</button>
+                                            <button name="amenityUpdate" type="submit" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                             <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateAmenityModal">
                                 Update Amenity
                             </button>
@@ -355,9 +354,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                         <?php while ($row = $resultAmenities->fetch_assoc()) : ?>
                             <tr>
                                 <td>
-                                    <!-- <form method="post" autocomplete="off"> -->
                                     <a href="settings.php?amenity_id=<?php echo $row['amenity_id']; ?>" class="btnEdit">Edit</a>
-                                    <!-- </form> -->
                                 </td>
                                 <td><?php echo $row['subdivision_name'] ?></td>
                                 <td><?php echo $row['amenity_name'] ?></td>
@@ -372,18 +369,19 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
             <div class="settingsAddSubdivision" id="settingsAddSubdivision">
                 <div class="addAmenityForm">
                     <form method="post" autocomplete="off">
+                        <input type="hidden" name="subdivision_id" value="<?php echo $subdivision_id ?? ''; ?>">
                         <table class="tblAmenityForm">
 
                             <tr>
                                 <td>Subdivision:</td>
                                 <td>
-                                    <input name="subdivision" type="text" placeholder="new subdivision" required />
+                                    <input name="subdivision" value="<?php echo $subdivision_name ?? ''; ?>" type="text" placeholder="new subdivision" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Barangay:</td>
                                 <td>
-                                    <input name="barangay" type="text" placeholder="barangay" required />
+                                    <input name="barangay" value="<?php echo $barangay ?? ''; ?>" type="text" placeholder="barangay" required />
                                 </td>
                             </tr>
                         </table>
@@ -407,8 +405,23 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                             <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addSubdivisionModal">
                                 Add Subdivision
                             </button>
-
-                            <button type="submit" class="btnClearReg">
+                            <div class="modal fade" id="updateSubdivisionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Do you really want to update this subdivision?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button name="subdivisionUpdate" onclick="location.href = '#settingsAddSubdivision'" type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateSubdivisionModal">
                                 Update Subdivision
                             </button>
                         </div>
@@ -417,11 +430,15 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                 <div class="tblAmenityContainer">
                     <table class="table tblAmenity">
                         <thead>
+                            <th></th>
                             <th>Subdivision</th>
                             <th>Barangay</th>
                         </thead>
                         <?php while ($row = $resultSubdivision->fetch_assoc()) : ?>
                             <tr>
+                                <td>
+                                    <a href="settings.php?subdivision_id=<?php echo $row['subdivision_id']; ?>#settingsAddSubdivision" class="btnEdit">Edit</a>
+                                </td>
                                 <td><?php echo $row['subdivision_name'] ?></td>
                                 <td><?php echo $row['barangay'] ?></td>
                             </tr>

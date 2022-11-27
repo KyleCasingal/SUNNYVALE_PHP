@@ -267,20 +267,38 @@ if (isset($_POST['amenityUpdate'])) {
     $subdivision_name = $_POST['subdivision_name'];
     $availability = $_POST['availability'];
 
-    $con->query("UPDATE amenities SET amenity_id = '$amenity_id', amenity_name = '$amenity_name', subdivision_name = '$subdivision_name', price = '$rate', availability = '$availability' WHERE amenity_id = '$amenity_id'");
-    // mysqli_query($con, $sql);
-    header("Location: settings.php#addAmenity");
+    $con->query("UPDATE amenities SET amenity_name = '$amenity_name', subdivision_name = '$subdivision_name', price = '$rate', availability = '$availability' WHERE amenity_id = '$amenity_id'");
+    header ("Location: settings.php#addAmenity");
 }
 
 
 
-// SUBDIVISION ADD
+// SUBDIVISION ADD, EDIT
 if (isset($_POST['subdivisionAdd'])) {
     $subdivision = $_POST['subdivision'];
     $barangay = $_POST['barangay'];
 
     $sql = "INSERT INTO subdivision(subdivision_name, barangay) VALUES ('$subdivision', '$barangay')";
     mysqli_query($con, $sql);
+}
+
+// SELECTING A ROW TO EDIT AMENITY
+if (isset($_GET['subdivision_id'])) {
+    $subdivision_id = $_GET['subdivision_id'];
+    $result = $con->query("SELECT * FROM subdivision WHERE subdivision_id = '$subdivision_id'");
+    if ($result->num_rows) {
+        $row = $result->fetch_array();
+        $subdivision_name = $row['subdivision_name'];
+        $barangay = $row['barangay'];
+    }
+}
+// UPDATING A ROW SUBDIVISION
+if (isset($_POST['subdivisionUpdate'])){
+    $subdivision_id = $_POST['subdivision_id'];
+    $subdivision_name = $_POST['subdivision'];
+    $barangay = $_POST['barangay'];
+    $con->query("UPDATE subdivision SET subdivision_name = '$subdivision_name', barangay = '$barangay' WHERE subdivision_id = '$subdivision_id'");
+    header ("Location: settings.php#settingsAddSubdivision");
 }
 
 // MONTHLY DUES ADD
