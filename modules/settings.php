@@ -2,6 +2,17 @@
 require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
+$resultSubdivision = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
+$resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
+$resultSubdivision_selectMonthly = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
+$resultSubdivision_selectOfficers = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
+$resultSubdivision_selectSysAcc = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
+$resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
+$resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
+$resultSysAcc = $con->query("SELECT * FROM user WHERE user_type = 'Secretary' OR user_type = 'Treasurer' OR user_type = 'Admin' ") or die($mysqli->error);
+$resultOfficer = $con->query("SELECT * FROM officers") or die($mysqli->error);
+$resultMonthly = $con->query("SELECT * FROM monthly_dues") or die($mysqli->error);
+$resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error);
 ?>
 
 <!DOCTYPE html>
@@ -12,9 +23,7 @@ $row = $result->fetch_assoc();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
     <title>SUNNYVALE</title>
 </head>
 <style>
@@ -108,6 +117,7 @@ $row = $result->fetch_assoc();
         margin: 2vw;
         border-radius: 1vw;
         padding: 2vw;
+        width: 50%;
     }
 
     .tblAmenityForm td {
@@ -128,6 +138,10 @@ $row = $result->fetch_assoc();
         margin: 0;
     }
 
+    .tblAmenity th {
+        background-color: rgba(234, 232, 199, 0.2);
+    }
+
     .tblAmenity th,
     .tblAmenity td {
         text-align: center;
@@ -137,6 +151,7 @@ $row = $result->fetch_assoc();
         max-width: 100%;
         max-height: 20vw;
         margin-top: 2vw;
+        vertical-align: center;
     }
 
     .tblAmenity tr:hover {
@@ -152,7 +167,7 @@ $row = $result->fetch_assoc();
         margin-left: 2vw;
         margin-right: 0;
         overflow-y: auto;
-        overflow-x: hidden;
+        overflow-x: auto;
         max-height: 20vw;
     }
 
@@ -202,93 +217,194 @@ $row = $result->fetch_assoc();
         display: flex;
         flex-direction: column;
     }
+
+    .btnEdit {
+        background-color: orange;
+        border: 0;
+        padding: 0.5vw;
+        max-width: 50vw;
+        width: 5vw;
+        font-family: "Poppins", sans-sans-serif;
+        font-size: .8vw;
+        margin-top: 2vw;
+        border-radius: 0.8vw;
+        cursor: pointer;
+        text-decoration: none;
+        color: white;
+    }
 </style>
 
 
 <body>
-
     <div class="secretary">
         <div class="sideBar">
             <?php require '../marginals/sidebarSecretaryPanel.php'; ?>
         </div>
         <div class="secretaryPanel">
-            <form method="post">
-                <label class="lblSettings" id="amenity">Amenities</label>
-                <div class="settingsAddAmenity" id="AddAmenity">
-                    <div class="addAmenityForm">
+            <label class="lblSettings" id="amenity">Amenities</label>
+            <div class="settingsAddAmenity" id="AddAmenity">
+                <div class="addAmenityForm">
+                    <form method="post" autocomplete="off">
+                        <input type="hidden" name="amenity_id" value="<?php echo $amenity_id ?? ''; ?>">
                         <table class="tblAmenityForm">
+                            <tr>
+                                <td>Subdivision:</td>
+                                <td>
+                                    <select name="subdivision_name" id="">
+                                        <option value="">Select...</option>
+                                        <?php while ($row = $resultSubdivision_selectAmenities->fetch_assoc()) : ?>
+                                            <option value="<?php echo $row['subdivision_name'] ?>" <?php
+                                                                                                    if (isset($_GET['amenity_id'])) {
+                                                                                                        if ($subdivision_name == $row['subdivision_name']) {
+                                                                                                            echo 'selected="selected"';
+                                                                                                        }
+                                                                                                    }
+                                                                                                    ?>><?php echo $row['subdivision_name'] ?></option>
+                                        <?php endwhile; ?>
+
+                                    </select>
+                                </td>
+                            </tr>
                             <tr>
                                 <td>Amenity:</td>
                                 <td>
-                                    <input type="text" placeholder="new amenity" />
+                                    <input name="newAmenity" value="<?php echo $amenity_name ?? ''; ?>" type="text" placeholder="new amenity" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Amenity Rate Per Hour:</td>
                                 <td>
-                                    <input type="text" placeholder="rate per hour" />
+                                    <input name="rate" value="<?php echo $price ?? ''; ?>" type="text" placeholder="rate per hour" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Availability:</td>
                                 <td>
-                                    <select name="" id="">
-                                        <option value="Available">Available</option>
-                                        <option value="Unavailable">Unavailable</option>
+                                    <select name="availability" id="" required>
+                                        <option value="">Select...</option>
+                                        <option value="Available" <?php
+                                                                    if (isset($_GET['amenity_id'])) {
+                                                                        if ($availability == "Available") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Available</option>
+                                        <option value="Unavailable" <?php
+                                                                    if (isset($_GET['amenity_id'])) {
+                                                                        if ($availability == "Unavailable") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Unavailable</option>
                                     </select>
                                 </td>
                             </tr>
                         </table>
+                        <div class="modal fade" id="addAmenityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you really want to add this new amenity?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button name="amenityAdd" onclick="location.href = '#addAmenity'" type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="btnArea">
-                            <button type="submit" class="btnSubmitReg">
+                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addAmenityModal">
                                 Add amenity
                             </button>
+                            <div class="modal fade" id="updateAmenityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Do you really want to update this amenity?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button name="amenityUpdate" onclick="location.href = '#addAmenity'" type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <button type="submit" class="btnClearReg">
+                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateAmenityModal">
                                 Update Amenity
                             </button>
                         </div>
-                    </div>
-                    <div class="tblAmenityContainer">
-                        <table class="table tblAmenity">
-                            <thead>
-                                <th>Amenity</th>
-                                <th>Rate</th>
-                                <th>Availabiliity</th>
-                            </thead>
-                            <tr>
-                                <td>BasketBall Court</td>
-                                <td>150</td>
-                                <td>Available</td>
-                            </tr>
-                            <tr>
-                                <td>Multi-purpose hall</td>
-                                <td>200</td>
-                                <td>Available</td>
-                            </tr>
-                        </table>
-                    </div>
+                    </form>
                 </div>
-
-                <label class="lblSettings">Subdivisions</label>
-                <div class="settingsAddSubdivision">
-                    <div class="addAmenityForm">
+                <div class="tblAmenityContainer">
+                    <table class="table tblAmenity">
+                        <thead>
+                            <th></th>
+                            <th>Subdivision</th>
+                            <th>Amenity</th>
+                            <th>Rate</th>
+                            <th>Availabiliity</th>
+                        </thead>
+                        <?php while ($row = $resultAmenities->fetch_assoc()) : ?>
+                            <tr>
+                                <td>
+                                    <!-- <form method="post" autocomplete="off"> -->
+                                    <a href="settings.php?amenity_id=<?php echo $row['amenity_id']; ?>" class="btnEdit">Edit</a>
+                                    <!-- </form> -->
+                                </td>
+                                <td><?php echo $row['subdivision_name'] ?></td>
+                                <td><?php echo $row['amenity_name'] ?></td>
+                                <td><?php echo $row['price'] ?></td>
+                                <td><?php echo $row['availability'] ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </table>
+                </div>
+            </div>
+            <label class="lblSettings">Subdivisions</label>
+            <div class="settingsAddSubdivision" id="settingsAddSubdivision">
+                <div class="addAmenityForm">
+                    <form method="post" autocomplete="off">
                         <table class="tblAmenityForm">
+
                             <tr>
                                 <td>Subdivision:</td>
                                 <td>
-                                    <input type="text" placeholder="new subdivision" />
+                                    <input name="subdivision" type="text" placeholder="new subdivision" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Barangay:</td>
                                 <td>
-                                    <input type="text" placeholder="barangay" />
+                                    <input name="barangay" type="text" placeholder="barangay" required />
                                 </td>
                             </tr>
                         </table>
+                        <div class="modal fade" id="addSubdivisionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you really want to add this new subdivision?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button name="subdivisionAdd" onclick="location.href = '#settingsAddSubdivision'" type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="btnArea">
-                            <button type="submit" class="btnSubmitReg">
+                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addSubdivisionModal">
                                 Add Subdivision
                             </button>
 
@@ -296,58 +412,65 @@ $row = $result->fetch_assoc();
                                 Update Subdivision
                             </button>
                         </div>
-                    </div>
-                    <div class="tblAmenityContainer">
-                        <table class="table tblAmenity">
-                            <thead>
-                                <th>Subdivision</th>
-                                <th>Barangay</th>
-                            </thead>
-                            <tr>
-                                <td>Sunnyvale 1</td>
-                                <td>Pantok</td>
-                            </tr>
-                            <tr>
-                                <td>Sunnyvale 2</td>
-                                <td>Palangoy</td>
-                            </tr>
-                            <tr>
-                                <td>Sunnyvale 3</td>
-                                <td>Palangoy</td>
-                            </tr>
-                            <tr>
-                                <td>Sunnyvale 4</td>
-                                <td>Pantok</td>
-                            </tr>
-                        </table>
-                    </div>
+                    </form>
                 </div>
+                <div class="tblAmenityContainer">
+                    <table class="table tblAmenity">
+                        <thead>
+                            <th>Subdivision</th>
+                            <th>Barangay</th>
+                        </thead>
+                        <?php while ($row = $resultSubdivision->fetch_assoc()) : ?>
+                            <tr>
+                                <td><?php echo $row['subdivision_name'] ?></td>
+                                <td><?php echo $row['barangay'] ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </table>
+                </div>
+            </div>
 
-                <label class="lblSettings">Monthly Dues</label>
-                <div class="settingsMonthlyDues">
-                    <div class="addAmenityForm">
+            <label class="lblSettings">Monthly Dues</label>
+            <div class="settingsMonthlyDues" id="settingsMonthlyDues">
+                <div class="addAmenityForm">
+                    <form method="post" autocomplete="off">
                         <table class="tblAmenityForm">
                             <tr>
                                 <td>Subdivision:</td>
                                 <td>
-                                    <select name="" id="">
-                                        <option value="Sunnyvale 1">Sunnyvale 1</option>
-                                        <option value="Sunnyvale 2">Sunnyvale 2</option>
-                                        <option value="Sunnyvale 3">Sunnyvale 3</option>
-                                        <option value="Sunnyvale 4">Sunnyvale 4</option>
+                                    <select name="subdivision" id="" required>
+                                        <option value="">Select...</option>
+                                        <?php while ($row = $resultSubdivision_selectMonthly->fetch_assoc()) : ?>
+                                            <option value="<?php echo $row['subdivision_name'] ?>"><?php echo $row['subdivision_name'] ?></option>
+                                        <?php endwhile; ?>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Monthly Dues Amount:</td>
                                 <td>
-                                    <input type="text" placeholder="monthly rate" />
+                                    <input name="rate" type="text" placeholder="monthly rate" required />
                                 </td>
                             </tr>
-
                         </table>
+                        <div class="modal fade" id="addMonthlyDuesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you really want to add this new monthly due?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button name="monthlyDuesAdd" onclick="location.href = '#settingsMonthlyDues'" type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="btnArea">
-                            <button type="submit" class="btnSubmitReg">
+                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addMonthlyDuesModal">
                                 Add amount
                             </button>
 
@@ -355,65 +478,59 @@ $row = $result->fetch_assoc();
                                 Update Amount
                             </button>
                         </div>
-                    </div>
-                    <div class="tblAmenityContainer">
-                        <table class="table tblAmenity">
-                            <thead>
-                                <th>Subdivision</th>
-                                <th>Amount</th>
-                                <th>Updated at</th>
-                            </thead>
-                            <tr>
-                                <td>Sunnyvale 1</td>
-                                <td>200</td>
-                                <td>11/24/2022</td>
-                            </tr>
-                            <tr>
-                                <td>Sunnyvale 2</td>
-                                <td>200</td>
-                                <td>11/19/2022</td>
-                            </tr>
-                            <tr>
-                                <td>Sunnyvale 3</td>
-                                <td>200</td>
-                                <td>11/22/2022</td>
-                            </tr>
-                            <tr>
-                                <td>Sunnyvale 4</td>
-                                <td>200</td>
-                                <td>11/16/2022</td>
-                            </tr>
-
-                        </table>
-                    </div>
+                    </form>
                 </div>
+                <div class="tblAmenityContainer">
+                    <table class="table tblAmenity">
+                        <thead>
+                            <th>Subdivision</th>
+                            <th>Amount</th>
+                            <th>Updated at</th>
+                        </thead>
+                        <?php while ($row = $resultMonthly->fetch_assoc()) : ?>
+                            <tr>
+                                <td><?php echo $row['subdivision_name'] ?></td>
+                                <td><?php echo $row['amount'] ?></td>
+                                <td><?php echo $row['updated_at'] ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </table>
+                </div>
+            </div>
 
-                <label class="lblSettings">System Accounts</label>
-                <div class="settingsSystemAccounts">
-                    <div class="addAmenityForm">
+            <label class="lblSettings">System Accounts</label>
+            <div class="settingsSystemAccounts" id="settingsSystemAccounts">
+                <div class="addAmenityForm">
+                    <form method="post" autocomplete="off">
                         <table class="tblAmenityForm">
+                            <tr>
+                                <td>Subdivision:</td>
+                                <td>
+                                    <select name="subdivision" id="" required>
+                                        <option value="">Select...</option>
+                                        <?php while ($row = $resultSubdivision_selectSysAcc->fetch_assoc()) : ?>
+                                            <option value="<?php echo $row['subdivision_name'] ?>"><?php echo $row['subdivision_name'] ?></option>
+                                        <?php endwhile; ?>
+                                    </select>
+                                </td>
+                            </tr>
                             <tr>
                                 <td>System Account:</td>
                                 <td>
-                                    <input type="text" placeholder="account name" />
+                                    <input name="account_name" type="text" placeholder="account name" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Password:</td>
                                 <td>
-                                    <input type="text" placeholder="password" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Confirm Password:</td>
-                                <td>
-                                    <input type="text" placeholder="password" />
+                                    <input name="password" type="text" placeholder="password" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Account Type:</td>
                                 <td>
-                                    <select name="" id="">
+                                    <select name="user_type" id="" required>
+                                        <option value="">Select...</option>
                                         <option value="Admin">Admin</option>
                                         <option value="Secretary">Secretary</option>
                                         <option value="Treasurer">Treasurer</option>
@@ -421,8 +538,106 @@ $row = $result->fetch_assoc();
                                 </td>
                             </tr>
                         </table>
+                        <div class="modal fade" id="addSysAcc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you really want to add this new system account?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button name="sysAccAdd" onclick="location.href = '#settingsSystemAccounts'" type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="btnArea">
-                            <button type="submit" class="btnSubmitReg">
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#addSysAcc" class="btnSubmitReg">
+                                Add Account
+                            </button>
+                            <button type="submit" class="btnClearReg">
+                                Update Account
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="tblAmenityContainer">
+                    <table class="table tblAmenity">
+                        <thead>
+                            <th>Subdivision</th>
+                            <th>Account Name</th>
+                            <th>Password</th>
+                            <th>Account Type</th>
+                            <th>Account Status</th>
+                        </thead>
+                        <?php while ($row = $resultSysAcc->fetch_assoc()) : ?>
+                            <tr>
+                                <td><?php echo $row['subdivision_name'] ?></td>
+                                <td><?php echo $row['full_name'] ?></td>
+                                <td><?php echo $row['password'] ?></td>
+                                <td><?php echo $row['user_type'] ?></td>
+                                <td><?php echo $row['account_status'] ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </table>
+                </div>
+            </div>
+
+            <label class="lblSettings">Subivision Officers</label>
+            <div class="settingsOfficers" id="settingsOfficers">
+                <div class="addAmenityForm">
+                    <form method="post" autocomplete="off">
+                        <table class="tblAmenityForm">
+                            <tr>
+                                <td>Officer Name:</td>
+                                <td>
+                                    <input name="officer" type="text" placeholder="officer name" required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Subdivision:</td>
+                                <td>
+                                    <select name="subdivision" id="" required>
+                                        <option value="">Select...</option>
+                                        <?php while ($row = $resultSubdivision_selectOfficers->fetch_assoc()) : ?>
+                                            <option value="<?php echo $row['subdivision_name'] ?>"><?php echo $row['subdivision_name'] ?></option>
+                                        <?php endwhile; ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Position:</td>
+                                <td>
+                                    <select name="position" id="" required>
+                                        <option value="">Select...</option>
+                                        <?php while ($row = $resultPositions->fetch_assoc()) : ?>
+                                            <option value="<?php echo $row['position_name'] ?>"><?php echo $row['position_name'] ?></option>
+                                        <?php endwhile; ?>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="modal fade" id="addOfficer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you really want to add this new officer?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button name="officerAdd" onclick="location.href = '#settingsOfficers'" type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btnArea">
+                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addOfficer">
                                 Add Officer
                             </button>
 
@@ -430,145 +645,33 @@ $row = $result->fetch_assoc();
                                 Update Officer
                             </button>
                         </div>
-                    </div>
-                    <div class="tblAmenityContainer">
-                        <table class="table tblAmenity">
-                            <thead>
-                                <th>Account Name</th>
-                                <th>Password</th>
-                                <th>Account Type</th>
-                            </thead>
-                            <tr>
-                                <td>SV1_Admin</td>
-                                <td>*********</td>
-                                <td>Admin</td>
-                            </tr>
-                            <tr>
-                                <td>SV1_Secretary</td>
-                                <td>*********</td>
-                                <td>Secretary</td>
-                            </tr>
-                            <tr>
-                                <td>SV1_Treasurer</td>
-                                <td>*********</td>
-                                <td>Secretary</td>
-                            </tr>
-                            <tr>
-                                <td>SV2_Admin</td>
-                                <td>*********</td>
-                                <td>Admin</td>
-                            </tr>
-                            <tr>
-                                <td>SV2_Secretary</td>
-                                <td>*********</td>
-                                <td>Secretary</td>
-                            </tr>
-                            <tr>
-                                <td>SV2_Treasurer</td>
-                                <td>*********</td>
-                                <td>Treasurer</td>
-                            </tr>
-                        </table>
-                    </div>
+                    </form>
                 </div>
-
-                <label class="lblSettings">Subivision Officers</label>
-                <div class="settingsOfficers">
-                    <div class="addAmenityForm">
-                        <table class="tblAmenityForm">
+                <div class="tblAmenityContainer">
+                    <table class="table tblAmenity">
+                        <thead>
+                            <th>Subdivision</th>
+                            <th>Officer Name</th>
+                            <th>Position</th>
+                        </thead>
+                        <?php while ($row = $resultOfficer->fetch_assoc()) : ?>
                             <tr>
-                                <td>Officer Name:</td>
-                                <td>
-                                    <input type="text" placeholder="officer name" />
-                                </td>
+                                <td><?php echo $row['subdivision_name'] ?></td>
+                                <td><?php echo $row['officer_name'] ?></td>
+                                <td><?php echo $row['position_name'] ?></td>
                             </tr>
-                            <tr>
-                                <td>Subdivision:</td>
-                                <td>
-                                    <select name="" id="">
-                                        <option value="Sunnyvale 1">Sunnyvale 1</option>
-                                        <option value="Sunnyvale 2">Sunnyvale 2</option>
-                                        <option value="Sunnyvale 3">Sunnyvale 3</option>
-                                        <option value="Sunnyvale 4">Sunnyvale 4</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Position:</td>
-                                <td>
-                                    <select name="" id="">
-                                        <option value="President">President</option>
-                                        <option value="Vice President">VicePresident</option>
-                                        <option value="Secretary">Secretary</option>
-                                        <option value="Treasurer">Treasurer</option>
-                                        <option value="Auditor">Auditor</option>
-                                        <option value="PIO">PIO</option>
-                                        <option value="Sgt.at Arms">Sgt.at Arms</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </table>
-                        <div class="btnArea">
-                            <button type="submit" class="btnSubmitReg">
-                                Add account
-                            </button>
-
-                            <button type="submit" class="btnClearReg">
-                                Update Account
-                            </button>
-                        </div>
-                    </div>
-                    <div class="tblAmenityContainer">
-                        <table class="table tblAmenity">
-                            <thead>
-                                <th>Officer Name</th>
-                                <th>Subdivision</th>
-                                <th>Position</th>
-                            </thead>
-                            <tr>
-                                <td>Sadie Wheeler</td>
-                                <td>Sunnyvale 1</td>
-                                <td>President</td>
-                            </tr>
-                            <tr>
-                                <td>Bennett Cooke</td>
-                                <td>Sunnyvale 1</td>
-                                <td>Vice President</td>
-                            </tr>
-                            <tr>
-                                <td>Martin Craig</td>
-                                <td>Sunnyvale 1</td>
-                                <td>Secretary</td>
-                            </tr>
-                            <tr>
-                                <td>Audrey Benson</td>
-                                <td>Sunnyvale 1</td>
-                                <td>Treasurer</td>
-                            </tr>
-                            <tr>
-                                <td>Ruth Walsh</td>
-                                <td>Sunnyvale 1</td>
-                                <td>Auditor</td>
-                            </tr>
-                            <tr>
-                                <td>Hadley Steele</td>
-                                <td>Sunnyvale 1</td>
-                                <td>PIO</td>
-                            </tr>
-                            <tr>
-                                <td>Hadley Steele</td>
-                                <td>Sunnyvale 1</td>
-                                <td>Sgt.at Arms</td>
-                            </tr>
-                        </table>
-                    </div>
+                        <?php endwhile; ?>
+                    </table>
                 </div>
+            </div>
         </div>
         </form>
     </div>
     <?php
     require '../marginals/footer2.php'
-        ?>
+    ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
+
 
 </html>

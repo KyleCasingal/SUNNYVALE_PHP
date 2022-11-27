@@ -1,5 +1,7 @@
 <?php
 require '../marginals/topbar.php';
+$res = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
+$row = $res->fetch_assoc();
 $result = $con->query("SELECT * FROM homeowner_profile ORDER BY homeowner_id ASC") or die($mysqli->error);
 ?>
 

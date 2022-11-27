@@ -50,7 +50,6 @@ if (isset($_POST['register'])) {
     $confirm_password = $_POST['confirm_password'];
     $sql = "SELECT * FROM homeowner_profile WHERE first_name = '$first_name' AND last_name = '$last_name' AND email_address = '$email_address' ";
     $result = mysqli_query($con, $sql);
-
     if ($password !== $confirm_password) {
         echo 'Passwords do not match!';
     } else if (mysqli_num_rows($result) == 1) {
@@ -149,6 +148,7 @@ if (isset($_POST['login'])) {
         $result = $con->query($sql = "SELECT * FROM user WHERE email_address = '$email_address'");
         $row = $result->fetch_assoc();
         $_SESSION['user_id'] = $row['user_id'];
+        $_SESSION['subdivision_name'] = $row['subdivision_name'];
         header("Location: ../modules/blogHome.php");
     } else {
         echo "Wrong email or password!";
@@ -167,11 +167,13 @@ if (isset($_POST['submitPost'])) {
     $row = $result->fetch_assoc();
     $user_id = $row['user_id'];
     $full_name = $row['full_name'];
-    if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
-        $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, content_image) VALUES ('$user_id','$full_name', '$title', '$content', now(), '$fileName')";
-        mysqli_query($con, $sql);
-        header("Location: ../modules/blogHome.php");
-    }
+    copy($_FILES['image']['tmp_name'], $targetFilePath);
+
+    $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, content_image) VALUES ('$user_id','$full_name', '$title', '$content', now(), '$fileName')";
+    mysqli_query($con, $sql);
+    header("Location: ../modules/blogHome.php");
+    // $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, content_image) VALUES ('$user_id','$full_name', '$title', '$content', now(), NULL)";
+    // mysqli_query($con, $sql);
 }
 
 // REGISTRATION OF HOMEOWNERS
@@ -220,11 +222,92 @@ if (isset($_POST['submitReservation'])) {
     $timeFrom = to_24_hour($_POST['hrFrom'], $_POST['minsFrom'], $_POST['ampmFrom']);
     $timeTo = to_24_hour($_POST['hrTo'], $_POST['minsTo'], $_POST['ampmTo']);
     $date = $_POST['date'];
-    $dateTimeFrom = $date ." " . $timeFrom;
+    $dateTimeFrom = $date . " " . $timeFrom;
     $dateTimeTo = $date . " " . $timeTo;
     if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
         $sql = "INSERT INTO facility_renting(amenity_name, renter_name, date_from, date_to, cost, payment_proof, marked_by, approved) VALUES ('$amenity','$name','$dateTimeFrom','$dateTimeTo','$cost','$fileName',NULL,'NOT YET')";
         mysqli_query($con, $sql);
     }
+}
 
+//SETTINGS INSERTION
+
+// AMENITY ADD, EDIT
+if (isset($_POST['amenityAdd'])) {
+    $newAmenity = $_POST['newAmenity'];
+    $rate = $_POST['rate'];
+    $availability = $_POST['availability'];
+    $subdivision_name = $_POST['subdivision_name'];
+
+
+    $sql = "INSERT INTO amenities(amenity_name, subdivision_name, price, availability) VALUES ('$newAmenity', '$subdivision_name', '$rate', '$availability')";
+    mysqli_query($con, $sql);
+    
+}
+
+//SELECTING A ROW TO EDIT AMENITY
+if (isset($_GET['amenity_id'])) {
+    $amenity_id = $_GET['amenity_id'];
+    $result = $con->query("SELECT * FROM amenities WHERE amenity_id = '$amenity_id'");
+    if ($result->num_rows) {
+        $row = $result->fetch_array();
+        $amenity_name = $row['amenity_name'];
+        $subdivision_name = $row['subdivision_name'];
+        $price = $row['price'];
+        $availability = $row['availability'];
+    }
+}
+
+// UPDATING A ROW AMENITY
+if (isset($_POST['amenityUpdate'])) {
+    $amenity_id = $_POST['amenity_id'];
+    $amenity_name = $_POST['newAmenity'];
+    $subdivision_name = $_POST['subdivision_name'];
+    $rate = $_POST['rate'];
+    $subdivision_name = $_POST['subdivision_name'];
+    $availability = $_POST['availability'];
+
+    $con->query("UPDATE amenities SET amenity_id = '$amenity_id', amenity_name = '$amenity_name', subdivision_name = '$subdivision_name', price = '$rate', availability = '$availability' WHERE amenity_id = '$amenity_id'");
+    // mysqli_query($con, $sql);
+    header("Location: settings.php#addAmenity");
+}
+
+
+
+// SUBDIVISION ADD
+if (isset($_POST['subdivisionAdd'])) {
+    $subdivision = $_POST['subdivision'];
+    $barangay = $_POST['barangay'];
+
+    $sql = "INSERT INTO subdivision(subdivision_name, barangay) VALUES ('$subdivision', '$barangay')";
+    mysqli_query($con, $sql);
+}
+
+// MONTHLY DUES ADD
+if (isset($_POST['monthlyDuesAdd'])) {
+    $subdivision = $_POST['subdivision'];
+    $rate = $_POST['rate'];
+
+    $sql = "INSERT INTO monthly_dues(subdivision_name, amount, updated_at) VALUES ('$subdivision','$rate',NOW())";
+    mysqli_query($con, $sql);
+}
+
+// SYSTEM ACCOUNT ADD
+if (isset($_POST['sysAccAdd'])) {
+    $subdivision = $_POST['subdivision'];
+    $systemAccount = $_POST['account_name'];
+    $password = $_POST['password'];
+    $userType = $_POST['user_type'];
+
+    $sql = "INSERT INTO user(full_name, subdivision_name, user_type, password, email_address, account_status, verification_code, email_verified_at) VALUES ('$systemAccount', '$subdivision','$userType', '$password', NULL, 'Activated', NULL, NULL)";
+    mysqli_query($con, $sql);
+}
+
+// SUBDIVISION OFFCER ADD
+if (isset($_POST['officerAdd'])) {
+    $name = $_POST['officer'];
+    $subdivision = $_POST['subdivision'];
+    $position = $_POST['position'];
+    $sql = "INSERT INTO officers(subdivision_name, officer_name, position_name) VALUES ('$subdivision', '$name', '$position')";
+    mysqli_query($con, $sql);
 }
