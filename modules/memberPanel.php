@@ -2,6 +2,7 @@
 require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
+$residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['barangay'];
 ?>
 
 <!DOCTYPE html>
@@ -204,7 +205,7 @@ $row = $result->fetch_assoc();
               <tr>
                 <td class="lbl">Residence Address:</td>
                 <td class="data">
-                  <?php echo $row['residence_address'] ?></ </td>
+                  <?php echo $residence_address ?></ </td>
               </tr>
               <tr>
                 <td class="lbl">Business Address:</td>

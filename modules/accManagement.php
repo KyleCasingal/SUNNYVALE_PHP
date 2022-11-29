@@ -17,6 +17,13 @@ if (isset($_POST['activate'])) {
         foreach ($_POST['checkbox'] as $user_id) {
             $sql = "UPDATE user SET account_status = 'Activated' WHERE user_id = '$user_id'";
             $result = mysqli_query($con, $sql);
+            $resultActivate = $con->query("SELECT * FROM user WHERE user_id = '$user_id'");
+            $row = $resultActivate->fetch_assoc();
+            $full_name = $row['full_name'];
+            $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+            $row = $resultSession->fetch_assoc();
+            $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" .  'activated user' . ' ' . "$full_name" . "' , NOW())";
+            mysqli_query($con, $sql1);
         }
     } else {
         echo 'Please select an account to activate!';
@@ -34,6 +41,13 @@ if (isset($_POST['deactivate'])) {
         foreach ($_POST['checkbox'] as $user_id) {
             $sql = "UPDATE user SET account_status = 'Deactivated' WHERE user_id = '$user_id'";
             $result = mysqli_query($con, $sql);
+            $resultDeactivate = $con->query("SELECT * FROM user WHERE user_id = '$user_id'");
+            $row = $resultDeactivate->fetch_assoc();
+            $full_name = $row['full_name'];
+            $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+            $row = $resultSession->fetch_assoc();
+            $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" .  'deactivated user' . ' ' . "$full_name" . "' , NOW())";
+            mysqli_query($con, $sql1);
         }
     } else {
         echo 'Please select an account to deactivate!';
@@ -433,21 +447,21 @@ if (isset($_POST['deactivate'])) {
                             Activate
                         </button>
                         <div class="modal fade" id="deactivate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Do you really want to deactivate this/these account/s?
-                                </div>
-                                <div class="modal-footer">
-                                    <button name="deactivate" type="submit" class="btn btn-primary">Save changes</button>
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you really want to deactivate this/these account/s?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button name="deactivate" type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                         <button type="button" name="deactivate" data-bs-toggle="modal" data-bs-target="#deactivate" <?php if ($status_filter == "Deactivated") { ?> disabled <?php   } ?> class="btnClearReg">
                             Deactivate
                         </button>
@@ -457,6 +471,20 @@ if (isset($_POST['deactivate'])) {
     </div>
     </div>
     <?php require '../marginals/footer2.php'; ?>
+    <script>
+        $('#select-all').click(function(event) {
+            if (this.checked) {
+                // Iterate each checkbox
+                $(':checkbox').each(function() {
+                    this.checked = true;
+                });
+            } else {
+                $(':checkbox').each(function() {
+                    this.checked = false;
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

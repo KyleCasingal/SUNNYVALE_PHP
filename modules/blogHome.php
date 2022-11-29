@@ -338,7 +338,22 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
             <li class="categoryListItem">Sports</li>
           </ul>
         </div>
-
+      </div>
+      <div class="modal fade" id="confirmLogout" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Do you really want to log out?
+            </div>
+            <div class="modal-footer">
+              <button type="button" onclick="location.href='../logoutProcess.php'" class="btn btn-primary">Log out</button>
+            </div>
+          </div>
+        </div>
       </div>
   </div>
 <?php endwhile; ?>

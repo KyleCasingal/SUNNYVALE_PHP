@@ -2,7 +2,7 @@
 require '../marginals/topbar.php';
 $res = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $res->fetch_assoc();
-$result = $con->query("SELECT * FROM homeowner_profile ORDER BY homeowner_id ASC") or die($mysqli->error);
+$result = $con->query("SELECT * FROM homeowner_profile WHERE email_address != '' ORDER BY homeowner_id ASC ") or die($mysqli->error);
 ?>
 
 <!DOCTYPE html>
@@ -114,6 +114,24 @@ $result = $con->query("SELECT * FROM homeowner_profile ORDER BY homeowner_id ASC
 
     .btnSubmitReg:hover {
         background-color: rgb(93, 151, 93);
+    }
+
+    .btnUpdateReg {
+        background-color: orange;
+        border: 0;
+        padding: 0.5vw;
+        max-width: 50vw;
+        width: 10vw;
+        font-family: "Poppins", sans-sans-serif;
+        font-size: 1vw;
+        margin-top: 2vw;
+        color: white;
+        border-radius: 0.8vw;
+        cursor: pointer;
+    }
+
+    .btnUpdateReg:hover {
+        background-color: orangered;
     }
 
     .btnClearReg {
@@ -311,6 +329,21 @@ $result = $con->query("SELECT * FROM homeowner_profile ORDER BY homeowner_id ASC
         margin: 0;
         padding-top: 2vw;
     }
+
+    .btnEdit {
+        background-color: orange;
+        border: 0;
+        padding: 0.5vw;
+        max-width: 50vw;
+        width: 5vw;
+        font-family: "Poppins", sans-sans-serif;
+        font-size: .8vw;
+        margin-top: 2vw;
+        border-radius: 0.8vw;
+        cursor: pointer;
+        text-decoration: none;
+        color: white;
+    }
 </style>
 <script>
     $("#form_id").trigger("reset");
@@ -328,73 +361,125 @@ $result = $con->query("SELECT * FROM homeowner_profile ORDER BY homeowner_id ASC
                     <label class="lblRegistration">Registration</label>
                     <div class="regForm">
                         <table class="tblForm">
+                            <input type="hidden" name="homeowner_id" value="<?php echo $homeowner_id ?? ''; ?>">
                             <tr>
                                 <td>First Name:</td>
                                 <td>
-                                    <input type="text" name="first_name" id="" placeholder="first name" required />
+                                    <input type="text" name="first_name" id="" placeholder="first name" value="<?php echo $first_name ?? ''; ?>" required />
                                 </td>
                                 <td>Date of Birth:</td>
                                 <td>
-                                    <input type="date" data-date-format="yyyy-mm-dd" name="birthdate" id="" required />
+                                    <input type="date" data-date-format="yyyy-mm-dd" name="birthdate" value="<?php echo $birthdate ?? ''; ?>" id="" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Middle Name:</td>
                                 <td>
-                                    <input type="text" name="middle_name" id="" placeholder="middle name" required />
+                                    <input type="text" name="middle_name" id="" placeholder="middle name" value="<?php echo $middle_name ?? ''; ?>" required />
                                 </td>
                                 <td>Sex:</td>
                                 <td>
                                     <select name="sex" id="">
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
+                                        <option value="">Select...</option>
+                                        <option value="Male" <?php
+                                                                if (isset($_GET['homeowner_id'])) {
+                                                                    if ($sex == "Male") {
+                                                                        echo 'selected="selected"';
+                                                                    }
+                                                                }
+                                                                ?>>Male</option>
+                                        <option value="Female" <?php
+                                                                if (isset($_GET['homeowner_id'])) {
+                                                                    if ($sex == "Female") {
+                                                                        echo 'selected="selected"';
+                                                                    }
+                                                                }
+                                                                ?>>Female</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Last Name:</td>
                                 <td>
-                                    <input type="text" name="last_name" id="" placeholder="last name" required />
+                                    <input type="text" name="last_name" id="" placeholder="last name" value="<?php echo $last_name ?? ''; ?>" required />
                                 </td>
                                 <td>Email:</td>
                                 <td>
-                                    <input type="text" name="email_address" id="" placeholder="email" required />
+                                    <input type="text" name="email_address" id="" placeholder="email" value="<?php echo $email_address ?? ''; ?>" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Suffix:</td>
                                 <td>
-                                    <input type="text" name="suffix" id="" placeholder="suffix" required />
+                                    <input type="text" name="suffix" id="" placeholder="suffix" value="<?php echo $suffix ?? ''; ?>" required />
                                 </td>
                                 <td>Mobile Number:</td>
                                 <td>
-                                    <input type="text" name="mobile_number" id="" placeholder="mobile no." required />
+                                    <input type="text" name="mobile_number" id="" placeholder="mobile no." value="<?php echo $mobile_number ?? ''; ?>" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Residence Address:</td>
                                 <td>
-                                    <input type="text" name="street" id="" placeholder="Lot and Block" required />
+                                    <input type="text" name="street" id="" placeholder="Lot and Block" value="<?php echo $street ?? ''; ?>" required />
                                 </td>
                                 <td>
                                     <select name="subdivision" id="">
-                                        <option value="Sunnyvale 1">Sunnyvale 1</option>
-                                        <option value="Sunnyvale 2">Sunnyvale 2</option>
-                                        <option value="Sunnyvale 3">Sunnyvale 3</option>
-                                        <option value="Sunnyvale 4">Sunnyvale 4</option>
+                                        <option value="">Select...</option>
+                                        <option value="Sunnyvale 1" <?php
+                                                                    if (isset($_GET['homeowner_id'])) {
+                                                                        if ($subdivision == "Sunnyvale 1") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Sunnyvale 1</option>
+                                        <option value="Sunnyvale 2" <?php
+                                                                    if (isset($_GET['homeowner_id'])) {
+                                                                        if ($subdivision == "Sunnyvale 2") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Sunnyvale 2</option>
+                                        <option value="Sunnyvale 3" <?php
+                                                                    if (isset($_GET['homeowner_id'])) {
+                                                                        if ($subdivision == "Sunnyvale 3") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Sunnyvale 3</option>
+                                        <option value="Sunnyvale 4" <?php
+                                                                    if (isset($_GET['homeowner_id'])) {
+                                                                        if ($subdivision == "Sunnyvale 4") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Sunnyvale 4</option>
                                     </select>
                                 </td>
                                 <td>
                                     <select name="barangay" id="">
-                                        <option value="Palangoy">Palangoy</option>
-                                        <option value="Pantok">Pantok</option>
+                                        <option value="">Select...</option>
+                                        <option value="Palangoy" <?php
+                                                                    if (isset($_GET['homeowner_id'])) {
+                                                                        if ($barangay == "Palangoy") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Palangoy</option>
+                                        <option value="Pantok" <?php
+                                                                if (isset($_GET['homeowner_id'])) {
+                                                                    if ($barangay == "Pantok") {
+                                                                        echo 'selected="selected"';
+                                                                    }
+                                                                }
+                                                                ?>>Pantok</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Business Address:</td>
                                 <td class="NA">
-                                    <input type="text" name="business_address" id="" placeholder="business address" required />
+                                    <input type="text" name="business_address" id="" placeholder="business address" value="<?php echo $business_address ?? ''; ?>" required />
                                     <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
                             </tr>
@@ -404,20 +489,58 @@ $result = $con->query("SELECT * FROM homeowner_profile ORDER BY homeowner_id ASC
                             <tr>
                                 <td>Occupation:</td>
                                 <td class="NA">
-                                    <input type="text" name="occupation" id="" placeholder="occupation" required />
+                                    <input type="text" name="occupation" id="" placeholder="occupation" value="<?php echo $occupation ?? ''; ?>" required />
                                     <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Employer:</td>
                                 <td class="NAemployer">
-                                    <input type="text" name="employer" id="" placeholder="employer" required />
+                                    <input type="text" name="employer" id="" placeholder="employer" value="<?php echo $employer ?? ''; ?>" required />
                                     <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
                                 <td>
-                                    <button name="homeowner_submit" type="submit" class="btnSubmitReg">
-                                        Submit
-                                    </button>
+                                    <div class="modal fade" id="homeowner_submit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Do you really want to add this homeowner profile?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button name="homeowner_submit" type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="homeowner_update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Do you really want to update this homeowner profile?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button name="homeowner_update" type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php if ($update == true) : ?>
+                                        <button data-bs-toggle="modal" data-bs-target="#homeowner_update" type="button" class="btnUpdateReg">
+                                            Update
+                                        </button>
+                                    <?php else : ?>
+                                        <button data-bs-toggle="modal" data-bs-target="#homeowner_submit" type="button" class="btnSubmitReg">
+                                            Submit
+                                        </button>
+                                    <?php endif; ?>
                                 </td>
                                 <td>
                                     <button type="button" value="" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -431,6 +554,7 @@ $result = $con->query("SELECT * FROM homeowner_profile ORDER BY homeowner_id ASC
                     <div class="tblContainer">
                         <table class="tblHomeowners table-hover">
                             <thead>
+                                <th></th>
                                 <th>Homeowner ID</th>
                                 <th>Full Name</th>
                                 <th>Date of Birth</th>
@@ -456,9 +580,13 @@ $result = $con->query("SELECT * FROM homeowner_profile ORDER BY homeowner_id ASC
                                 } else {
                                     $middle_name = " " . $row['middle_name'];
                                 }
+                                $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['barangay'];
 
                             ?>
                                 <tr>
+                                    <td>
+                                        <a href="homeownerRegistration.php?homeowner_id=<?php echo $row['homeowner_id']; ?>" class="btnEdit">Edit</a>
+                                    </td>
                                     <td><?php echo $row['homeowner_id']; ?></td>
                                     <td><?php echo $row['first_name'] . $middle_name . " " . $row['last_name'] . $suffix; ?></td>
                                     <td><?php
@@ -466,7 +594,7 @@ $result = $con->query("SELECT * FROM homeowner_profile ORDER BY homeowner_id ASC
                                         echo $phptime = date("m/d/Y", $datetime);
                                         ?></td>
                                     <td><?php echo $row['sex']; ?></td>
-                                    <td><?php echo $row['residence_address']; ?></td>
+                                    <td><?php echo $residence_address; ?></td>
                                     <td><?php echo $row['email_address']; ?></td>
                                     <td><?php echo $row['mobile_number']; ?></td>
                                     <td><?php echo $row['business_address']; ?></td>

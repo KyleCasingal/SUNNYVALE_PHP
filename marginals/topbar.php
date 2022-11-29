@@ -232,7 +232,7 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
     <form class="topbarNav" method="post">
       <div class="topCenter">
         <ul class="topList">
-          <li name="logout" onclick="location.href='../logoutProcess.php'" class="topListItem1">HOME</li>
+          <li data-bs-toggle="modal" data-bs-target="#confirmLogout" onclick="location.href='#confirmLogout'" class="topListItem1">HOME</li>
           <li onclick="location.href='../modules/amenities.php'" class="topListItem1">AMENITIES</li>
           <li onclick="location.href='../modules/blogHome.php'" class="topListItem1"> BLOG</li>
         </ul>
@@ -250,7 +250,7 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
               <a class="dropdown-item" href="../modules/MemberPanel.php">Member Profile</a>
               <a class="dropdown-item" href="../modules/inboxPanel.php">Inbox</a>
               <?php
-              if ($row['user_type'] == 'Secretary' or 'Admin') {
+              if ($row['user_type'] == 'Secretary' or $row['user_type'] == 'Admin' or $row['user_type'] == 'Treasurer') {
                 echo '<a class="dropdown-item" href="../modules/homeownerRegistration.php">Panel</a>';
               }
               ?>
