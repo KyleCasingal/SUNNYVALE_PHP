@@ -241,6 +241,8 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
             <?php require '../marginals/sidebarSecretaryPanel.php'; ?>
         </div>
         <div class="secretaryPanel">
+
+            <!-- SETTINGS AMENITY -->
             <label class="lblSettings" id="amenity">Amenities</label>
             <div class="settingsAddAmenity" id="AddAmenity">
                 <div class="addAmenityForm">
@@ -261,7 +263,6 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                                                                                     }
                                                                                                     ?>><?php echo $row['subdivision_name'] ?></option>
                                         <?php endwhile; ?>
-
                                     </select>
                                 </td>
                             </tr>
@@ -300,6 +301,8 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                 </td>
                             </tr>
                         </table>
+
+                        <!--MODAL ADD AMENITY -->
                         <div class="modal fade" id="addAmenityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -320,6 +323,8 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                             <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addAmenityModal">
                                 Add amenity
                             </button>
+
+                            <!-- MODAL UPDATE AMENITY -->
                             <div class="modal fade" id="updateAmenityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -342,6 +347,8 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                         </div>
                     </form>
                 </div>
+
+                <!-- SETTINGS AMENITY TABLE -->
                 <div class="tblAmenityContainer">
                     <table class="table tblAmenity">
                         <thead>
@@ -365,6 +372,8 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                     </table>
                 </div>
             </div>
+
+            <!-- SETTINGS SUBDIVISION -->
             <label class="lblSettings">Subdivisions</label>
             <div class="settingsAddSubdivision" id="settingsAddSubdivision">
                 <div class="addAmenityForm">
@@ -385,6 +394,8 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                 </td>
                             </tr>
                         </table>
+
+                        <!-- MODAL ADD SUBDIVISION -->
                         <div class="modal fade" id="addSubdivisionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -405,6 +416,8 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                             <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addSubdivisionModal">
                                 Add Subdivision
                             </button>
+
+                            <!-- MODAL UPDATE SUBDIVISION -->
                             <div class="modal fade" id="updateSubdivisionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -427,6 +440,8 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                         </div>
                     </form>
                 </div>
+
+                <!-- SETTINGS SUBIDIVISION TABLE -->
                 <div class="tblAmenityContainer">
                     <table class="table tblAmenity">
                         <thead>
@@ -447,10 +462,12 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                 </div>
             </div>
 
+            <!-- SETTINGS MONTHLY DUES -->
             <label class="lblSettings">Monthly Dues</label>
             <div class="settingsMonthlyDues" id="settingsMonthlyDues">
                 <div class="addAmenityForm">
                     <form method="post" autocomplete="off">
+                        <input type="hidden" name="monthly_dues_id" value="<?php echo $monthly_dues_id ?? ''; ?>">
                         <table class="tblAmenityForm">
                             <tr>
                                 <td>Subdivision:</td>
@@ -458,7 +475,13 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                     <select name="subdivision" id="" required>
                                         <option value="">Select...</option>
                                         <?php while ($row = $resultSubdivision_selectMonthly->fetch_assoc()) : ?>
-                                            <option value="<?php echo $row['subdivision_name'] ?>"><?php echo $row['subdivision_name'] ?></option>
+                                            <option value="<?php echo $row['subdivision_name'] ?>" <?php
+                                                                                                    if (isset($_GET['monthly_dues_id'])) {
+                                                                                                        if ($subdivision_name == $row['subdivision_name']) {
+                                                                                                            echo 'selected="selected"';
+                                                                                                        }
+                                                                                                    }
+                                                                                                    ?>><?php echo $row['subdivision_name'] ?></option>
                                         <?php endwhile; ?>
                                     </select>
                                 </td>
@@ -466,10 +489,12 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                             <tr>
                                 <td>Monthly Dues Amount:</td>
                                 <td>
-                                    <input name="rate" type="text" placeholder="monthly rate" required />
+                                    <input name="rate" value="<?php echo $rate ?? '' ?>" type="text" placeholder="monthly rate" required />
                                 </td>
                             </tr>
                         </table>
+
+                        <!-- MODAL ADD MONTHLY DUES -->
                         <div class="modal fade" id="addMonthlyDuesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -491,21 +516,44 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                 Add amount
                             </button>
 
-                            <button type="submit" class="btnClearReg">
+                            <!-- MODAL UPDATE MONTHLY DUES -->
+                            <div class="modal fade" id="updateMonthlyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Do you really want to update this existing monthly due?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button name="monthlyDuesUpdate" onclick="location.href = '#settingsMonthlyDues'" type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateMonthlyModal">
                                 Update Amount
                             </button>
                         </div>
                     </form>
                 </div>
+
+                <!-- TABLE MONTHLY DUES -->
                 <div class="tblAmenityContainer">
                     <table class="table tblAmenity">
                         <thead>
+                            <th></th>
                             <th>Subdivision</th>
                             <th>Amount</th>
                             <th>Updated at</th>
                         </thead>
                         <?php while ($row = $resultMonthly->fetch_assoc()) : ?>
                             <tr>
+                                <td>
+                                    <a href="settings.php?monthly_dues_id=<?php echo $row['monthly_dues_id']; ?>#settingsMonthlyDues" class="btnEdit">Edit</a>
+                                </td>
                                 <td><?php echo $row['subdivision_name'] ?></td>
                                 <td><?php echo $row['amount'] ?></td>
                                 <td><?php echo $row['updated_at'] ?></td>
@@ -515,32 +563,23 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                 </div>
             </div>
 
+            <!-- SETTINGS SYSTEM ACCOUNTS -->
             <label class="lblSettings">System Accounts</label>
             <div class="settingsSystemAccounts" id="settingsSystemAccounts">
                 <div class="addAmenityForm">
                     <form method="post" autocomplete="off">
+                        <input type="hidden" name="user_id" value="<?php echo $account_id ?? ''; ?>">
                         <table class="tblAmenityForm">
-                            <tr>
-                                <td>Subdivision:</td>
-                                <td>
-                                    <select name="subdivision" id="" required>
-                                        <option value="">Select...</option>
-                                        <?php while ($row = $resultSubdivision_selectSysAcc->fetch_assoc()) : ?>
-                                            <option value="<?php echo $row['subdivision_name'] ?>"><?php echo $row['subdivision_name'] ?></option>
-                                        <?php endwhile; ?>
-                                    </select>
-                                </td>
-                            </tr>
                             <tr>
                                 <td>System Account:</td>
                                 <td>
-                                    <input name="account_name" type="text" placeholder="account name" required />
+                                    <input name="account_name" value="<?php echo $account_name ?? '' ?>" type="text" placeholder="account name" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Password:</td>
                                 <td>
-                                    <input name="password" type="text" placeholder="password" required />
+                                    <input name="password" value="<?php echo $password ?? '' ?>" type="text" placeholder="password" required />
                                 </td>
                             </tr>
                             <tr>
@@ -548,13 +587,55 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                 <td>
                                     <select name="user_type" id="" required>
                                         <option value="">Select...</option>
-                                        <option value="Admin">Admin</option>
-                                        <option value="Secretary">Secretary</option>
-                                        <option value="Treasurer">Treasurer</option>
+                                        <option value="Admin" <?php
+                                                                if (isset($_GET['user_id'])) {
+                                                                    if ($account_type == "Admin") {
+                                                                        echo 'selected="selected"';
+                                                                    }
+                                                                }
+                                                                ?>>Admin</option>
+                                        <option value="Secretary" <?php
+                                                                    if (isset($_GET['user_id'])) {
+                                                                        if ($account_type == "Secretary") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Secretary</option>
+                                        <option value="Treasurer" <?php
+                                                                    if (isset($_GET['user_id'])) {
+                                                                        if ($account_type == "Treasurer") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Treasurer</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Account Status:</td>
+                                <td>
+                                    <select name="account_status" id="" required>
+                                        <option value="">Select...</option>
+                                        <option value="Activated" <?php
+                                                                    if (isset($_GET['user_id'])) {
+                                                                        if ($account_status == "Activated") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Activated</option>
+                                        <option value="Deactivated" <?php
+                                                                    if (isset($_GET['user_id'])) {
+                                                                        if ($account_status == "Deactivated") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Deactivated</option>
                                     </select>
                                 </td>
                             </tr>
                         </table>
+
+                        <!-- MODAL ADD SYSTEM ACCOUNT -->
                         <div class="modal fade" id="addSysAcc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -575,16 +656,36 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                             <button type="button" data-bs-toggle="modal" data-bs-target="#addSysAcc" class="btnSubmitReg">
                                 Add Account
                             </button>
-                            <button type="submit" class="btnClearReg">
+
+                            <!-- MODAL UPDATE SYSTEM ACCOUNT -->
+                            <div class="modal fade" id="updateSysAcc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Do you really want to update this existing account?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button name="sysAccUpdate" type="submit" onclick="location.href = '#settingsSystemAccounts'" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateSysAcc" class="btnSubmitReg">
                                 Update Account
                             </button>
                         </div>
                     </form>
                 </div>
+
+                <!-- TABLE SYSTEM ACCOUNTS  -->
                 <div class="tblAmenityContainer">
                     <table class="table tblAmenity">
                         <thead>
-                            <th>Subdivision</th>
+                            <th></th>
                             <th>Account Name</th>
                             <th>Password</th>
                             <th>Account Type</th>
@@ -592,7 +693,9 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                         </thead>
                         <?php while ($row = $resultSysAcc->fetch_assoc()) : ?>
                             <tr>
-                                <td><?php echo $row['subdivision_name'] ?></td>
+                                <td>
+                                    <a href="settings.php?user_id=<?php echo $row['user_id']; ?>#settingsSystemAccounts" class="btnEdit">Edit</a>
+                                </td>
                                 <td><?php echo $row['full_name'] ?></td>
                                 <td><?php echo $row['password'] ?></td>
                                 <td><?php echo $row['user_type'] ?></td>
@@ -603,24 +706,32 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                 </div>
             </div>
 
+            <!-- SETTINGS SUBDIVISION OFFICERS -->
             <label class="lblSettings">Subivision Officers</label>
             <div class="settingsOfficers" id="settingsOfficers">
                 <div class="addAmenityForm">
                     <form method="post" autocomplete="off">
+                        <input type="hidden" name="officer_id" value="<?php echo $officer_id ?? ''; ?>">
                         <table class="tblAmenityForm">
                             <tr>
                                 <td>Officer Name:</td>
                                 <td>
-                                    <input name="officer" type="text" placeholder="officer name" required />
+                                    <input name="officer_name" type="text" value="<?php echo $officer_name ?? ''; ?>" placeholder="officer name" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Subdivision:</td>
                                 <td>
-                                    <select name="subdivision" id="" required>
+                                    <select name="subdivision_name" id="" required>
                                         <option value="">Select...</option>
                                         <?php while ($row = $resultSubdivision_selectOfficers->fetch_assoc()) : ?>
-                                            <option value="<?php echo $row['subdivision_name'] ?>"><?php echo $row['subdivision_name'] ?></option>
+                                            <option value="<?php echo $row['subdivision_name'] ?>" <?php
+                                                                                                    if (isset($_GET['officer_id'])) {
+                                                                                                        if ($subdivision_name == $row['subdivision_name']) {
+                                                                                                            echo 'selected="selected"';
+                                                                                                        }
+                                                                                                    }
+                                                                                                    ?>><?php echo $row['subdivision_name'] ?></option>
                                         <?php endwhile; ?>
                                     </select>
                                 </td>
@@ -628,15 +739,23 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                             <tr>
                                 <td>Position:</td>
                                 <td>
-                                    <select name="position" id="" required>
+                                    <select name="position_name" id="" required>
                                         <option value="">Select...</option>
                                         <?php while ($row = $resultPositions->fetch_assoc()) : ?>
-                                            <option value="<?php echo $row['position_name'] ?>"><?php echo $row['position_name'] ?></option>
+                                            <option value="<?php echo $row['position_name'] ?>" <?php
+                                                                                                    if (isset($_GET['officer_id'])) {
+                                                                                                        if ($position_name == $row['position_name']) {
+                                                                                                            echo 'selected="selected"';
+                                                                                                        }
+                                                                                                    }
+                                                                                                    ?>><?php echo $row['position_name'] ?> </option>
                                         <?php endwhile; ?>
                                     </select>
                                 </td>
                             </tr>
                         </table>
+
+                        <!-- MODAL ADD SUBDIVISION OFFICER -->
                         <div class="modal fade" id="addOfficer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -658,21 +777,44 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                 Add Officer
                             </button>
 
-                            <button type="submit" class="btnClearReg">
+                            <!-- MODAL UPDATE SUBDIVISION OFFICER -->
+                            <div class="modal fade" id="updateOfficer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Do you really want to updated this existing officer?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" name="officerUpdate" onclick="location.href = '#settingsOfficers'" type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateOfficer">
                                 Update Officer
                             </button>
                         </div>
                     </form>
                 </div>
+
+                <!-- TABLE SUBDIVISION OFFICERS  -->
                 <div class="tblAmenityContainer">
                     <table class="table tblAmenity">
                         <thead>
+                            <th></th>
                             <th>Subdivision</th>
                             <th>Officer Name</th>
                             <th>Position</th>
                         </thead>
                         <?php while ($row = $resultOfficer->fetch_assoc()) : ?>
                             <tr>
+                                <td>
+                                    <a href="settings.php?officer_id=<?php echo $row['officer_id']; ?>#settingsOfficers" class="btnEdit">Edit</a>
+                                </td>
                                 <td><?php echo $row['subdivision_name'] ?></td>
                                 <td><?php echo $row['officer_name'] ?></td>
                                 <td><?php echo $row['position_name'] ?></td>

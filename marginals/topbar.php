@@ -250,7 +250,7 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
               <a class="dropdown-item" href="../modules/MemberPanel.php">Member Profile</a>
               <a class="dropdown-item" href="../modules/inboxPanel.php">Inbox</a>
               <?php
-              if ($row['user_type'] == 'Secretary') {
+              if ($row['user_type'] == 'Secretary' or 'Admin') {
                 echo '<a class="dropdown-item" href="../modules/homeownerRegistration.php">Panel</a>';
               }
               ?>

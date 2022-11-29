@@ -148,7 +148,6 @@ if (isset($_POST['login'])) {
         $result = $con->query($sql = "SELECT * FROM user WHERE email_address = '$email_address'");
         $row = $result->fetch_assoc();
         $_SESSION['user_id'] = $row['user_id'];
-        $_SESSION['subdivision_name'] = $row['subdivision_name'];
         header("Location: ../modules/blogHome.php");
     } else {
         echo "Wrong email or password!";
@@ -273,7 +272,7 @@ if (isset($_POST['amenityUpdate'])) {
 
 
 
-// SUBDIVISION ADD, EDIT
+// SUBDIVISION ADD
 if (isset($_POST['subdivisionAdd'])) {
     $subdivision = $_POST['subdivision'];
     $barangay = $_POST['barangay'];
@@ -292,6 +291,7 @@ if (isset($_GET['subdivision_id'])) {
         $barangay = $row['barangay'];
     }
 }
+
 // UPDATING A ROW SUBDIVISION
 if (isset($_POST['subdivisionUpdate'])){
     $subdivision_id = $_POST['subdivision_id'];
@@ -310,22 +310,90 @@ if (isset($_POST['monthlyDuesAdd'])) {
     mysqli_query($con, $sql);
 }
 
+// SELECTING A ROW TO EDIT MONTHLY DUES
+if (isset($_GET['monthly_dues_id'])) {
+    $monthly_dues_id = $_GET['monthly_dues_id'];
+    $result = $con->query("SELECT * FROM monthly_dues WHERE monthly_dues_id = '$monthly_dues_id'");
+    if ($result->num_rows) {
+        $row = $result->fetch_array();
+        $subdivision_name = $row['subdivision_name'];
+        $rate = $row['amount'];
+    }
+}
+
+// UPDATING A ROW MONTHLY DUES
+if (isset($_POST['monthlyDuesUpdate'])){
+    $monthly_dues_id = $_POST['monthly_dues_id'];
+    $subdivision_name = $_POST['subdivision'];
+    $rate = $_POST['rate'];
+    $con->query("UPDATE monthly_dues SET subdivision_name = '$subdivision_name', amount = '$rate', updated_at = NOW() WHERE monthly_dues_id = '$monthly_dues_id'");
+    header ("Location: settings.php#settingsMonthlyDues");
+}
+
+
 // SYSTEM ACCOUNT ADD
 if (isset($_POST['sysAccAdd'])) {
-    $subdivision = $_POST['subdivision'];
     $systemAccount = $_POST['account_name'];
     $password = $_POST['password'];
     $userType = $_POST['user_type'];
 
-    $sql = "INSERT INTO user(full_name, subdivision_name, user_type, password, email_address, account_status, verification_code, email_verified_at) VALUES ('$systemAccount', '$subdivision','$userType', '$password', NULL, 'Activated', NULL, NULL)";
+    $sql = "INSERT INTO user(full_name, user_type, password, email_address, account_status, verification_code, email_verified_at) VALUES ('$systemAccount', '$userType', '$password', '$systemAccount', 'Activated', NULL, NULL)";
+    mysqli_query($con, $sql);
+    $sql1 = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, residence_address, business_address, occupation, email_address, birthdate, mobile_number, employer, display_picture) VALUES ('', '$systemAccount', NULL, NULL,'' , '', NULL, NULL, '', NOW(), '', '', 'default.png')";
+    mysqli_query($con, $sql1);
+}
+
+// SELECTING A ROW TO EDIT SYSTEM ACCOUNT
+if (isset($_GET['user_id'])){
+    $account_id = $_GET['user_id'];
+    $result = $con->query("SELECT * FROM user WHERE user_id = '$account_id'");
+    if ($result->num_rows) {
+        $row = $result->fetch_array();
+        $account_name = $row['full_name'];
+        $password = $row['password'];
+        $account_type = $row['user_type'];
+        $account_status = $row['account_status'];
+    }
+}
+
+// UPDATING A SYSTEM ACCOUNT
+if (isset($_POST['sysAccUpdate'])){
+    $account_id = $_POST['user_id'];
+    $full_name = $_POST['account_name'];
+    $password = $_POST['password'];
+    $account_type = $_POST['user_type'];
+    $account_status = $_POST['account_status'];
+    $con->query("UPDATE user SET password = '$password', user_type = '$account_type', account_status = '$account_status' WHERE user_id = '$account_id'"); 
+    header ("Location: settings.php#settingsSystemAccounts");
+}   
+
+// SUBDIVISION OFFICER ADD
+if (isset($_POST['officerAdd'])) {
+    $officer_name = $_POST['officer'];
+    $subdivision_name = $_POST['subdivision_name'];
+    $position_name = $_POST['position_name'];
+    $sql = "INSERT INTO officers(subdivision_name, officer_name, position_name) VALUES ('$subdivision_name', '$officer_name', '$position_name')";
     mysqli_query($con, $sql);
 }
 
-// SUBDIVISION OFFCER ADD
-if (isset($_POST['officerAdd'])) {
-    $name = $_POST['officer'];
-    $subdivision = $_POST['subdivision'];
-    $position = $_POST['position'];
-    $sql = "INSERT INTO officers(subdivision_name, officer_name, position_name) VALUES ('$subdivision', '$name', '$position')";
-    mysqli_query($con, $sql);
+// SELECTING A ROW TO EDIT OFFICERS
+if (isset($_GET['officer_id'])){
+    $officer_id = $_GET['officer_id'];
+    $result = $con->query("SELECT * FROM officers WHERE officer_id = '$officer_id'");
+    if ($result->num_rows) {
+        $row = $result->fetch_array();
+        $officer_name = $row['officer_name'];
+        $subdivision_name = $row['subdivision_name'];
+        $position_name = $row['position_name'];
+    }
 }
+
+// UPDATING AN OFFICER
+if (isset($_POST['officerUpdate'])){
+    $officer_id = $_POST['officer_id'];
+    $officer_name = $_POST['officer_name'];
+    $subdivision_name = $_POST['subdivision_name'];
+    $position_name = $_POST['position_name'];
+    $con->query("UPDATE officers SET subdivision_name = '$subdivision_name', officer_name = '$officer_name', position_name = '$position_name' WHERE officer_id = '$officer_id'"); 
+    header ("Location: settings.php#settingsOfficers");
+}   
