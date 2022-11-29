@@ -308,10 +308,11 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
             <div class="dropdown-menu">
               <a class="dropdown-item" href="../modules/MemberPanel.php">Member Profile</a>
               <a class="dropdown-item" href="../modules/inboxPanel.php">Inbox</a>
-
-              <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="dropdown-item" href="#staticBackdrop">Submit a Complaint</a>
-
-
+              <?php
+              if ($row['user_type'] == 'Homeowner') {
+                echo ' <a data-bs-toggle="modal" data-bs-target="#raiseConcern" class="dropdown-item" href="#raiseConcern">Submit a Complaint</a>';
+              }
+              ?>
               <?php
               if ($row['user_type'] == 'Secretary' or $row['user_type'] == 'Admin' or $row['user_type'] == 'Treasurer') {
                 echo '<a class="dropdown-item" href="../modules/homeownerRegistration.php">Panel</a>';
@@ -325,7 +326,7 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
       </div>
     </form>
   </div>
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal fade" id="raiseConcern" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
