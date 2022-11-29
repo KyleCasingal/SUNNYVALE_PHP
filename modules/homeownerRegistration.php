@@ -380,7 +380,7 @@ $result = $con->query("SELECT * FROM homeowner_profile WHERE email_address != ''
                                 <td>Sex:</td>
                                 <td>
                                     <select name="sex" id="">
-                                        <option value="">Select...</option>
+                                        <option value="" required>Select...</option>
                                         <option value="Male" <?php
                                                                 if (isset($_GET['homeowner_id'])) {
                                                                     if ($sex == "Male") {

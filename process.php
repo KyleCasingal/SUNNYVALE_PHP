@@ -51,7 +51,7 @@ if (isset($_POST['register'])) {
     $sql = "SELECT * FROM homeowner_profile WHERE first_name = '$first_name' AND last_name = '$last_name' AND email_address = '$email_address' ";
     $result = mysqli_query($con, $sql);
     $row = $result->fetch_assoc();
-    $homeowner_id = $row['user_homeowner_id'];
+    $homeowner_id = $row['homeowner_id'];
     if ($password !== $confirm_password) {
         echo 'Passwords do not match!';
     } else if (mysqli_num_rows($result) == 1) {
@@ -62,7 +62,7 @@ if (isset($_POST['register'])) {
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
             $mail->Username = 'sunnyvalesubdivision@gmail.com';
-            $mail->Password = 'xmdyrdzqmopfjpbo';
+            $mail->Password = 'xtxphqmvhpllutrz';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
             $mail->setFrom('sunnyvalesubdivision@gmail.com');
@@ -72,7 +72,7 @@ if (isset($_POST['register'])) {
             $mail->Subject = 'Email verification';
             $mail->Body = '<p>Your verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
             $mail->send();
-            $sql = "INSERT INTO user (homeowner_id, full_name,password,user_type,email_address,account_status,verification_code,email_verified_at) VALUES('$homeowner_id', '$full_name', '$password','Homeowner','$email_address','Pending', '$verification_code', NULL)";
+            $sql = "INSERT INTO user (user_homeowner_id, full_name,password,user_type,email_address,account_status,verification_code,email_verified_at) VALUES('$homeowner_id', '$full_name', '$password','Homeowner','$email_address','Pending', '$verification_code', NULL)";
             $result = mysqli_query($con, $sql);
             header("Location: ../modules/verify.php? email_address=" . $email_address);
             exit();
@@ -94,12 +94,29 @@ if (isset($_POST["verify"])) {
     $result = mysqli_query($con, $sql);
 
     if (mysqli_affected_rows($con) == 1) {
-        echo "<p>Your email is now verified, wait for the admin to activate your account.</p>";
-        header("Location:../index.php");
+        echo "<div class='messageSuccess'>
+        <label >
+          Account is now verified. Please wait for the Admin to activate your account.
+        </label>
+        <form method='post'>
+            <button class='okBtn' name='okBtn' type='submit' >OK</button>
+        </form>
+      </div>";
     } else {
-        echo "Verification code failed. Please try again.";
+        echo "<div class='messageFail'>
+        <label >
+          Wrong OTP. Please try again.
+        </label>
+      </div>";
     }
 }
+
+//REDIRECT TO INDEX AFTER OTP VERIFY
+if (isset($_POST["okBtn"])) {
+    header("Location: ../index.php");
+}
+
+
 
 // RESEND OTP
 if (isset($_POST["emailVerify"])) {

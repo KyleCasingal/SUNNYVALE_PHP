@@ -58,6 +58,7 @@
     ?>
     </div>
     <div class="landingPage">
+        <input type="hidden" value=<?php echo $verified ?? ''; ?>/>
         <img src="./img/landingBG.png" alt="" />
         <div class="landingTitle">
             Sunnyvale
