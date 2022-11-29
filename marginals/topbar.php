@@ -18,6 +18,9 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script>
+
+  </script>
   <title>SUNNYVALE</title>
 </head>
 <style>
@@ -221,7 +224,8 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
     background-color: rgb(89, 89, 89, 0);
     border: none !important;
   }
-  .modalConcernBody{
+
+  .modalConcernBody {
     padding: 0;
   }
 
@@ -236,7 +240,7 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
   }
 
   .concernSubject label {
-    font-family: 'Poppins' sans-serif;
+    font-family: 'Poppins'sans-serif;
     margin-left: 1vw;
     font-size: 1vw;
   }
@@ -280,8 +284,46 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
     border-bottom: 1px solid rgb(211, 211, 211);
     background-color: rgba(0, 0, 0, 0);
   }
-</style>
 
+  .messageSuccess label {
+    margin-left: 2vw;
+  }
+
+  .messageSuccess {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5vw;
+    color: white;
+    align-items: center;
+    background-color: darkseagreen;
+  }
+
+  .okBtn {
+    margin: 0;
+    color: white;
+    border-radius: 0.5vw;
+    width: 5vw;
+    height: 3vw;
+    border: none;
+    font-size: 1vw;
+    font-family: 'Poppins', sans-serif;
+    background-color: darkgreen;
+  }
+
+  .formBTN {
+    margin: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+  <script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
 <body>
   <div class='nav'>
     <div class="topLeft">
@@ -326,51 +368,55 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
       </div>
     </form>
   </div>
-  <div class="modal fade" id="raiseConcern" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+  <form action="" method="post">
+    <div class="modal fade" id="raiseConcern" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">
+              Raise a Concern
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modalConcernBody">
+            <div class="concernSubject">
+              <label>Subject:</label>
+              <textarea name="concern_subject" id="" cols="30" rows="10" class="subjectText" required></textarea>
+            </div>
+            <div class="concernMessage">
+              <textarea name="concern_description" id="" cols="30" rows="10" class="concernText" placeholder="Explain briefly your concern..." maxLength={255} required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+
+            <button type="submit" name="concernSubmit" class="btn btn-primary">
+              Submit Concern
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="modal fade" id="confirmLogout" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">
-            Raise a Concern
-          </h5>
+          <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modalConcernBody">
-          <div class="concernSubject">
-            <label>Subject:</label>
-            <textarea name="" id="" cols="30" rows="10" class="subjectText"></textarea>
-          </div>
-          <div class="concernMessage">
-            <textarea name="" id="" cols="30" rows="10" class="concernText" placeholder="Explain briefly your concern..." maxLength={255}></textarea>
-          </div>
+        <div class="modal-body">
+          Do you really want to log out?
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-primary">
-            Submit Concern
-          </button>
+          <button type="button" onclick="location.href='../logoutProcess.php'" class="btn btn-primary">Log out</button>
         </div>
       </div>
     </div>
   </div>
-  <div class="modal fade" id="confirmLogout" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              Do you really want to log out?
-            </div>
-            <div class="modal-footer">
-              <button type="button" onclick="location.href='../logoutProcess.php'" class="btn btn-primary">Log out</button>
-            </div>
-          </div>
-        </div>
-      </div>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

@@ -78,6 +78,7 @@
     font-family: 'Poppins', sans-serif;
     font-size: 1.5vw;
     background-color: darkseagreen;
+    color: white;
   }
   .messageFail{
     display: flex;
@@ -86,6 +87,7 @@
     font-family: 'Poppins', sans-serif;
     font-size: 1.5vw;
     background-color: lightcoral;
+    color: white;
   }
   .okBtn{
     border-radius: 0.5vw;
@@ -94,6 +96,7 @@
     font-size: 1vw;
     font-family: 'Poppins', sans-serif;
     background-color: darkgreen;
+    color: white;
   }
  
 </style>

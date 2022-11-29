@@ -451,6 +451,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                         </thead>
                         <?php while ($row = $resultSubdivision->fetch_assoc()) : ?>
                             <tr>
+                               
                                 <td>
                                     <a href="settings.php?subdivision_id=<?php echo $row['subdivision_id']; ?>#settingsAddSubdivision" class="btnEdit">Edit</a>
                                 </td>

@@ -2,6 +2,9 @@
 require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
+$resultComplaints = $con->query("SELECT * FROM concern WHERE status = 'Pending' OR status = 'Processing' ");
+
+$resultComplaintsRow = $con->query("SELECT * FROM CONCERN WHERE concern_id = ''")
 ?>
 
 <!DOCTYPE html>
@@ -12,9 +15,7 @@ $row = $result->fetch_assoc();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
     <title>SUNNYVALE</title>
 </head>
 <style>
@@ -237,46 +238,47 @@ $row = $result->fetch_assoc();
         overflow-y: scroll;
     }
 
-    .tblMessage {
+    .tblComplaints {
         margin: 0;
         width: 100%;
         height: 100%;
         max-height: 30px;
     }
 
-    .trInbox {
+    .trComplaints {
         width: 100%;
         color: rgb(89, 89, 89);
         background-color: rgb(241, 241, 241);
         border-bottom: 1px solid rgb(192, 192, 192);
     }
 
-    .trInbox:hover {
+    .trComplaints:hover {
         background-color: rgb(233, 233, 233);
         cursor: pointer;
     }
 
-    .msgSender {
+    .sender {
+        white-space: nowrap;
         font-family: "Poppins", sans-serif;
-        font-size: 1.5vw;
+        font-size: 1.2vw;
         font-weight: bold;
     }
 
-    .msgDesc {
+    .complaintDesc {
         max-width: 50vw;
         width: fixed;
         text-align: left;
         font-family: "Poppins", sans-serif;
-        font-size: 1.2vw;
+        font-size: 1vw;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
-    .msgTime {
+    .complaintTime {
         text-align: center;
         font-family: "Poppins", sans-serif;
-        font-size: 1.2vw;
+        font-size: 1vw;
     }
 
     .inboxTitle {
@@ -291,117 +293,80 @@ $row = $result->fetch_assoc();
     .complaintManagement {
         margin: 2vw;
     }
+    .subject{
+        font-weight: 800;
+    }
 </style>
-   
+
 
 <body>
     <div class="secretary">
         <div class="sideBar">
             <?php require '../marginals/sidebarSecretaryPanel.php'; ?>
         </div>
-        
+
         <div class="secretaryPanel">
             <div class="complaintManagement">
                 <label class="inboxTitle">Complaints</label>
-            <div class="inboxContainer">
-                <table class="tblMessage">
-                    <tr class="trInbox">
-                        <td class="msgSender">Jane Doe</td>
-                        <td class="msgDesc">
-                            "Neque porro quisquam est qui dolorem ipsum quia dolor sit
-                            amet, consectetur, adipisci velit sdasdasdasdsadas"
-                        </td>
-                        <td class="msgTime">9:00 pm</td>
-                    </tr>
-                    <tr class="trInbox">
-                        <td class="msgSender">Jane Doe</td>
-                        <td class="msgDesc">
-                            "Neque porro quisquam est qui dolorem ipsum quia dolor sit
-                            amet, consectetur, adipisci velit sdasdasdasdsadas"
-                        </td>
-                        <td class="msgTime">9:00 pm</td>
-                    </tr>
-                    <tr class="trInbox">
-                        <td class="msgSender">Jane Doe</td>
-                        <td class="msgDesc">
-                            "Neque porro quisquam est qui dolorem ipsum quia dolor sit
-                            amet, consectetur, adipisci velit sdasdasdasdsadas"
-                        </td>
-                        <td class="msgTime">9:00 pm</td>
-                    </tr>
-                    <tr class="trInbox">
-                        <td class="msgSender">Jane Doe</td>
-                        <td class="msgDesc">
-                            "Neque porro quisquam est qui dolorem ipsum quia dolor sit
-                            amet, consectetur, adipisci velit sdasdasdasdsadas"
-                        </td>
-                        <td class="msgTime">9:00 pm</td>
-                    </tr>
-                    <tr class="trInbox">
-                        <td class="msgSender">Jane Doe</td>
-                        <td class="msgDesc">
-                            "Neque porro quisquam est qui dolorem ipsum quia dolor sit
-                            amet, consectetur, adipisci velit sdasdasdasdsadas"
-                        </td>
-                        <td class="msgTime">9:00 pm</td>
-                    </tr>
-                    <tr class="trInbox">
-                        <td class="msgSender">Jane Doe</td>
-                        <td class="msgDesc">
-                            "Neque porro quisquam est qui dolorem ipsum quia dolor sit
-                            amet, consectetur, adipisci velit sdasdasdasdsadas"
-                        </td>
-                        <td class="msgTime">9:00 pm</td>
-                    </tr>
-                    <tr class="trInbox">
-                        <td class="msgSender">Jane Doe</td>
-                        <td class="msgDesc">
-                            "Neque porro quisquam est qui dolorem ipsum quia dolor sit
-                            amet, consectetur, adipisci velit sdasdasdasdsadas"
-                        </td>
-                        <td class="msgTime">9:00 pm</td>
-                    </tr>
-                    <tr class="trInbox">
-                        <td class="msgSender">Jane Doe</td>
-                        <td class="msgDesc">
-                            "Neque porro quisquam est qui dolorem ipsum quia dolor sit
-                            amet, consectetur, adipisci velit sdasdasdasdsadas"
-                        </td>
-                        <td class="msgTime">9:00 pm</td>
-                    </tr>
-                    <tr class="trInbox">
-                        <td class="msgSender">Jane Doe</td>
-                        <td class="msgDesc">
-                            "Neque porro quisquam est qui dolorem ipsum quia dolor sit
-                            amet, consectetur, adipisci velit sdasdasdasdsadas"
-                        </td>
-                        <td class="msgTime">9:00 pm</td>
-                    </tr>
-                    <tr class="trInbox">
-                        <td class="msgSender">Jane Doe</td>
-                        <td class="msgDesc">
-                            "Neque porro quisquam est qui dolorem ipsum quia dolor sit
-                            amet, consectetur, adipisci velit sdasdasdasdsadas"
-                        </td>
-                        <td class="msgTime">9:00 pm</td>
-                    </tr>
-                    <tr class="trInbox">
-                        <td class="msgSender">Jane Doe</td>
-                        <td class="msgDesc">
-                            "Neque porro quisquam est qui dolorem ipsum quia dolor sit
-                            amet, consectetur, adipisci velit sdasdasdasdsadas"
-                        </td>
-                        <td class="msgTime">9:00 pm</td>
-                    </tr>
-                </table>
+                <div class="inboxContainer">
+                    <input name="concern_id" type="hidden" value = <?php $row['concern_id'] ?? '' ; ?> >
+                    <table class="tblComplaints">
+                        <?php while ($row = $resultComplaints->fetch_assoc()) : ?>
+                            <tr class="trComplaints" data-bs-toggle="modal" data-bs-toggle="#complainModal">
+                            <a href="complaintManagement.php?concern_id=<?php echo $row['concern_id']; ?>" hidden></a>
+                                <td class="sender"><?php echo $row['full_name']; ?></td>
+                                <td class="complaintDesc"><label class="subject"><?php echo $row['concern_subject']?></label>
+                                   <?php echo $row['concern_description']; ?>
+                                </td>
+                                <td class="complaintTime"><?php echo $row['datetime'] ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </table>
+                </div>
             </div>
-            </div>
-            
+
         </div>
     </div>
-        <?php
-        require '../marginals/footer2.php'
-            ?>
+    <div class="modal fade" id="complaintModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">
+              Complaint Report
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modalConcernBody">
+            <table>
+                <tr>
+                    <td>Complainant:</td>
+                    <td><?php echo $row['full_name']; ?></td>
+                </tr>
+                <tr>
+                    <td>Subject:</td>
+                    <td><?php echo $row['concern_subject']?></td>
+                </tr>
+                <tr>
+                    <td>Complaint Description:</td>
+                    <td> <?php echo $row['concern_description']; ?></td>
+                </tr>
+            </table>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+
+            <button type="submit" name="concernSubmit" class="btn btn-primary">
+              Submit Concern
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <?php
+    require '../marginals/footer2.php'
+    ?>
 </body>
 
 </html>

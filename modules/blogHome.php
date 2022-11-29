@@ -138,20 +138,22 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     width: 30%;
     position: fixed;
     z-index: 0;
-    top: 0;
+    top: 5vw;
     right: 0;
     overflow-x: hidden;
     margin-top: 2vw;
   }
 
   .sideText label {
-
     font-weight: normal;
     font-size: 2vw;
-    margin-top: 5vw;
     padding-right: 10px;
     font-family: "Poppins", sans-serif;
     color: var(--text);
+  }
+
+  .sideText {
+    margin: 0;
   }
 
   .categoriesText {
@@ -343,7 +345,8 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
 <?php endwhile; ?>
 <?php require '../marginals/footer2.php' ?>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+</script>
 </body>
 
 </html>

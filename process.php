@@ -116,8 +116,6 @@ if (isset($_POST["okBtn"])) {
     header("Location: ../index.php");
 }
 
-
-
 // RESEND OTP
 if (isset($_POST["emailVerify"])) {
     $email_address = $_POST["email_verify"];
@@ -527,4 +525,30 @@ if (isset($_POST['officerUpdate'])) {
     $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an existing subdivision officer' . ' ' . "$officer_name" . '-' . "$position_name"  . "', NOW())";
     mysqli_query($con, $sql1);
     header("Location: settings.php#settingsOfficers");
+}
+
+// SUBMITTING A CONCERN
+if (isset($_POST['concernSubmit'])) {
+    $concern_subject = $_POST['concern_subject'];
+    $concern_description = $_POST['concern_description'];
+    $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+    $row = $result->fetch_assoc();
+    $sql = "INSERT INTO concern(full_name, concern_subject, concern_description, status) VALUES ('" . $row['full_name'] . "','$concern_subject', '$concern_description', 'Pending')";
+    mysqli_query($con, $sql);
+    echo "<div class='messageSuccess'>
+    <label>
+      Your concern has been sent. The officers will take a look into it.
+    </label>
+    <form  class='formBTN' method='post'>
+    <button class='okBtn' name='concernOk' type='submit' >OK</button>
+    </form>
+  </div>";
+}
+
+if(isset($_POST['concernOk'])){
+    header("Location: blogHome.php");
+}
+
+if (isset($_GET['concern_id'])){
+    ;
 }
