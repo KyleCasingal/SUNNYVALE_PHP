@@ -221,6 +221,65 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
     background-color: rgb(89, 89, 89, 0);
     border: none !important;
   }
+  .modalConcernBody{
+    padding: 0;
+  }
+
+
+  .concernSubject {
+    height: auto;
+    display: flex;
+    align-items: stretch;
+    margin: 0;
+    width: 100%;
+    border-bottom: 1px solid rgb(228, 228, 228);
+  }
+
+  .concernSubject label {
+    font-family: 'Poppins' sans-serif;
+    margin-left: 1vw;
+    font-size: 1vw;
+  }
+
+  .concernMessage {
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    width: 100%;
+    border: 1px solid rgb(228, 228, 228);
+  }
+
+  .subjectText {
+    height: 3vw;
+    border: none;
+    overflow: hidden;
+    outline: none;
+    margin-right: 1vw;
+    font-size: 1vw;
+    width: 100%;
+  }
+
+  .concernText {
+    height: 10vw;
+    border: none;
+    overflow: hidden;
+    margin: 0;
+    outline: none;
+    font-size: 1vw;
+    width: 100%;
+  }
+
+  .concernBtn {
+    padding: 0;
+    padding-bottom: 0.5vw;
+    margin-top: -1vw;
+    margin-bottom: 0vw;
+    border: none;
+    border-bottom: 1px solid rgb(211, 211, 211);
+    background-color: rgba(0, 0, 0, 0);
+  }
 </style>
 
 <body>
@@ -249,6 +308,10 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
             <div class="dropdown-menu">
               <a class="dropdown-item" href="../modules/MemberPanel.php">Member Profile</a>
               <a class="dropdown-item" href="../modules/inboxPanel.php">Inbox</a>
+
+              <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="dropdown-item" href="#staticBackdrop">Submit a Complaint</a>
+
+
               <?php
               if ($row['user_type'] == 'Secretary' or $row['user_type'] == 'Admin' or $row['user_type'] == 'Treasurer') {
                 echo '<a class="dropdown-item" href="../modules/homeownerRegistration.php">Panel</a>';
@@ -262,6 +325,51 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
       </div>
     </form>
   </div>
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">
+            Raise a Concern
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modalConcernBody">
+          <div class="concernSubject">
+            <label>Subject:</label>
+            <textarea name="" id="" cols="30" rows="10" class="subjectText"></textarea>
+          </div>
+          <div class="concernMessage">
+            <textarea name="" id="" cols="30" rows="10" class="concernText" placeholder="Explain briefly your concern..." maxLength={255}></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn btn-primary">
+            Submit Concern
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="confirmLogout" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Do you really want to log out?
+            </div>
+            <div class="modal-footer">
+              <button type="button" onclick="location.href='../logoutProcess.php'" class="btn btn-primary">Log out</button>
+            </div>
+          </div>
+        </div>
+      </div>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

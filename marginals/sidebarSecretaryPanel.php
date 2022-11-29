@@ -296,6 +296,7 @@
                     <li id="approval" onclick="location.href='../modules/accManagement.php'">Approval of Accounts</li>
                     <li id="ticket" onclick="location.href='../modules/complaintManagement.php'">Complaint Tickets</li>
                     <li id="settings" onclick="location.href='../modules/settings.php'">Settings</li>
+                    <li id="reports" onclick="location.href='../modules/reports.php'">Reports</li>
                 </ul>
             </form>
         </div>

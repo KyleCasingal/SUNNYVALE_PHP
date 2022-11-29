@@ -84,7 +84,7 @@ $result = $con->query("SELECT * FROM amenities") or die($mysqli->error);
     margin-bottom: 1vw;
   }
 
-  .btnSubmitPost {
+  .btnSubmit {
     background-color: darkseagreen;
     border: 0;
     padding: 0.5vw;
@@ -97,8 +97,24 @@ $result = $con->query("SELECT * FROM amenities") or die($mysqli->error);
     border-radius: 0.8vw;
     cursor: pointer;
   }
+  .btnCompute{
+    background-color: rgb(248, 186, 55);
+    border: 0;
+    padding: 0.5vw;
+    max-width: 50vw;
+    width: 15vw;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.5vw;
+    margin-top: 2vw;
+    color: white;
+    border-radius: 0.8vw;
+    cursor: pointer;
+  }
+  .btnCompute:hover{
+    background-color: rgb(253, 200, 86);
+  }
 
-  .btnSubmitPost:hover {
+  .btnSubmit:hover {
     background-color: rgba(167, 197, 167);
   }
 
@@ -273,8 +289,8 @@ $result = $con->query("SELECT * FROM amenities") or die($mysqli->error);
 
                                                             ?> />
         <br>
-        <button name="compute">Compute</button>
-        <button class="btnSubmitPost" name="submitReservation" id="submitPost">Submit Reservation</button>
+        <button name="compute" class="btnCompute">Compute</button>
+        <button class="btnSubmit" name="submitReservation" id="submitPost">Submit Reservation</button>
       </div>
       <div class="paymentForm">
         <label class="writeText">Upload proof of payment here:</label>
