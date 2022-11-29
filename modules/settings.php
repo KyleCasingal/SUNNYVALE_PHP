@@ -743,12 +743,12 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                         <option value="">Select...</option>
                                         <?php while ($row = $resultPositions->fetch_assoc()) : ?>
                                             <option value="<?php echo $row['position_name'] ?>" <?php
-                                                                                                    if (isset($_GET['officer_id'])) {
-                                                                                                        if ($position_name == $row['position_name']) {
-                                                                                                            echo 'selected="selected"';
-                                                                                                        }
+                                                                                                if (isset($_GET['officer_id'])) {
+                                                                                                    if ($position_name == $row['position_name']) {
+                                                                                                        echo 'selected="selected"';
                                                                                                     }
-                                                                                                    ?>><?php echo $row['position_name'] ?> </option>
+                                                                                                }
+                                                                                                ?>><?php echo $row['position_name'] ?> </option>
                                         <?php endwhile; ?>
                                     </select>
                                 </td>
