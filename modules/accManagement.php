@@ -412,11 +412,43 @@ if (isset($_POST['deactivate'])) {
                             <?php endwhile; ?>
                         </table>
                     </div>
+                    <div class="modal fade" id="activate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Do you really want to activate this/these account/s?
+                                </div>
+                                <div class="modal-footer">
+                                    <button name="activate" type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="btnArea">
-                        <button name="activate" <?php if ($status_filter == "Activated") { ?> disabled <?php   } ?> type="submit" class="btnSubmitReg">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#activate" <?php if ($status_filter == "Activated") { ?> disabled <?php   } ?> class="btnSubmitReg">
                             Activate
                         </button>
-                        <button name="deactivate" <?php if ($status_filter == "Deactivated") { ?> disabled <?php   } ?> type="submit" class="btnClearReg">
+                        <div class="modal fade" id="deactivate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Do you really want to deactivate this/these account/s?
+                                </div>
+                                <div class="modal-footer">
+                                    <button name="deactivate" type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <button type="button" name="deactivate" data-bs-toggle="modal" data-bs-target="#deactivate" <?php if ($status_filter == "Deactivated") { ?> disabled <?php   } ?> class="btnClearReg">
                             Deactivate
                         </button>
                     </div>
