@@ -397,7 +397,7 @@ if (isset($_POST['compute'])) {
       Invalid time input!
     </label>
   </div>";
-    } else if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] > 9) {
+    } else if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] > 8) {
         echo "<div class='messageFail'>
         <label >
           Invalid time input!
