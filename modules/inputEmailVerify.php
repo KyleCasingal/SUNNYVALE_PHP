@@ -18,6 +18,16 @@ require "../marginals/topbarVerify.php";
     margin: 0;
   }
 
+  .messageFail {
+    display: flex;
+    padding: 1vw;
+    justify-content: space-between;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5vw;
+    background-color: lightcoral;
+    color: white;
+  }
+
   .verifyPage {
     height: calc(100vh - 50px);
     display: flex;
@@ -77,7 +87,7 @@ require "../marginals/topbarVerify.php";
   <div class="verifyPage">
     <form class="verifyForm" method="post">
       <label>Email verification</label>
-      <input type="text" name="email_verify" id="email_verify" class="verifyInput" placeholder="Enter your email..." value="" required/>
+      <input type="text" name="email_verify" id="email_verify" class="verifyInput" placeholder="Enter your email..." value="" required />
       <button class="verifyButton" id="emailVerify" name="emailVerify">
         Resend OTP
       </button>

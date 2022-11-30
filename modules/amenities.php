@@ -1,6 +1,8 @@
 <?php
 require '../marginals/topbar.php';
-$result = $con->query("SELECT * FROM amenities") or die($mysqli->error);
+$result = $con->query("SELECT * FROM amenities WHERE availability =  'Available' ORDER BY subdivision_name ASC") or die($mysqli->error);
+$resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date_from)=curdate()");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +20,26 @@ $result = $con->query("SELECT * FROM amenities") or die($mysqli->error);
 <style>
   * {
     margin: 0;
+  }
+
+  .messageSuccess {
+    display: flex;
+    padding: 1vw;
+    justify-content: space-between;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5vw;
+    background-color: darkseagreen;
+    color: white;
+  }
+
+  .messageFail {
+    display: flex;
+    padding: 1vw;
+    justify-content: space-between;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5vw;
+    background-color: lightcoral;
+    color: white;
   }
 
   input {
@@ -97,7 +119,8 @@ $result = $con->query("SELECT * FROM amenities") or die($mysqli->error);
     border-radius: 0.8vw;
     cursor: pointer;
   }
-  .btnCompute{
+
+  .btnCompute {
     background-color: rgb(248, 186, 55);
     border: 0;
     padding: 0.5vw;
@@ -110,7 +133,8 @@ $result = $con->query("SELECT * FROM amenities") or die($mysqli->error);
     border-radius: 0.8vw;
     cursor: pointer;
   }
-  .btnCompute:hover{
+
+  .btnCompute:hover {
     background-color: rgb(253, 200, 86);
   }
 
@@ -241,7 +265,7 @@ $result = $con->query("SELECT * FROM amenities") or die($mysqli->error);
                                                   $date = $_POST['date'];
                                                   echo "value = '$date'";
                                                 }
-                                                $date = date('Y-m-d', strtotime('tomorrow'));
+                                                $date = date('Y-m-d', strtotime('today'));
                                                 echo "min='$date'"
                                                 ?>>
         <label>Amenity</label>
@@ -284,8 +308,19 @@ $result = $con->query("SELECT * FROM amenities") or die($mysqli->error);
                                                               $res = $con->query("SELECT * FROM amenities WHERE amenity_name = '$amenity'") or die($mysqli->error);
                                                               $row = $res->fetch_assoc();
                                                               $cost = $totalHrs * $row['price'];
-                                                              echo "value = '$cost'";
+                                                              
+                                                              if ($cost < 0) {
+                                                                echo "value = ''";
+                                                              } else if ($_POST['ampmFrom'] == 'am' and $_POST['hrFrom'] < 6) {
+                                                                echo "value = ''";
+                                                              } else if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] > 9) {
+                                                                echo "value = ''";
+                                                              } else {
+                                                                echo "value = '$cost'";
+                                                              }
                                                             }
+
+
 
                                                             ?> />
         <br>
@@ -301,6 +336,24 @@ $result = $con->query("SELECT * FROM amenities") or die($mysqli->error);
         <label for="image" class="upload">Upload Photo</label>
       </div>
     </div>
+    <table>
+      <tr>
+        <th>Amenity</th>
+        <th>Renter</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Cost</th>
+      </tr>
+      <?php while ($row = $resultReservation->fetch_assoc()) : ?>
+        <tr>
+          <td><?php echo $row['renter_name'] ?></td>
+          <td><?php echo $row['amenity_name'] ?></td>
+          <td><?php echo $row['date_from'] ?></td>
+          <td><?php echo $row['date_to'] ?></td>
+          <td><?php echo $row['cost'] ?></td>
+        </tr>
+      <?php endwhile; ?>
+    </table>
   </form>
   <?php
   require '../marginals/footer2.php';

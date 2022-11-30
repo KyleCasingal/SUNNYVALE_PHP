@@ -15,6 +15,16 @@
     margin: 0;
   }
 
+  .messageFail {
+    display: flex;
+    padding: 1vw;
+    justify-content: space-between;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5vw;
+    background-color: lightcoral;
+    color: white;
+  }
+
   .loginPage {
     height: calc(100vh - 50px);
     display: flex;
@@ -103,14 +113,15 @@
     text-decoration: none;
     color: #F6E70C;
   }
-  .verifyLinkLbl{
+
+  .verifyLinkLbl {
     display: flex;
     gap: 0.2vw;
     align-items: baseline;
     justify-content: center;
   }
 
-  .verifyLinkLbl p{
+  .verifyLinkLbl p {
     font-size: 1vw;
     margin-top: 1vw;
     text-decoration: none;
@@ -125,9 +136,9 @@
     <span class="loginTitle">Login</span>
     <form class="loginForm" method="post">
       <label>Email</label>
-      <input type="text" name="email_address" id="email_address" class="loginInput" placeholder="Enter your email..." value="" required/>
+      <input type="text" name="email_address" id="email_address" class="loginInput" placeholder="Enter your email..." value="" required />
       <label>Password</label>
-      <input type="password" name="password" id="password" class="loginInput" placeholder="Enter your password..." value="" required/>
+      <input type="password" name="password" id="password" class="loginInput" placeholder="Enter your password..." value="" required />
       <button class="loginButton" id="login" name="login">
         Login
       </button>
@@ -135,7 +146,7 @@
         Continue as Guest
       </button>
       <div class="verifyLinkLbl">
-        <p >Verify your account </p>
+        <p>Verify your account </p>
         <a class="verifyLink" href="../modules/inputEmailVerify.php"> here</a>
       </div>
 

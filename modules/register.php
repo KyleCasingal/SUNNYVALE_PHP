@@ -101,6 +101,16 @@
     padding: 0.6vw;
     font-size: 1vw;
   }
+
+  .messageFail {
+    display: flex;
+    padding: 1vw;
+    justify-content: space-between;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5vw;
+    background-color: lightcoral;
+    color: white;
+  }
 </style>
 
 <body>

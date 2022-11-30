@@ -51,9 +51,22 @@ if (isset($_POST['register'])) {
     $sql = "SELECT * FROM homeowner_profile WHERE first_name = '$first_name' AND last_name = '$last_name' AND email_address = '$email_address' ";
     $result = mysqli_query($con, $sql);
     $row = $result->fetch_assoc();
-    $homeowner_id = $row['homeowner_id'];
-    if ($password !== $confirm_password) {
-        echo 'Passwords do not match!';
+    $sql1 = "SELECT * FROM user WHERE email_address = '$email_address'";
+    $result1 = mysqli_query($con, $sql1);
+    $homeowner_id = $row['homeowner_id'] ?? '';
+
+    if (mysqli_num_rows($result1) == 1) {
+        echo "<div class='messageFail'>
+        <label>
+          Your email is already associated with an existing user!
+        </label>
+      </div>";
+    } else if ($password !== $confirm_password) {
+        echo "<div class='messageFail'>
+        <label>
+        Passwords do not match!
+        </label>
+      </div>";
     } else if (mysqli_num_rows($result) == 1) {
         $mail = new PHPMailer(true);
         try {
@@ -74,13 +87,19 @@ if (isset($_POST['register'])) {
             $mail->send();
             $sql = "INSERT INTO user (user_homeowner_id, full_name,password,user_type,email_address,account_status,verification_code,email_verified_at) VALUES('$homeowner_id', '$full_name', '$password','Homeowner','$email_address','Pending', '$verification_code', NULL)";
             $result = mysqli_query($con, $sql);
+            $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $first_name . ' ' . $last_name . "' ,  'created an account', NOW())";
+            mysqli_query($con, $sql1);
             header("Location: ../modules/verify.php? email_address=" . $email_address);
             exit();
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
     } else {
-        echo "The information that you have provided is not found in the homeowners' list. Please try again.";
+        echo "<div class='messageFail'>
+        <label>
+        The information that you have provided is not found in the homeowners' list. Please try again.
+        </label>
+      </div>";
     }
 }
 
@@ -94,6 +113,9 @@ if (isset($_POST["verify"])) {
     $result = mysqli_query($con, $sql);
 
     if (mysqli_affected_rows($con) == 1) {
+        $result = mysqli_query($con, $sql);
+        $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('$email_address' ,  'verified their email', NOW())";
+        mysqli_query($con, $sql1);
         echo "<div class='messageSuccess'>
         <label >
           Account is now verified. Please wait for the Admin to activate your account.
@@ -121,9 +143,21 @@ if (isset($_POST["emailVerify"])) {
     $email_address = $_POST["email_verify"];
     $sql = "SELECT * FROM user WHERE email_address = '$email_address' ";
     $result = mysqli_query($con, $sql);
+    $sql1 = "SELECT * FROM user WHERE email_address = '$email_address' AND email_verified_at IS NOT NULL";
+    $result1 = mysqli_query($con, $sql);
     $row = $result->fetch_assoc();
     if (mysqli_num_rows($result) == 0) {
-        echo "Your email is not registered with an existing account.";
+        echo "<div class='messageFail'>
+        <label>
+        Your email is not registered with an existing account.
+        </label>
+      </div>";
+    } else if (mysqli_num_rows($result) == 1) {
+        echo "<div class='messageFail'>
+        <label>
+        Your email is already verified.
+        </label>
+      </div>";
     } else {
         $full_name = $row['full_name'];
         $mail = new PHPMailer(true);
@@ -159,6 +193,8 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
     $sql = "SELECT * FROM user WHERE email_address = '$email_address' AND password = '$password' AND account_status = 'Activated' ";
     $result = mysqli_query($con, $sql);
+    $sql1 = "SELECT * FROM user WHERE email_address = '$email_address' AND password = '$password' AND (account_status = 'Pending' or account_status = 'Deactivated')";
+    $result1 = mysqli_query($con, $sql1);
 
     if (mysqli_num_rows($result) == 1) {
         $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
@@ -168,8 +204,18 @@ if (isset($_POST['login'])) {
         $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','logged in', NOW())";
         mysqli_query($con, $sql1);
         header("Location: ../modules/blogHome.php");
+    } elseif (mysqli_num_rows($result1) == 1) {
+        echo "<div class='messageFail'>
+        <label >
+          Your account is not activated.
+        </label>
+      </div>";
     } else {
-        echo "Wrong email or password!";
+        echo "<div class='messageFail'>
+        <label >
+          Wrong username or password!
+        </label>
+      </div>";
     }
     $con->close();
 }
@@ -190,8 +236,8 @@ if (isset($_POST['submitPost'])) {
     $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, content_image) VALUES ('$user_id','$full_name', '$title', '$content', now(), '$fileName')";
     mysqli_query($con, $sql);
     header("Location: ../modules/blogHome.php");
-    // $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, content_image) VALUES ('$user_id','$full_name', '$title', '$content', now(), NULL)";
-    // mysqli_query($con, $sql);
+    $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "' ,  'uploaded a new post', NOW())";
+    mysqli_query($con, $sql1);
 }
 
 // REGISTRATION OF HOMEOWNERS
@@ -303,12 +349,55 @@ if (isset($_POST['submitReservation'])) {
     $date = $_POST['date'];
     $dateTimeFrom = $date . " " . $timeFrom;
     $dateTimeTo = $date . " " . $timeTo;
-    if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
+
+    if ($cost == '') {
+        echo "<div class='messageFail'>
+    <label >
+      Please compute your reservation first!
+    </label>
+  </div>";
+    } else if ($_FILES['image']['size'] == 0) {
+        echo "<div class='messageFail'>
+    <label >
+      Please upload your proof of payment!
+    </label>
+  </div>";
+    } else if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
         $sql = "INSERT INTO facility_renting(amenity_name, renter_name, date_from, date_to, cost, payment_proof) VALUES ('$amenity','$name','$dateTimeFrom','$dateTimeTo','$cost','$fileName')";
         mysqli_query($con, $sql);
+        $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('$name' ,  'reserved an amenity', NOW())";
+        mysqli_query($con, $sql1);
+        echo "<div class='messageSuccess'>
+    <label >
+      Your reservation has been set!
+    </label>
+  </div>";
     }
 }
 
+// AMENITY ERROR 
+if (isset($_POST['compute'])) {
+    if ($_POST['ampmFrom'] == 'pm' and $_POST['ampmTo'] == 'am') {
+        echo "<div class='messageFail'>
+    <label >
+      Invalid time input!
+    </label>
+  </div>";
+    }
+    if ($_POST['ampmFrom'] == 'am' and $_POST['hrFrom'] < 6) {
+        echo "<div class='messageFail'>
+    <label >
+      Invalid time input!
+    </label>
+  </div>";
+    } else if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] > 9) {
+        echo "<div class='messageFail'>
+        <label >
+          Invalid time input!
+        </label>
+      </div>";
+    }
+}
 //SETTINGS INSERTION
 
 // AMENITY ADD, EDIT
@@ -535,6 +624,8 @@ if (isset($_POST['concernSubmit'])) {
     $row = $result->fetch_assoc();
     $sql = "INSERT INTO concern(full_name, concern_subject, concern_description, status) VALUES ('" . $row['full_name'] . "','$concern_subject', '$concern_description', 'Pending')";
     mysqli_query($con, $sql);
+    $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "' ,  'submitted a concern', NOW())";
+    mysqli_query($con, $sql1);
     echo "<div class='messageSuccess'>
     <label>
       Your concern has been sent. The officers will take a look into it.
@@ -545,10 +636,9 @@ if (isset($_POST['concernSubmit'])) {
   </div>";
 }
 
-if(isset($_POST['concernOk'])){
+if (isset($_POST['concernOk'])) {
     header("Location: blogHome.php");
 }
 
-if (isset($_GET['concern_id'])){
-    ;
+if (isset($_GET['concern_id'])) {;
 }
