@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 30, 2022 at 12:10 PM
+-- Generation Time: Nov 30, 2022 at 08:16 PM
 -- Server version: 8.0.28
 -- PHP Version: 7.4.26
 
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=114 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `audit_trail`
@@ -154,7 +154,27 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (90, 'SV1_Admin', 'logged in', '2022-11-30 16:49:17'),
 (91, 'SV1_Admin', 'logged out', '2022-11-30 16:52:09'),
 (92, 'SV1_Secretary', 'logged in', '2022-11-30 16:52:22'),
-(93, 'SV1_Secretary', 'logged out', '2022-11-30 16:52:35');
+(93, 'SV1_Secretary', 'logged out', '2022-11-30 16:52:35'),
+(94, 'SV1_Admin', 'logged in', '2022-11-30 21:55:37'),
+(95, 'SV1_Admin', 'logged out', '2022-11-30 23:32:58'),
+(96, 'SV1_Admin', 'logged in', '2022-11-30 23:33:06'),
+(97, 'SV1_Admin', 'logged out', '2022-11-30 23:40:02'),
+(98, 'SV1_Admin', 'logged in', '2022-11-30 23:40:12'),
+(99, 'SV1_Admin', 'reserved an amenity', '2022-11-30 23:45:17'),
+(100, 'SV1_Admin', 'logged out', '2022-11-30 23:53:02'),
+(101, 'SV1_Admin', 'logged in', '2022-11-30 23:59:07'),
+(102, 'SV1_Admin', 'logged out', '2022-12-01 00:00:03'),
+(103, 'SV1_Admin', 'logged in', '2022-12-01 00:04:39'),
+(104, 'SV1_Admin', 'logged out', '2022-12-01 00:05:18'),
+(105, 'Mon Carlo Delima', 'logged in', '2022-12-01 00:08:11'),
+(106, 'Mon Carlo Delima', 'logged out', '2022-12-01 01:41:29'),
+(107, 'SV1_Admin', 'logged in', '2022-12-01 01:41:58'),
+(108, 'SV1_Admin', 'logged out', '2022-12-01 01:43:16'),
+(109, 'Mon Carlo Delima', 'logged in', '2022-12-01 01:43:26'),
+(110, 'Mon Carlo Delima', 'logged out', '2022-12-01 03:14:51'),
+(111, 'John Doe', 'logged in', '2022-12-01 03:16:07'),
+(112, 'John Doe', 'logged out', '2022-12-01 03:56:21'),
+(113, 'Mon Carlo Delima', 'logged in', '2022-12-01 03:56:28');
 
 -- --------------------------------------------------------
 
@@ -205,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `facility_renting` (
   `cost` int NOT NULL,
   `payment_proof` varchar(255) NOT NULL,
   PRIMARY KEY (`transaction_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `facility_renting`
@@ -215,7 +235,8 @@ INSERT INTO `facility_renting` (`transaction_id`, `amenity_name`, `renter_name`,
 (1, 'Basketball Court', 'Mon Carlo Delima', '2022-11-26 01:00:00', '2022-11-26 02:00:00', 150, 'test'),
 (2, 'Volleyball Court', 'Mon Carlo Delima', '2022-11-26 02:00:00', '2022-11-26 04:00:00', 300, 'test'),
 (3, 'Multi-purpose Hall', 'Mon Carlo Delima', '2022-11-27 05:30:00', '2022-11-27 06:30:00', 150, 'Delima, Mon Carlo Z. output.png'),
-(4, 'Basketball Court', '', '2022-12-01 19:00:00', '2022-12-01 20:00:00', 150, 'monsters-university-clipart-clipart-panda-free-clipart-images-9HMBXK-clipart.gif');
+(4, 'Basketball Court', '', '2022-12-01 19:00:00', '2022-12-01 20:00:00', 150, 'monsters-university-clipart-clipart-panda-free-clipart-images-9HMBXK-clipart.gif'),
+(5, 'Basketball Court', 'SV1_Admin', '2022-12-01 14:00:00', '2022-12-01 15:00:00', 150, 'monsters-university-clipart-clipart-panda-free-clipart-images-9HMBXK-clipart.gif');
 
 -- --------------------------------------------------------
 
@@ -249,11 +270,11 @@ CREATE TABLE IF NOT EXISTS `homeowner_profile` (
 --
 
 INSERT INTO `homeowner_profile` (`homeowner_id`, `last_name`, `first_name`, `middle_name`, `suffix`, `sex`, `street`, `subdivision`, `barangay`, `business_address`, `occupation`, `email_address`, `birthdate`, `mobile_number`, `employer`, `display_picture`) VALUES
-(1, 'Delima', 'Mon Carlo', 'Zonio', 'N/A', 'Male', 'Lot 1 Block 2', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'dmoncarlo6@gmail.com', '2002-10-06', '09157189636', 'N/A', 'DELIMA_2x2.png'),
+(1, 'Delima', 'Mon Carlo', 'Zonio', 'N/A', 'Male', 'Lot 1 Block 2', 'Sunnyvale 1', 'Palangoy', 'test', 'test', 'dmoncarlo6@gmail.com', '2002-10-06', '09157189636', 'test', 'DELIMA_2x2.png'),
 (2, 'Casingal', 'Kyle Andrei', 'Morillo', 'N/A', 'Male', 'Lot 1 Block 1', 'Sunnyvale 3', 'Palangoy', 'N/A', 'N/A', 'kylecasingal36@gmail.com', '2001-09-02', '09123456789', 'N/A', '316495100_870517180796101_3304939871151226288_n.jpg'),
 (3, 'Flores', 'Jeune Paolus', 'Damaso', 'N/A', 'Male', 'Lot 1 Block 3', 'Sunnyvale 2', 'Pantok', 'N/A', 'N/A', 'floresjeunepaolus@gmail.com', '2002-06-16', '09123123123', 'Inya', '316156823_3360766927514073_2770550987709432568_n.jpg'),
 (4, 'Doe', 'John', 'N/A', 'Jr.', 'Male', 'Lot 2 Block 4', 'Sunnyvale 3', 'Palangoy', 'N/A', 'Programmer', 'dmoncarlo@gmail.com', '2002-10-06', '09157189636', 'Mark Zuckerberg', 'default.png'),
-(18, '', 'SV1_Admin', NULL, NULL, '', '', '', '', NULL, '', '', NULL, '', NULL, 'default.png'),
+(18, '', 'SV1_Admin', NULL, NULL, '', '', '', '', NULL, '', '', NULL, '', 'N/A', 'default.png'),
 (8, 'BendaÃ±a', 'Krishtalene', 'Edejer', 'N/A', 'Female', 'Lot 1 Block 5', 'Sunnyvale 2', 'Pantok', 'N/A', 'N/A', 'tissabendana@gmail.com', '2002-10-19', '09123456789', 'N/A', 'default.png'),
 (17, 'Escueta', 'Roiemar', 'Conchada', 'N/A', 'Male', 'Lot 4 Block 3', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'escuetaroiemar@gmail.com', '2022-11-28', '09123456789', 'N/A', 'default.png'),
 (16, 'castillo', 'janwel', NULL, 'N/A', 'Male', 'Lot 2 Block 3 ', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'janweljigycastillo20@gmail.com', '2022-11-25', '09123456789', 'N/A', '315887907_1137649846869408_655406644278059076_n.png'),
@@ -296,6 +317,32 @@ INSERT INTO `monthly_dues` (`monthly_dues_id`, `subdivision_name`, `amount`, `up
 (6, 'Sunnyvale 5', 500, '2022-11-29'),
 (7, 'Sunnyvale 5', 300, '2022-11-29'),
 (11, 'Sunnyvale 10', 720, '2022-11-29');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `monthly_dues_bill`
+--
+
+DROP TABLE IF EXISTS `monthly_dues_bill`;
+CREATE TABLE IF NOT EXISTS `monthly_dues_bill` (
+  `monthlyDues_ID` int NOT NULL AUTO_INCREMENT,
+  `homeowner_name` varchar(255) NOT NULL,
+  `subdivision` varchar(45) NOT NULL,
+  `month` varchar(45) NOT NULL,
+  `year` varchar(45) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `paid_at` varchar(255) DEFAULT NULL,
+  `status` varchar(255) NOT NULL,
+  PRIMARY KEY (`monthlyDues_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `monthly_dues_bill`
+--
+
+INSERT INTO `monthly_dues_bill` (`monthlyDues_ID`, `homeowner_name`, `subdivision`, `month`, `year`, `address`, `paid_at`, `status`) VALUES
+(1, 'Mon Carlo Delima', 'Sunnyvale 1', 'December', '2022', 'Block 1 Lot 2', '2022-12-01 02:36:53', 'Paid');
 
 -- --------------------------------------------------------
 
@@ -384,13 +431,7 @@ INSERT INTO `post` (`post_id`, `user_id`, `full_name`, `title`, `content`, `publ
 (2, 24, 'Jeune Paolus Flores', 'Fascinating art created by nature.', '', '2022-11-24 09:59:54', '316218368_829271824950879_360246867658747215_n.png'),
 (3, 23, 'Kyle Andrei Casingal', 'Reflection', 'Imagine seeing these astonishing cars, lively blue skies, and few waves of clouds in an upside-down world. Inconceivable, isn\'t it?', '2022-11-24 10:03:11', '316189223_691988422233113_5145406262467036356_n.png'),
 (4, 23, 'Kyle Andrei Casingal', 'Windows of truth shows the real beauty of nature.', '', '2022-11-24 10:04:40', '313194508_684251046380877_4560164667618025920_n.png'),
-(5, 28, 'Mon Carlo Delima', 'Vintage mansion represents calm, warm, and peace.', '', '2022-11-24 10:05:22', '312140489_698881924813395_203606755662892340_n.png'),
-(6, 28, 'Mon Carlo Delima', 'Hello there!', 'I have the high ground!', '2022-11-24 22:12:30', '05b.jpg'),
-(7, 28, 'Mon Carlo Delima', 'PB', 'Princess Bubblegum', '2022-11-26 15:49:56', 'Delima, Mon Carlo Z..png'),
-(8, 28, 'Mon Carlo Delima', 'Mike Wazowski', 'One eye', '2022-11-26 16:03:52', 'Delima, Mon Carlo Z. - Color Layer.png'),
-(12, 28, 'Mon Carlo Delima', 'Walang picture ito', 'Text lang', '2022-11-27 00:05:53', ''),
-(13, 28, 'Mon Carlo Delima', 'Pixel Art', 'hahaha', '2022-11-28 23:17:37', '95218308_1293814724147342_3915191701978742784_n.png'),
-(14, 42, 'Roiemar Escueta', 'splb', 'hagot', '2022-11-28 23:31:07', 'AFFEECTIONATE.png');
+(5, 28, 'Mon Carlo Delima', 'Vintage mansion represents calm, warm, and peace.', '', '2022-11-24 10:05:22', '312140489_698881924813395_203606755662892340_n.png');
 
 -- --------------------------------------------------------
 
