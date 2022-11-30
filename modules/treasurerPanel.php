@@ -131,6 +131,15 @@
   .btnSubmitPost:hover {
     background-color: rgba(167, 197, 167);
   }
+  .lblTable {
+    font-size: 2vw;
+    font-family: "Poppins", sans-serif;
+    margin-left: 2vw;
+    margin-bottom: -2vw;
+    padding: 0;
+    color: rgb(89, 89, 89);
+    font-weight: 800;
+  }
 </style>
 
 <body>
@@ -171,6 +180,7 @@
           <input type="text" readOnly />
           <button class="btnSubmitPost" name="submitPost" id="submitPost">Submit Payment</button>
         </div>
+        <label class="lblTable">Recent Monthly Dues Payments</label>
         <div class="table-responsive">
           <table id="dtBasicExample" class="table table-hover" cellspacing="0" width="100%">
             <thead>

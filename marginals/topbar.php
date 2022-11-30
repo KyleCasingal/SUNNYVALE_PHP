@@ -356,8 +356,14 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
               }
               ?>
               <?php
-              if ($row['user_type'] == 'Secretary' or $row['user_type'] == 'Admin' or $row['user_type'] == 'Treasurer') {
-                echo '<a class="dropdown-item" href="../modules/homeownerRegistration.php">Panel</a>';
+              if ($row['user_type'] == 'Admin' ){
+                echo '<a class="dropdown-item" href="../modules/settings.php">Admin Panel</a>';
+              }
+              if ($row['user_type'] == 'Treasurer'){
+                echo '<a class="dropdown-item" href="../modules/treasurerPanel.php">Treasurer Panel</a>';
+              }
+              if ($row['user_type'] == 'Secretary'){
+                echo '<a class="dropdown-item" href="../modules/settingsSecretary.php">Secretary Panel</a>';
               }
               ?>
               <div class="dropdown-divider"></div>

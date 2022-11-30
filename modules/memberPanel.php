@@ -63,6 +63,7 @@ $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['ba
   }
 
   .profileForm img {
+    z-index: -1;
     width: 10vw;
     height: 10vw;
     border-radius: 50%;
@@ -164,6 +165,369 @@ $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['ba
     color: rgb(89, 89, 89);
     font-weight: 800;
   }
+
+  input {
+        font-size: 1vw;
+        border-radius: 0.5vw;
+        border: none !important;
+
+    }
+
+    select {
+        font-size: 1vw;
+        border: none !important;
+        border-radius: 1vw;
+        width: 15vw;
+    }
+
+    .tblForm {
+        border: 0 none !important;
+
+
+    }
+
+    .tblForm th,
+    td {
+        font-size: 1vw;
+        padding: 1vw;
+    }
+
+    .secretary {
+        display: flex;
+    }
+
+    .sideBar {
+        background-color: rgb(248, 245, 227);
+        flex: 2;
+        color: black;
+    }
+
+    .secretarySideBar {
+        display: inline;
+        justify-content: flex-end;
+        margin-top: 5px;
+        margin-bottom: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .secretarySideBar li {
+        color: rgb(89, 89, 89);
+        font-family: "Poppins", sans-serif;
+        text-align: center;
+        padding: 1.5vw;
+        padding-left: 0.5vw;
+        padding-right: 0.5vw;
+        font-size: max(1.5vw, min(10px));
+        cursor: pointer;
+        border-bottom: 1px solid lightgray;
+    }
+
+    .secretarySideBar li:hover {
+        background-color: rgb(236, 235, 226);
+    }
+
+    .secretaryPanel {
+        flex: 8;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .regForm {
+        background-color: rgba(234, 232, 199, 0.2);
+        width: 100%;
+        padding: 1vw;
+        /* margin: 1vw; */
+        border-radius: 1vw;
+    }
+
+    .btnSubmitReg {
+        background-color: darkseagreen;
+        border: 0;
+        padding: 0.5vw;
+        max-width: 50vw;
+        width: 10vw;
+        font-family: "Poppins", sans-sans-serif;
+        font-size: 1vw;
+        margin-top: 2vw;
+        color: white;
+        border-radius: 0.8vw;
+        cursor: pointer;
+    }
+
+    .btnSubmitReg:hover {
+        background-color: rgb(93, 151, 93);
+    }
+
+    .btnUpdateReg {
+        background-color: orange;
+        border: 0;
+        padding: 0.5vw;
+        max-width: 50vw;
+        width: 10vw;
+        font-family: "Poppins", sans-sans-serif;
+        font-size: 1vw;
+        margin-top: 2vw;
+        color: white;
+        border-radius: 0.8vw;
+        cursor: pointer;
+    }
+
+    .btnUpdateReg:hover {
+        background-color: orangered;
+    }
+
+    .btnClearReg {
+        background-color: lightcoral;
+        border: 0;
+        padding: 0.5vw;
+        max-width: 50vw;
+        width: 10vw;
+        font-family: "Poppins", sans-sans-serif;
+        font-size: 1vw;
+        margin-top: 2vw;
+        color: white;
+        border-radius: 0.8vw;
+        cursor: pointer;
+    }
+
+    .btnClearReg:hover {
+        background-color: rgb(180, 83, 83);
+    }
+
+    .lblRegistration {
+        font-size: 2vw;
+        font-family: "Poppins", sans-serif;
+        margin-top: 1vw;
+        margin-left: 2vw;
+        margin-bottom: -2vw;
+        padding: 0;
+        color: rgb(89, 89, 89);
+        font-weight: 800;
+    }
+
+    .tblContainer {
+        justify-content: center;
+        margin-top: 0vw;
+        margin-bottom: 2vw;
+        margin-left: 2vw;
+        margin-right: 0;
+        overflow-y: auto;
+        overflow-x: auto;
+        max-height: 20vw;
+    }
+
+    .tblHomeowners {
+        margin-bottom: 2vw;
+        overflow-x: auto;
+        overflow-y: auto;
+        text-align: center;
+        margin: 2vw;
+        margin-right: 2vw;
+        max-width: 60%;
+    }
+
+    .tblHomeowners thead,
+    th {
+        padding: 0.5vw;
+        text-align: center;
+        font-size: 1.2vw;
+        background-color: rgba(234, 232, 199, 0.2);
+        width: max-content;
+        white-space: nowrap;
+    }
+
+    .tblHomeowners td {
+        width: max-content;
+        white-space: nowrap;
+    }
+
+    .tblHomeowners tr:hover {
+        background-color: rgb(211, 211, 211);
+    }
+
+    .userManagementForm {
+        background-color: rgba(234, 232, 199, 0.2);
+        width: 95%;
+        padding: 2vw;
+        margin: 2vw;
+        border-radius: 1vw;
+    }
+
+    .tblUsers {
+        max-width: 95%;
+        margin-top: 2vw;
+    }
+
+    .tblUsers th {
+        text-align: center;
+    }
+
+    .tblUsers td {
+        text-align: center;
+    }
+
+    .btnArea {
+        display: flex;
+        margin: 2vw;
+        gap: 1vw;
+    }
+
+    .tbl tr:hover {
+        background-color: rgb(211, 211, 211);
+    }
+
+
+    /* complaint container */
+    .inbox {
+        overflow: hidden;
+        margin: 2vw;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .inboxContainer {
+        padding: 2vw;
+        padding-left: 0;
+        padding-right: 0;
+        border-radius: 1vw;
+        background-color: rgb(241, 241, 241);
+        display: flex;
+        width: 95%;
+        height: 70vh;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
+    .tblMessage {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        max-height: 30px;
+    }
+
+    .trInbox {
+        width: 100%;
+        color: rgb(89, 89, 89);
+        background-color: rgb(241, 241, 241);
+        border-bottom: 1px solid rgb(192, 192, 192);
+    }
+
+    .trInbox:hover {
+        background-color: rgb(233, 233, 233);
+        cursor: pointer;
+    }
+
+    .msgSender {
+        font-family: "Poppins", sans-serif;
+        font-size: 1.5vw;
+        font-weight: bold;
+    }
+
+    .msgDesc {
+        max-width: 50vw;
+        width: fixed;
+        text-align: left;
+        font-family: "Poppins", sans-serif;
+        font-size: 1.2vw;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .msgTime {
+        text-align: center;
+        font-family: "Poppins", sans-serif;
+        font-size: 1.2vw;
+    }
+
+    .inboxTitle {
+        font-size: 2vw;
+        font-family: "Poppins", sans-serif;
+        padding: 0;
+        margin-bottom: 1vw;
+        color: rgb(89, 89, 89);
+        font-weight: 800;
+    }
+
+    .complaintManagement {
+        margin: 2vw;
+    }
+
+    .lblNA {
+        margin: 0;
+        color: gray;
+        font-size: 0.8vw;
+        text-align: center;
+        font-style: italic;
+    }
+
+    .NA {
+        vertical-align: bottom !important;
+        text-align: center;
+        padding-bottom: 0 !important;
+    }
+
+    .NAemployer {
+        margin: 0;
+        padding-top: 2vw;
+    }
+
+    .btnEdit {
+        background-color: orange;
+        border: 0;
+        padding: 0.5vw;
+        max-width: 50vw;
+        width: 5vw;
+        font-family: "Poppins", sans-sans-serif;
+        font-size: .8vw;
+        margin-top: 2vw;
+        border-radius: 0.8vw;
+        cursor: pointer;
+        text-decoration: none;
+        color: white;
+    }
+   
+    .fa-camera{
+      color: rgba(0, 0, 0, 0);
+    }
+    .profileImg{
+      width: 10vw;
+      height: 10vw;
+      border-radius: 50%;
+    }
+    /* .profileImg:hover .lblUpload{
+      box-shadow:  rgba(0, 0, 0, 0.2);
+      background-color: rgba(0, 0, 0, 0.2);
+      color: black;
+    } */
+    .lblUpload{
+      display: none;
+      border-radius: 50%;
+      display: flex;
+      gap: 1vw;
+      height: 10vw;
+      width: 10vw;
+      border: 1px solid black;
+      font-family: 'Poppins', sans-serif;
+      color: rgba(0, 0, 0, 0);
+      bottom: 10vw;
+      font-size: 1vw;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      cursor: pointer;
+    }
+    .lblUpload:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+      color: white;
+    }
+    .lblUpload:hover .fa-camera{
+      color: white;
+    }
+    .input{
+      display: hidden;
+    }
 </style>
 
 <body>
@@ -179,6 +543,11 @@ $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['ba
             <img <?php
                   $imageURL = '../media/displayPhotos/' . $row['display_picture'];
                   ?> src="<?= $imageURL ?>" alt="" />
+                  <label for="image" class="lblUpload">Upload Photo</label>
+                  <div class="input" hidden> 
+                    <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()"></input>
+                  </div>
+                  
           </div>
 
           <table class="table tblProfile">
@@ -187,7 +556,7 @@ $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['ba
                 <td class="lbl">Name:</td>
                 <td class="data"><?php echo $row['first_name'] . " " . $row['middle_name']  . " " . $row['last_name']; ?></td>
                 <td class="editBtn">
-                  <i class="fa-solid fa-pen fa-2x"></i>
+                  <i class="fa-solid fa-pen fa-2x" data-bs-toggle="modal" data-bs-target="#editProfile"></i>
                 </td>
               </tr>
               <tr>
@@ -277,6 +646,213 @@ $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['ba
     </div>
   </div>
   </div>
+  <div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div class="regForm">
+                        <table class="tblForm">
+                            <input type="hidden" name="homeowner_id" value="<?php echo $homeowner_id ?? ''; ?>">
+                            <tr>
+                                <td>First Name:</td>
+                                <td>
+                                    <input type="text" name="first_name" id="" placeholder="first name" value="<?php echo $first_name ?? ''; ?>" required />
+                                </td>
+                                <td>Date of Birth:</td>
+                                <td>
+                                    <input type="date" data-date-format="yyyy-mm-dd" name="birthdate" value="<?php echo $birthdate ?? ''; ?>" id="" required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Middle Name:</td>
+                                <td>
+                                    <input type="text" name="middle_name" id="" placeholder="middle name" value="<?php echo $middle_name ?? ''; ?>" required />
+                                </td>
+                                <td>Sex:</td>
+                                <td>
+                                    <select name="sex" id="">
+                                        <option value="" required>Select...</option>
+                                        <option value="Male" <?php
+                                                                if (isset($_GET['homeowner_id'])) {
+                                                                    if ($sex == "Male") {
+                                                                        echo 'selected="selected"';
+                                                                    }
+                                                                }
+                                                                ?>>Male</option>
+                                        <option value="Female" <?php
+                                                                if (isset($_GET['homeowner_id'])) {
+                                                                    if ($sex == "Female") {
+                                                                        echo 'selected="selected"';
+                                                                    }
+                                                                }
+                                                                ?>>Female</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Last Name:</td>
+                                <td>
+                                    <input type="text" name="last_name" id="" placeholder="last name" value="<?php echo $last_name ?? ''; ?>" required />
+                                </td>
+                                <td>Email:</td>
+                                <td>
+                                    <input type="text" name="email_address" id="" placeholder="email" value="<?php echo $email_address ?? ''; ?>" required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Suffix:</td>
+                                <td>
+                                    <input type="text" name="suffix" id="" placeholder="suffix" value="<?php echo $suffix ?? ''; ?>" required />
+                                </td>
+                                <td>Mobile Number:</td>
+                                <td>
+                                    <input type="text" name="mobile_number" id="" placeholder="mobile no." value="<?php echo $mobile_number ?? ''; ?>" required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Residence Address:</td>
+                                <td>
+                                    <input type="text" name="street" id="" placeholder="Lot and Block" value="<?php echo $street ?? ''; ?>" required />
+                                </td>
+                                <td>
+                                    <select name="subdivision" id="">
+                                        <option value="">Select...</option>
+                                        <option value="Sunnyvale 1" <?php
+                                                                    if (isset($_GET['homeowner_id'])) {
+                                                                        if ($subdivision == "Sunnyvale 1") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Sunnyvale 1</option>
+                                        <option value="Sunnyvale 2" <?php
+                                                                    if (isset($_GET['homeowner_id'])) {
+                                                                        if ($subdivision == "Sunnyvale 2") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Sunnyvale 2</option>
+                                        <option value="Sunnyvale 3" <?php
+                                                                    if (isset($_GET['homeowner_id'])) {
+                                                                        if ($subdivision == "Sunnyvale 3") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Sunnyvale 3</option>
+                                        <option value="Sunnyvale 4" <?php
+                                                                    if (isset($_GET['homeowner_id'])) {
+                                                                        if ($subdivision == "Sunnyvale 4") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Sunnyvale 4</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="barangay" id="">
+                                        <option value="">Select...</option>
+                                        <option value="Palangoy" <?php
+                                                                    if (isset($_GET['homeowner_id'])) {
+                                                                        if ($barangay == "Palangoy") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Palangoy</option>
+                                        <option value="Pantok" <?php
+                                                                if (isset($_GET['homeowner_id'])) {
+                                                                    if ($barangay == "Pantok") {
+                                                                        echo 'selected="selected"';
+                                                                    }
+                                                                }
+                                                                ?>>Pantok</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Business Address:</td>
+                                <td class="NA">
+                                    <input type="text" name="business_address" id="" placeholder="business address" value="<?php echo $business_address ?? ''; ?>" required />
+                                    <p class="lblNA">*write N/A if not applicable*</p>
+                                </td>
+                            </tr>
+                            <tr>
+
+                            </tr>
+                            <tr>
+                                <td>Occupation:</td>
+                                <td class="NA">
+                                    <input type="text" name="occupation" id="" placeholder="occupation" value="<?php echo $occupation ?? ''; ?>" required />
+                                    <p class="lblNA">*write N/A if not applicable*</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Employer:</td>
+                                <td class="NAemployer">
+                                    <input type="text" name="employer" id="" placeholder="employer" value="<?php echo $employer ?? ''; ?>" required />
+                                    <p class="lblNA">*write N/A if not applicable*</p>
+                                </td>
+                                <td>
+                                    <div class="modal fade" id="homeowner_submit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Do you really want to add this homeowner profile?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button name="homeowner_submit" type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="homeowner_update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Do you really want to update this homeowner profile?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button name="homeowner_update" type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php if ($update == true) : ?>
+                                        <button data-bs-toggle="modal" data-bs-target="#homeowner_update" type="button" class="btnUpdateReg">
+                                            Update
+                                        </button>
+                                    <?php else : ?>
+                                        <button data-bs-toggle="modal" data-bs-target="#homeowner_submit" type="button" class="btnSubmitReg">
+                                            Submit
+                                        </button>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <button type="button" value="" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        Clear
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
   <?php
   require '../marginals/footer2.php'
   ?>

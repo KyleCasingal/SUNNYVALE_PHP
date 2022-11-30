@@ -238,7 +238,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
 <body>
     <div class="secretary">
         <div class="sideBar">
-            <?php require '../marginals/sidebarSecretaryPanel.php'; ?>
+            <?php require '../marginals/sidebarAdmin.php'; ?>
         </div>
         <div class="secretaryPanel">
 

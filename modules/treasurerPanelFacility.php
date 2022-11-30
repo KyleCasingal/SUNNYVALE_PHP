@@ -118,6 +118,45 @@
     .btnSubmitPost:hover {
         background-color: rgba(167, 197, 167);
     }
+
+    .table-responsive {
+    font-size: max(1vw, min(10px));
+    max-height: 500px;
+    min-height: 20vw;
+  }
+
+  .table {
+    margin-top: 1vw;
+    margin-bottom: 2vw;
+    overflow-y: scroll;
+    align-items: center;
+    justify-self: center;
+    margin: 2vw;
+    max-width: 95%;
+  }
+
+  .lblTable {
+    font-size: 2vw;
+    font-family: "Poppins", sans-serif;
+    margin-left: 2vw;
+    margin-bottom: -2vw;
+    padding: 0;
+    color: rgb(89, 89, 89);
+    font-weight: 800;
+  }
+  thead {
+    top: 0;
+    position: sticky;
+    text-align: center;
+    background-color: rgb(251, 250, 244);
+  }
+
+  th,
+  td {
+    text-align: center;
+    padding: 0.8vw;
+    border: 1px solid lightgray;
+  }
 </style>
 
 <body>
@@ -148,8 +187,48 @@
                 <input type="text" readOnly />
                 <button class="btnSubmitPost" name="submitPost" id="submitPost">Submit Reservation</button>
             </div>
+            <div class="table-responsive">
+          <label class="lblTable">Current Scheduled Facilities</label>
+          <table id="dtBasicExample" class="table table-hover" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Month</th>
+                <th>Year</th>
+                <th>Address</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Jane Doe</td>
+                <td>October</td>
+                <td>2022</td>
+                <td>blk 1 lot 2</td>
+              </tr>
+              <tr>
+                <td>Jane Doe</td>
+                <td>October</td>
+                <td>2022</td>
+                <td>blk 1 lot 2</td>
+              </tr>
+              <tr>
+                <td>Jane Doe</td>
+                <td>October</td>
+                <td>2022</td>
+                <td>blk 1 lot 2</td>
+              </tr>
+              <tr>
+                <td>Jane Doe</td>
+                <td>October</td>
+                <td>2022</td>
+                <td>blk 1 lot 2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         </div>
     </div>
+    
     <?php
     require '../marginals/footer2.php'
     ?>

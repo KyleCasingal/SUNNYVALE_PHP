@@ -353,7 +353,15 @@ $result = $con->query("SELECT * FROM homeowner_profile WHERE email_address != ''
     <form method="post">
         <div class="secretary">
             <div class="sideBar">
-                <?php require '../marginals/sidebarSecretaryPanel.php'; ?>
+            <?php
+              if ($row['user_type'] == 'Admin' ){
+                require '../marginals/sidebarAdmin.php';
+              }
+              
+              if ($row['user_type'] == 'Secretary'){
+                require '../marginals/sidebarSecretaryPanel.php';
+              }
+              ?>
             </div>
 
             <div class="secretaryPanel">

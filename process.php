@@ -304,7 +304,7 @@ if (isset($_POST['submitReservation'])) {
     $dateTimeFrom = $date . " " . $timeFrom;
     $dateTimeTo = $date . " " . $timeTo;
     if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
-        $sql = "INSERT INTO facility_renting(amenity_name, renter_name, date_from, date_to, cost, payment_proof, marked_by, approved) VALUES ('$amenity','$name','$dateTimeFrom','$dateTimeTo','$cost','$fileName',NULL,'NOT YET')";
+        $sql = "INSERT INTO facility_renting(amenity_name, renter_name, date_from, date_to, cost, payment_proof) VALUES ('$amenity','$name','$dateTimeFrom','$dateTimeTo','$cost','$fileName')";
         mysqli_query($con, $sql);
     }
 }

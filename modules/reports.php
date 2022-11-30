@@ -117,7 +117,15 @@ $row = $result->fetch_assoc();
 
     <div class="secretary">
         <div class="sideBar">
-            <?php require '../marginals/sidebarSecretaryPanel.php'; ?>
+        <?php
+              if ($row['user_type'] == 'Admin' ){
+                require '../marginals/sidebarAdmin.php';
+              }
+              
+              if ($row['user_type'] == 'Secretary'){
+                require '../marginals/sidebarSecretaryPanel.php';
+              }
+              ?>
         </div>
         <div class="secretaryPanel">
           
