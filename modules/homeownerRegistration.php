@@ -432,36 +432,11 @@ $result = $con->query("SELECT * FROM homeowner_profile WHERE email_address != ''
                                     <input type="text" name="street" id="" placeholder="Lot and Block" value="<?php echo $street ?? ''; ?>" required />
                                 </td>
                                 <td>
-                                    <select name="subdivision" id="">
+                                <select name="subdivision" id="">
                                         <option value="">Select...</option>
-                                        <option value="Sunnyvale 1" <?php
-                                                                    if (isset($_GET['homeowner_id'])) {
-                                                                        if ($subdivision == "Sunnyvale 1") {
-                                                                            echo 'selected="selected"';
-                                                                        }
-                                                                    }
-                                                                    ?>>Sunnyvale 1</option>
-                                        <option value="Sunnyvale 2" <?php
-                                                                    if (isset($_GET['homeowner_id'])) {
-                                                                        if ($subdivision == "Sunnyvale 2") {
-                                                                            echo 'selected="selected"';
-                                                                        }
-                                                                    }
-                                                                    ?>>Sunnyvale 2</option>
-                                        <option value="Sunnyvale 3" <?php
-                                                                    if (isset($_GET['homeowner_id'])) {
-                                                                        if ($subdivision == "Sunnyvale 3") {
-                                                                            echo 'selected="selected"';
-                                                                        }
-                                                                    }
-                                                                    ?>>Sunnyvale 3</option>
-                                        <option value="Sunnyvale 4" <?php
-                                                                    if (isset($_GET['homeowner_id'])) {
-                                                                        if ($subdivision == "Sunnyvale 4") {
-                                                                            echo 'selected="selected"';
-                                                                        }
-                                                                    }
-                                                                    ?>>Sunnyvale 4</option>
+                                        <?php while ($row = $resultSubd->fetch_assoc()) : ?>
+                                            <option value="<?php echo $row['subdivision_name'] ?>" ><?php echo $row['subdivision_name'] ?></option>
+                                        <?php endwhile; ?>
                                     </select>
                                 </td>
                                 <td>

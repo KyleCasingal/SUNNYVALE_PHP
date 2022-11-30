@@ -1,3 +1,9 @@
+<?php
+  $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
+  $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
+  $resultSubd = $con->query("SELECT * FROM subdivision");
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +21,7 @@
   }
 
   input {
+    margin-bottom: 2vw;
     padding: 0.5vw;
     max-width: 50vw;
     height: 2vw;
@@ -56,6 +63,7 @@
 
   th,
   td {
+    text-align: center;
     padding: 0.8vw;
     border: 1px solid lightgray;
   }
@@ -86,7 +94,7 @@
     justify-content: center;
     padding: 2vw;
     margin: 1.5vw;
-    width: 70%;
+    width: 95%;
     border-radius: 1vw;
     flex-direction: column;
     background-color: rgba(234, 232, 199, 0.2);
@@ -175,46 +183,43 @@
               <option value="2025">2025</option>
               <option value="2026">2026</option>
             </select>
+            <label>Subdivision</label>
+            <select name="subdivision" id="">
+                                        <option value="">Select...</option>
+                                        <?php while ($row = $resultSubd->fetch_assoc()) : ?>
+                                            <option value="<?php echo $row['subdivision_name'] ?>" ><?php echo $row['subdivision_name'] ?></option>
+                                        <?php endwhile; ?>
+                                    </select>
           </div>
           <label>Block and Lot Number:</label>
-          <input type="text" readOnly />
+          <input type="text"  />
           <button class="btnSubmitPost" name="submitPost" id="submitPost">Submit Payment</button>
         </div>
         <label class="lblTable">Recent Monthly Dues Payments</label>
         <div class="table-responsive">
           <table id="dtBasicExample" class="table table-hover" cellspacing="0" width="100%">
-            <thead>
+             <thead>
               <tr>
                 <th>Name</th>
+                <th>Subdivision</th>
                 <th>Month</th>
                 <th>Year</th>
                 <th>Address</th>
+                <th>Paid at</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
+            <?php while ($row = $resultDues->fetch_assoc()) : ?>
               <tr>
-                <td>Jane Doe</td>
-                <td>October</td>
-                <td>2022</td>
-                <td>blk 1 lot 2</td>
-              </tr>
-              <tr>
-                <td>Jane Doe</td>
-                <td>October</td>
-                <td>2022</td>
-                <td>blk 1 lot 2</td>
-              </tr>
-              <tr>
-                <td>Jane Doe</td>
-                <td>October</td>
-                <td>2022</td>
-                <td>blk 1 lot 2</td>
-              </tr>
-              <tr>
-                <td>Jane Doe</td>
-                <td>October</td>
-                <td>2022</td>
-                <td>blk 1 lot 2</td>
+                <td><?php echo $row['homeowner_name'] ?></td>
+                <td><?php echo $row['subdivision'] ?></td>
+                <td><?php echo $row['month'] ?></td>
+                <td><?php echo $row['year'] ?></td>
+                <td><?php echo $row['address'] ?></td>
+                <td><?php echo $row['paid_at'] ?></td>
+                <td><?php echo $row['status'] ?></td>
+                <?php endwhile; ?>
               </tr>
             </tbody>
           </table>

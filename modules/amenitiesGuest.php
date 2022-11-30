@@ -10,12 +10,10 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="amenitiesGuest.css" media="screen">
-  <link rel="stylesheet" href="../footer/footer.css" media="screen">
-  <link rel="stylesheet" href="../topbarLanding/topbarLanding.css" media="screen">
   <meta name="theme-color" content="#000000" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <title>SUNNYVALE</title>
 </head>
@@ -23,6 +21,7 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date
   * {
     margin: 0;
   }
+  
 
   .messageSuccess {
     display: flex;
@@ -157,6 +156,16 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date
     border-radius: 0.8vw;
     cursor: pointer;
     margin-bottom: 1vw;
+  }
+  .table{
+    margin: 2vw;
+    width: 90%;
+  }
+  thead{
+    background-color: rgba(234, 232, 199, 0.2);
+  }
+  td, th{
+    text-align: center;
   }
 
   .upload:hover {
@@ -339,14 +348,14 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date
         <label for="image" class="upload">Upload Photo</label>
       </div>
     </div>
-    <table>
-      <tr>
+    <table class="table table-hover">
+      <thead>
         <th>Amenity</th>
         <th>Renter</th>
         <th>From</th>
         <th>To</th>
         <th>Cost</th>
-      </tr>
+      </thead>
       <?php while ($row = $resultReservation->fetch_assoc()) : ?>
         <tr>
           <td><?php echo $row['renter_name'] ?></td>

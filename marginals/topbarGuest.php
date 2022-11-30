@@ -4,6 +4,14 @@ if (isset($_SESSION['user_id'])) {
   header("Location: ./blogHome.php");
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
 <style>
   .topLanding {
     margin-bottom: 0;
@@ -144,6 +152,9 @@ if (isset($_SESSION['user_id'])) {
     max-height: 4.5vw;
   }
 </style>
+<body>
+  
+</body>
 <form method='POST'>
 
   <div class="topLanding">
@@ -166,3 +177,4 @@ if (isset($_SESSION['user_id'])) {
     </div>
   </div>
 </form>
+</html>

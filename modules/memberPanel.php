@@ -3,6 +3,9 @@ require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
 $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['barangay'];
+$resultSubd = $con->query("SELECT * FROM subdivision");
+$resultDues = $con->query("SELECT * FROM `user`, `monthly_dues_bill` WHERE user_id = " . $user_id = $_SESSION['user_id'] . " AND full_name = full_name;");
+
 ?>
 
 <!DOCTYPE html>
@@ -143,6 +146,13 @@ $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['ba
     justify-self: center;
     margin: 2vw;
     max-width: 95%;
+  }
+  .tblPaidDues{
+    margin: 2vw;
+    width: 90%;
+  }
+  .tblPaidDues td{
+    text-align: center;
   }
 
   .lblTable {
@@ -508,7 +518,7 @@ $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['ba
       gap: 1vw;
       height: 10vw;
       width: 10vw;
-      border: 1px solid black;
+      border: none;
       font-family: 'Poppins', sans-serif;
       color: rgba(0, 0, 0, 0);
       bottom: 10vw;
@@ -603,39 +613,29 @@ $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['ba
         </div>
         <div class="table-responsive">
           <label class="lblTable">Paid Monthly Dues</label>
-          <table id="dtBasicExample" class="table table-hover" cellspacing="0" width="100%">
+          <table class="tblPaidDues table-hover" cellspacing="0" width="100%">
             <thead>
               <tr>
                 <th>Name</th>
+                <th>Subdivision</th>
                 <th>Month</th>
                 <th>Year</th>
                 <th>Address</th>
+                <th>Paid at</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
+            <?php while ($row = $resultDues->fetch_assoc()) : ?>
               <tr>
-                <td>Jane Doe</td>
-                <td>October</td>
-                <td>2022</td>
-                <td>blk 1 lot 2</td>
-              </tr>
-              <tr>
-                <td>Jane Doe</td>
-                <td>October</td>
-                <td>2022</td>
-                <td>blk 1 lot 2</td>
-              </tr>
-              <tr>
-                <td>Jane Doe</td>
-                <td>October</td>
-                <td>2022</td>
-                <td>blk 1 lot 2</td>
-              </tr>
-              <tr>
-                <td>Jane Doe</td>
-                <td>October</td>
-                <td>2022</td>
-                <td>blk 1 lot 2</td>
+                <td><?php echo $row['homeowner_name'] ?></td>
+                <td><?php echo $row['subdivision'] ?></td>
+                <td><?php echo $row['month'] ?></td>
+                <td><?php echo $row['year'] ?></td>
+                <td><?php echo $row['address'] ?></td>
+                <td><?php echo $row['paid_at'] ?></td>
+                <td><?php echo $row['status'] ?></td>
+                <?php endwhile; ?>
               </tr>
             </tbody>
           </table>
@@ -650,7 +650,7 @@ $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['ba
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Edit Your Information</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -660,17 +660,17 @@ $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['ba
                             <tr>
                                 <td>First Name:</td>
                                 <td>
-                                    <input type="text" name="first_name" id="" placeholder="first name" value="<?php echo $first_name ?? ''; ?>" required />
+                                    <input type="text" name="first_name" id="" placeholder="first name" value="<?php echo $row['first_name'] ?? '';?>" required />
                                 </td>
                                 <td>Date of Birth:</td>
                                 <td>
-                                    <input type="date" data-date-format="yyyy-mm-dd" name="birthdate" value="<?php echo $birthdate ?? ''; ?>" id="" required />
+                                    <input type="date" data-date-format="yyyy-mm-dd" name="birthdate" value="<?php echo $row['birthdate'] ?? '';?>" id="" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Middle Name:</td>
                                 <td>
-                                    <input type="text" name="middle_name" id="" placeholder="middle name" value="<?php echo $middle_name ?? ''; ?>" required />
+                                    <input type="text" name="middle_name" id="" placeholder="middle name" value="<?php echo $row['middle_name'] ?? ''; ?>" required />
                                 </td>
                                 <td>Sex:</td>
                                 <td>
@@ -678,14 +678,14 @@ $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['ba
                                         <option value="" required>Select...</option>
                                         <option value="Male" <?php
                                                                 if (isset($_GET['homeowner_id'])) {
-                                                                    if ($sex == "Male") {
+                                                                    if ($row['sex'] == "Male") {
                                                                         echo 'selected="selected"';
                                                                     }
                                                                 }
                                                                 ?>>Male</option>
                                         <option value="Female" <?php
                                                                 if (isset($_GET['homeowner_id'])) {
-                                                                    if ($sex == "Female") {
+                                                                    if ($row['sex'] == "Female") {
                                                                         echo 'selected="selected"';
                                                                     }
                                                                 }
@@ -696,59 +696,34 @@ $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['ba
                             <tr>
                                 <td>Last Name:</td>
                                 <td>
-                                    <input type="text" name="last_name" id="" placeholder="last name" value="<?php echo $last_name ?? ''; ?>" required />
+                                    <input type="text" name="last_name" id="" placeholder="last name" value="<?php echo $row['last_name'] ?? ''; ?>" required />
                                 </td>
                                 <td>Email:</td>
                                 <td>
-                                    <input type="text" name="email_address" id="" placeholder="email" value="<?php echo $email_address ?? ''; ?>" required />
+                                    <input type="text" name="email_address" id="" placeholder="email" value="<?php echo $row['email_address'] ?? ''; ?>" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Suffix:</td>
                                 <td>
-                                    <input type="text" name="suffix" id="" placeholder="suffix" value="<?php echo $suffix ?? ''; ?>" required />
+                                    <input type="text" name="suffix" id="" placeholder="suffix" value="<?php echo $row['suffix'] ?? ''; ?>" required />
                                 </td>
                                 <td>Mobile Number:</td>
                                 <td>
-                                    <input type="text" name="mobile_number" id="" placeholder="mobile no." value="<?php echo $mobile_number ?? ''; ?>" required />
+                                    <input type="text" name="mobile_number" id="" placeholder="mobile no." value="<?php echo $row['mobile_number'] ?? ''; ?>" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Residence Address:</td>
                                 <td>
-                                    <input type="text" name="street" id="" placeholder="Lot and Block" value="<?php echo $street ?? ''; ?>" required />
+                                    <input type="text" name="street" id="" placeholder="Lot and Block" value="<?php echo $row['street'] ?? ''; ?>" required />
                                 </td>
                                 <td>
-                                    <select name="subdivision" id="">
+                                <select name="subdivision" id="">
                                         <option value="">Select...</option>
-                                        <option value="Sunnyvale 1" <?php
-                                                                    if (isset($_GET['homeowner_id'])) {
-                                                                        if ($subdivision == "Sunnyvale 1") {
-                                                                            echo 'selected="selected"';
-                                                                        }
-                                                                    }
-                                                                    ?>>Sunnyvale 1</option>
-                                        <option value="Sunnyvale 2" <?php
-                                                                    if (isset($_GET['homeowner_id'])) {
-                                                                        if ($subdivision == "Sunnyvale 2") {
-                                                                            echo 'selected="selected"';
-                                                                        }
-                                                                    }
-                                                                    ?>>Sunnyvale 2</option>
-                                        <option value="Sunnyvale 3" <?php
-                                                                    if (isset($_GET['homeowner_id'])) {
-                                                                        if ($subdivision == "Sunnyvale 3") {
-                                                                            echo 'selected="selected"';
-                                                                        }
-                                                                    }
-                                                                    ?>>Sunnyvale 3</option>
-                                        <option value="Sunnyvale 4" <?php
-                                                                    if (isset($_GET['homeowner_id'])) {
-                                                                        if ($subdivision == "Sunnyvale 4") {
-                                                                            echo 'selected="selected"';
-                                                                        }
-                                                                    }
-                                                                    ?>>Sunnyvale 4</option>
+                                        <?php while ($row = $resultSubd->fetch_assoc()) : ?>
+                                            <option value="<?php echo $row['subdivision_name'] ?>" ><?php echo $row['subdivision_name'] ?></option>
+                                        <?php endwhile; ?>
                                     </select>
                                 </td>
                                 <td>
@@ -774,7 +749,7 @@ $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['ba
                             <tr>
                                 <td>Business Address:</td>
                                 <td class="NA">
-                                    <input type="text" name="business_address" id="" placeholder="business address" value="<?php echo $business_address ?? ''; ?>" required />
+                                    <input type="text" name="business_address" id="" placeholder="business address" value="<?php echo $row['business_address'] ?? ''; ?>" required />
                                     <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
                             </tr>
@@ -784,14 +759,14 @@ $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['ba
                             <tr>
                                 <td>Occupation:</td>
                                 <td class="NA">
-                                    <input type="text" name="occupation" id="" placeholder="occupation" value="<?php echo $occupation ?? ''; ?>" required />
+                                    <input type="text" name="occupation" id="" placeholder="occupation" value="<?php echo $row['occupation'] ?? ''; ?>" required />
                                     <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Employer:</td>
                                 <td class="NAemployer">
-                                    <input type="text" name="employer" id="" placeholder="employer" value="<?php echo $employer ?? ''; ?>" required />
+                                    <input type="text" name="employer" id="" placeholder="employer" value="<?php echo $row['employer'] ?? ''; ?>" required />
                                     <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
                                 <td>

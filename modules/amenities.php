@@ -1,7 +1,7 @@
 <?php
 require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM amenities WHERE availability =  'Available' ORDER BY subdivision_name ASC") or die($mysqli->error);
-$resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date_from)=curdate()");
+$resultReservation = $con->query("SELECT * FROM facility_renting WHERE date_from BETWEEN NOW() AND NOW() + INTERVAL 1 DAY;");
 
 ?>
 <!DOCTYPE html>
@@ -160,6 +160,35 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date
   .upload:hover {
     background-color: rgb(253, 200, 86);
   }
+
+  .tblAmenity {
+    width: 90%;
+    margin-bottom: 2vw;
+    overflow-x: auto;
+    overflow-y: auto;
+    text-align: center;
+    margin: 2vw;
+    margin-right: 2vw;
+  }
+
+  .tblAmenity thead,
+  th {
+    padding: 0.5vw;
+    text-align: center;
+    font-size: 1.2vw;
+    background-color: rgba(234, 232, 199, 0.2);
+    width: max-content;
+    white-space: nowrap;
+  }
+
+  .tblAmenity td {
+    width: max-content;
+    white-space: nowrap;
+  }
+
+  .tblAmenity tr:hover {
+    background-color: rgb(211, 211, 211);
+  }
 </style>
 <script>
   if (window.history.replaceState) {
@@ -308,7 +337,7 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date
                                                               $res = $con->query("SELECT * FROM amenities WHERE amenity_name = '$amenity'") or die($mysqli->error);
                                                               $row = $res->fetch_assoc();
                                                               $cost = $totalHrs * $row['price'];
-                                                              
+
                                                               if ($cost < 0) {
                                                                 echo "value = ''";
                                                               } else if ($_POST['ampmFrom'] == 'am' and $_POST['hrFrom'] < 6) {
@@ -336,7 +365,7 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date
         <label for="image" class="upload">Upload Photo</label>
       </div>
     </div>
-    <table>
+    <table class="tblAmenity">
       <tr>
         <th>Amenity</th>
         <th>Renter</th>
