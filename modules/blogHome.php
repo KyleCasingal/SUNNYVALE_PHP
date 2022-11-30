@@ -20,6 +20,16 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     --text: black;
   }
 
+  .messageSuccess {
+    display: flex;
+    padding: 1vw;
+    justify-content: space-between;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5vw;
+    background-color: darkseagreen;
+    color: white;
+  }
+
   .mdl-body {
     margin: 0;
     font-style: 'Poppins', sans-serif;

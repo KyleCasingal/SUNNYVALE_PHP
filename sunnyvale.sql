@@ -335,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `monthly_dues_bill` (
   `paid_at` varchar(255) DEFAULT NULL,
   `status` varchar(255) NOT NULL,
   PRIMARY KEY (`monthlyDues_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `monthly_dues_bill`

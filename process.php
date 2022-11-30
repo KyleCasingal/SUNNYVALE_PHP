@@ -225,17 +225,24 @@ if (isset($_POST['submitPost'])) {
     $targetDir = '../media/postsPhotos/';
     $title = mysqli_real_escape_string($con, $_POST['title']);
     $content = mysqli_real_escape_string($con,  $_POST['content']);
-    $fileName = '' . $_FILES['image']['name'];
+    $fileName = '' . $_FILES['image']['name'] ?? '';
     $targetFilePath = $targetDir . $fileName;
     $result = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
     $row = $result->fetch_assoc();
     $user_id = $row['user_id'];
     $full_name = $row['full_name'];
-    copy($_FILES['image']['tmp_name'], $targetFilePath);
+
+    if ($_FILES['image']['size'] != 0) {
+        copy($_FILES['image']['tmp_name'], $targetFilePath);
+    }
 
     $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, content_image) VALUES ('$user_id','$full_name', '$title', '$content', now(), '$fileName')";
     mysqli_query($con, $sql);
-    header("Location: ../modules/blogHome.php");
+    echo "<div class='messageSuccess'>
+        <label >
+          Your post has been uploaded!
+        </label>
+      </div>";
     $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "' ,  'uploaded a new post', NOW())";
     mysqli_query($con, $sql1);
 }

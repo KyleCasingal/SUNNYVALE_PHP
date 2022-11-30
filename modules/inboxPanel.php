@@ -9,7 +9,7 @@ $resultComplaints = $con->query("SELECT * FROM concern WHERE status = 'Pending' 
 
 if (isset($_GET['concern_id'])) {
     $concern_id = $_GET['concern_id'];
-    $resultConcern = $con->query("SELECT * FROM concern WHERE concern_id = '$concern_id'");
+    $resultConcern = $con->query("SELECT * FROM concern, WHERE concern_id = '$concern_id' AND ");
 }
 ?>
 <!DOCTYPE html>

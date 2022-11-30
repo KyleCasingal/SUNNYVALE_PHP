@@ -3,6 +3,7 @@ require '../marginals/topbar.php';
 $res = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $res->fetch_assoc();
 $result = $con->query("SELECT * FROM homeowner_profile WHERE email_address != '' ORDER BY homeowner_id ASC ") or die($mysqli->error);
+$resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC") or die($mysqli->error);
 ?>
 
 <!DOCTYPE html>
@@ -353,15 +354,15 @@ $result = $con->query("SELECT * FROM homeowner_profile WHERE email_address != ''
     <form method="post">
         <div class="secretary">
             <div class="sideBar">
-            <?php
-              if ($row['user_type'] == 'Admin' ){
-                require '../marginals/sidebarAdmin.php';
-              }
-              
-              if ($row['user_type'] == 'Secretary'){
-                require '../marginals/sidebarSecretaryPanel.php';
-              }
-              ?>
+                <?php
+                if ($row['user_type'] == 'Admin') {
+                    require '../marginals/sidebarAdmin.php';
+                }
+
+                if ($row['user_type'] == 'Secretary') {
+                    require '../marginals/sidebarSecretaryPanel.php';
+                }
+                ?>
             </div>
 
             <div class="secretaryPanel">
@@ -432,10 +433,16 @@ $result = $con->query("SELECT * FROM homeowner_profile WHERE email_address != ''
                                     <input type="text" name="street" id="" placeholder="Lot and Block" value="<?php echo $street ?? ''; ?>" required />
                                 </td>
                                 <td>
-                                <select name="subdivision" id="">
+                                    <select name="subdivision" id="">
                                         <option value="">Select...</option>
                                         <?php while ($row = $resultSubd->fetch_assoc()) : ?>
-                                            <option value="<?php echo $row['subdivision_name'] ?>" ><?php echo $row['subdivision_name'] ?></option>
+                                            <option value="<?php echo $row['subdivision_name'] ?>" <?php
+                                                                                                    if (isset($_GET['homeowner_id'])) {
+                                                                                                        if ($subdivision == $row['subdivision_name']) {
+                                                                                                            echo 'selected="selected"';
+                                                                                                        }
+                                                                                                    }
+                                                                                                    ?>><?php echo $row['subdivision_name'] ?></option>
                                         <?php endwhile; ?>
                                     </select>
                                 </td>
