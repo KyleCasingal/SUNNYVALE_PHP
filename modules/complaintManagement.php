@@ -4,7 +4,13 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
 $row = $result->fetch_assoc();
 $resultComplaints = $con->query("SELECT * FROM concern WHERE status = 'Pending' OR status = 'Processing' ");
 
-$resultComplaintsRow = $con->query("SELECT * FROM CONCERN WHERE concern_id = ''")
+
+
+if (isset($_GET['concern_id'])) {
+    $concern_id = $_GET['concern_id'];
+    $resultConcern = $con->query("SELECT * FROM concern WHERE concern_id = '$concern_id'");
+    
+}
 ?>
 
 <!DOCTYPE html>
@@ -312,14 +318,18 @@ $resultComplaintsRow = $con->query("SELECT * FROM CONCERN WHERE concern_id = ''"
                     <input name="concern_id" type="hidden" value = <?php $row['concern_id'] ?? '' ; ?> >
                     <table class="tblComplaints">
                         <?php while ($row = $resultComplaints->fetch_assoc()) : ?>
-                            <tr class="trComplaints" data-bs-toggle="modal" data-bs-toggle="#complainModal">
-                            <a href="complaintManagement.php?concern_id=<?php echo $row['concern_id']; ?>" hidden></a>
+                            <form action="post">
+                            <tr class="trComplaints" data-bs-toggle="modal" data-bs-target="#complaintModal">
+                                <td>
+                                    <a href="complaintManagement.php?concern_id=<?php echo $row['concern_id']; ?>" hidden><?php echo $row['concern_id']; ?></a>
+                                </td>
                                 <td class="sender"><?php echo $row['full_name']; ?></td>
                                 <td class="complaintDesc"><label class="subject"><?php echo $row['concern_subject']?></label>
                                    <?php echo $row['concern_description']; ?>
                                 </td>
                                 <td class="complaintTime"><?php echo $row['datetime'] ?></td>
                             </tr>
+                        </form>
                         <?php endwhile; ?>
                     </table>
                 </div>
@@ -338,17 +348,18 @@ $resultComplaintsRow = $con->query("SELECT * FROM CONCERN WHERE concern_id = ''"
           </div>
           <div class="modalConcernBody">
             <table>
+                <?php $rowConcern = $resultConcern->fetch_assoc(); ?>
                 <tr>
                     <td>Complainant:</td>
-                    <td><?php echo $row['full_name']; ?></td>
+                    <td><?php echo $rowConcern['full_name']; ?></td>
                 </tr>
                 <tr>
                     <td>Subject:</td>
-                    <td><?php echo $row['concern_subject']?></td>
+                    <td><?php echo $rowConcern['concern_subject']?></td>
                 </tr>
                 <tr>
                     <td>Complaint Description:</td>
-                    <td> <?php echo $row['concern_description']; ?></td>
+                    <td> <?php echo $rowConcern['concern_description']; ?></td>
                 </tr>
             </table>
           <div class="modal-footer">
@@ -356,13 +367,17 @@ $resultComplaintsRow = $con->query("SELECT * FROM CONCERN WHERE concern_id = ''"
               Close
             </button>
 
-            <button type="submit" name="concernSubmit" class="btn btn-primary">
-              Submit Concern
+            <button type="submit" name="concernProcess" class="btn btn-primary">
+              Processing
+            </button>
+            <button type="submit" name="concernProcess" class="btn btn-success">
+              Resolved
             </button>
 
           </div>
         </div>
       </div>
+    </div>
     </div>
     <?php
     require '../marginals/footer2.php'
