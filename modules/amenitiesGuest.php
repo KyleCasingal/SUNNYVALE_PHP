@@ -21,7 +21,7 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date
   * {
     margin: 0;
   }
-  
+
 
   .messageSuccess {
     display: flex;
@@ -157,14 +157,18 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date
     cursor: pointer;
     margin-bottom: 1vw;
   }
-  .table{
+
+  .table {
     margin: 2vw;
     width: 90%;
   }
-  thead{
+
+  thead {
     background-color: rgba(234, 232, 199, 0.2);
   }
-  td, th{
+
+  td,
+  th {
     text-align: center;
   }
 
@@ -327,6 +331,8 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date
                                                               if ($cost < 0) {
                                                                 echo "value = ''";
                                                               } else if ($_POST['ampmFrom'] == 'am' and $_POST['hrFrom'] < 6) {
+                                                                echo "value = ''";
+                                                              } else if ($_POST['ampmFrom'] == 'pm' and $_POST['hrFrom'] > 9 and $_POST['minsFrom'] > 1) {
                                                                 echo "value = ''";
                                                               } else if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] > 9 and $_POST['minsTo'] > 1) {
                                                                 echo "value = ''";

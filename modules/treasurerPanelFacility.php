@@ -101,6 +101,7 @@ $resultAmenity = $con->query("SELECT * FROM facility_renting WHERE date_from BET
     background-color: rgba(234, 232, 199, 0.2);
     font-family: 'Poppins', sans-serif;
   }
+
   input {
     padding: 0.5vw;
     max-width: 50vw;
@@ -130,6 +131,7 @@ $resultAmenity = $con->query("SELECT * FROM facility_renting WHERE date_from BET
     font-size: 2vw;
     padding: 0.5vw;
   }
+
   .btnSubmit {
     background-color: darkseagreen;
     border: 0;
@@ -313,6 +315,8 @@ $resultAmenity = $con->query("SELECT * FROM facility_renting WHERE date_from BET
                                                               if ($cost < 0) {
                                                                 echo "value = ''";
                                                               } else if ($_POST['ampmFrom'] == 'am' and $_POST['hrFrom'] < 6) {
+                                                                echo "value = ''";
+                                                              } else if ($_POST['ampmFrom'] == 'pm' and $_POST['hrFrom'] > 9 and $_POST['minsFrom'] > 1) {
                                                                 echo "value = ''";
                                                               } else if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] > 9 and $_POST['minsTo'] > 1) {
                                                                 echo "value = ''";
