@@ -100,6 +100,11 @@ $row = $result->fetch_assoc();
   color: white;
   border-radius: 0.8vw;
   cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+a:hover{
+  color: white;
 }
 .btnSubmitReg:hover {
   background-color: rgb(93, 151, 93);
@@ -131,18 +136,15 @@ $row = $result->fetch_assoc();
           
       <div class="reportsContainer">
         <div class="buttonArea">
-          <button type="submit" class="btnSubmitReg">
+          <a class="btnSubmitReg" href="../reports/reportAmenities.php" target="_blank">
             Amenity Renting
-          </button>
-          <button type="submit" class="btnSubmitReg">
+            </a>
+            <a class="btnSubmitReg" href="../reports/reportMonthlyDues.php" target="_blank">
             Paid Monthly Dues
-          </button>
-          <button type="submit" class="btnSubmitReg">
-            Unpaid Dues
-          </button>
-          <button type="submit" class="btnSubmitReg">
+            </a>
+            <a class="btnSubmitReg" href="../reports/reportAuditTrail.php" target="_blank">
             Audit Trail
-          </button>
+            </a>
         </div>
         
       </div>  
