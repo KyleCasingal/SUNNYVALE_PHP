@@ -398,15 +398,19 @@ if (isset($_POST['compute'])) {
     </label>
   </div>";
     }
-    if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] > 9 and $_POST['minsTo'] > 1) {
+    if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] >= 9 and $_POST['minsTo'] >= 1) {
         echo "<div class='messageFail'>
         <label >
           Invalid time input!
         </label>
       </div>";
     }
-    if ($_POST['ampmFrom'] == 'pm' and $_POST['hrFrom'] > 9 and $_POST['minsFrom'] > 1) {
-        echo "value = ''";
+    if ($_POST['ampmFrom'] == 'pm' and $_POST['hrFrom'] >= 9 and $_POST['minsFrom'] >= 0) {
+        echo "<div class='messageFail'>
+        <label >
+          Invalid time input!
+        </label>
+      </div>";
     }
 }
 //SETTINGS INSERTION

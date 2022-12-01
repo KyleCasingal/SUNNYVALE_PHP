@@ -316,9 +316,9 @@ $resultAmenity = $con->query("SELECT * FROM facility_renting WHERE date_from BET
                                                                 echo "value = ''";
                                                               } else if ($_POST['ampmFrom'] == 'am' and $_POST['hrFrom'] < 6) {
                                                                 echo "value = ''";
-                                                              } else if ($_POST['ampmFrom'] == 'pm' and $_POST['hrFrom'] > 9 and $_POST['minsFrom'] > 1) {
+                                                              } else if ($_POST['ampmFrom'] == 'pm' and $_POST['hrFrom'] >= 9 and $_POST['minsFrom'] >= 0) {
                                                                 echo "value = ''";
-                                                              } else if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] > 9 and $_POST['minsTo'] > 1) {
+                                                              } else if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] >=9 and $_POST['minsTo'] >= 1) {
                                                                 echo "value = ''";
                                                               } else {
                                                                 echo "value = '$cost'";
