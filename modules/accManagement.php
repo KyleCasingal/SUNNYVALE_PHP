@@ -14,6 +14,11 @@ if (isset($_POST['filterButton'])) {
 }
 if (isset($_POST['activate'])) {
     if (isset($_POST['checkbox'])) {
+        echo "<div class='messageSuccess'>
+        <label >
+          Selected user/s are activated!
+        </label>
+      </div>";
         foreach ($_POST['checkbox'] as $user_id) {
             $sql = "UPDATE user SET account_status = 'Activated' WHERE user_id = '$user_id'";
             $result = mysqli_query($con, $sql);
@@ -24,6 +29,7 @@ if (isset($_POST['activate'])) {
             $row = $resultSession->fetch_assoc();
             $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" .  'activated user' . ' ' . "$full_name" . "' , NOW())";
             mysqli_query($con, $sql1);
+            
         }
     } else {
         echo 'Please select an account to activate!';
@@ -38,6 +44,11 @@ if (isset($_POST['activate'])) {
 }
 if (isset($_POST['deactivate'])) {
     if (isset($_POST['checkbox'])) {
+        echo "<div class='messageSuccess'>
+        <label >
+          Selected user/s are deactivated!
+        </label>
+      </div>";
         foreach ($_POST['checkbox'] as $user_id) {
             $sql = "UPDATE user SET account_status = 'Deactivated' WHERE user_id = '$user_id'";
             $result = mysqli_query($con, $sql);

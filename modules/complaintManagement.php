@@ -2,7 +2,7 @@
 require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultComplaints = $con->query("SELECT * FROM concern WHERE status = 'Pending' OR status = 'Processing' ");
+$resultComplaints = $con->query("SELECT * FROM concern, user WHERE status = 'Pending' OR status = 'Processing'");
 
 
 
@@ -341,7 +341,7 @@ if (isset($_GET['concern_id'])) {
                                 <td onclick="location.href='complaintManagement.php?concern_id=<?php echo $row['concern_id']; ?>'">
                                     OPEN
                                 </td>
-                                <td class="sender" data-bs-toggle="modal" data-bs-target="#complaintModal"><?php echo $row['full_name']; ?></td>
+                                <td class="sender" data-bs-toggle="modal" data-bs-target="#complaintModal"><?php echo $row['full_Name']; ?></td>
                                 <td class="complaintDesc" data-bs-toggle="modal" data-bs-target="#complaintModal"><label class="subject"><?php echo $row['concern_subject'] ?></label>
                                     <?php echo $row['concern_description']; ?>
                                 </td>
@@ -374,7 +374,7 @@ if (isset($_GET['concern_id'])) {
                         <?php $rowConcern = $resultConcern->fetch_assoc(); ?>
                         <tr>
                             <td>Complainant:</td>
-                            <td><?php echo $rowConcern['full_name']; ?></td>
+                            <td><?php echo $rowConcern['full_Name']; ?></td>
                         </tr>
                         <tr>
                             <td>Subject:</td>

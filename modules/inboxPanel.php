@@ -5,8 +5,6 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
 $row = $result->fetch_assoc();
 $resultComplaints = $con->query("SELECT * FROM concern WHERE status = 'Pending' OR status = 'Processing' ");
 
-
-
 if (isset($_GET['concern_id'])) {
     $concern_id = $_GET['concern_id'];
     $resultConcern = $con->query("SELECT * FROM concern WHERE concern_id = '$concern_id' ");
@@ -207,7 +205,7 @@ if (isset($_GET['concern_id'])) {
                             <td onclick="location.href='inboxPanel.php?concern_id=<?php echo $row['concern_id']; ?>'">
                                 OPEN
                             </td>
-                            <td class="msgSender" data-bs-toggle="modal" data-bs-target="#complaintStatus"><?php echo $row['full_name']; ?></td>
+                            <td class="msgSender" data-bs-toggle="modal" data-bs-target="#complaintStatus"><?php echo $row['full_Name']; ?></td>
                             <td class="msgDesc" data-bs-toggle="modal" data-bs-target="#complaintStatus"><label class="subject"><?php echo $row['concern_subject'] ?></label>
                                 <?php echo $row['concern_description']; ?>
                             </td>
@@ -236,7 +234,7 @@ if (isset($_GET['concern_id'])) {
                         <?php $rowConcern = $resultConcern->fetch_assoc(); ?>
                         <tr>
                             <td>Complainant:</td>
-                            <td><?php echo $rowConcern['full_name']; ?></td>
+                            <td><?php echo $rowConcern['full_Name']; ?></td>
                         </tr>
                         <tr>
                             <td>Subject:</td>
