@@ -2,7 +2,7 @@
 require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultComplaints = $con->query("SELECT * FROM concern, user WHERE status = 'Pending' OR status = 'Processing'");
+$resultComplaints = $con->query("SELECT * FROM concern WHERE status = 'Pending' OR status = 'Processing'");
 
 
 
@@ -317,15 +317,15 @@ if (isset($_GET['concern_id'])) {
 <body>
     <div class="secretary">
         <div class="sideBar">
-        <?php
-              if ($row['user_type'] == 'Admin' ){
+            <?php
+            if ($row['user_type'] == 'Admin') {
                 require '../marginals/sidebarAdmin.php';
-              }
-              
-              if ($row['user_type'] == 'Secretary'){
+            }
+
+            if ($row['user_type'] == 'Secretary') {
                 require '../marginals/sidebarSecretaryPanel.php';
-              }
-              ?>
+            }
+            ?>
         </div>
 
         <div class="secretaryPanel">
@@ -333,34 +333,29 @@ if (isset($_GET['concern_id'])) {
                 <label class="inboxTitle">Complaints</label>
                 <div class="inboxContainer">
 
-                    <input name="concern_id" type="hidden" value=<?php $row['concern_id'] ?? ''; ?>>
+
                     <table class="tblComplaints">
                         <?php while ($row = $resultComplaints->fetch_assoc()) : ?>
+                            <tr class="trComplaints">
+                                <td class="use-address"><?php echo $row['concern_id'] ?></td>
+                                <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal"><?php echo $row['full_Name']; ?></td>
+                                <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal"><label class="subject"><?php echo $row['concern_subject'] ?></label></td>
+                                <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal"><?php echo $row['concern_description']; ?></td>
+                                <td id="myBtn" class="complaintTime" data-bs-toggle="modal" data-bs-target="#complaintModal"><?php echo $row['datetime'] ?></td>
 
-                            <tr class="trComplaints" >
-                                <td onclick="location.href='complaintManagement.php?concern_id=<?php echo $row['concern_id']; ?>'">
-                                    OPEN
-                                </td>
-                                <td class="sender" data-bs-toggle="modal" data-bs-target="#complaintModal"><?php echo $row['full_Name']; ?></td>
-                                <td class="complaintDesc" data-bs-toggle="modal" data-bs-target="#complaintModal"><label class="subject"><?php echo $row['concern_subject'] ?></label>
-                                    <?php echo $row['concern_description']; ?>
-                                </td>
-                                <td class="complaintTime" data-bs-toggle="modal" data-bs-target="#complaintModal"><?php echo $row['datetime'] ?></td>
                             </tr>
-
                         <?php endwhile; ?>
                     </table>
-
                 </div>
             </div>
 
         </div>
     </div>
-   
+
     <?php
     require '../marginals/footer2.php'
     ?>
-     <div class="modal fade" id="complaintModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="complaintModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -371,18 +366,21 @@ if (isset($_GET['concern_id'])) {
                 </div>
                 <div class="modalConcernBody">
                     <table>
-                        <?php $rowConcern = $resultConcern->fetch_assoc(); ?>
+                        <tr>
+                            <td></td>
+                            <td id="id"></td>
+                        </tr>
                         <tr>
                             <td>Complainant:</td>
-                            <td><?php echo $rowConcern['full_Name']; ?></td>
+                            <td id="complainant"></td>
                         </tr>
                         <tr>
                             <td>Subject:</td>
-                            <td><?php echo $rowConcern['concern_subject'] ?></td>
+                            <td id="subject"></td>
                         </tr>
                         <tr>
                             <td>Complaint Description:</td>
-                            <td> <?php echo $rowConcern['concern_description']; ?></td>
+                            <td id="description"></td>
                         </tr>
                     </table>
                     <div class="modal-footer">
@@ -403,5 +401,32 @@ if (isset($_GET['concern_id'])) {
         </div>
     </div>
 </body>
+<script>
+    $(".use-address").click(function() {
+        var $row = $(this).closest("tr"); // Find the row
+        var $tds = $row.find("td");
+        $.each($tds, function(index) {
+            document.getElementById("id").innerHTML = ($(this).text());
+            return (index !== 0);
+        });
+        $.each($tds, function(index) {
+            document.getElementById("complainant").innerHTML = ($(this).text());
+            return (index !== 1);
+        });
+        $.each($tds, function(index) {
+            document.getElementById("subject").innerHTML = ($(this).text());
+            return (index !== 2);
+        });
+        $.each($tds, function(index) {
+            document.getElementById("description").innerHTML = ($(this).text());
+            return (index !== 3);
+        });
+
+    });
+
+    // let text = document.getElementById("myBtn").textContent;
+    // document.getElementById("demo") = text;
+    // document.getElementById("concern_id").innerText
+</script>
 
 </html>

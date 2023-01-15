@@ -33,7 +33,6 @@ if (isset($_POST['registerButtonGuest'])) {
 if (isset($_POST['loginButtonGuest'])) {
     header("Location: ../modules/login.php");
 }
-
 // REGISTER A NEW USER
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -650,10 +649,33 @@ if (isset($_POST['concernSubmit'])) {
     </form>
   </div>";
 }
-
 if (isset($_POST['concernOk'])) {
     header("Location: blogHome.php");
 }
 
-if (isset($_GET['concern_id'])) {;
+// EDITING PROFILE
+
+if (isset($_POST['editProfile'])){
+    $first_name = $_POST['first_name'];
+    $middle_name = $_POST['middle_name'];
+    $last_name = $_POST['last_name'];
+    $suffix = $_POST['suffix'];
+    $street = $_POST['street'];
+    $subdivision = $_POST['subdivision'];
+    $business_address = $_POST['business_address'];
+    $mobile_number = $_POST['mobile_number'];
+    $occupation = $_POST['occupation'];
+    $employer = $_POST['employer'];
+    $birthdate = strtotime($_POST['birthdate']);
+    $birthdate = date('Y-m-d', $birthdate);
+    $sex = $_POST['sex'];
+    $email_address = $_POST['email_address'];
+
+    $result = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" . $subdivision . "'");
+    $row = $result->fetch_assoc();
+
+    $sql1 = "UPDATE homeowner_profile SET first_name ='" . $first_name . "', middle_name ='" . $middle_name . "', last_name ='" . $last_name . "', suffix ='" . $suffix . "', street ='" . $street . "', subdivision ='" . $subdivision . "', barangay ='" . $row['barangay'] . "', business_address ='" . $business_address . "', occupation ='" . $occupation . "', email_address='" . $email_address . "', email_address='" . $birthdate . "', mobile_number='" . $mobile_number . "', employer='" . $employer . "'   WHERE homeowner_id = '" . $_SESSION['user_id'] . "'";
+    $result1 = mysqli_query($con, $sql1);
+
 }
+
