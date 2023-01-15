@@ -552,258 +552,264 @@ $resultDues = $con->query("SELECT * FROM `user`, `monthly_dues_bill` WHERE user_
     <div class="sideBar">
       <?php require '../marginals/sidebarMemberPanel.php'; ?>
     </div>
-      <div class="memberPanel">
-        <div class="profileMem" id="profile">
-          <label class="lblProfile">Member Profile</label>
-          <div class="profileForm">
-            <div class="profileImg">
-              <img <?php
-                    $imageURL = '../media/displayPhotos/' . $row['display_picture'];
-                    ?> src="<?= $imageURL ?>" alt="" />
-              <label for="image" class="lblUpload">Upload Photo</label>
-              <div class="input" hidden>
-                <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()"></input>
-              </div>
+    <div class="memberPanel">
+      <div class="profileMem" id="profile">
+        <label class="lblProfile">Member Profile</label>
+        <div class="profileForm">
+          <div class="profileImg">
+            <img <?php
+                  $imageURL = '../media/displayPhotos/' . $row['display_picture'];
+                  ?> src="<?= $imageURL ?>" alt="" />
+            <label for="image" class="lblUpload">Upload Photo</label>
+            <div class="input" hidden>
+              <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()"></input>
             </div>
-            <table class="table tblProfile">
-              <tbody>
-                <tr>
-                  <td class="lbl">Name:</td>
-                  <td class="data"><?php echo $row['first_name'] . " " . $row['middle_name']  . " " . $row['last_name']; ?></td>
-                  <td class="editBtn">
-                    <i class="fa-solid fa-pen fa-2x" data-bs-toggle="modal" data-bs-target="#editProfile"></i>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="lbl">Date of Birth:</td>
-                  <td class="data"><?php
-                                    $datetime = strtotime($row['birthdate']);
-                                    echo $phptime = date("F/d/Y", $datetime);
-                                    ?>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="lbl">Gender:</td>
-                  <td class="data"><?php echo $row['sex'] ?></td>
-                </tr>
-                <tr>
-                  <td class="lbl">Residence Address:</td>
-                  <td class="data">
-                    <?php echo $residence_address ?></ </td>
-                </tr>
-                <tr>
-                  <td class="lbl">Business Address:</td>
-                  <td class="data">
-                    <?php echo $row['business_address'] ?>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="lbl">Occupation:</td>
-                  <td class="data"><?php echo $row['occupation'] ?></td>
-                </tr>
-                <tr>
-                  <td class="lbl">Employer:</td>
-                  <td class="data"><?php echo $row['employer'] ?></td>
-                </tr>
-                <tr>
-                  <td class="lbl">Email:</td>
-                  <td class="data"><?php echo $row['email_address'] ?></td>
-                </tr>
-                <tr>
-                  <td class="lbl">Mobile Number:</td>
-                  <td class="data"><?php echo $row['mobile_number'] ?></td>
-                </tr>
-              </tbody>
-            </table>
           </div>
-          <div class="table-responsive">
-            <label class="lblTable">Paid Monthly Dues</label>
-            <table class="tblPaidDues table-hover" cellspacing="0" width="100%">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Subdivision</th>
-                  <th>Month</th>
-                  <th>Year</th>
-                  <th>Address</th>
-                  <th>Paid at</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php while ($rowDues = $resultDues->fetch_assoc()) : ?>
-                  <tr>
-                    <td><?php echo $rowDues['homeowner_name'] ?></td>
-                    <td><?php echo $rowDues['subdivision'] ?></td>
-                    <td><?php echo $rowDues['month'] ?></td>
-                    <td><?php echo $rowDues['year'] ?></td>
-                    <td><?php echo $rowDues['address'] ?></td>
-                    <td><?php echo $rowDues['paid_at'] ?></td>
-                    <td><?php echo $rowDues['status'] ?></td>
-                  <?php endwhile; ?>
-                  </tr>
-              </tbody>
-            </table>
-          </div>
+          <table class="table tblProfile">
+            <tbody>
+              <tr>
+                <td class="lbl">Name:</td>
+                <td class="data"><?php
+                                  if ($row['suffix'] == "N/A") {
+                                    echo $row['first_name'] . " " . $row['middle_name']  . " " . $row['last_name'];
+                                  } else {
+                                    echo $row['first_name'] . " " . $row['middle_name']  . " " . $row['last_name'] . " " . $row['suffix'];
+                                  }
+                                  ?></td>
+                <td class="editBtn">
+                  <i class="fa-solid fa-pen fa-2x" data-bs-toggle="modal" data-bs-target="#editProfile"></i>
+                </td>
+              </tr>
+              <tr>
+                <td class="lbl">Date of Birth:</td>
+                <td class="data"><?php
+                                  $datetime = strtotime($row['birthdate']);
+                                  echo $phptime = date("F/d/Y", $datetime);
+                                  ?>
+                </td>
+              </tr>
+              <tr>
+                <td class="lbl">Gender:</td>
+                <td class="data"><?php echo $row['sex'] ?></td>
+              </tr>
+              <tr>
+                <td class="lbl">Residence Address:</td>
+                <td class="data">
+                  <?php echo $residence_address ?></ </td>
+              </tr>
+              <tr>
+                <td class="lbl">Business Address:</td>
+                <td class="data">
+                  <?php echo $row['business_address'] ?>
+                </td>
+              </tr>
+              <tr>
+                <td class="lbl">Occupation:</td>
+                <td class="data"><?php echo $row['occupation'] ?></td>
+              </tr>
+              <tr>
+                <td class="lbl">Employer:</td>
+                <td class="data"><?php echo $row['employer'] ?></td>
+              </tr>
+              <tr>
+                <td class="lbl">Email:</td>
+                <td class="data"><?php echo $row['email_address'] ?></td>
+              </tr>
+              <tr>
+                <td class="lbl">Mobile Number:</td>
+                <td class="data"><?php echo $row['mobile_number'] ?></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
-
+        <div class="table-responsive">
+          <label class="lblTable">Paid Monthly Dues</label>
+          <table class="tblPaidDues table-hover" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Subdivision</th>
+                <th>Month</th>
+                <th>Year</th>
+                <th>Address</th>
+                <th>Paid at</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php while ($rowDues = $resultDues->fetch_assoc()) : ?>
+                <tr>
+                  <td><?php echo $rowDues['homeowner_name'] ?></td>
+                  <td><?php echo $rowDues['subdivision'] ?></td>
+                  <td><?php echo $rowDues['month'] ?></td>
+                  <td><?php echo $rowDues['year'] ?></td>
+                  <td><?php echo $rowDues['address'] ?></td>
+                  <td><?php echo $rowDues['paid_at'] ?></td>
+                  <td><?php echo $rowDues['status'] ?></td>
+                <?php endwhile; ?>
+                </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+
+
+    </div>
   </div>
   </div>
   <form method="post">
-  <div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Edit Your Information</h5>
-          <button type="button" class="btn-close discardChanges"></button>
-        </div>
-        <div class="modal-body">
-          <div class="regForm">
-            <table class="tblForm">
-              <tr>
-                <td>First Name:</td>
-                <td>
-                  <input type="text" name="first_name" id="" placeholder="first name" value="<?php echo $row['first_name']; ?>" required />
-                </td>
-                <td>Date of Birth:</td>
-                <td>
-                  <input type="date" data-date-format="yyyy-mm-dd" name="birthdate" value="<?php echo $row['birthdate'] ?? ''; ?>" id="" required />
-                </td>
-              </tr>
-              <tr>
-                <td>Middle Name:</td>
-                <td>
-                  <input type="text" name="middle_name" id="" placeholder="middle name" value="<?php echo $row['middle_name'] ?? ''; ?>" required />
-                </td>
-                <td>Sex:</td>
-                <td>
-                  <select name="sex" id="">
-                    <option value="" required>Select...</option>
-                    <option value="Male" <?php
-                                          if ($row['sex'] == "Male") {
-                                            echo 'selected="selected"';
-                                          }
-                                          ?>>Male</option>
-                    <option value="Female" <?php
-                                            if ($row['sex'] == "Female") {
+    <div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Edit Your Information</h5>
+            <button type="button" class="btn-close discardChanges"></button>
+          </div>
+          <div class="modal-body">
+            <div class="regForm">
+              <table class="tblForm">
+                <tr>
+                  <td>First Name:</td>
+                  <td>
+                    <input type="text" name="first_name" id="" placeholder="first name" value="<?php echo $row['first_name']; ?>" required />
+                  </td>
+                  <td>Date of Birth:</td>
+                  <td>
+                    <input type="date" data-date-format="yyyy-mm-dd" name="birthdate" value="<?php echo $row['birthdate'] ?? ''; ?>" id="" required />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Middle Name:</td>
+                  <td>
+                    <input type="text" name="middle_name" id="" placeholder="middle name" value="<?php echo $row['middle_name'] ?? ''; ?>" required />
+                  </td>
+                  <td>Sex:</td>
+                  <td>
+                    <select name="sex" id="">
+                      <option value="" required>Select...</option>
+                      <option value="Male" <?php
+                                            if ($row['sex'] == "Male") {
                                               echo 'selected="selected"';
                                             }
-                                            ?>>Female</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>Last Name:</td>
-                <td>
-                  <input type="text" name="last_name" id="" placeholder="last name" value="<?php echo $row['last_name'] ?? ''; ?>" required />
-                </td>
-                <td>Email:</td>
-                <td>
-                  <input type="text" name="email_address" id="" placeholder="email" value="<?php echo $row['email_address'] ?? ''; ?>" required />
-                </td>
-              </tr>
-              <tr>
-                <td>Suffix:</td>
-                <td>
-                  <input type="text" name="suffix" id="" placeholder="suffix" value="<?php echo $row['suffix'] ?? ''; ?>" required />
-                </td>
-                <td>Mobile Number:</td>
-                <td>
-                  <input type="text" name="mobile_number" id="" placeholder="mobile no." value="<?php echo $row['mobile_number'] ?? ''; ?>" required />
-                </td>
-              </tr>
-              <tr>
-                <td>Residence Address:</td>
-                <td>
-                  <input type="text" name="street" id="" placeholder="Lot and Block" value="<?php echo $row['street'] ?? ''; ?>" required />
-                </td>
-                <td>
-                  <select name="subdivision" id="">
-                    <option value="">Select...</option>
-                    <?php while ($rowSubd = $resultSubd->fetch_assoc()) : ?>
-                      <option value="<?php echo $rowSubd['subdivision_name'] ?>" <?php
-                                                                                  if ($rowSubd['subdivision_name'] == $row['subdivision']) {
-                                                                                    echo 'selected="selected"';
-                                                                                  }
-                                                                                  ?>><?php echo $rowSubd['subdivision_name'] ?></option>
-                    <?php endwhile; ?>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td>Business Address:</td>
-                <td class="NA">
-                  <input type="text" name="business_address" id="" placeholder="business address" value="<?php echo $row['business_address'] ?? ''; ?>" required />
-                  <p class="lblNA">*write N/A if not applicable*</p>
-                </td>
-              </tr>
-              <tr>
+                                            ?>>Male</option>
+                      <option value="Female" <?php
+                                              if ($row['sex'] == "Female") {
+                                                echo 'selected="selected"';
+                                              }
+                                              ?>>Female</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Last Name:</td>
+                  <td>
+                    <input type="text" name="last_name" id="" placeholder="last name" value="<?php echo $row['last_name'] ?? ''; ?>" required />
+                  </td>
+                  <td>Email:</td>
+                  <td>
+                    <input type="text" name="email_address" id="" placeholder="email" value="<?php echo $row['email_address'] ?? ''; ?>" required />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Suffix:</td>
+                  <td>
+                    <input type="text" name="suffix" id="" placeholder="suffix" value="<?php echo $row['suffix'] ?? ''; ?>" required />
+                  </td>
+                  <td>Mobile Number:</td>
+                  <td>
+                    <input type="text" name="mobile_number" id="" placeholder="mobile no." value="<?php echo $row['mobile_number'] ?? ''; ?>" required />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Residence Address:</td>
+                  <td>
+                    <input type="text" name="street" id="" placeholder="Lot and Block" value="<?php echo $row['street'] ?? ''; ?>" required />
+                  </td>
+                  <td>
+                    <select name="subdivision" id="">
+                      <option value="">Select...</option>
+                      <?php while ($rowSubd = $resultSubd->fetch_assoc()) : ?>
+                        <option value="<?php echo $rowSubd['subdivision_name'] ?>" <?php
+                                                                                    if ($rowSubd['subdivision_name'] == $row['subdivision']) {
+                                                                                      echo 'selected="selected"';
+                                                                                    }
+                                                                                    ?>><?php echo $rowSubd['subdivision_name'] ?></option>
+                      <?php endwhile; ?>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Business Address:</td>
+                  <td class="NA">
+                    <input type="text" name="business_address" id="" placeholder="business address" value="<?php echo $row['business_address'] ?? ''; ?>" required />
+                    <p class="lblNA">*write N/A if not applicable*</p>
+                  </td>
+                </tr>
+                <tr>
 
-              </tr>
-              <tr>
-                <td>Occupation:</td>
-                <td class="NA">
-                  <input type="text" name="occupation" id="" placeholder="occupation" value="<?php echo $row['occupation'] ?? ''; ?>" required />
-                  <p class="lblNA">*write N/A if not applicable*</p>
-                </td>
-              </tr>
-              <tr>
-                <td>Employer:</td>
-                <td class="NAemployer">
-                  <input type="text" name="employer" id="" placeholder="employer" value="<?php echo $row['employer'] ?? ''; ?>" required />
-                  <p class="lblNA">*write N/A if not applicable*</p>
-                </td>
-                <td>
-                  <button data-bs-toggle="modal" data-bs-target="#homeowner_submit" type="button" class="btnSubmitReg saveChanges">
-                    Save
-                  </button>
-                </td>
-                <td>
-                  <button type="button" value="" class="btnClearReg discardChanges" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Discard
-                  </button>
-                </td>
-              </tr>
-            </table>
+                </tr>
+                <tr>
+                  <td>Occupation:</td>
+                  <td class="NA">
+                    <input type="text" name="occupation" id="" placeholder="occupation" value="<?php echo $row['occupation'] ?? ''; ?>" required />
+                    <p class="lblNA">*write N/A if not applicable*</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Employer:</td>
+                  <td class="NAemployer">
+                    <input type="text" name="employer" id="" placeholder="employer" value="<?php echo $row['employer'] ?? ''; ?>" required />
+                    <p class="lblNA">*write N/A if not applicable*</p>
+                  </td>
+                  <td>
+                    <button data-bs-toggle="modal" data-bs-target="#homeowner_submit" type="button" class="btnSubmitReg saveChanges">
+                      Save
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" value="" class="btnClearReg discardChanges" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      Discard
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="modal fade" id="confirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Do you really want to save your changes?
-        </div>
-        <div class="modal-footer">
-          <button name="editProfile" type="submit" class="btn btn-success">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="discardConfirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Your changes will be discarded!
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-warning" onclick="location.href='memberPanel.php'">Discard changes</button>
+    <div class="modal fade" id="confirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Do you really want to save your changes?
+          </div>
+          <div class="modal-footer">
+            <button name="editProfile" type="submit" class="btn btn-success">Save changes</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <div class="modal fade" id="discardConfirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Your changes will be discarded!
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-warning" onclick="location.href='memberPanel.php'">Discard changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </form>
   <?php
   require '../marginals/footer2.php'

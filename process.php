@@ -674,7 +674,7 @@ if (isset($_POST['editProfile'])){
     $result = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" . $subdivision . "'");
     $row = $result->fetch_assoc();
 
-    $sql1 = "UPDATE homeowner_profile SET first_name ='" . $first_name . "', middle_name ='" . $middle_name . "', last_name ='" . $last_name . "', suffix ='" . $suffix . "', street ='" . $street . "', subdivision ='" . $subdivision . "', barangay ='" . $row['barangay'] . "', business_address ='" . $business_address . "', occupation ='" . $occupation . "', email_address='" . $email_address . "', email_address='" . $birthdate . "', mobile_number='" . $mobile_number . "', employer='" . $employer . "'   WHERE homeowner_id = '" . $_SESSION['user_id'] . "'";
+    $sql1 = "UPDATE homeowner_profile SET first_name ='" . $first_name . "', middle_name ='" . $middle_name . "', last_name ='" . $last_name . "', suffix ='" . $suffix . "', street ='" . $street . "', subdivision ='" . $subdivision . "', barangay ='" . $row['barangay'] . "', business_address ='" . $business_address . "', occupation ='" . $occupation . "', email_address='" . $email_address . "', birthdate='" . $birthdate . "', mobile_number='" . $mobile_number . "', employer='" . $employer . "'   WHERE homeowner_id = '" . $_SESSION['user_id'] . "'";
     $result1 = mysqli_query($con, $sql1);
 
 }
