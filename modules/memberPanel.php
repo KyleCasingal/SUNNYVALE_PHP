@@ -559,11 +559,8 @@ $resultDues = $con->query("SELECT * FROM `user`, `monthly_dues_bill` WHERE user_
           <div class="profileImg">
             <img <?php
                   $imageURL = '../media/displayPhotos/' . $row['display_picture'];
-                  ?> src="<?= $imageURL ?>" alt="" />
-            <label for="image" class="lblUpload">Upload Photo</label>
-            <div class="input" hidden>
-              <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()"></input>
-            </div>
+                  ?> src="<?= $imageURL ?>" />
+            <label class="lblUpload" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Upload Photo</label>
           </div>
           <table class="table tblProfile">
             <tbody>
@@ -657,7 +654,7 @@ $resultDues = $con->query("SELECT * FROM `user`, `monthly_dues_bill` WHERE user_
     </div>
   </div>
   </div>
-  <form method="post">
+  <form method="post" enctype="multipart/form-data">
     <div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -762,7 +759,7 @@ $resultDues = $con->query("SELECT * FROM `user`, `monthly_dues_bill` WHERE user_
                     <p class="lblNA">*write N/A if not applicable*</p>
                   </td>
                   <td>
-                    <button data-bs-toggle="modal" data-bs-target="#homeowner_submit" type="button" class="btnSubmitReg saveChanges">
+                    <button data-bs-toggle="modal" type="button" class="btnSubmitReg saveChanges">
                       Save
                     </button>
                   </td>
@@ -794,7 +791,30 @@ $resultDues = $con->query("SELECT * FROM `user`, `monthly_dues_bill` WHERE user_
         </div>
       </div>
     </div>
-    <div class="modal fade" id="discardConfirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Change profile photo</h5>
+            <button type="button" class="btn-close discardChanges"></button>
+          </div>
+          <div class="mdl-body">
+            <div class="blogWrite">
+              <div class="blogWritePage">
+                <div class="formBlog">
+                  <label class="writeText">Add Photos</label>
+                  <input class="attInput" type="file" name="image" id="image" accept="image/*" onchange="preview()"></input>
+                  <img class="imagePrev" id="imagePreview" src=# alt="" />
+                  <label for="image" class="upload">Upload Photo</label>
+                  <button data-bs-toggle="modal" type="button" class="savePhoto">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="photoConfirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -802,15 +822,34 @@ $resultDues = $con->query("SELECT * FROM `user`, `monthly_dues_bill` WHERE user_
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            Your changes will be discarded!
+            Do you really want to change your profile photo?
           </div>
           <div class="modal-footer">
-            <button class="btn btn-warning" onclick="location.href='memberPanel.php'">Discard changes</button>
+            <button name="editProfilePhoto" type="submit" class="btn btn-success">Save changes</button>
           </div>
         </div>
       </div>
     </div>
   </form>
+  <div class="modal fade" id="discardConfirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Your changes will be discarded!
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-warning" onclick="location.href='memberPanel.php'">Discard changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
   <?php
   require '../marginals/footer2.php'
   ?>
@@ -822,9 +861,30 @@ $resultDues = $con->query("SELECT * FROM `user`, `monthly_dues_bill` WHERE user_
     });
   });
   $(document).ready(function() {
+    $('.savePhoto').click(function() {
+      $('#photoConfirmation').modal('show');
+    });
+  });
+  $(document).ready(function() {
     $('.discardChanges').click(function() {
       $('#discardConfirmation').modal('show');
     });
+  });
+
+  function readURL(input, id) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        $('#' + id).attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#image").change(function() {
+    readURL(this, 'imagePreview');
   });
 </script>
 

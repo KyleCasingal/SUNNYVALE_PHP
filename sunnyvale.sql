@@ -2,9 +2,9 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Dec 01, 2022 at 02:34 AM
--- Server version: 8.0.28
+-- Host: 127.0.0.1:3307
+-- Generation Time: Jan 20, 2023 at 10:05 AM
+-- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -29,13 +29,13 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `amenities`;
 CREATE TABLE IF NOT EXISTS `amenities` (
-  `amenity_id` int NOT NULL AUTO_INCREMENT,
+  `amenity_id` int(11) NOT NULL AUTO_INCREMENT,
   `amenity_name` varchar(255) NOT NULL,
   `subdivision_name` varchar(50) NOT NULL,
-  `price` int NOT NULL,
+  `price` int(11) NOT NULL,
   `availability` varchar(50) NOT NULL,
   PRIMARY KEY (`amenity_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenities`
@@ -64,12 +64,12 @@ INSERT INTO `amenities` (`amenity_id`, `amenity_name`, `subdivision_name`, `pric
 
 DROP TABLE IF EXISTS `audit_trail`;
 CREATE TABLE IF NOT EXISTS `audit_trail` (
-  `audit_id` int NOT NULL AUTO_INCREMENT,
+  `audit_id` int(11) NOT NULL AUTO_INCREMENT,
   `user` varchar(50) NOT NULL,
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=211 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=294 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -271,7 +271,90 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (207, 'SV1_Admin', 'deactivated user Kyle Andrei Casingal', '2022-12-01 10:21:54'),
 (208, 'SV1_Admin', 'activated user Krishtalene BendaÃ±a', '2022-12-01 10:22:16'),
 (209, 'SV1_Admin', 'activated user Kyle Andrei Casingal', '2022-12-01 10:22:16'),
-(210, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 1-Basketball Court', '2022-12-01 10:22:49');
+(210, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 1-Basketball Court', '2022-12-01 10:22:49'),
+(211, 'SV1_Admin', 'logged in', '2023-01-13 13:30:20'),
+(212, 'SV1_Admin', 'logged out', '2023-01-13 13:35:53'),
+(213, 'SV1_Admin', 'logged in', '2023-01-13 13:36:09'),
+(214, 'SV1_Admin', 'logged out', '2023-01-13 13:38:21'),
+(215, 'SV1_Admin', 'logged in', '2023-01-13 13:38:30'),
+(216, 'SV1_Admin', 'logged out', '2023-01-13 13:38:41'),
+(217, 'SV1_Admin', 'logged in', '2023-01-13 13:38:48'),
+(218, 'SV1_Admin', 'logged out', '2023-01-13 13:38:51'),
+(219, 'SV1_Admin', 'logged in', '2023-01-13 13:39:01'),
+(220, 'Mon Carlo Delima', 'logged out', '2023-01-13 14:33:50'),
+(221, 'SV1_Admin', 'logged in', '2023-01-13 14:33:53'),
+(222, 'SV1_Admin', 'logged out', '2023-01-13 14:39:57'),
+(223, 'SV1_Admin', 'logged in', '2023-01-13 14:40:00'),
+(224, 'SV1_Admin', 'logged out', '2023-01-13 17:54:10'),
+(225, 'SV1_Admin', 'logged in', '2023-01-13 17:54:12'),
+(226, 'SV1_Admin', 'logged out', '2023-01-13 17:54:35'),
+(227, 'Mon Carlo Delima', 'logged in', '2023-01-13 17:54:39'),
+(228, 'Mon Carlo Delima', 'logged out', '2023-01-13 17:54:56'),
+(229, 'SV1_Admin', 'logged in', '2023-01-13 17:54:59'),
+(230, 'SV1_Admin', 'logged out', '2023-01-13 18:10:15'),
+(231, 'SV1_Admin', 'logged in', '2023-01-13 18:10:17'),
+(232, 'SV1_Admin', 'logged out', '2023-01-14 16:43:31'),
+(233, 'Mon Carlo Delima', 'logged in', '2023-01-14 16:43:35'),
+(234, 'Mon Carlo Delima', 'logged out', '2023-01-14 17:15:18'),
+(235, 'Mon Carlo Delima', 'logged in', '2023-01-14 17:15:21'),
+(236, 'Mon Carlo Delima', 'logged out', '2023-01-14 17:20:46'),
+(237, 'Mon Carlo Delima', 'logged in', '2023-01-14 17:20:49'),
+(238, 'Mon Carlo Delima', 'logged out', '2023-01-14 17:21:20'),
+(239, 'SV1_Treasurer', 'logged in', '2023-01-14 17:21:25'),
+(240, 'SV1_Treasurer', 'logged out', '2023-01-14 17:21:29'),
+(241, 'SV1_Admin', 'logged in', '2023-01-14 17:21:35'),
+(242, 'SV1_Admin', 'logged out', '2023-01-14 17:24:30'),
+(243, 'Mon Carlo Delima', 'logged in', '2023-01-14 17:24:32'),
+(244, 'Mon Carlo Delima', 'logged out', '2023-01-14 17:26:29'),
+(245, 'SV1_Admin', 'logged in', '2023-01-14 17:26:36'),
+(246, 'SV1_Admin', 'logged out', '2023-01-14 17:27:16'),
+(247, 'Mon Carlo Delima', 'logged in', '2023-01-14 17:27:19'),
+(248, 'Mon Carlo Delima', 'logged out', '2023-01-14 17:40:47'),
+(249, 'SV1_Admin', 'logged in', '2023-01-14 17:40:50'),
+(250, 'SV1_Admin', 'logged out', '2023-01-14 17:41:29'),
+(251, 'Mon Carlo Delima', 'logged in', '2023-01-14 17:41:33'),
+(252, 'Mon Carlo Delima', 'logged out', '2023-01-14 17:42:18'),
+(253, 'SV1_Admin', 'logged in', '2023-01-14 17:42:20'),
+(254, 'SV1_Admin', 'logged out', '2023-01-14 17:43:05'),
+(255, 'Mon Carlo Delima', 'logged in', '2023-01-14 17:43:09'),
+(256, 'Mon Carlo Delima', 'logged out', '2023-01-14 17:47:08'),
+(257, 'Mon Carlo Delima', 'logged in', '2023-01-14 21:27:15'),
+(258, 'Mon Carlo Delima', 'logged out', '2023-01-15 11:16:23'),
+(259, 'SV1_Admin', 'logged in', '2023-01-15 11:16:25'),
+(260, 'SV1_Admin', 'logged out', '2023-01-15 11:17:45'),
+(261, 'Mon Carlo Delima', 'logged in', '2023-01-15 11:17:49'),
+(262, 'Mon Carlo Delima', 'logged out', '2023-01-15 11:26:25'),
+(263, 'Mon Carlo Delima', 'logged in', '2023-01-15 11:26:33'),
+(264, 'Mon Carlo Delima', 'logged out', '2023-01-15 11:50:11'),
+(265, 'SV1_Admin', 'logged in', '2023-01-15 11:50:13'),
+(266, 'SV1_Admin', 'logged out', '2023-01-15 11:50:54'),
+(267, 'Mon Carlo Delima', 'logged in', '2023-01-15 11:50:57'),
+(268, 'Mon Carlo Delima', 'logged out', '2023-01-15 12:06:34'),
+(269, 'SV1_Admin', 'logged in', '2023-01-15 12:06:36'),
+(270, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 1-Basketball', '2023-01-15 12:06:57'),
+(271, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 1-Basketball Court', '2023-01-15 12:07:03'),
+(272, 'SV1_Admin', 'logged out', '2023-01-15 12:08:04'),
+(273, 'SV1_Admin', 'logged in', '2023-01-15 12:08:07'),
+(274, 'SV1_Admin', 'updated homeowner Mon Carl Delima', '2023-01-15 12:08:32'),
+(275, 'SV1_Admin', 'updated homeowner Mon Carlo Delima', '2023-01-15 12:08:48'),
+(276, 'SV1_Admin', 'updated homeowner Mon Carl Delima', '2023-01-15 12:08:53'),
+(277, 'SV1_Admin', 'updated homeowner Mon Carlo Delima', '2023-01-15 12:08:57'),
+(278, 'SV1_Admin', 'logged out', '2023-01-15 12:09:14'),
+(279, 'Mon Carlo Delima', 'logged in', '2023-01-15 12:09:18'),
+(280, 'Mon Carlo Delima', 'logged out', '2023-01-15 15:49:45'),
+(281, 'SV1_Admin', 'logged in', '2023-01-15 15:49:52'),
+(282, 'SV1_Admin', 'logged out', '2023-01-15 15:50:11'),
+(283, 'SV1_Admin', 'logged in', '2023-01-15 15:51:36'),
+(284, 'SV1_Admin', 'logged out', '2023-01-15 15:55:36'),
+(285, 'Mon Carlo Delima', 'logged in', '2023-01-15 15:55:39'),
+(286, 'Mon Carlo Delima', 'logged out', '2023-01-15 16:17:42'),
+(287, 'SV1_Admin', 'logged in', '2023-01-15 16:30:41'),
+(288, 'SV1_Admin', 'logged out', '2023-01-18 21:19:10'),
+(289, 'Mon Carlo Delima', 'logged in', '2023-01-18 21:19:13'),
+(290, 'Mon Carlo Delima', 'logged in', '2023-01-18 22:03:53'),
+(291, 'Mon Carlo Delima', 'uploaded a new post', '2023-01-18 22:10:04'),
+(292, 'Mon Carlo Delima', 'uploaded a new post', '2023-01-20 09:07:53'),
+(293, 'Mon Carlo Delima', 'uploaded a new post', '2023-01-20 09:08:12');
 
 -- --------------------------------------------------------
 
@@ -281,14 +364,14 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 
 DROP TABLE IF EXISTS `concern`;
 CREATE TABLE IF NOT EXISTS `concern` (
-  `concern_id` int NOT NULL AUTO_INCREMENT,
-  `full_Name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `concern_id` int(11) NOT NULL AUTO_INCREMENT,
+  `full_Name` varchar(50) NOT NULL,
   `concern_subject` varchar(100) NOT NULL,
   `concern_description` varchar(255) NOT NULL,
   `status` varchar(50) NOT NULL,
   `datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`concern_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `concern`
@@ -315,15 +398,15 @@ INSERT INTO `concern` (`concern_id`, `full_Name`, `concern_subject`, `concern_de
 
 DROP TABLE IF EXISTS `facility_renting`;
 CREATE TABLE IF NOT EXISTS `facility_renting` (
-  `transaction_id` int NOT NULL AUTO_INCREMENT,
+  `transaction_id` int(11) NOT NULL AUTO_INCREMENT,
   `amenity_name` varchar(255) NOT NULL,
   `renter_name` varchar(255) NOT NULL,
   `date_from` datetime NOT NULL,
   `date_to` datetime NOT NULL,
-  `cost` int NOT NULL,
+  `cost` int(11) NOT NULL,
   `payment_proof` varchar(255) NOT NULL,
   PRIMARY KEY (`transaction_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `facility_renting`
@@ -344,7 +427,7 @@ INSERT INTO `facility_renting` (`transaction_id`, `amenity_name`, `renter_name`,
 
 DROP TABLE IF EXISTS `homeowner_profile`;
 CREATE TABLE IF NOT EXISTS `homeowner_profile` (
-  `homeowner_id` int NOT NULL AUTO_INCREMENT,
+  `homeowner_id` int(11) NOT NULL AUTO_INCREMENT,
   `last_name` varchar(100) NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `middle_name` varchar(100) DEFAULT NULL,
@@ -361,14 +444,14 @@ CREATE TABLE IF NOT EXISTS `homeowner_profile` (
   `employer` varchar(100) DEFAULT NULL,
   `display_picture` varchar(255) NOT NULL,
   PRIMARY KEY (`homeowner_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `homeowner_profile`
 --
 
 INSERT INTO `homeowner_profile` (`homeowner_id`, `last_name`, `first_name`, `middle_name`, `suffix`, `sex`, `street`, `subdivision`, `barangay`, `business_address`, `occupation`, `email_address`, `birthdate`, `mobile_number`, `employer`, `display_picture`) VALUES
-(1, 'Delima', 'Mon Carlo', 'Zonio', 'N/A', 'Male', 'Lot 1 Block 2', 'Sunnyvale 1', 'Palangoy', 'test', 'test', 'dmoncarlo6@gmail.com', '2002-10-06', '09157189636', 'test', 'DELIMA_2x2.png'),
+(1, 'Delima', 'Mon Carlo', 'Zonio', 'N/A', 'Male', 'Lot 1 Block 2', 'Sunnyvale 1', 'Pantok', 'N/A', 'N/A', 'dmoncarlo6@gmail.com', '2002-10-06', '09157189636', 'N/A', 'hdversion.png'),
 (2, 'Casingal', 'Kyle Andrei', 'Morillo', 'N/A', 'Male', 'Lot 1 Block 1', 'Sunnyvale 3', 'Palangoy', 'N/A', 'N/A', 'kylecasingal36@gmail.com', '2001-09-02', '09123456789', 'N/A', '316495100_870517180796101_3304939871151226288_n.jpg'),
 (3, 'Flores', 'Jeune Paolus', 'Damaso', 'N/A', 'Male', 'Lot 1 Block 3', 'Sunnyvale 2', 'Pantok', 'N/A', 'N/A', 'floresjeunepaolus@gmail.com', '2002-06-16', '09123123123', 'Inya', '316156823_3360766927514073_2770550987709432568_n.jpg'),
 (4, 'Doe', 'John', 'N/A', 'Jr.', 'Male', 'Lot 2 Block 4', 'Sunnyvale 3', 'Palangoy', 'N/A', 'Programmer', 'dmoncarlo@gmail.com', '2002-10-06', '09157189636', 'Mark Zuckerberg', 'default.png'),
@@ -396,12 +479,12 @@ INSERT INTO `homeowner_profile` (`homeowner_id`, `last_name`, `first_name`, `mid
 
 DROP TABLE IF EXISTS `monthly_dues`;
 CREATE TABLE IF NOT EXISTS `monthly_dues` (
-  `monthly_dues_id` int NOT NULL AUTO_INCREMENT,
+  `monthly_dues_id` int(11) NOT NULL AUTO_INCREMENT,
   `subdivision_name` varchar(255) NOT NULL,
-  `amount` int NOT NULL,
+  `amount` int(11) NOT NULL,
   `updated_at` date NOT NULL,
   PRIMARY KEY (`monthly_dues_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `monthly_dues`
@@ -425,7 +508,7 @@ INSERT INTO `monthly_dues` (`monthly_dues_id`, `subdivision_name`, `amount`, `up
 
 DROP TABLE IF EXISTS `monthly_dues_bill`;
 CREATE TABLE IF NOT EXISTS `monthly_dues_bill` (
-  `monthlyDues_ID` int NOT NULL AUTO_INCREMENT,
+  `monthlyDues_ID` int(11) NOT NULL AUTO_INCREMENT,
   `homeowner_name` varchar(255) NOT NULL,
   `subdivision` varchar(45) NOT NULL,
   `month` varchar(45) NOT NULL,
@@ -434,7 +517,7 @@ CREATE TABLE IF NOT EXISTS `monthly_dues_bill` (
   `paid_at` varchar(255) DEFAULT NULL,
   `status` varchar(255) NOT NULL,
   PRIMARY KEY (`monthlyDues_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `monthly_dues_bill`
@@ -451,12 +534,12 @@ INSERT INTO `monthly_dues_bill` (`monthlyDues_ID`, `homeowner_name`, `subdivisio
 
 DROP TABLE IF EXISTS `officers`;
 CREATE TABLE IF NOT EXISTS `officers` (
-  `officer_id` int NOT NULL AUTO_INCREMENT,
+  `officer_id` int(11) NOT NULL AUTO_INCREMENT,
   `subdivision_name` varchar(50) NOT NULL,
   `officer_name` varchar(255) NOT NULL,
   `position_name` varchar(50) NOT NULL,
   PRIMARY KEY (`officer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `officers`
@@ -483,12 +566,12 @@ INSERT INTO `officers` (`officer_id`, `subdivision_name`, `officer_name`, `posit
 
 DROP TABLE IF EXISTS `positions`;
 CREATE TABLE IF NOT EXISTS `positions` (
-  `position_id` int NOT NULL AUTO_INCREMENT,
-  `subdivision_id` int NOT NULL,
+  `position_id` int(11) NOT NULL AUTO_INCREMENT,
+  `subdivision_id` int(11) NOT NULL,
   `subdivision_name` varchar(50) NOT NULL,
   `position_name` varchar(255) NOT NULL,
   PRIMARY KEY (`position_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `positions`
@@ -511,15 +594,15 @@ INSERT INTO `positions` (`position_id`, `subdivision_id`, `subdivision_name`, `p
 
 DROP TABLE IF EXISTS `post`;
 CREATE TABLE IF NOT EXISTS `post` (
-  `post_id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
+  `post_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
   `full_name` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` varchar(255) DEFAULT NULL,
   `published_at` datetime NOT NULL,
   `content_image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`post_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `post`
@@ -546,11 +629,11 @@ INSERT INTO `post` (`post_id`, `user_id`, `full_name`, `title`, `content`, `publ
 
 DROP TABLE IF EXISTS `subdivision`;
 CREATE TABLE IF NOT EXISTS `subdivision` (
-  `subdivision_id` int NOT NULL AUTO_INCREMENT,
+  `subdivision_id` int(11) NOT NULL AUTO_INCREMENT,
   `subdivision_name` varchar(255) NOT NULL,
   `barangay` varchar(255) NOT NULL,
   PRIMARY KEY (`subdivision_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `subdivision`
@@ -577,8 +660,8 @@ INSERT INTO `subdivision` (`subdivision_id`, `subdivision_name`, `barangay`) VAL
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` int NOT NULL AUTO_INCREMENT,
-  `user_homeowner_id` int NOT NULL,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_homeowner_id` int(11) NOT NULL,
   `full_name` varchar(50) NOT NULL,
   `user_type` varchar(15) NOT NULL,
   `password` varchar(30) NOT NULL,
@@ -587,7 +670,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `verification_code` varchar(6) DEFAULT NULL,
   `email_verified_at` datetime DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`

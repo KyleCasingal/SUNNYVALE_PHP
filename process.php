@@ -655,7 +655,7 @@ if (isset($_POST['concernOk'])) {
 
 // EDITING PROFILE
 
-if (isset($_POST['editProfile'])){
+if (isset($_POST['editProfile'])) {
     $first_name = $_POST['first_name'];
     $middle_name = $_POST['middle_name'];
     $last_name = $_POST['last_name'];
@@ -676,6 +676,24 @@ if (isset($_POST['editProfile'])){
 
     $sql1 = "UPDATE homeowner_profile SET first_name ='" . $first_name . "', middle_name ='" . $middle_name . "', last_name ='" . $last_name . "', suffix ='" . $suffix . "', street ='" . $street . "', subdivision ='" . $subdivision . "', barangay ='" . $row['barangay'] . "', business_address ='" . $business_address . "', occupation ='" . $occupation . "', email_address='" . $email_address . "', birthdate='" . $birthdate . "', mobile_number='" . $mobile_number . "', employer='" . $employer . "'   WHERE homeowner_id = '" . $_SESSION['user_id'] . "'";
     $result1 = mysqli_query($con, $sql1);
-
 }
 
+// EDITING PROFILE PHOTO
+
+if (isset($_POST['editProfilePhoto'])) {
+    $targetDir = '../media/displayPhotos/';
+    $fileName = '' . $_FILES['image']['name'] ?? '';
+    $targetFilePath = $targetDir . $fileName;
+
+    if ($_FILES['image']['size'] != 0) {
+        copy($_FILES['image']['tmp_name'], $targetFilePath);
+    }
+
+    $sql = "UPDATE homeowner_profile SET display_picture = '" . $fileName . "' WHERE homeowner_id = '" . $_SESSION['user_id'] . "'";
+    mysqli_query($con, $sql);
+    echo "<div class='messageSuccess'>
+        <label >
+          Profile Photo changed successfully!
+        </label>
+      </div>";
+}
