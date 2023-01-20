@@ -670,12 +670,24 @@ if (isset($_POST['editProfile'])) {
     $birthdate = date('Y-m-d', $birthdate);
     $sex = $_POST['sex'];
     $email_address = $_POST['email_address'];
+    $full_name = $first_name . " " . $last_name;
 
-    $result = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" . $subdivision . "'");
-    $row = $result->fetch_assoc();
+    $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" . $subdivision . "'");
+    $rowSubdivision = $resultSubdivision->fetch_assoc();
 
-    $sql1 = "UPDATE homeowner_profile SET first_name ='" . $first_name . "', middle_name ='" . $middle_name . "', last_name ='" . $last_name . "', suffix ='" . $suffix . "', street ='" . $street . "', subdivision ='" . $subdivision . "', barangay ='" . $row['barangay'] . "', business_address ='" . $business_address . "', occupation ='" . $occupation . "', email_address='" . $email_address . "', birthdate='" . $birthdate . "', mobile_number='" . $mobile_number . "', employer='" . $employer . "'   WHERE homeowner_id = '" . $_SESSION['user_id'] . "'";
+    $resultID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+    $rowID = $resultID->fetch_assoc();
+
+    $sql = "UPDATE homeowner_profile SET first_name ='" . $first_name . "', middle_name ='" . $middle_name . "', last_name ='" . $last_name . "', suffix ='" . $suffix . "', street ='" . $street . "', subdivision ='" . $subdivision . "', barangay ='" . $rowSubdivision['barangay'] . "', business_address ='" . $business_address . "', occupation ='" . $occupation . "', email_address='" . $email_address . "', birthdate='" . $birthdate . "', mobile_number='" . $mobile_number . "', employer='" . $employer . "'   WHERE homeowner_id = '" . $rowID['user_homeowner_id'] . "'";
+    $result = mysqli_query($con, $sql);
+
+    $sql1 = "UPDATE user SET full_name='" . $full_name . "', email_address='" . $email_address . "' WHERE user_id = '" . $_SESSION['user_id'] . "'";
     $result1 = mysqli_query($con, $sql1);
+    echo "<div class='messageSuccess'>
+        <label >
+          Changes saved!
+        </label>
+      </div>";
 }
 
 // EDITING PROFILE PHOTO
@@ -689,7 +701,10 @@ if (isset($_POST['editProfilePhoto'])) {
         copy($_FILES['image']['tmp_name'], $targetFilePath);
     }
 
-    $sql = "UPDATE homeowner_profile SET display_picture = '" . $fileName . "' WHERE homeowner_id = '" . $_SESSION['user_id'] . "'";
+    $resultID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+    $rowID = $result1->fetch_assoc();
+
+    $sql = "UPDATE homeowner_profile SET display_picture = '" . $fileName . "' WHERE homeowner_id = '" . $rowID['user_homeowner_id'] . "'";
     mysqli_query($con, $sql);
     echo "<div class='messageSuccess'>
         <label >
