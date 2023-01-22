@@ -545,6 +545,25 @@ $resultDues = $con->query("SELECT * FROM `user`, `monthly_dues_bill` WHERE user_
   .input {
     display: hidden;
   }
+
+  .savePhoto {
+    background-color: darkseagreen;
+    border: 0;
+    padding: 0.5vw;
+    max-width: 20vw;
+    width: 10vw;
+    font-family: "Poppins", sans-serif;
+    font-size: 1vw;
+    margin-top: 2vw;
+    color: white;
+    border-radius: 0.8vw;
+    cursor: pointer;
+  }
+
+  .imagePrev{
+    max-width: 20vw;
+    max-height: 20vw;
+  }
 </style>
 
 <body>

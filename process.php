@@ -702,7 +702,7 @@ if (isset($_POST['editProfilePhoto'])) {
     }
 
     $resultID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
-    $rowID = $result1->fetch_assoc();
+    $rowID = $resultID->fetch_assoc();
 
     $sql = "UPDATE homeowner_profile SET display_picture = '" . $fileName . "' WHERE homeowner_id = '" . $rowID['user_homeowner_id'] . "'";
     mysqli_query($con, $sql);

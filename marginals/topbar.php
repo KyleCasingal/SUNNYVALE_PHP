@@ -36,7 +36,7 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
     padding: 0;
     width: 100%;
     height: 4.5vw;
-    background-color: rgba(255, 253, 245, 0.767);
+    background-color: rgba(131, 151, 145);
     position: sticky;
     top: 0;
     display: flex;
@@ -77,7 +77,7 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
   .topIcon {
     font-size: 2vw;
     margin-right: 10px;
-    color: rgb(89, 89, 89);
+    color: white;
     font-family: "Poppins", sans-serif;
     font-style: normal;
     cursor: pointer;
@@ -104,13 +104,13 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
     margin: 0;
     padding: 0;
     list-style: none;
-    color: rgb(89, 89, 89);
+    color: white;
 
   }
 
   .topListItem1 {
 
-    color: rgb(89, 89, 89);
+    color: white;
     padding: 0.5vw;
     margin-right: 0.1vw;
     font-size: 1.2vw;
@@ -125,7 +125,7 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
 
   .topSearchIcon {
     font-size: 18px;
-    color: rgb(89, 89, 89);
+    color: white;
     cursor: pointer;
     margin-left: 15px;
   }
@@ -240,7 +240,7 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
   }
 
   .concernSubject label {
-    font-family: 'Poppins'sans-serif;
+    font-family: 'Poppins' sans-serif;
     margin-left: 1vw;
     font-size: 1vw;
   }
@@ -319,15 +319,16 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
     justify-content: center;
   }
 </style>
-  <script>
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
+<script>
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
 </script>
+
 <body>
   <div class='nav'>
     <div class="topLeft">
-      <img src="..\img\logoSVgray.png" alt="" />
+      <img src="..\img\logoSV.png" alt="" />
       <i class="topIcon">SUNNYVALE</i>
     </div>
     <form class="topbarNav" method="post">
@@ -356,13 +357,13 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
               }
               ?>
               <?php
-              if ($row['user_type'] == 'Admin' ){
+              if ($row['user_type'] == 'Admin') {
                 echo '<a class="dropdown-item" href="../modules/settings.php">Admin Panel</a>';
               }
-              if ($row['user_type'] == 'Treasurer'){
+              if ($row['user_type'] == 'Treasurer') {
                 echo '<a class="dropdown-item" href="../modules/treasurerPanel.php">Treasurer Panel</a>';
               }
-              if ($row['user_type'] == 'Secretary'){
+              if ($row['user_type'] == 'Secretary') {
                 echo '<a class="dropdown-item" href="../modules/settingsSecretary.php">Secretary Panel</a>';
               }
               ?>

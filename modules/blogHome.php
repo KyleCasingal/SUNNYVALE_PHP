@@ -20,6 +20,11 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     --text: black;
   }
 
+  .blogHome {
+    display: flex;
+    flex-direction: row;
+  }
+
   .messageSuccess {
     display: flex;
     padding: 1vw;
@@ -50,10 +55,9 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     color: var(--text);
     font-size: 2vw;
     display: flex;
-    width: 55%;
+    width: 85%;
     margin-left: 5%;
     margin-top: 2vw;
-    padding-right: 1vw;
     font-family: "Poppins", sans-serif;
   }
 
@@ -61,7 +65,7 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     flex: 1;
   }
 
-  .blogHome {
+  .blogScroll {
     width: 100%;
     color: rgb(89, 89, 89);
   }
@@ -69,13 +73,13 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
   .blogPost {
     align-items: center;
     justify-content: center;
-    width: 55%;
+    width: 85%;
     margin-left: 5%;
     margin-top: 20px;
     margin-bottom: 50px;
     padding: 10px;
     border-radius: 10px;
-    background-color: rgba(234, 232, 199, 0.2);
+    background-color: rgba(170, 192, 175, 0.3);
     font-family: "Poppins", sans-serif;
   }
 
@@ -124,7 +128,7 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
   .postImg {
     align-self: center;
     justify-self: center;
-    max-width: 40vw;
+    max-width: 30vw;
     max-height: 40vw;
   }
 
@@ -144,20 +148,19 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
   }
 
   .sideContent {
-    height: 100%;
-    width: 30%;
-    position: fixed;
-    z-index: 0;
-    top: 5vw;
-    right: 0;
+    padding-right: 1vw;
+    padding-top: 2vw;
+    position: sticky;
+    width: 50%;
+    top: 0;
     overflow-x: hidden;
-    margin-top: 2vw;
+    margin: 0;
   }
 
   .sideText label {
+    padding-bottom: 1vw;
     font-weight: normal;
     font-size: 2vw;
-    padding-right: 10px;
     font-family: "Poppins", sans-serif;
     color: var(--text);
   }
@@ -171,7 +174,6 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     margin-top: 2vw;
     padding: 0.5vw;
     border-radius: 1vw;
-    background-color: rgba(234, 232, 199, 0.2);
     font-family: "Poppins", sans-serif;
   }
 
@@ -281,12 +283,34 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     display: flex;
     flex-direction: column;
   }
+
+  .announcementScroll {
+    background-color: rgb(170, 192, 175, 0.3);
+    border-radius: 1vw;
+  }
+
+  .announcementTable {
+    width: 100%;
+  }
+
+  .announcementTable tr {
+    width: 100%;
+  }
+
+  .announcementTable td{
+    white-space: nowrap;
+    padding: 1vw;
+  }
+
+  .announcementTable tr:hover {
+    background-color: rgb(170, 192, 175);
+  }
 </style>
 
 <body>
 
   <div class='blogHome'>
-    <div class="blogPage">
+    <div class="blogScroll">
       <div class="blogHead">
         <p class="headTxt">Recent Posts</p>
         <button id="newPost" type="button" class="newPostBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -310,53 +334,71 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
           </div>
         </div>
       </div>
-    </div>
-    <?php while ($row = $result->fetch_assoc()) : ?>
-      <div class="blogPost">
-        <div class="blogProfile">
-          <img class="avatarBlog" <?php
-                                  $imageURL = '../media/displayPhotos/' . $row['display_picture'];
-                                  ?> src="<?= $imageURL ?>" alt="" />
-          <div class="profileText">
-            <p class="profileName"><?php echo $row['full_name']; ?></p>
-            <p class="profileDate">
-              <?php
-              $datetime = strtotime($row['published_at']);
-              echo $phptime = date("g:i A m/d/y", $datetime);
-              ?>
+      <?php while ($row = $result->fetch_assoc()) : ?>
+        <div class="blogPost">
+          <div class="blogProfile">
+            <img class="avatarBlog" <?php
+                                    $imageURL = '../media/displayPhotos/' . $row['display_picture'];
+                                    ?> src="<?= $imageURL ?>" alt="" />
+            <div class="profileText">
+              <p class="profileName"><?php echo $row['full_name']; ?></p>
+              <p class="profileDate">
+                <?php
+                $datetime = strtotime($row['published_at']);
+                echo $phptime = date("g:i A m/d/y", $datetime);
+                ?>
+              </p>
+            </div>
+          </div>
+          <div class="postContent">
+            <img class="postImg" <?php
+                                  $imageURL = '../media/postsPhotos/' . $row['content_image'];
+                                  ?> src="<?= $imageURL ?>" alt="">
+            </img>
+            <p class="blogTitle"><?php echo $row['title']; ?></p>
+            <p class="blogBody">
+              <?php echo $row['content']; ?>
             </p>
           </div>
         </div>
-        <div class="postContent">
-          <img class="postImg" <?php
-                                $imageURL = '../media/postsPhotos/' . $row['content_image'];
-                                ?> src="<?= $imageURL ?>" alt="">
-          </img>
-          <p class="blogTitle"><?php echo $row['title']; ?></p>
-          <p class="blogBody">
-            <?php echo $row['content']; ?>
-          </p>
-        </div>
-      </div>
-      <div class="sideContent">
-        <div class="sideText">
-          <label>Categories</label>
-        </div>
-        <div class="categoriesText">
-          <ul class="categoryList">
-            <li class="categoryListItem">LifeStyle</li>
-            <li class="categoryListItem">Food</li>
-            <li class="categoryListItem">Events</li>
-            <li class="categoryListItem">Sports</li>
-          </ul>
-        </div>
-      </div>
-  </div>
-<?php endwhile; ?>
-<?php require '../marginals/footer2.php' ?>
+      <?php endwhile; ?>
+    </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-</script>
+    <div class="sideContent">
+      <div class="sideText">
+        <label class="sideTitle">Announcements</label>
+        <div class="announcementScroll">
+          <table class="announcementTable">
+            <tr>
+              <td>Avatar</td>
+              <td>Title</td>
+            </tr>
+            <tr>
+              <td>Avatar</td>
+              <td>Title</td>
+            </tr>
+            <tr>
+              <td>Avatar</td>
+              <td>Title</td>
+            </tr>
+            <tr>
+              <td>Avatar</td>
+              <td>Title</td>
+            </tr>
+            <tr>
+              <td>Avatar</td>
+              <td>Title</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <?php require '../marginals/footer2.php' ?>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+  </script>
 </body>
 
 </html>
