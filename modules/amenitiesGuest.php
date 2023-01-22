@@ -86,7 +86,7 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date
     width: 60%;
     border-radius: 1vw;
     flex-direction: column;
-    background-color: rgba(234, 232, 199, 0.2);
+    background-color: rgb(170, 192, 175, 0.3);
     font-family: 'Poppins', sans-serif;
   }
 
@@ -97,7 +97,7 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date
     width: 40%;
     border-radius: 1vw;
     flex-direction: column;
-    background-color: rgba(234, 232, 199, 0.2);
+    background-color: rgb(170, 192, 175, 0.3);
     font-family: 'Poppins', sans-serif;
   }
 
@@ -164,7 +164,7 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date
   }
 
   thead {
-    background-color: rgba(234, 232, 199, 0.2);
+    background-color: rgb(170, 192, 175, 0.3);
   }
 
   td,

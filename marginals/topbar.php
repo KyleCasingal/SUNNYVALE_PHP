@@ -318,6 +318,12 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
     align-items: center;
     justify-content: center;
   }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    background-color: rgb(170, 192, 175, 0.3);
+  }
 </style>
 <script>
   if (window.history.replaceState) {

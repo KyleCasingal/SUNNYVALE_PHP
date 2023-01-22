@@ -6,6 +6,7 @@ if (isset($_SESSION['user_id'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,7 +19,7 @@ if (isset($_SESSION['user_id'])) {
     padding: 0;
     width: 100%;
     height: 6vw;
-    background-color: rgba(255, 253, 245, 0.767);
+    background-color: rgba(131, 151, 145);
     position: sticky;
     top: 0;
     display: flex;
@@ -44,7 +45,7 @@ if (isset($_SESSION['user_id'])) {
   .topIconLanding {
     font-size: 2.5vw;
     margin-right: 10px;
-    color: rgb(89, 89, 89);
+    color: white;
     font-family: "Poppins", sans-serif;
     font-style: normal;
     cursor: pointer;
@@ -92,11 +93,11 @@ if (isset($_SESSION['user_id'])) {
     margin: 0;
     padding: 0;
     list-style: none;
-    color: rgb(89, 89, 89);
+    color: white;
   }
 
   .topListItemLanding {
-    color: rgb(89, 89, 89);
+    color: white;
     padding: 0.8vw;
     margin-right: 0.2vw;
     font-size: 1vw;
@@ -147,19 +148,21 @@ if (isset($_SESSION['user_id'])) {
   .loginButtonLanding:hover {
     background-color: rgb(93, 151, 93);
   }
-  .topCenterLanding{
+
+  .topCenterLanding {
     display: flex;
     max-height: 4.5vw;
   }
 </style>
+
 <body>
-  
+
 </body>
 <form method='POST'>
 
   <div class="topLanding">
     <div class="topLeftLanding">
-      <img src="..\img\logoSVgray.png" alt= />
+      <img src="..\img\logoSV.png" alt= />
       <i class="topIconLanding">SUNNYVALE</i>
     </div>
     <div class="topCenterLanding">
@@ -177,4 +180,5 @@ if (isset($_SESSION['user_id'])) {
     </div>
   </div>
 </form>
+
 </html>

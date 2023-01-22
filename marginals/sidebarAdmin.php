@@ -46,7 +46,7 @@
     }
 
     .sideBar {
-        background-color: rgb(248, 245, 227);
+        background-color: rgb(170, 192, 175, 0.3);
         flex: 2;
         color: black;
     }
@@ -76,219 +76,11 @@
         background-color: rgb(236, 235, 226);
     }
 
-    .secretaryPanel {
-        flex: 8;
-        width: 100%;
-        overflow-x: hidden;
-    }
-
-    .regForm {
-        background-color: rgba(234, 232, 199, 0.2);
-        width: 90%;
-        padding: 2vw;
-        margin: 2vw;
-        border-radius: 1vw;
-    }
-
-    .btnSubmitReg {
-        background-color: darkseagreen;
-        border: 0;
-        padding: 0.5vw;
-        max-width: 50vw;
-        width: 10vw;
-        font-family: "Poppins", sans-sans-serif;
-        font-size: 1vw;
-        margin-top: 2vw;
-        color: white;
-        border-radius: 0.8vw;
-        cursor: pointer;
-    }
-
-    .btnSubmitReg:hover {
-        background-color: rgb(93, 151, 93);
-    }
-
-    .btnClearReg {
-        background-color: lightcoral;
-        border: 0;
-        padding: 0.5vw;
-        max-width: 50vw;
-        width: 10vw;
-        font-family: "Poppins", sans-sans-serif;
-        font-size: 1vw;
-        margin-top: 2vw;
-        color: white;
-        border-radius: 0.8vw;
-        cursor: pointer;
-    }
-
-    .btnClearReg:hover {
-        background-color: rgb(180, 83, 83);
-    }
-
-    .lblRegistration {
-        font-size: 2vw;
-        font-family: "Poppins", sans-serif;
-        margin-top: 1vw;
-        margin-left: 2vw;
-        margin-bottom: -2vw;
-        padding: 0;
-        color: rgb(89, 89, 89);
-        font-weight: 800;
-    }
-
-    .tblContainer {
-        justify-content: center;
-        margin-top: 0vw;
-        margin-bottom: 2vw;
-        margin-left: 2vw;
-        margin-right: 0;
-        overflow-y: auto;
-        overflow-x: auto;
-        max-height: 20vw;
-    }
-
-    .tblHomeowners {
-        margin-bottom: 2vw;
-        overflow-x: auto;
-        overflow-y: auto;
-        text-align: center;
-        margin: 2vw;
-        margin-right: 2vw;
-        max-width: 60%;
-    }
-
-    .tblHomeowners thead,
-    th {
-        padding: 0.5vw;
-        text-align: center;
-        font-size: 1.2vw;
-        background-color: rgba(234, 232, 199, 0.2);
-        width: max-content;
-        white-space: nowrap;
-    }
-
-    .tblHomeowners td {
-        width: max-content;
-        white-space: nowrap;
-    }
-
-    .tblHomeowners tr:hover {
-        background-color: rgb(211, 211, 211);
-    }
-
-    .userManagementForm {
-        background-color: rgba(234, 232, 199, 0.2);
-        width: 95%;
-        padding: 2vw;
-        margin: 2vw;
-        border-radius: 1vw;
-    }
-
-    .tblUsers {
-        max-width: 95%;
-        margin-top: 2vw;
-    }
-
-    .tblUsers th {
-        text-align: center;
-    }
-
-    .tblUsers td {
-        text-align: center;
-    }
-
-    .btnArea {
-        display: flex;
-        margin: 2vw;
-        gap: 1vw;
-    }
-
-    .tbl tr:hover {
-        background-color: rgb(211, 211, 211);
-    }
-
-
-    /* complaint container */
-    .inbox {
-        overflow: hidden;
-        margin: 2vw;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .inboxContainer {
-        padding: 2vw;
-        padding-left: 0;
-        padding-right: 0;
-        border-radius: 1vw;
-        background-color: rgb(241, 241, 241);
-        display: flex;
-        width: 95%;
-        height: 70vh;
-        overflow-x: hidden;
-        overflow-y: scroll;
-    }
-
-    .tblMessage {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        max-height: 30px;
-    }
-
-    .trInbox {
-        width: 100%;
-        color: rgb(89, 89, 89);
-        background-color: rgb(241, 241, 241);
-        border-bottom: 1px solid rgb(192, 192, 192);
-    }
-
-    .trInbox:hover {
-        background-color: rgb(233, 233, 233);
-        cursor: pointer;
-    }
-
-    .msgSender {
-        font-family: "Poppins", sans-serif;
-        font-size: 1.5vw;
-        font-weight: bold;
-    }
-
-    .msgDesc {
-        max-width: 50vw;
-        width: fixed;
-        text-align: left;
-        font-family: "Poppins", sans-serif;
-        font-size: 1.2vw;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .msgTime {
-        text-align: center;
-        font-family: "Poppins", sans-serif;
-        font-size: 1.2vw;
-    }
-
-    .inboxTitle {
-        font-size: 2vw;
-        font-family: "Poppins", sans-serif;
-        padding: 0;
-        margin-bottom: 1vw;
-        color: rgb(89, 89, 89);
-        font-weight: 800;
-    }
-
-    .complaintManagement {
-        margin: 2vw;
-    }
+    
 </style>
 
 
 <body>
-    <div class="secretary">
         <div class="secretarySideBar">
             <form method="post">
                 <ul class="secretarySideBar">
@@ -300,7 +92,6 @@
                 </ul>
             </form>
         </div>
-    </div>
 </body>
 
 </html>

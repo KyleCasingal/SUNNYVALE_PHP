@@ -8,8 +8,42 @@
     <title>Document</title>
 </head>
 <Style>
+    * {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    input {
+        font-size: 1vw;
+        border-radius: 0.5vw;
+        border: none !important;
+
+    }
+
+    select {
+        font-size: 1vw;
+        border: none !important;
+        border-radius: 1vw;
+        width: 15vw;
+    }
+
+    .tblForm {
+        border: 0 none !important;
+
+    }
+
+    .tblForm th,
+    td {
+        font-size: 1vw;
+        padding: 1vw;
+    }
+
+    .secretary {
+        display: flex;
+    }
+
     .sideBar {
-        background-color: rgb(248, 245, 227);
+        background-color: rgb(170, 192, 175, 0.3);
         flex: 2;
         color: black;
     }
@@ -24,10 +58,12 @@
     }
 
     .memberSideBar li {
-        color: black;
-        font-family: 'Poppins', sans-serif;
+        color: rgb(89, 89, 89);
+        font-family: "Poppins", sans-serif;
         text-align: center;
         padding: 1.5vw;
+        padding-left: 0.5vw;
+        padding-right: 0.5vw;
         font-size: max(1.5vw, min(10px));
         cursor: pointer;
         border-bottom: 1px solid lightgray;
@@ -39,14 +75,15 @@
 </Style>
 
 <body>
-    <div class="sideBar">
+    <div class="secretarySideBar">
         <form method="post">
-            <ul class="memberSideBar">
+            <ul class="secretarySideBar">
                 <li id="profile" onclick="location.href='../modules/memberPanel.php'">Profile</li>
                 <li id="inbox" onclick="location.href='../modules/inboxPanel.php'">Inbox</li>
             </ul>
         </form>
     </div>
 </body>
+
 
 </html>

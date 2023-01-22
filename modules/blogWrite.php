@@ -29,7 +29,7 @@
   }
 
   label {
-    font-size: 1vw;
+    font-size: 1.5vw;
     margin: 0;
   }
 
@@ -70,12 +70,12 @@
   .formBlog {
     display: flex;
     justify-content: center;
-    padding: 2vw;
-    margin: 1.5vw;
+    padding: 1vw;
+    margin: 1vw;
     width: 90%;
     border-radius: 1vw;
     flex-direction: column;
-    background-color: rgba(234, 232, 199, 0.2);
+    
     font-family: "Poppins", sans-serif;
   }
 
@@ -112,6 +112,10 @@
     max-height: 20vw;
     margin-bottom: 2vw;
   }
+  .lblPostForm{
+    padding-bottom: 1vw;
+    padding-top: 1vw;
+  }
 </style>
 
 <body>
@@ -123,12 +127,10 @@
           <input class="attInput" type="file" name="image" id="image" accept="image/*" onchange="preview()"></input>
           <img class="imagePrev" id="imagePreview" src=# alt=""  />
           <label for="image" class="upload">Upload Photo</label>
-          <label>Title</label>
+          <label class="lblPostForm">Title</label>
           <input type="text" name="title" id="title" />
-          <label>Description</label>
+          <label class="lblPostForm">Description</label>
           <textarea class="descInput" type="text" name="content" id="content" maxLength={255}></textarea>
-          <label>Tags</label>
-          <input type="text" />
           <button class="btnSubmitPost" name="submitPost" id="submitPost">Submit</button>
         </div>
       </div>

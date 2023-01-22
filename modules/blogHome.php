@@ -287,6 +287,8 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
   .announcementScroll {
     background-color: rgb(170, 192, 175, 0.3);
     border-radius: 1vw;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
   }
 
   .announcementTable {
@@ -297,7 +299,7 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     width: 100%;
   }
 
-  .announcementTable td{
+  .announcementTable td {
     white-space: nowrap;
     padding: 1vw;
   }
@@ -305,6 +307,11 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
   .announcementTable tr:hover {
     background-color: rgb(170, 192, 175);
   }
+
+  .mdl-body, .modal-header{
+    background-color: rgb(170, 192, 175, 0.3);
+  }
+  
 </style>
 
 <body>
