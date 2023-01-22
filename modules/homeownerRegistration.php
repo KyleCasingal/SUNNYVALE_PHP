@@ -92,7 +92,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
     }
 
     .regForm {
-        background-color: rgba(234, 232, 199, 0.2);
+        background-color: rgb(170, 192, 175, 0.3);
         width: 90%;
         padding: 2vw;
         margin: 2vw;
@@ -190,7 +190,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
         padding: 0.5vw;
         text-align: center;
         font-size: 1.2vw;
-        background-color: rgba(234, 232, 199, 0.2);
+        background-color: rgb(170, 192, 175, 0.3);
         width: max-content;
         white-space: nowrap;
     }
@@ -205,7 +205,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
     }
 
     .userManagementForm {
-        background-color: rgba(234, 232, 199, 0.2);
+        background-color: rgb(170, 192, 175, 0.3);
         width: 95%;
         padding: 2vw;
         margin: 2vw;

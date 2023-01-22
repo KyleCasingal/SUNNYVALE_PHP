@@ -91,6 +91,13 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     cursor: pointer;
   }
 
+  .avatarAnnouncement {
+    width: 2.5vw;
+    height: 2.5vw;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
   .blogProfile {
     width: 100%;
     display: flex;
@@ -149,12 +156,14 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
 
   .sideContent {
     padding-right: 1vw;
-    padding-top: 2vw;
-    position: sticky;
-    width: 50%;
-    top: 0;
-    overflow-x: hidden;
+    z-index: 1;
     margin: 0;
+    position: sticky;
+    top: 1vw;
+    height: 100%;
+    width: 40%;
+    overflow: hidden;
+    margin-top: 2vw;
   }
 
   .sideText label {
@@ -308,10 +317,46 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     background-color: rgb(170, 192, 175);
   }
 
-  .mdl-body, .modal-header{
+  .mdl-body,
+  .modal-header {
     background-color: rgb(170, 192, 175, 0.3);
   }
-  
+
+  .tblAvatar {
+    text-align: center;
+  }
+
+  .tblTitle {
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1vw;
+    font-weight: bold;
+  }
+
+  .linkList {
+    margin-left: 1em;
+  }
+
+  .footerLink {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1vw;
+    padding: 0.2em;
+    color: gray;
+    text-decoration: none;
+  }
+
+  .footerLink:hover {
+    color: gray;
+    text-decoration: underline;
+  }
+
+  .footerCopyright {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1vw;
+    padding: 0.2em;
+    color: gray;
+    margin-left: 1em;
+  }
 </style>
 
 <body>
@@ -377,32 +422,38 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
         <div class="announcementScroll">
           <table class="announcementTable">
             <tr>
-              <td>Avatar</td>
-              <td>Title</td>
+              <td class="tblAvatar"><img src="../media/displayPhotos/default.png" class="avatarAnnouncement"></td>
+              <td class="tblTitle">Water supply interruption</td>
             </tr>
             <tr>
-              <td>Avatar</td>
-              <td>Title</td>
+              <td class="tblAvatar"><img src="../media/displayPhotos/default.png" class="avatarAnnouncement"></td>
+              <td class="tblTitle">Chinese new year party</td>
             </tr>
             <tr>
-              <td>Avatar</td>
-              <td>Title</td>
+              <td class="tblAvatar"><img src="../media/displayPhotos/default.png" class="avatarAnnouncement"></td>
+              <td class="tblTitle">Basketball League try outs</td>
             </tr>
             <tr>
-              <td>Avatar</td>
-              <td>Title</td>
-            </tr>
-            <tr>
-              <td>Avatar</td>
-              <td>Title</td>
+              <td class="tblAvatar"><img src="../media/displayPhotos/default.png" class="avatarAnnouncement"></td>
+              <td class="tblTitle">Volleyball League try outs</td>
             </tr>
           </table>
         </div>
       </div>
+      <span class="footerList">
+        <div class="linkList">
+          <a class="footerLink" href="">About</a>
+          <a class="footerLink" href="">Contact</a>
+          <a class="footerLink" href="">Privacy</a>
+          <a class="footerLink" href="">Developers</a>
+        </div>
+        <label class="footerCopyright">© Sunnyvale Subdivisions</label>
+
+      </span>
     </div>
   </div>
 
-  <?php require '../marginals/footer2.php' ?>
+  <!-- <?php require '../marginals/footer2.php' ?> -->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
   </script>

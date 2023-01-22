@@ -9,7 +9,7 @@
 </head>
 <Style>
     .sideBar {
-        background-color: rgb(248, 245, 227);
+        background-color: rgb(170, 192, 175, 0.3);
         flex: 2;
         color: black;
     }

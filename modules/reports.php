@@ -137,10 +137,10 @@ a:hover{
       <div class="reportsContainer">
         <div class="buttonArea">
           <a class="btnSubmitReg" href="../reports/reportAmenities.php" target="_blank">
-            Amenity Renting
+            Collection Report
             </a>
             <a class="btnSubmitReg" href="../reports/reportMonthlyDues.php" target="_blank">
-            Paid Monthly Dues
+            Home Owner List
             </a>
             <a class="btnSubmitReg" href="../reports/reportAuditTrail.php" target="_blank">
             Audit Trail

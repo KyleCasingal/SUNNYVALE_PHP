@@ -76,7 +76,7 @@ $resultDues = $con->query("SELECT * FROM `user`, `monthly_dues_bill` WHERE user_
 
   .profileForm {
     display: flex;
-    background-color: rgba(234, 232, 199, 0.2);
+    background-color: rgb(170, 192, 175, 0.3);
     width: 90%;
     padding: 2vw;
     margin: 2vw;
@@ -246,7 +246,6 @@ $resultDues = $con->query("SELECT * FROM `user`, `monthly_dues_bill` WHERE user_
   }
 
   .regForm {
-    background-color: rgba(234, 232, 199, 0.2);
     width: 100%;
     padding: 1vw;
     /* margin: 1vw; */
@@ -344,7 +343,7 @@ $resultDues = $con->query("SELECT * FROM `user`, `monthly_dues_bill` WHERE user_
     padding: 0.5vw;
     text-align: center;
     font-size: 1.2vw;
-    background-color: rgba(234, 232, 199, 0.2);
+    background-color: rgb(170, 192, 175, 0.3);
     width: max-content;
     white-space: nowrap;
   }
@@ -359,7 +358,7 @@ $resultDues = $con->query("SELECT * FROM `user`, `monthly_dues_bill` WHERE user_
   }
 
   .userManagementForm {
-    background-color: rgba(234, 232, 199, 0.2);
+    background-color: rgb(170, 192, 175, 0.3);
     width: 95%;
     padding: 2vw;
     margin: 2vw;

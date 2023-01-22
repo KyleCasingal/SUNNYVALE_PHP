@@ -113,7 +113,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
 
     .addAmenityForm {
 
-        background-color: rgba(234, 232, 199, 0.2);
+        background-color: rgb(170, 192, 175, 0.3);
         margin: 2vw;
         border-radius: 1vw;
         padding: 2vw;
@@ -139,7 +139,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
     }
 
     .tblAmenity th {
-        background-color: rgba(234, 232, 199, 0.2);
+        background-color: rgb(170, 192, 175, 0.3);
     }
 
     .tblAmenity th,
@@ -240,7 +240,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
     }
 
     .regForm {
-        background-color: rgba(234, 232, 199, 0.2);
+        background-color: rgb(170, 192, 175, 0.3);
         width: 90%;
         padding: 2vw;
         margin: 2vw;
@@ -320,7 +320,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
         padding: 0.5vw;
         text-align: center;
         font-size: 1.2vw;
-        background-color: rgba(234, 232, 199, 0.2);
+        background-color: rgb(170, 192, 175, 0.3);
         width: max-content;
         white-space: nowrap;
     }
@@ -335,7 +335,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
     }
 
     .userManagementForm {
-        background-color: rgba(234, 232, 199, 0.2);
+        background-color: rgb(170, 192, 175, 0.3);
         width: 95%;
         padding: 2vw;
         margin: 2vw;

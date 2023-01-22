@@ -1,7 +1,7 @@
 <?php
-  $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
-  $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
-  $resultSubd = $con->query("SELECT * FROM subdivision");
+$con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
+$resultDues = $con->query("SELECT * FROM monthly_dues_bill");
+$resultSubd = $con->query("SELECT * FROM subdivision");
 
 ?>
 <!DOCTYPE html>
@@ -58,7 +58,7 @@
     top: 0;
     position: sticky;
     text-align: center;
-    background-color: rgb(251, 250, 244);
+    background-color: rgb(170, 192, 175, 0.3);
   }
 
   th,
@@ -97,7 +97,7 @@
     width: 95%;
     border-radius: 1vw;
     flex-direction: column;
-    background-color: rgba(234, 232, 199, 0.2);
+    background-color: rgb(170, 192, 175, 0.3);
     font-family: "Newsreader", serif;
   }
 
@@ -139,6 +139,7 @@
   .btnSubmitPost:hover {
     background-color: rgba(167, 197, 167);
   }
+
   .lblTable {
     font-size: 2vw;
     font-family: "Poppins", sans-serif;
@@ -185,20 +186,20 @@
             </select>
             <label>Subdivision</label>
             <select name="subdivision" id="">
-                                        <option value="">Select...</option>
-                                        <?php while ($row = $resultSubd->fetch_assoc()) : ?>
-                                            <option value="<?php echo $row['subdivision_name'] ?>" ><?php echo $row['subdivision_name'] ?></option>
-                                        <?php endwhile; ?>
-                                    </select>
+              <option value="">Select...</option>
+              <?php while ($row = $resultSubd->fetch_assoc()) : ?>
+                <option value="<?php echo $row['subdivision_name'] ?>"><?php echo $row['subdivision_name'] ?></option>
+              <?php endwhile; ?>
+            </select>
           </div>
           <label>Block and Lot Number:</label>
-          <input type="text"  />
+          <input type="text" />
           <button class="btnSubmitPost" name="submitPost" id="submitPost">Submit Payment</button>
         </div>
         <label class="lblTable">Recent Monthly Dues Payments</label>
         <div class="table-responsive">
           <table id="dtBasicExample" class="table table-hover" cellspacing="0" width="100%">
-             <thead>
+            <thead>
               <tr>
                 <th>Name</th>
                 <th>Subdivision</th>
@@ -210,17 +211,17 @@
               </tr>
             </thead>
             <tbody>
-            <?php while ($row = $resultDues->fetch_assoc()) : ?>
-              <tr>
-                <td><?php echo $row['homeowner_name'] ?></td>
-                <td><?php echo $row['subdivision'] ?></td>
-                <td><?php echo $row['month'] ?></td>
-                <td><?php echo $row['year'] ?></td>
-                <td><?php echo $row['address'] ?></td>
-                <td><?php echo $row['paid_at'] ?></td>
-                <td><?php echo $row['status'] ?></td>
+              <?php while ($row = $resultDues->fetch_assoc()) : ?>
+                <tr>
+                  <td><?php echo $row['homeowner_name'] ?></td>
+                  <td><?php echo $row['subdivision'] ?></td>
+                  <td><?php echo $row['month'] ?></td>
+                  <td><?php echo $row['year'] ?></td>
+                  <td><?php echo $row['address'] ?></td>
+                  <td><?php echo $row['paid_at'] ?></td>
+                  <td><?php echo $row['status'] ?></td>
                 <?php endwhile; ?>
-              </tr>
+                </tr>
             </tbody>
           </table>
         </div>

@@ -13,7 +13,7 @@
 <style>
   .footer {
     width: 100%;
-    height: 15vmax;
+    height: 12vmax;
     background-color: rgb(33, 37, 41);
     top: 0;
     margin-top: 0;
