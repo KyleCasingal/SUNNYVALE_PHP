@@ -1,6 +1,8 @@
 <?php
 require '../marginals/topbar.php';
-$result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) ORDER BY post_id DESC") or die($mysqli->error);
+$result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'No' ORDER BY post_id DESC") or die($mysqli->error);
+$resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' ORDER BY post_id DESC") or die($mysqli->error);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -308,13 +310,30 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     width: 100%;
   }
 
-  .announcementTable td {
+  .announcementTable .tblTitle{
+    text-align: left;
     white-space: nowrap;
-    padding: 1vw;
+    padding-left: 1vw;
+    padding-top: 0.5vw;
+    padding-bottom: 0.5vw;
+    width: auto;
   }
+
+
+  .announcementTable .tblAvatarCell {
+    padding-left: 1vw;
+    padding-top: 0.5vw;
+    padding-bottom: 0.5vw;
+    width: 2.5vw;
+  }
+  .announcementTable .tblDate{
+    padding-left:0.5vw;
+  }
+
 
   .announcementTable tr:hover {
     background-color: rgb(170, 192, 175);
+    cursor: pointer;
   }
 
   .mdl-body,
@@ -323,7 +342,9 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
   }
 
   .tblAvatar {
-    text-align: center;
+    max-width: 2.5vw;
+    max-height: 2.5vw;
+    border-radius: 50%;
   }
 
   .tblTitle {
@@ -331,6 +352,11 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
     font-family: 'Poppins', sans-serif;
     font-size: 1vw;
     font-weight: bold;
+  }
+  .tblDate{
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8vw;
   }
 
   .linkList {
@@ -421,22 +447,18 @@ $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = C
         <label class="sideTitle">Announcements</label>
         <div class="announcementScroll">
           <table class="announcementTable">
-            <tr>
-              <td class="tblAvatar"><img src="../media/displayPhotos/default.png" class="avatarAnnouncement"></td>
-              <td class="tblTitle">Water supply interruption</td>
-            </tr>
-            <tr>
-              <td class="tblAvatar"><img src="../media/displayPhotos/default.png" class="avatarAnnouncement"></td>
-              <td class="tblTitle">Chinese new year party</td>
-            </tr>
-            <tr>
-              <td class="tblAvatar"><img src="../media/displayPhotos/default.png" class="avatarAnnouncement"></td>
-              <td class="tblTitle">Basketball League try outs</td>
-            </tr>
-            <tr>
-              <td class="tblAvatar"><img src="../media/displayPhotos/default.png" class="avatarAnnouncement"></td>
-              <td class="tblTitle">Volleyball League try outs</td>
-            </tr>
+            <?php while ($row = $resultOfficer->fetch_assoc()) : ?>
+              <tr>
+                <td class="tblAvatarCell"><img class="tblAvatar" <?php
+                                                                  $imageURL = '../media/displayPhotos/' . $row['display_picture'];
+                                                                  ?> src="<?= $imageURL ?>" alt="" /></td>
+                <td class="tblTitle"> <?php echo $row['title']; ?> </td>
+                <td class="tblDate"><?php
+                                    $datetime = strtotime($row['published_at']);
+                                    echo $phptime = date("g:i A m/d/y", $datetime);
+                                    ?></td>
+              </tr>
+            <?php endwhile; ?>
           </table>
         </div>
       </div>

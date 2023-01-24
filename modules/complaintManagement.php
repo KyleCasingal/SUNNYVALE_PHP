@@ -311,6 +311,16 @@ if (isset($_GET['concern_id'])) {
     .subject {
         font-weight: 800;
     }
+
+    .modal-header,
+    .modalConcernBody {
+        background-color: rgba(170, 192, 175, 0.3);
+    }
+
+    .modal-footer {
+        background-color: rgba(170, 192, 175, 0);
+
+    }
 </style>
 
 

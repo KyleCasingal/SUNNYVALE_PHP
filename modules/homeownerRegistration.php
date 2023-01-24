@@ -446,7 +446,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                                         <?php endwhile; ?>
                                     </select>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <select name="barangay" id="">
                                         <option value="">Select...</option>
                                         <option value="Palangoy" <?php
@@ -464,7 +464,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                                                                 }
                                                                 ?>>Pantok</option>
                                     </select>
-                                </td>
+                                </td> -->
                             </tr>
                             <tr>
                                 <td>Business Address:</td>
