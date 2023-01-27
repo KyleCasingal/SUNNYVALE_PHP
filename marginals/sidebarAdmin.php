@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <title>Document</title>
 </head>
 <style>
@@ -64,7 +65,7 @@
         color: rgb(89, 89, 89);
         font-family: "Poppins", sans-serif;
         text-align: center;
-        padding: 1.5vw;
+        margin: 0;
         padding-left: 0.5vw;
         padding-right: 0.5vw;
         font-size: max(1.5vw, min(10px));
@@ -76,22 +77,44 @@
         background-color: rgb(236, 235, 226);
     }
 
-    
+    .btnSettings {
+        color: rgb(89, 89, 89);
+        font-family: "Poppins", sans-serif;
+        text-align: center;
+        font-size: max(1.5vw, min(10px));
+        background-color: rgb(0, 0, 0, 0);
+        border: 1px solid black;
+        width: 100%;
+        height: 100%;
+
+    }
 </style>
 
 
 <body>
-        <div class="secretarySideBar">
-            <form method="post">
-                <ul class="secretarySideBar">
-                    <li id="registration" onclick="location.href='../modules/homeownerRegistration.php'">Homeowner Registration</li>
-                    <li id="approval" onclick="location.href='../modules/accManagement.php'">Approval of Accounts</li>
-                    <li id="ticket" onclick="location.href='../modules/complaintManagement.php'">Complaint Tickets</li>
-                    <li id="settings" onclick="location.href='../modules/settings.php'">Settings</li>
-                    <li id="reports" onclick="location.href='../modules/reports.php'">Reports</li>
-                </ul>
-            </form>
-        </div>
+    <div class="secretarySideBar">
+        <form method="post">
+            <ul class="secretarySideBar">
+                <li id="registration" onclick="location.href='../modules/homeownerRegistration.php'">Homeowner Registration</li>
+                <li id="approval" onclick="location.href='../modules/accManagement.php'">Approval of Accounts</li>
+                <li id="ticket" onclick="location.href='../modules/complaintManagement.php'">Complaint Tickets</li>
+                <li id="settings">
+                    <button type="button" class="btnSettings" data-bs-toggle="dropdown" aria-expanded="false">
+                        Settings
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>Amenities</li>
+                        <li>Subdivisions</li>
+                        <li>Monthly Dues</li>
+                        <li>System Accounts</li>
+                        <li>Subdivision Officers</li>
+                    </ul>
+                </li>
+                <li id="reports" onclick="location.href='../modules/reports.php'">Reports</li>
+            </ul>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 
 </html>
