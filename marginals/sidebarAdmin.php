@@ -88,6 +88,18 @@
         height: 100%;
 
     }
+    .btnReports {
+        color: rgb(89, 89, 89);
+        font-family: "Poppins", sans-serif;
+        text-align: center;
+        font-size: max(1.5vw, min(10px));
+        background-color: rgb(0, 0, 0, 0);
+        border: 1px solid black;
+        width: 100%;
+        height: 100%;
+
+    }
+    
 </style>
 
 
@@ -103,14 +115,24 @@
                         Settings
                     </button>
                     <ul class="dropdown-menu">
-                        <li>Amenities</li>
-                        <li>Subdivisions</li>
-                        <li>Monthly Dues</li>
-                        <li>System Accounts</li>
-                        <li>Subdivision Officers</li>
+                        <li id="Amenities" onclick="location.href='../modules/settingsAmenity.php'">Amenities</li>
+                        <li id="Subdivision" onclick="location.href='../modules/settingsSubdivision.php'">Subdivisions</li>
+                        <li id="Monthly Dues" onclick="location.href='../modules/settingsMonthlydues.php'">Monthly Dues</li>
+                        <li id="System Accounts" onclick="location.href='../modules/settingsSystemAcc.php'">System Accounts</li>
+                        <li id="Subdivision Officers" onclick="location.href='../modules/settingsSubdivisionOfficer.php'">Subdivision Officers</li>
                     </ul>
                 </li>
-                <li id="reports" onclick="location.href='../modules/reports.php'">Reports</li>
+    
+                <li id="reports">
+                <button type="button" class="btnReports" data-bs-toggle="dropdown" aria-expanded="false">
+                        Reports
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li id="Collection Report" onclick="location.href='../reports/reportAmenities.php'" target="_blank">Collection Report</li>
+                        <li id="Home Owner List" onclick="location.href='../reports/reportMonthlyDues.php'" target="_blank">Home Owner List</li>
+                        <li id="Audit Trail" onclick="location.href='../reports/reportAuditTrail.php'" target="_blank">Audit Trail</li>
+                    </ul>
+                </li>
             </ul>
         </form>
     </div>
