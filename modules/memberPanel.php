@@ -552,16 +552,28 @@ $resultDues = $con->query("SELECT * FROM `user`, `monthly_dues_bill` WHERE user_
     max-width: 20vw;
     width: 10vw;
     font-family: "Poppins", sans-serif;
-    font-size: 1vw;
+    font-size: 1.2vw;
     margin-top: 2vw;
     color: white;
     border-radius: 0.8vw;
     cursor: pointer;
   }
 
-  .imagePrev{
+  .imagePrev {
     max-width: 20vw;
     max-height: 20vw;
+  }
+
+  .mdl-body{
+    margin: 1vw;
+  }
+  .formBlog{
+    display: flex;
+    flex-direction: column;
+  }
+  .formBlog label{
+    padding-top: 1vw;
+    font-size: 1.5vw;
   }
 </style>
 

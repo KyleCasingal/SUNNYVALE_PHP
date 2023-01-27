@@ -229,6 +229,13 @@ if (isset($_GET['concern_id'])) {
         width: 100%;
         overflow-x: hidden;
     }
+
+    .modalConcernBody {
+        background-color: rgb(170, 192, 175, 0.3);
+    }
+    .modal-footer{
+        background-color: rgb(0, 0, 0, 0);
+    }
 </style>
 
 <body>

@@ -83,7 +83,7 @@
         text-align: center;
         font-size: max(1.5vw, min(10px));
         background-color: rgb(0, 0, 0, 0);
-        border: 1px solid black;
+        border: none;
         width: 100%;
         height: 100%;
 
@@ -94,7 +94,7 @@
         text-align: center;
         font-size: max(1.5vw, min(10px));
         background-color: rgb(0, 0, 0, 0);
-        border: 1px solid black;
+        border: none;
         width: 100%;
         height: 100%;
 
