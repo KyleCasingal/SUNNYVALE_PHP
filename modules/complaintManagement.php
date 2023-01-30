@@ -348,7 +348,7 @@ if (isset($_GET['concern_id'])) {
                         <?php while ($row = $resultComplaints->fetch_assoc()) : ?>
                             <tr class="trComplaints">
                                 <td class="use-address"><?php echo $row['concern_id'] ?></td>
-                                <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal"><?php echo $row['full_Name']; ?></td>
+                                <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal"><?php echo $row['full_name']; ?></td>
                                 <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal"><label class="subject"><?php echo $row['concern_subject'] ?></label></td>
                                 <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal"><?php echo $row['concern_description']; ?></td>
                                 <td id="myBtn" class="complaintTime" data-bs-toggle="modal" data-bs-target="#complaintModal"><?php echo $row['datetime'] ?></td>
@@ -433,11 +433,6 @@ if (isset($_GET['concern_id'])) {
         });
 
     });
-
-    // let text = document.getElementById("myBtn").textContent;
-    // document.getElementById("demo") = text;
-    // document.getElementById("concern_id").innerText
-    
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </html>

@@ -3,7 +3,7 @@ require '../marginals/topbar.php';
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultComplaints = $con->query("SELECT * FROM concern WHERE status = 'Pending' OR status = 'Processing' ");
+$resultComplaints = $con->query("SELECT * FROM concern WHERE full_name = '" . $row['full_name'] . "' ORDER BY datetime DESC");
 
 if (isset($_GET['concern_id'])) {
     $concern_id = $_GET['concern_id'];
@@ -248,17 +248,13 @@ if (isset($_GET['concern_id'])) {
             <label class="inboxTitle">Messages</label>
             <div class="inboxContainer">
                 <table class="tblMessage">
-                    <?php while ($row = $resultComplaints->fetch_assoc()) : ?>
-
+                    <?php while ($rowComplaints = $resultComplaints->fetch_assoc()) : ?>
                         <tr class="trInbox">
-                            <td onclick="location.href='inboxPanel.php?concern_id=<?php echo $row['concern_id']; ?>'">
-                                OPEN
+                            <td class="msgDesc use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus"><label class="subject"><?php echo $rowComplaints['concern_subject'] ?></label>
+                                <?php echo $rowComplaints['concern_description']; ?>
                             </td>
-                            <td class="msgSender" data-bs-toggle="modal" data-bs-target="#complaintStatus"><?php echo $row['full_Name']; ?></td>
-                            <td class="msgDesc" data-bs-toggle="modal" data-bs-target="#complaintStatus"><label class="subject"><?php echo $row['concern_subject'] ?></label>
-                                <?php echo $row['concern_description']; ?>
-                            </td>
-                            <td class="msgTime" data-bs-toggle="modal" data-bs-target="#complaintStatus"><?php echo $row['datetime'] ?></td>
+                            <td class="msgTime" data-bs-toggle="modal" data-bs-target="#complaintStatus"><?php echo $rowComplaints['datetime'] ?></td>
+                            <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus"> <?php echo $rowComplaints['status']; ?></td>
                         </tr>
 
                     <?php endwhile; ?>
@@ -280,22 +276,17 @@ if (isset($_GET['concern_id'])) {
                 </div>
                 <div class="modalConcernBody">
                     <table>
-                        <?php $rowConcern = $resultConcern->fetch_assoc(); ?>
-                        <tr>
-                            <td>Complainant:</td>
-                            <td><?php echo $rowConcern['full_Name']; ?></td>
-                        </tr>
                         <tr>
                             <td>Subject:</td>
-                            <td><?php echo $rowConcern['concern_subject'] ?></td>
+                            <td id="concern_subject"></td>
                         </tr>
                         <tr>
                             <td>Complaint Description:</td>
-                            <td> <?php echo $rowConcern['concern_description']; ?></td>
+                            <td id="concern_description"></td>
                         </tr>
                         <tr>
-                            <td>Status</td>
-                            <td><?php echo $rowConcern['status']; ?></td>
+                            <td>Status:</td>
+                            <td id="status"></td>
                         </tr>
                     </table>
                     <div class="modal-footer">
@@ -310,5 +301,23 @@ if (isset($_GET['concern_id'])) {
         </div>
     </div>
 </body>
+<script>
+    $(".use-address").click(function() {
+        var $row = $(this).closest("tr"); // Find the row
+        var $tds = $row.find("td");
+        $.each($tds, function(index) {
+            document.getElementById("concern_subject").innerHTML = ($(this).text());
+            return (index !== 0);
+        });
+        $.each($tds, function(index) {
+            document.getElementById("concern_description").innerHTML = ($(this).text());
+            return (index !== 1);
+        });
+        $.each($tds, function(index) {
+            document.getElementById("status").innerHTML = ($(this).text());
+            return (index !== 2);
+        });
 
+    });
+</script>
 </html>

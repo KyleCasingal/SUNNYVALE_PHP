@@ -310,7 +310,7 @@ $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_n
     width: 100%;
   }
 
-  .announcementTable .tblTitle{
+  .announcementTable .tblTitle {
     text-align: left;
     white-space: nowrap;
     padding-left: 1vw;
@@ -326,8 +326,9 @@ $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_n
     padding-bottom: 0.5vw;
     width: 2.5vw;
   }
-  .announcementTable .tblDate{
-    padding-left:0.5vw;
+
+  .announcementTable .tblDate {
+    padding-left: 0.5vw;
   }
 
 
@@ -353,7 +354,8 @@ $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_n
     font-size: 1vw;
     font-weight: bold;
   }
-  .tblDate{
+
+  .tblDate {
     text-align: left;
     font-family: 'Poppins', sans-serif;
     font-size: 0.8vw;
@@ -449,14 +451,12 @@ $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_n
           <table class="announcementTable">
             <?php while ($row = $resultOfficer->fetch_assoc()) : ?>
               <tr>
-                <td class="tblAvatarCell"><img class="tblAvatar" <?php
-                                                                  $imageURL = '../media/displayPhotos/' . $row['display_picture'];
-                                                                  ?> src="<?= $imageURL ?>" alt="" /></td>
-                <td class="tblTitle"> <?php echo $row['title']; ?> </td>
-                <td class="tblDate"><?php
-                                    $datetime = strtotime($row['published_at']);
-                                    echo $phptime = date("g:i A m/d/y", $datetime);
-                                    ?></td>
+                <td class="tblTitle use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus"> <?php echo $row['title']; ?> </td>
+                <td class="use-address" hidden><?php echo $row['content']; ?></td>
+                <td class="tblDate use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus"><?php
+                                                                                                          $datetime = strtotime($row['published_at']);
+                                                                                                          echo $phptime = date("g:i A m/d/y", $datetime);
+                                                                                                          ?></td>
               </tr>
             <?php endwhile; ?>
           </table>
@@ -470,15 +470,62 @@ $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_n
           <a class="footerLink" href="">Developers</a>
         </div>
         <label class="footerCopyright">© Sunnyvale Subdivisions</label>
-
       </span>
     </div>
   </div>
-
+  <div class="modal fade" id="complaintStatus" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">
+            Announcement Details
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modalConcernBody">
+          <table>
+            <tr>
+              <td>Subject:</td>
+              <td id="subject"></td>
+            </tr>
+            <tr>
+              <td>Body:</td>
+              <td id="details"></td>
+            </tr>
+            <tr>
+              <td>Date Posted:</td>
+              <td id="date"></td>
+            </tr>
+          </table>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- <?php require '../marginals/footer2.php' ?> -->
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-  </script>
 </body>
+<script>
+  $(".use-address").click(function() {
+    var $row = $(this).closest("tr"); // Find the row
+    var $tds = $row.find("td");
+    $.each($tds, function(index) {
+      document.getElementById("subject").innerHTML = ($(this).text());
+      return (index !== 0);
+    });
+    $.each($tds, function(index) {
+      document.getElementById("details").innerHTML = ($(this).text());
+      return (index !== 1);
+    });
+    $.each($tds, function(index) {
+      document.getElementById("date").innerHTML = ($(this).text());
+      return (index !== 2);
+    });
+
+  });
+</script>
 
 </html>
