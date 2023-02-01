@@ -347,7 +347,7 @@ if (isset($_GET['concern_id'])) {
                     <table class="tblComplaints">
                         <?php while ($row = $resultComplaints->fetch_assoc()) : ?>
                             <tr class="trComplaints">
-                                <td class="use-address"><?php echo $row['concern_id'] ?></td>
+                                <td class="use-address" hidden><?php echo $row['concern_id'] ?></td>
                                 <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal"><?php echo $row['full_Name']; ?></td>
                                 <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal"><label class="subject"><?php echo $row['concern_subject'] ?></label></td>
                                 <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal"><?php echo $row['concern_description']; ?></td>
@@ -377,8 +377,8 @@ if (isset($_GET['concern_id'])) {
                 <div class="modalConcernBody">
                     <table>
                         <tr>
-                            <td></td>
-                            <td id="id"></td>
+                            <td hidden></td>
+                            <tdh hidden id="id"></td>
                         </tr>
                         <tr>
                             <td>Complainant:</td>
