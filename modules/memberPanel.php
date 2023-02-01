@@ -4,11 +4,11 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
 $row = $result->fetch_assoc();
 $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['barangay'];
 $resultSubd = $con->query("SELECT * FROM subdivision");
-$resultDues = $con->query("SELECT * FROM `user`, `monthly_dues_bill` WHERE user_id = " . $user_id = $_SESSION['user_id'] . " AND full_name = homeowner_name");
+$resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id = " . $user_id = $_SESSION['user_id'] . " AND full_name = homeowner_name");
 
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 
 <head>
