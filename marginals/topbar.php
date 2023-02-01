@@ -324,6 +324,8 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
   .modal-footer {
     background-color: rgb(170, 192, 175, 0.3);
   }
+
+
 </style>
 <script>
   if (window.history.replaceState) {
