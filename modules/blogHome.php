@@ -390,10 +390,12 @@ $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_n
     background-color: rgb(170, 192, 175, 0.3);
     padding: 1vw;
   }
-  .modal-footer{
+
+  .modal-footer {
     background-color: rgb(0, 0, 0, 0);
   }
-  .announcementText{
+
+  .announcementText {
     font-size: 1.1em;
     padding: 0.5em;
 

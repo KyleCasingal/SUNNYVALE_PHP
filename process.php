@@ -719,3 +719,73 @@ if (isset($_POST['editProfilePhoto'])) {
         </label>
       </div>";
 }
+
+//POPULATING PURPOSE DROP DOWN BASED ON AMENITY
+
+// if(isset($_POST["country"])){
+//   // Capture selected country
+//   $country = $_POST["country"];
+
+//   // Define country and city array
+//   $countryArr = array(
+//                   "usa" => array("New Yourk", "Los Angeles", "California"),
+//                   "india" => array("Mumbai", "New Delhi", "Bangalore"),
+//                   "uk" => array("London", "Manchester", "Liverpool")
+//               );
+
+//   // Display city dropdown based on country name
+//   if($country !== 'Select'){
+//       echo "<label>Purpose</label>";
+//       echo "<select>";
+//       foreach($countryArr[$country] as $value){
+//           echo "<option>". $value . "</option>";
+//       }
+//       echo "</select>";
+//   } 
+// }
+
+// if (isset($_POST['amenity_id'])) {
+//   $amenity_id = $_POST['amenity_id'];
+
+//   $result = $con->query("SELECT * FROM amenity_purpose WHERE amenity_id=$amenity_id ORDER BY amenity_purpose DESC");
+  
+//   if($result != 0){
+//     echo '<option value="">Select Purpose</option>';
+//     while ($row = $result->fetch_assoc()){
+//       echo '<option value="'.$row['amenity_purpose_id'].'">'.$row['amenity_purpose'].'</option>';
+//     }
+//   }else{
+//     echo '<option value="">No Purpose Found</option>';
+//   }
+// }
+
+if (isset($_POST['subdivision_id'])) {
+  $subdivision_id = $_POST['subdivision_id'];
+
+  $result = $con->query("SELECT * FROM amenities WHERE subdivision_id=$subdivision_id ORDER BY amenity_name DESC");
+  
+
+  if(mysqli_num_rows($result)>0){
+    echo '<option value="">Select Amenity...</option>';
+    while ($row = $result->fetch_assoc()){
+      echo '<option value="'.$row['amenity_id'].'">'.$row['amenity_name'].'</option>';
+    }
+  }else{
+    echo '<option value="">No Amenity Found</option>';
+  }
+}
+
+if (isset($_POST['amenity_id'])) {
+  $amenity_id = $_POST['amenity_id'];
+
+  $result = $con->query("SELECT * FROM amenity_purpose WHERE amenity_id=$amenity_id ORDER BY amenity_purpose DESC");
+  
+  if(mysqli_num_rows($result)>0){
+    echo '<option value="">Select Purpose...</option>';
+    while ($row = $result->fetch_assoc()){
+      echo '<option value="'.$row['amenity_purpose_id'].'">'.$row['amenity_purpose'].'</option>';
+    }
+  }else{
+    echo '<option value="">No Purpose Found</option>';
+  }
+}

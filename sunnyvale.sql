@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Jan 20, 2023 at 10:05 AM
+-- Generation Time: Feb 09, 2023 at 05:46 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -31,6 +31,7 @@ DROP TABLE IF EXISTS `amenities`;
 CREATE TABLE IF NOT EXISTS `amenities` (
   `amenity_id` int(11) NOT NULL AUTO_INCREMENT,
   `amenity_name` varchar(255) NOT NULL,
+  `subdivision_id` int(11) NOT NULL,
   `subdivision_name` varchar(50) NOT NULL,
   `price` int(11) NOT NULL,
   `availability` varchar(50) NOT NULL,
@@ -41,20 +42,37 @@ CREATE TABLE IF NOT EXISTS `amenities` (
 -- Dumping data for table `amenities`
 --
 
-INSERT INTO `amenities` (`amenity_id`, `amenity_name`, `subdivision_name`, `price`, `availability`) VALUES
-(1, 'Basketball Court', 'Sunnyvale 1', 200, 'Available'),
-(2, 'Volleyball Court', 'Sunnyvale 1', 150, 'Available'),
-(3, 'Badminton Court', 'Sunnyvale 2', 150, 'Available'),
-(4, 'Multi-purpose Hall', 'Sunnyvale 2', 200, 'Available'),
-(5, 'Swimming Pool', 'Sunnyvale 1', 200, 'Available'),
-(6, 'Clubhouse', 'Sunnyvale 1', 400, 'Unavailable'),
-(9, 'Basketball Court', 'Sunnyvale 8', 500, 'Available'),
-(10, 'Clubhouse', 'Sunnyvale 3', 250, 'Available'),
-(11, 'Basketball Court', 'Sunnyvale 4', 50, 'Available'),
-(12, 'Swimming Pool', 'Sunnyvale 1', 480, 'Available'),
-(13, 'Court of Appeal', 'Sunnyvale 1', 20, 'Available'),
-(14, 'Volleyball Court', 'Sunnyvale 2', 21, 'Available'),
-(16, 'Bathhouse', 'Sunnyvale 1', 300, 'Available');
+INSERT INTO `amenities` (`amenity_id`, `amenity_name`, `subdivision_id`, `subdivision_name`, `price`, `availability`) VALUES
+(1, 'Court', 1, 'Sunnyvale 1', 200, 'Available'),
+(4, 'Multi-purpose Hall', 1, 'Sunnyvale 1', 200, 'Available'),
+(5, 'Swimming Pool', 1, 'Sunnyvale 1', 200, 'Available'),
+(6, 'Clubhouse', 1, 'Sunnyvale 1', 400, 'Unavailable'),
+(10, 'Clubhouse', 3, 'Sunnyvale 3', 250, 'Available'),
+(14, 'Volleyball Court', 2, 'Sunnyvale 2', 21, 'Available'),
+(16, 'Bathhouse', 1, 'Sunnyvale 1', 300, 'Available');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `amenity_purpose`
+--
+
+DROP TABLE IF EXISTS `amenity_purpose`;
+CREATE TABLE IF NOT EXISTS `amenity_purpose` (
+  `amenity_purpose_id` int(10) NOT NULL AUTO_INCREMENT,
+  `amenity_id` int(10) NOT NULL,
+  `amenity_purpose` varchar(100) NOT NULL,
+  `day_rate` int(10) NOT NULL,
+  `night_rate` int(10) NOT NULL,
+  PRIMARY KEY (`amenity_purpose_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `amenity_purpose`
+--
+
+INSERT INTO `amenity_purpose` (`amenity_purpose_id`, `amenity_id`, `amenity_purpose`, `day_rate`, `night_rate`) VALUES
+(1, 1, 'Basketball', 50, 100);
 
 -- --------------------------------------------------------
 
@@ -69,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=294 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=363 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -354,7 +372,76 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (290, 'Mon Carlo Delima', 'logged in', '2023-01-18 22:03:53'),
 (291, 'Mon Carlo Delima', 'uploaded a new post', '2023-01-18 22:10:04'),
 (292, 'Mon Carlo Delima', 'uploaded a new post', '2023-01-20 09:07:53'),
-(293, 'Mon Carlo Delima', 'uploaded a new post', '2023-01-20 09:08:12');
+(293, 'Mon Carlo Delima', 'uploaded a new post', '2023-01-20 09:08:12'),
+(294, 'SV1_Admin', 'logged out', '2023-01-24 19:58:31'),
+(295, 'SV1_Admin', 'logged in', '2023-01-24 19:58:36'),
+(296, 'SV1_Admin', 'uploaded a new post', '2023-01-24 20:00:38'),
+(297, 'SV1_Admin', 'logged out', '2023-01-24 20:00:42'),
+(298, 'SV1_Admin', 'logged in', '2023-01-24 20:01:33'),
+(299, 'SV1_Admin', 'uploaded a new post', '2023-01-24 20:06:20'),
+(300, 'SV1_Admin', 'logged out', '2023-01-24 20:10:40'),
+(301, 'Mon Carlo Delima', 'logged in', '2023-01-24 20:10:45'),
+(302, 'Mon Carlo Delima', 'logged out', '2023-01-24 20:12:57'),
+(303, 'Mon Carlo Delima', 'logged in', '2023-01-24 20:14:08'),
+(304, 'Mon Carlo Delima', 'logged out', '2023-01-24 20:14:36'),
+(305, 'Mon Carlo Delima', 'logged in', '2023-01-24 20:14:40'),
+(306, 'SV1_Admin', 'logged in', '2023-01-24 20:16:04'),
+(307, 'Mon Carlo Delima', 'logged out', '2023-01-27 19:00:55'),
+(308, 'SV1_Admin', 'logged in', '2023-01-27 19:00:58'),
+(309, 'SV1_Admin', 'logged out', '2023-01-30 20:30:02'),
+(310, 'Mon Carlo Delima', 'logged in', '2023-01-30 20:30:04'),
+(311, 'Mon Carlo Delima', 'logged out', '2023-01-30 20:35:01'),
+(312, 'Mon Carlo Delima', 'logged in', '2023-01-30 20:35:03'),
+(313, 'Mon Carlo Delima', 'logged in', '2023-01-30 20:48:05'),
+(314, 'Mon Carlo Delima', 'logged out', '2023-01-30 20:48:08'),
+(315, 'SV1_Admin', 'logged in', '2023-01-30 20:48:13'),
+(316, 'SV1_Admin', 'logged out', '2023-01-30 20:49:42'),
+(317, 'Mon Carlo Delima', 'logged in', '2023-01-30 20:49:45'),
+(318, 'Mon Carlo Delima', 'logged out', '2023-01-30 21:09:28'),
+(319, 'SV1_Admin', 'logged in', '2023-01-30 21:09:31'),
+(320, 'SV1_Admin', 'logged out', '2023-01-30 21:09:58'),
+(321, 'Mon Carlo Delima', 'logged in', '2023-01-30 21:10:01'),
+(322, 'Mon Carlo Delima', 'logged out', '2023-01-30 21:17:47'),
+(323, 'Mon Carlo Delima', 'logged in', '2023-01-30 21:17:53'),
+(324, 'Mon Carlo Delima', 'logged out', '2023-01-30 21:21:23'),
+(325, 'Mon Carlo Delima', 'logged in', '2023-01-30 21:21:26'),
+(326, 'Mon Carlo Delima', 'logged out', '2023-01-30 21:29:44'),
+(327, 'Mon Carlo Delima', 'logged in', '2023-01-30 21:29:46'),
+(328, 'Mon Carlo Delima', 'logged out', '2023-01-30 21:36:26'),
+(329, 'Mon Carlo Delima', 'logged in', '2023-01-30 21:36:28'),
+(330, 'Mon Carlo Delima', 'logged out', '2023-01-30 21:36:40'),
+(331, 'Mon Carlo Delima', 'logged in', '2023-01-30 21:36:41'),
+(332, 'Mon Carlo Delima', 'logged out', '2023-01-30 21:36:50'),
+(333, 'Mon Carlo Delima', 'logged in', '2023-01-30 21:36:51'),
+(334, 'Mon Carlo Delima', 'logged out', '2023-02-01 18:43:53'),
+(335, 'Mon Carlo Delima', 'logged in', '2023-02-01 18:43:57'),
+(336, 'Mon Carlo Delima', 'logged out', '2023-02-01 19:12:20'),
+(337, 'SV1_Admin', 'logged in', '2023-02-01 19:12:23'),
+(338, 'SV1_Admin', 'logged out', '2023-02-01 19:13:39'),
+(339, 'Mon Carlo Delima', 'logged in', '2023-02-01 19:14:00'),
+(340, 'Mon Carlo Delima', 'logged out', '2023-02-01 20:14:33'),
+(341, 'Mon Carlo Delima', 'logged in', '2023-02-01 20:14:37'),
+(342, 'Mon Carlo Delima', 'logged out', '2023-02-03 22:48:43'),
+(343, 'SV1_Admin', 'logged in', '2023-02-03 22:48:46'),
+(344, 'SV1_Admin', 'logged out', '2023-02-04 14:02:17'),
+(345, 'SV1_Admin', 'logged in', '2023-02-04 14:02:24'),
+(346, 'SV1_Admin', 'logged out', '2023-02-04 15:23:51'),
+(347, 'SV1_Admin', 'logged in', '2023-02-04 15:23:54'),
+(348, 'SV1_Admin', 'logged in', '2023-02-04 15:24:55'),
+(349, 'SV1_Admin', 'logged out', '2023-02-04 15:25:09'),
+(350, 'SV1_Admin', 'logged in', '2023-02-04 15:25:11'),
+(351, 'SV1_Admin', 'logged out', '2023-02-04 15:25:15'),
+(352, 'Mon Carlo Delima', 'logged in', '2023-02-04 15:25:17'),
+(353, 'SV1_Admin', 'logged out', '2023-02-06 16:36:40'),
+(354, 'SV1_Admin', 'logged in', '2023-02-06 16:36:43'),
+(355, 'SV1_Admin', 'logged out', '2023-02-06 16:39:33'),
+(356, 'SV1_Admin', 'logged in', '2023-02-06 16:39:36'),
+(357, 'SV1_Admin', 'logged out', '2023-02-06 16:42:41'),
+(358, 'SV1_Admin', 'logged in', '2023-02-06 16:42:45'),
+(359, 'Mon Carlo Delima', 'logged in', '2023-02-06 17:41:45'),
+(360, 'SV1_Admin', 'logged out', '2023-02-07 17:01:41'),
+(361, 'Mon Carlo Delima', 'logged in', '2023-02-07 17:01:48'),
+(362, 'Mon Carlo Delima', 'logged out', '2023-02-07 17:19:20');
 
 -- --------------------------------------------------------
 
@@ -365,7 +452,7 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 DROP TABLE IF EXISTS `concern`;
 CREATE TABLE IF NOT EXISTS `concern` (
   `concern_id` int(11) NOT NULL AUTO_INCREMENT,
-  `full_Name` varchar(50) NOT NULL,
+  `full_name` varchar(50) NOT NULL,
   `concern_subject` varchar(100) NOT NULL,
   `concern_description` varchar(255) NOT NULL,
   `status` varchar(50) NOT NULL,
@@ -377,7 +464,7 @@ CREATE TABLE IF NOT EXISTS `concern` (
 -- Dumping data for table `concern`
 --
 
-INSERT INTO `concern` (`concern_id`, `full_Name`, `concern_subject`, `concern_description`, `status`, `datetime`) VALUES
+INSERT INTO `concern` (`concern_id`, `full_name`, `concern_subject`, `concern_description`, `status`, `datetime`) VALUES
 (1, 'Kyle Casingal', 'Noise Complaint', 'Nagvivideoke pa rin yung kapitbahay namin kahit lagpas 10 na', 'Pending', '2022-11-10 22:13:45'),
 (2, 'Kyle Casingal', 'Basura', 'Kung saan-saan nagtatapon ng basura yung kapitbahay ko.', 'Pending', '2022-11-02 22:13:59'),
 (3, 'Mon Carlo Delima', 'Vandalism', 'Dinrawingan ng kapitbahay namin yung kalsada sa tapat ng bahay namin.', 'Pending', '2022-11-04 22:14:02'),
@@ -405,19 +492,9 @@ CREATE TABLE IF NOT EXISTS `facility_renting` (
   `date_to` datetime NOT NULL,
   `cost` int(11) NOT NULL,
   `payment_proof` varchar(255) NOT NULL,
+  `cart` varchar(10) NOT NULL,
   PRIMARY KEY (`transaction_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `facility_renting`
---
-
-INSERT INTO `facility_renting` (`transaction_id`, `amenity_name`, `renter_name`, `date_from`, `date_to`, `cost`, `payment_proof`) VALUES
-(1, 'Basketball Court', 'Mon Carlo Delima', '2022-11-26 01:00:00', '2022-11-26 02:00:00', 150, 'test'),
-(2, 'Volleyball Court', 'Mon Carlo Delima', '2022-11-26 02:00:00', '2022-11-26 04:00:00', 300, 'test'),
-(3, 'Multi-purpose Hall', 'Mon Carlo Delima', '2022-11-27 05:30:00', '2022-11-27 06:30:00', 150, 'Delima, Mon Carlo Z. output.png'),
-(6, 'Multi-purpose Hall', 'Mon Carlo Delima', '2022-12-01 12:00:00', '2022-12-01 13:00:00', 200, 'deq3szx-038151fb-a2a0-45a8-823e-c7ddb1886164.jpg'),
-(7, 'Basketball Court', 'Kyle Andrei Casingal', '2022-12-02 07:00:00', '2022-12-02 08:00:00', 150, 'monsters-university-clipart-clipart-panda-free-clipart-images-9HMBXK-clipart.gif');
 
 -- --------------------------------------------------------
 
@@ -601,25 +678,28 @@ CREATE TABLE IF NOT EXISTS `post` (
   `content` varchar(255) DEFAULT NULL,
   `published_at` datetime NOT NULL,
   `content_image` varchar(255) DEFAULT NULL,
+  `officer_post` varchar(10) NOT NULL,
   PRIMARY KEY (`post_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `post`
 --
 
-INSERT INTO `post` (`post_id`, `user_id`, `full_name`, `title`, `content`, `published_at`, `content_image`) VALUES
-(1, 28, 'Mon Carlo Delima', 'The moon is beautiful, isn\'t it?', '', '2022-11-24 01:09:01', '315906640_1753081135077201_6331420859846659098_n.png'),
-(2, 24, 'Jeune Paolus Flores', 'Fascinating art created by nature.', '', '2022-11-24 09:59:54', '316218368_829271824950879_360246867658747215_n.png'),
-(3, 23, 'Kyle Andrei Casingal', 'Reflection', 'Imagine seeing these astonishing cars, lively blue skies, and few waves of clouds in an upside-down world. Inconceivable, isn\'t it?', '2022-11-24 10:03:11', '316189223_691988422233113_5145406262467036356_n.png'),
-(4, 23, 'Kyle Andrei Casingal', 'Windows of truth shows the real beauty of nature.', '', '2022-11-24 10:04:40', '313194508_684251046380877_4560164667618025920_n.png'),
-(5, 28, 'Mon Carlo Delima', 'Vintage mansion represents calm, warm, and peace.', '', '2022-11-24 10:05:22', '312140489_698881924813395_203606755662892340_n.png'),
-(15, 52, 'Marco Ivan Sta. Maria', '', 'Oh well, the sun strengthens the health of the plant, does this photo represents a good day because of that?', '2022-12-01 06:37:21', 'Picture2.jpg'),
-(17, 53, 'Krishtalene BendaÃ±a', '', 'Just had a ride inside the Sunnyvale subdivision, I feel like this will be part of my everyday routine.', '2022-12-01 06:48:54', 'Picture4.png'),
-(18, 52, 'Marco Ivan Sta. Maria', '', 'The kids enjoyed the party in Sunnyvale Subdivision, it\'s great seeing them happy while watching the program.', '2022-12-01 06:49:23', 'Picture5.jpg'),
-(19, 53, 'Krishtalene BendaÃ±a', '', 'Hi everyone! Just want to share this beautiful view I took near Sunnyvale Subdivision. It\'s in ArtSector Gallery and Chimney Cafe 360Â°. Let\'s visit this place together.', '2022-12-01 06:50:15', 'Picture6.jpg'),
-(20, 52, 'Marco Ivan Sta. Maria', '', 'Sometimes it\'s good to be blue. How sweet to be a cloud and floating in blue. I never get tired of the blue sky.', '2022-12-01 06:51:00', 'Picture3.png'),
-(24, 55, 'Kyle Andrei Casingal', 'Light Bulb', 'insert description here', '2022-12-01 10:13:20', '188-1889845_a-very-simple-concept-infinitustoken-medium-light-bulb.png');
+INSERT INTO `post` (`post_id`, `user_id`, `full_name`, `title`, `content`, `published_at`, `content_image`, `officer_post`) VALUES
+(1, 28, 'Mon Carlo Delima', 'The moon is beautiful, isn\'t it?', '', '2022-11-24 01:09:01', '315906640_1753081135077201_6331420859846659098_n.png', 'No'),
+(2, 24, 'Jeune Paolus Flores', 'Fascinating art created by nature.', '', '2022-11-24 09:59:54', '316218368_829271824950879_360246867658747215_n.png', 'No'),
+(3, 23, 'Kyle Andrei Casingal', 'Reflection', 'Imagine seeing these astonishing cars, lively blue skies, and few waves of clouds in an upside-down world. Inconceivable, isn\'t it?', '2022-11-24 10:03:11', '316189223_691988422233113_5145406262467036356_n.png', 'No'),
+(4, 23, 'Kyle Andrei Casingal', 'Windows of truth shows the real beauty of nature.', '', '2022-11-24 10:04:40', '313194508_684251046380877_4560164667618025920_n.png', 'No'),
+(5, 28, 'Mon Carlo Delima', 'Vintage mansion represents calm, warm, and peace.', '', '2022-11-24 10:05:22', '312140489_698881924813395_203606755662892340_n.png', 'No'),
+(15, 52, 'Marco Ivan Sta. Maria', '', 'Oh well, the sun strengthens the health of the plant, does this photo represents a good day because of that?', '2022-12-01 06:37:21', 'Picture2.jpg', 'No'),
+(17, 53, 'Krishtalene BendaÃ±a', '', 'Just had a ride inside the Sunnyvale subdivision, I feel like this will be part of my everyday routine.', '2022-12-01 06:48:54', 'Picture4.png', 'No'),
+(18, 52, 'Marco Ivan Sta. Maria', '', 'The kids enjoyed the party in Sunnyvale Subdivision, it\'s great seeing them happy while watching the program.', '2022-12-01 06:49:23', 'Picture5.jpg', 'No'),
+(19, 53, 'Krishtalene BendaÃ±a', '', 'Hi everyone! Just want to share this beautiful view I took near Sunnyvale Subdivision. It\'s in ArtSector Gallery and Chimney Cafe 360Â°. Let\'s visit this place together.', '2022-12-01 06:50:15', 'Picture6.jpg', 'No'),
+(20, 52, 'Marco Ivan Sta. Maria', '', 'Sometimes it\'s good to be blue. How sweet to be a cloud and floating in blue. I never get tired of the blue sky.', '2022-12-01 06:51:00', 'Picture3.png', 'No'),
+(24, 55, 'Kyle Andrei Casingal', 'Light Bulb', 'insert description here', '2022-12-01 10:13:20', '188-1889845_a-very-simple-concept-infinitustoken-medium-light-bulb.png', 'No'),
+(28, 18, 'SV1_Admin', 'Water interruption', 'test', '2023-01-24 20:00:38', '', 'Yes'),
+(29, 18, 'SV1_Admin', 'Chinese New Year event', 'test', '2023-01-24 20:06:20', '', 'Yes');
 
 -- --------------------------------------------------------
 
