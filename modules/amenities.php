@@ -5,7 +5,7 @@ $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision
 $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date_from BETWEEN NOW() AND NOW() + INTERVAL 1 DAY;");
 $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
 $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
-//IMPORTANT DONT DELETE I DONT KNOW WHY WORK
+
 $resultRes = $con->query("SELECT renter_name, subdivision_name, amenity_name, amenity_purpose, date_from, date_to, cost FROM amenity_renting WHERE user_id= ". $_SESSION['user_id']."");
 
 ?>
