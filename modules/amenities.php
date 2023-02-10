@@ -3,10 +3,11 @@ require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM amenities WHERE availability =  'Available' ORDER BY subdivision_name ASC") or die($mysqli->error);
 $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
 $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date_from BETWEEN NOW() AND NOW() + INTERVAL 1 DAY;");
-
-
 $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
 $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
+//IMPORTANT DONT DELETE I DONT KNOW WHY WORK
+$resultRes = $con->query("SELECT renter_name, subdivision_name, amenity_name, amenity_purpose, date_from, date_to, cost FROM amenity_renting WHERE user_id= ". $_SESSION['user_id']."");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,16 +79,19 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
     font-size: 2vw;
     padding: 0.5vw;
   }
-  .form-check-label{
+
+  .form-check-label {
     font-size: 1.5em;
-  
+
   }
-  .form-check{
+
+  .form-check {
     display: flex;
     align-items: stretch;
-    
+
   }
-  .form-check-input{
+
+  .form-check-input {
     align-self: flex-end;
   }
 
@@ -373,7 +377,8 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
         </div>
 
         <button class="btnSubmit" name="addToCart" id="">Add</button>
-        <button type="button" class="btnSubmit" name="" id="" data-bs-toggle="modal" data-bs-target="#editProfile">Availed Services</button> 
+        <button type="button" class="btnSubmit" name="" id="" data-bs-toggle="modal"
+          data-bs-target="#editProfile">Availed Services</button>
         <!-- <label>Amount</label>
         <input name="cost" type="text" id="price" readOnly <?php
         //AMOUNT COMPUTATION
@@ -424,145 +429,59 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
         <label for="image" class="upload">Upload Photo</label>
       </div>
     </div> -->
-      <!-- <table class="tblAmenity">
-      <tr>
-        <th>Amenity</th>
-        <th>Renter</th>
-        <th>From</th>
-        <th>To</th>
-        <th>Cost</th>
-      </tr>
-      <?php while ($row = $resultReservation->fetch_assoc()): ?>
-          <tr>
-            <td><?php echo $row['renter_name'] ?></td>
-            <td><?php echo $row['amenity_name'] ?></td>
-            <td><?php echo $row['date_from'] ?></td>
-            <td><?php echo $row['date_to'] ?></td>
-            <td><?php echo $row['cost'] ?></td>
-          </tr>
-      <?php endwhile; ?>
-    </table> -->
-    <div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Edit Your Information</h5>
-            <button type="button" class="btn-close discardChanges"></button>
-          </div>
-          <div class="modal-body">
-            <div class="regForm">
-              <table class="tblForm">
-                <tr>
-                  <td>First Name:</td>
-                  <td>
-                    <input type="text" name="first_name" id="" placeholder="first name" value="<?php echo $row['first_name']; ?>" required />
-                  </td>
-                  <td>Date of Birth:</td>
-                  <td>
-                    <input type="date" data-date-format="yyyy-mm-dd" name="birthdate" value="<?php echo $row['birthdate'] ?? ''; ?>" id="" required />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Middle Name:</td>
-                  <td>
-                    <input type="text" name="middle_name" id="" placeholder="middle name" value="<?php echo $row['middle_name'] ?? ''; ?>" required />
-                  </td>
-                  <td>Sex:</td>
-                  <td>
-                    <select name="sex" id="">
-                      <option value="" required>Select...</option>
-                      <option value="Male" <?php
-                                            if ($row['sex'] == "Male") {
-                                              echo 'selected="selected"';
-                                            }
-                                            ?>>Male</option>
-                      <option value="Female" <?php
-                                              if ($row['sex'] == "Female") {
-                                                echo 'selected="selected"';
-                                              }
-                                              ?>>Female</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Last Name:</td>
-                  <td>
-                    <input type="text" name="last_name" id="" placeholder="last name" value="<?php echo $row['last_name'] ?? ''; ?>" required />
-                  </td>
-                  <td>Email:</td>
-                  <td>
-                    <input type="text" name="email_address" id="" placeholder="email" value="<?php echo $row['email_address'] ?? ''; ?>" required />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Suffix:</td>
-                  <td>
-                    <input type="text" name="suffix" id="" placeholder="suffix" value="<?php echo $row['suffix'] ?? ''; ?>" required />
-                  </td>
-                  <td>Mobile Number:</td>
-                  <td>
-                    <input type="text" name="mobile_number" id="" placeholder="mobile no." value="<?php echo $row['mobile_number'] ?? ''; ?>" required />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Residence Address:</td>
-                  <td>
-                    <input type="text" name="street" id="" placeholder="Lot and Block" value="<?php echo $row['street'] ?? ''; ?>" required />
-                  </td>
-                  <td>
-                    <select name="subdivision" id="">
-                      <option value="">Select...</option>
-                      <?php while ($rowSubd = $resultSubd->fetch_assoc()) : ?>
-                        <option value="<?php echo $rowSubd['subdivision_name'] ?>" <?php
-                                                                                    if ($rowSubd['subdivision_name'] == $row['subdivision']) {
-                                                                                      echo 'selected="selected"';
-                                                                                    }
-                                                                                    ?>><?php echo $rowSubd['subdivision_name'] ?></option>
-                      <?php endwhile; ?>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Business Address:</td>
-                  <td class="NA">
-                    <input type="text" name="business_address" id="" placeholder="business address" value="<?php echo $row['business_address'] ?? ''; ?>" required />
-                    <p class="lblNA">*write N/A if not applicable*</p>
-                  </td>
-                </tr>
-                <tr>
 
-                </tr>
+      <div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Availed Services</h5>
+              <button type="button" class="btn-close discardChanges" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="tblAmenity">
                 <tr>
-                  <td>Occupation:</td>
-                  <td class="NA">
-                    <input type="text" name="occupation" id="" placeholder="occupation" value="<?php echo $row['occupation'] ?? ''; ?>" required />
-                    <p class="lblNA">*write N/A if not applicable*</p>
-                  </td>
+                  <th>Amenity</th>
+                  <th>Subdivision</th>
+                  <th>Renter</th>
+                  <th>Purpose</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Cost</th>
                 </tr>
-                <tr>
-                  <td>Employer:</td>
-                  <td class="NAemployer">
-                    <input type="text" name="employer" id="" placeholder="employer" value="<?php echo $row['employer'] ?? ''; ?>" required />
-                    <p class="lblNA">*write N/A if not applicable*</p>
-                  </td>
-                  <td>
-                    <button data-bs-toggle="modal" type="button" class="btnSubmitReg saveChanges">
-                      Save
-                    </button>
-                  </td>
-                  <td>
-                    <button type="button" value="" class="btnClearReg discardChanges" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                      Discard
-                    </button>
-                  </td>
-                </tr>
+                <?php while ($row = $resultRes->fetch_assoc()): ?>
+                  <tr>
+                    <td>
+                      <?php echo $row['amenity_name'] ?>
+                    </td>
+                    <td>
+                      <?php echo $row['subdivision_name'] ?>
+                    </td>
+                    <td>
+                      <?php echo $row['renter_name'] ?>
+                    </td>
+                    
+                    <td>
+                      <?php echo $row['amenity_purpose'] ?>
+                    </td>
+                    <td>
+                      <?php echo $row['date_from'] ?>
+                    </td>
+                    <td>
+                      <?php echo $row['date_to'] ?>
+                    </td>
+                    <td>
+                      <?php echo $row['cost'] ?>
+                    </td>
+                  </tr>
+                <?php endwhile; ?>
               </table>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    
+
 
   </form>
   <?php
