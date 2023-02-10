@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Feb 09, 2023 at 05:46 AM
+-- Generation Time: Feb 10, 2023 at 11:47 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -77,6 +77,36 @@ INSERT INTO `amenity_purpose` (`amenity_purpose_id`, `amenity_id`, `amenity_purp
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `amenity_renting`
+--
+
+DROP TABLE IF EXISTS `amenity_renting`;
+CREATE TABLE IF NOT EXISTS `amenity_renting` (
+  `transaction_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL,
+  `renter_name` varchar(255) NOT NULL,
+  `subdivision_name` varchar(255) NOT NULL,
+  `amenity_name` varchar(255) NOT NULL,
+  `amenity_purpose` varchar(255) NOT NULL,
+  `date_from` datetime DEFAULT NULL,
+  `date_to` datetime DEFAULT NULL,
+  `cost` int(11) DEFAULT NULL,
+  `payment_proof` varchar(255) DEFAULT NULL,
+  `cart` varchar(10) NOT NULL,
+  PRIMARY KEY (`transaction_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `amenity_renting`
+--
+
+INSERT INTO `amenity_renting` (`transaction_id`, `user_id`, `renter_name`, `subdivision_name`, `amenity_name`, `amenity_purpose`, `date_from`, `date_to`, `cost`, `payment_proof`, `cart`) VALUES
+(2, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', 'Basketball', NULL, NULL, NULL, NULL, 'Yes'),
+(3, 1, 'Mon Carlo Delima', '', '', '', NULL, NULL, NULL, NULL, 'Yes');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `audit_trail`
 --
 
@@ -87,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=363 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=364 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -441,7 +471,8 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (359, 'Mon Carlo Delima', 'logged in', '2023-02-06 17:41:45'),
 (360, 'SV1_Admin', 'logged out', '2023-02-07 17:01:41'),
 (361, 'Mon Carlo Delima', 'logged in', '2023-02-07 17:01:48'),
-(362, 'Mon Carlo Delima', 'logged out', '2023-02-07 17:19:20');
+(362, 'Mon Carlo Delima', 'logged out', '2023-02-07 17:19:20'),
+(363, 'Mon Carlo Delima', 'logged in', '2023-02-10 10:25:18');
 
 -- --------------------------------------------------------
 
@@ -476,25 +507,6 @@ INSERT INTO `concern` (`concern_id`, `full_name`, `concern_subject`, `concern_de
 (43, 'Mon Carlo Delima', 'Singer', 'Sintunado, maingay', 'Pending', '2022-11-12 22:14:13'),
 (42, 'Mon Carlo Delima', 'Noise complaint', 'nagddrums, hindi naman magaling', 'Pending', '2022-11-18 22:14:15'),
 (46, 'Kyle Andrei Casingal', 'Noise Complain', 'being too loud at 10 pm ', 'Pending', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `facility_renting`
---
-
-DROP TABLE IF EXISTS `facility_renting`;
-CREATE TABLE IF NOT EXISTS `facility_renting` (
-  `transaction_id` int(11) NOT NULL AUTO_INCREMENT,
-  `amenity_name` varchar(255) NOT NULL,
-  `renter_name` varchar(255) NOT NULL,
-  `date_from` datetime NOT NULL,
-  `date_to` datetime NOT NULL,
-  `cost` int(11) NOT NULL,
-  `payment_proof` varchar(255) NOT NULL,
-  `cart` varchar(10) NOT NULL,
-  PRIMARY KEY (`transaction_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 

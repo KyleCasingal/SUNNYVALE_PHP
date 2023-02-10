@@ -720,45 +720,6 @@ if (isset($_POST['editProfilePhoto'])) {
       </div>";
 }
 
-//POPULATING PURPOSE DROP DOWN BASED ON AMENITY
-
-// if(isset($_POST["country"])){
-//   // Capture selected country
-//   $country = $_POST["country"];
-
-//   // Define country and city array
-//   $countryArr = array(
-//                   "usa" => array("New Yourk", "Los Angeles", "California"),
-//                   "india" => array("Mumbai", "New Delhi", "Bangalore"),
-//                   "uk" => array("London", "Manchester", "Liverpool")
-//               );
-
-//   // Display city dropdown based on country name
-//   if($country !== 'Select'){
-//       echo "<label>Purpose</label>";
-//       echo "<select>";
-//       foreach($countryArr[$country] as $value){
-//           echo "<option>". $value . "</option>";
-//       }
-//       echo "</select>";
-//   } 
-// }
-
-// if (isset($_POST['amenity_id'])) {
-//   $amenity_id = $_POST['amenity_id'];
-
-//   $result = $con->query("SELECT * FROM amenity_purpose WHERE amenity_id=$amenity_id ORDER BY amenity_purpose DESC");
-  
-//   if($result != 0){
-//     echo '<option value="">Select Purpose</option>';
-//     while ($row = $result->fetch_assoc()){
-//       echo '<option value="'.$row['amenity_purpose_id'].'">'.$row['amenity_purpose'].'</option>';
-//     }
-//   }else{
-//     echo '<option value="">No Purpose Found</option>';
-//   }
-// }
-
 if (isset($_POST['subdivision_id'])) {
   $subdivision_id = $_POST['subdivision_id'];
 
@@ -777,15 +738,39 @@ if (isset($_POST['subdivision_id'])) {
 
 if (isset($_POST['amenity_id'])) {
   $amenity_id = $_POST['amenity_id'];
-
   $result = $con->query("SELECT * FROM amenity_purpose WHERE amenity_id=$amenity_id ORDER BY amenity_purpose DESC");
   
   if(mysqli_num_rows($result)>0){
     echo '<option value="">Select Purpose...</option>';
     while ($row = $result->fetch_assoc()){
-      echo '<option value="'.$row['amenity_purpose_id'].'">'.$row['amenity_purpose'].'</option>';
+      echo '<option value="'.$row['amenity_id'].'">'.$row['amenity_purpose'].'</option>';
     }
   }else{
     echo '<option value="">No Purpose Found</option>';
   }
+}
+
+// ADDING TO CART AMENITIES
+
+if (isset($_POST['addToCart'])){
+  $renter_name = $_POST['renter_name'];
+  $subdivision_id = $_POST['subdivision'];
+  $amenity_id = $_POST['amenity'];
+  $amenity_purpose_id = $_POST['purpose'];
+
+  $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_id = '$subdivision_id'");
+  $rowSubdivision = $resultSubdivision->fetch_assoc();
+
+  $resultAmenity = $con->query("SELECT * FROM amenities WHERE amenity_id = '$amenity_id'");
+  $rowAmenity = $resultAmenity->fetch_assoc();
+
+  $resultPurpose = $con->query("SELECT * FROM amenity_purpose WHERE amenity_purpose_id = '$amenity_purpose_id'");
+  $rowPurpose = $resultPurpose->fetch_assoc();
+
+  $resultID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+  $rowID = $resultID->fetch_assoc();
+
+  $sql = "INSERT INTO amenity_renting (user_id, renter_name, subdivision_name, amenity_name, amenity_purpose, cart) VALUES('" . $rowID['user_id'] . "', '$renter_name', '" . $rowSubdivision['subdivision_name'] . "', '" . $rowAmenity['amenity_name'] . "', '" . $rowPurpose['amenity_purpose'] . "', 'Yes')";
+  $result = mysqli_query($con, $sql);
+
 }
