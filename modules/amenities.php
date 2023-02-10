@@ -73,6 +73,18 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date_from
     font-size: 2vw;
     padding: 0.5vw;
   }
+  .form-check-label{
+    font-size: 1.5em;
+  
+  }
+  .form-check{
+    display: flex;
+    align-items: stretch;
+    
+  }
+  .form-check-input{
+    align-self: flex-end;
+  }
 
   .amenities {
     display: flex;
@@ -322,8 +334,8 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date_from
         <select name="subdivision" id="subdivision_id" required>
           <option value="">Select...</option>
           <?php
-          while ($rowSubdivision = $resultSubdivision->fetch_assoc()){
-            echo '<option value="'.$rowSubdivision['subdivision_id'].'">'.$rowSubdivision['subdivision_name'].'</option>';
+          while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
+            echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
           }
           ?>
         </select>
@@ -335,8 +347,22 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date_from
         <select name="purpose" id="purpose_id" required>
           <option value="">Select Amenity first...</option>
         </select>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked="">
+          <label class="form-check-label" for="flexRadioDefault2">
+            Day
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+          <label class="form-check-label" for="flexRadioDefault1">
+            Night
+          </label>
+        </div>
+
         <button class="btnSubmit" name="addToCart" id="">Add</button>
-        <button type="button" class="btnSubmit" name="" id="" data-bs-toggle="modal" data-bs-target="#editProfile">Availed Services</button> 
+        <button type="button" class="btnSubmit" name="" id="" data-bs-toggle="modal" data-bs-target="#editProfile">Availed Services</button>
         <!-- <label>Amount</label>
         <input name="cost" type="text" id="price" readOnly <?php
                                                             //AMOUNT COMPUTATION
@@ -387,7 +413,7 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date_from
         <label for="image" class="upload">Upload Photo</label>
       </div>
     </div> -->
-    <!-- <table class="tblAmenity">
+      <!-- <table class="tblAmenity">
       <tr>
         <th>Amenity</th>
         <th>Renter</th>
@@ -405,15 +431,15 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date_from
         </tr>
       <?php endwhile; ?>
     </table> -->
-    <div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Edit Your Information</h5>
-            <button type="button" class="btn-close discardChanges"></button>
-          </div>
-          <div class="modal-body">
-            <div class="regForm">
+      <div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Edit Your Information</h5>
+              <button type="button" class="btn-close discardChanges"></button>
+            </div>
+            <div class="modal-body">
+              <!-- <div class="regForm">
               <table class="tblForm">
                 <tr>
                   <td>First Name:</td>
@@ -520,18 +546,18 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date_from
                   </td>
                 </tr>
               </table>
+            </div> -->
             </div>
           </div>
         </div>
       </div>
-    </div>
-    
+
 
   </form>
   <?php
   require '../marginals/footer2.php';
   ?>
-  
+
 </body>
 
 </html>

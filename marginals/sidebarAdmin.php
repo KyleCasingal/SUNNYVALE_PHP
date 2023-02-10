@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Document</title>
 </head>
 <style>
@@ -88,6 +89,7 @@
         height: 100%;
 
     }
+
     .btnReports {
         color: rgb(89, 89, 89);
         font-family: "Poppins", sans-serif;
@@ -99,7 +101,14 @@
         height: 100%;
 
     }
-    
+
+    .dropdown-menu li {
+        font-size: 1vw;
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 1vw;
+        border: none;
+    }
 </style>
 
 
@@ -112,8 +121,9 @@
                 <li id="ticket" onclick="location.href='../modules/complaintManagement.php'">Complaint Tickets</li>
                 <li id="settings">
                     <button type="button" class="btnSettings" data-bs-toggle="dropdown" aria-expanded="false">
-                        Settings
+                        Settings <i class="fa-sharp fa-solid fa-chevron-right"></i>
                     </button>
+
                     <ul class="dropdown-menu">
                         <li id="Amenities" onclick="location.href='../modules/settingsAmenity.php'">Amenities</li>
                         <li id="Subdivision" onclick="location.href='../modules/settingsSubdivision.php'">Subdivisions</li>
@@ -122,10 +132,10 @@
                         <li id="Subdivision Officers" onclick="location.href='../modules/settingsSubdivisionOfficer.php'">Subdivision Officers</li>
                     </ul>
                 </li>
-    
+
                 <li id="reports">
-                <button type="button" class="btnReports" data-bs-toggle="dropdown" aria-expanded="false">
-                        Reports
+                    <button type="button" class="btnReports" data-bs-toggle="dropdown" aria-expanded="false">
+                        Reports <i class="fa-sharp fa-solid fa-chevron-right"></i>
                     </button>
                     <ul class="dropdown-menu">
                         <li id="Collection Report" onclick="location.href='../reports/reportAmenities.php'" target="_blank">Collection Report</li>
