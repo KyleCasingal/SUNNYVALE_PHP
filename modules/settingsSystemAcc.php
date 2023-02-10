@@ -4,14 +4,10 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
 $row = $result->fetch_assoc();
 $resultSubdivision = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
 $resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultSubdivision_selectMonthly = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultSubdivision_selectOfficers = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
+
 $resultSubdivision_selectSysAcc = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
+
 $resultSysAcc = $con->query("SELECT * FROM user WHERE user_type = 'Secretary' OR user_type = 'Treasurer' OR user_type = 'Admin' ") or die($mysqli->error);
-$resultOfficer = $con->query("SELECT * FROM officers") or die($mysqli->error);
-$resultMonthly = $con->query("SELECT * FROM monthly_dues") or die($mysqli->error);
 $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error);
 ?>
 
@@ -506,7 +502,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                         <?php while ($row = $resultSysAcc->fetch_assoc()) : ?>
                             <tr>
                                 <td>
-                                    <a href="settings.php?user_id=<?php echo $row['user_id']; ?>#settingsSystemAccounts" class="btnEdit">Edit</a>
+                                    <a href="settingsSystemAcc.php?user_id=<?php echo $row['user_id']; ?>#settingsSystemAccounts" class="btnEdit">Edit</a>
                                 </td>
                                 <td><?php echo $row['full_name'] ?></td>
                                 <td><?php echo $row['password'] ?></td>

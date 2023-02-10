@@ -2,17 +2,8 @@
 require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultSubdivision = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
 $resultSubdivision_selectMonthly = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultSubdivision_selectOfficers = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultSubdivision_selectSysAcc = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
-$resultSysAcc = $con->query("SELECT * FROM user WHERE user_type = 'Secretary' OR user_type = 'Treasurer' OR user_type = 'Admin' ") or die($mysqli->error);
-$resultOfficer = $con->query("SELECT * FROM officers") or die($mysqli->error);
 $resultMonthly = $con->query("SELECT * FROM monthly_dues") or die($mysqli->error);
-$resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error);
 ?>
 
 <!DOCTYPE html>
@@ -475,7 +466,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                         <?php while ($row = $resultMonthly->fetch_assoc()): ?>
                             <tr>
                                 <td>
-                                    <a href="settings.php?monthly_dues_id=<?php echo $row['monthly_dues_id']; ?>#settingsMonthlyDues"
+                                    <a href="settingsMonthlydues.php?monthly_dues_id=<?php echo $row['monthly_dues_id']; ?>#settingsMonthlyDues"
                                         class="btnEdit">Edit</a>
                                 </td>
                                 <td>
