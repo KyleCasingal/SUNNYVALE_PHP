@@ -6,7 +6,7 @@ $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date_from
 $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
 $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
 
-$resultRes = $con->query("SELECT renter_name, subdivision_name, amenity_name, amenity_purpose, date_from, date_to, cost FROM amenity_renting WHERE user_id= ". $_SESSION['user_id']."");
+$resultRes = $con->query("SELECT renter_name, subdivision_name, amenity_name, amenity_purpose, date_from, date_to, cost FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . "");
 
 ?>
 <!DOCTYPE html>
@@ -273,7 +273,7 @@ $resultRes = $con->query("SELECT renter_name, subdivision_name, amenity_name, am
       <div class="amenitiesForm">
         <label>Name</label>
         <input type="text" name="renter_name" id="name" value="<?php echo $row['full_name'] ?>" readonly />
-        <!-- <label>Date</label>
+        <label>Date</label>
         <input required type="date" name="date" <?php
         if (isset($_POST['compute'])) {
           $date = $_POST['date'];
@@ -282,69 +282,7 @@ $resultRes = $con->query("SELECT renter_name, subdivision_name, amenity_name, am
         $date = date('Y-m-d', strtotime('today'));
         echo "min='$date'"
           ?>>
-        <div class="timeinput">
-          <label>Time</label>
-          <select name="hrFrom" id="" required>
-            <option value="">hr</option>
-            <?php
-            for ($x = 1; $x <= 12; $x++) {
-              $x = sprintf("%02d", $x);
-              echo "<option value='$x'";
-              if (isset($_POST['compute'])) {
-                if ($_POST['hrFrom'] == $x)
-                  echo "selected='selected'";
-              }
-              echo ">  $x ";
-            }
-            ?>
-          </select>
-          <select name="ampmFrom" id="" required>
-            <option value="">am/pm</option>
-            <option value="am" <?php
-            if (isset($_POST['compute'])) {
-              if ($_POST['ampmFrom'] == "am")
-                echo 'selected="selected"';
-            }
-            ?>>am</option>
-            <option value="pm" <?php
-            if (isset($_POST['compute'])) {
-              if ($_POST['ampmFrom'] == "pm")
-                echo 'selected="selected"';
-            }
-            ?>>pm</option>
-          </select>
-          <label>To</label>
-          <select name="hrTo" id="" required>
-            <option value="">hr</option>
-            <?php
-            for ($x = 1; $x <= 12; $x++) {
-              $x = sprintf("%02d", $x);
-              echo "<option value='$x'";
-              if (isset($_POST['compute'])) {
-                if ($_POST['hrTo'] == $x)
-                  echo "selected='selected'";
-              }
-              echo ">  $x ";
-            }
-            ?>
-          </select>
-          </option>
-          <select name="ampmTo" id="" required>
-            <option value="">am/pm</option>
-            <option value="am" <?php
-            if (isset($_POST['compute'])) {
-              if ($_POST['ampmTo'] == "am")
-                echo 'selected="selected"';
-            }
-            ?>>am</option>
-            <option value="pm" <?php
-            if (isset($_POST['compute'])) {
-              if ($_POST['ampmTo'] == "pm")
-                echo 'selected="selected"';
-            }
-            ?>>pm</option>
-          </select>
-        </div> -->
+
         <label>Subdivision</label>
         <select name="subdivision" id="subdivision_id" required>
           <option value="">Select...</option>
@@ -428,6 +366,7 @@ $resultRes = $con->query("SELECT renter_name, subdivision_name, amenity_name, am
         </div>
         <label for="image" class="upload">Upload Photo</label>
       </div>
+
     </div> -->
 
       <div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -442,6 +381,7 @@ $resultRes = $con->query("SELECT renter_name, subdivision_name, amenity_name, am
             <div class="modal-body">
               <table class="tblAmenity">
                 <tr>
+                  <th></th>
                   <th>Amenity</th>
                   <th>Subdivision</th>
                   <th>Renter</th>
@@ -453,6 +393,11 @@ $resultRes = $con->query("SELECT renter_name, subdivision_name, amenity_name, am
                 <?php while ($row = $resultRes->fetch_assoc()): ?>
                   <tr>
                     <td>
+                      <div>
+                        <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                      </div>
+                    </td>
+                    <td>
                       <?php echo $row['amenity_name'] ?>
                     </td>
                     <td>
@@ -461,7 +406,7 @@ $resultRes = $con->query("SELECT renter_name, subdivision_name, amenity_name, am
                     <td>
                       <?php echo $row['renter_name'] ?>
                     </td>
-                    
+
                     <td>
                       <?php echo $row['amenity_purpose'] ?>
                     </td>
@@ -475,7 +420,75 @@ $resultRes = $con->query("SELECT renter_name, subdivision_name, amenity_name, am
                       <?php echo $row['cost'] ?>
                     </td>
                   </tr>
+
+
+
+
+
                 <?php endwhile; ?>
+                <div class="timeinput">
+                  <label>Time</label>
+                  <select name="hrFrom" id="" required>
+                    <option value="">hr</option>
+                    <?php
+                    for ($x = 1; $x <= 12; $x++) {
+                      $x = sprintf("%02d", $x);
+                      echo "<option value='$x'";
+                      if (isset($_POST['compute'])) {
+                        if ($_POST['hrFrom'] == $x)
+                          echo "selected='selected'";
+                      }
+                      echo ">  $x ";
+                    }
+                    ?>
+                  </select>
+                  <select name="ampmFrom" id="" required>
+                    <option value="">am/pm</option>
+                    <option value="am" <?php
+                    if (isset($_POST['compute'])) {
+                      if ($_POST['ampmFrom'] == "am")
+                        echo 'selected="selected"';
+                    }
+                    ?>>am</option>
+                    <option value="pm" <?php
+                    if (isset($_POST['compute'])) {
+                      if ($_POST['ampmFrom'] == "pm")
+                        echo 'selected="selected"';
+                    }
+                    ?>>pm</option>
+                  </select>
+                  <label>To</label>
+                  <select name="hrTo" id="" required>
+                    <option value="">hr</option>
+                    <?php
+                    for ($x = 1; $x <= 12; $x++) {
+                      $x = sprintf("%02d", $x);
+                      echo "<option value='$x'";
+                      if (isset($_POST['compute'])) {
+                        if ($_POST['hrTo'] == $x)
+                          echo "selected='selected'";
+                      }
+                      echo ">  $x ";
+                    }
+                    ?>
+                  </select>
+                  </option>
+                  <select name="ampmTo" id="" required>
+                    <option value="">am/pm</option>
+                    <option value="am" <?php
+                    if (isset($_POST['compute'])) {
+                      if ($_POST['ampmTo'] == "am")
+                        echo 'selected="selected"';
+                    }
+                    ?>>am</option>
+                    <option value="pm" <?php
+                    if (isset($_POST['compute'])) {
+                      if ($_POST['ampmTo'] == "pm")
+                        echo 'selected="selected"';
+                    }
+                    ?>>pm</option>
+                  </select>
+                </div>
               </table>
             </div>
           </div>
