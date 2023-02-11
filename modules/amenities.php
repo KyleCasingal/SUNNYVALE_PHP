@@ -7,7 +7,25 @@ $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") o
 $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
 
 $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . "") or die($mysqli->error);;
-
+if (isset($_POST['applyDateTime'])) {
+  function to_24_hour($hours, $minutes, $meridiem)
+  {
+    $hours = sprintf('%02d', (int) $hours);
+    $meridiem = (strtolower($meridiem) == 'am') ? 'am' : 'pm';
+    return date('H:i', strtotime("{$hours}:{$minutes} {$meridiem}"));
+  }
+  $timeFrom = to_24_hour($_POST['hrFrom'], '00', $_POST['ampmFrom']);
+  $timeTo = to_24_hour($_POST['hrTo'], '00', $_POST['ampmTo']);
+  $date = $_POST['date'];
+  $dateTimeFrom = $date . " " . $timeFrom;
+  $dateTimeTo = $date . " " . $timeTo;
+  if (isset($_POST['checkbox'])) {
+    foreach ($_POST['checkbox'] as $transaction_id) {
+      $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo' WHERE transaction_id = '$transaction_id'";
+      $result = mysqli_query($con, $sql);
+    }
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -271,6 +289,14 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
       $("#to2").removeAttr("required");
     });
   });
+
+  $(document).ready(function() {
+    $("#dateTime").click(function() {
+      $("#subdivision_id").removeAttr("required");
+      $("#amenity_id").removeAttr("required");
+      $("#purpose_id").removeAttr("required");
+    });
+  });
 </script>
 
 <body>
@@ -376,8 +402,7 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
             <div class="modal-body">
               <table class="tblAmenity">
                 <tr>
-                  <th><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
-                  </th>
+                  <th><input type="checkbox" name="select-all" id="select-all" /></th>
                   <th>Amenity</th>
                   <th>Subdivision</th>
                   <th>Renter</th>
@@ -389,7 +414,7 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
                 <?php while ($row = $resultRes->fetch_assoc()) : ?>
                   <tr>
                     <td>
-                      <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                      <input type="checkbox" value=<?php echo $row['transaction_id']; ?> name="checkbox[]" id="checkbox">
                     </td>
                     <td>
                       <?php echo $row['amenity_name'] ?>
@@ -417,13 +442,13 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
                 <?php endwhile; ?>
                 <div><label>Date</label>
                   <input required id="date1" type="date" name="date" <?php
-                                                          if (isset($_POST['compute'])) {
-                                                            $date = $_POST['date'];
-                                                            echo "value = '$date'";
-                                                          }
-                                                          $date = date('Y-m-d', strtotime('today'));
-                                                          echo "min='$date'"
-                                                          ?>>
+                                                                      if (isset($_POST['compute'])) {
+                                                                        $date = $_POST['date'];
+                                                                        echo "value = '$date'";
+                                                                      }
+                                                                      $date = date('Y-m-d', strtotime('today'));
+                                                                      echo "min='$date'"
+                                                                      ?>>
                 </div>
                 <div class="timeinput">
                   <label>Time</label>
@@ -432,12 +457,7 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
                     <?php
                     for ($x = 1; $x <= 12; $x++) {
                       $x = sprintf("%02d", $x);
-                      echo "<option value='$x'";
-                      if (isset($_POST['compute'])) {
-                        if ($_POST['hrFrom'] == $x)
-                          echo "selected='selected'";
-                      }
-                      echo ">  $x ";
+                      echo "<option value='$x'>$x";
                     }
                     ?>
                   </select>
@@ -488,6 +508,7 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
                                         ?>>pm</option>
                   </select>
                 </div>
+                <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>
               </table>
             </div>
           </div>
@@ -501,5 +522,19 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
   ?>
 
 </body>
+<script>
+  $('#select-all').click(function(event) {
+    if (this.checked) {
+      // Iterate each checkbox
+      $(':checkbox').each(function() {
+        this.checked = true;
+      });
+    } else {
+      $(':checkbox').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+</script>
 
 </html>
