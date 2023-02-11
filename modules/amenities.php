@@ -18,7 +18,9 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#000000" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap"
+    rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <title>SUNNYVALE</title>
@@ -227,19 +229,19 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
   //   }
   // }
 
-  $("#image").change(function() {
+  $("#image").change(function () {
     readURL(this, 'imagePreview');
   });
 
-  $(document).ready(function() {
-    $("#amenity_id").on('click', function() {
+  $(document).ready(function () {
+    $("#amenity_id").on('click', function () {
       var amenity_id = $(this).val();
       if (amenity_id) {
         $.ajax({
           type: 'POST',
           url: '../process.php/',
           data: 'amenity_id=' + amenity_id,
-          success: function(html) {
+          success: function (html) {
             $("#purpose_id").html(html);
           }
         });
@@ -247,15 +249,15 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
     });
   });
 
-  $(document).ready(function() {
-    $("#subdivision_id").on('click', function() {
+  $(document).ready(function () {
+    $("#subdivision_id").on('click', function () {
       var subdivision_id = $(this).val();
       if (subdivision_id) {
         $.ajax({
           type: 'POST',
           url: '../process.php/',
           data: 'subdivision_id=' + subdivision_id,
-          success: function(html) {
+          success: function (html) {
             $("#amenity_id").html(html);
           }
         });
@@ -304,44 +306,45 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
         </div> -->
 
         <button class="btnSubmit" name="addToCart" id="">Add</button>
-        <button type="button" class="btnSubmit" name="" id="" data-bs-toggle="modal" data-bs-target="#editProfile">Availed Services</button>
+        <button type="button" class="btnSubmit" name="" id="" data-bs-toggle="modal"
+          data-bs-target="#editProfile">Availed Services</button>
         <!-- <label>Amount</label>
         <input name="cost" type="text" id="price" readOnly <?php
-                                                            //AMOUNT COMPUTATION
-                                                            if (isset($_POST['compute'])) {
-                                                              function to_24_hour($hours, $minutes, $meridiem)
-                                                              {
-                                                                $hours = sprintf('%02d', (int) $hours);
-                                                                $minutes = sprintf('%02d', (int) $minutes);
-                                                                $meridiem = (strtolower($meridiem) == 'am') ? 'am' : 'pm';
-                                                                return date('H:i', strtotime("{$hours}:{$minutes} {$meridiem}"));
-                                                              }
-                                                              $timeFrom = to_24_hour($_POST['hrFrom'], 00, $_POST['ampmFrom']);
-                                                              $timeTo = to_24_hour($_POST['hrTo'], 00, $_POST['ampmTo']);
-                                                              $timeFrom = strtotime($timeFrom);
-                                                              $timeTo = strtotime($timeTo);
-                                                              $difference = ($timeTo - $timeFrom);
-                                                              $totalHrs = ($difference / 3600);
-                                                              $totalHrs = number_format((float) $totalHrs, 2, '.', '');
-                                                              $res = $con->query("SELECT * FROM amenities WHERE amenity_name = '$amenity'") or die($mysqli->error);
-                                                              $row = $res->fetch_assoc();
-                                                              $cost = $totalHrs * $row['price'];
-                                                              if ($cost < 0) {
-                                                                echo "value = ''";
-                                                              } else if ($_POST['ampmFrom'] == 'am' and $_POST['hrFrom'] < 6) {
-                                                                echo "value = ''";
-                                                              } else if ($_POST['ampmFrom'] == 'pm' and $_POST['hrFrom'] >= 9) {
-                                                                echo "value = ''";
-                                                              } else if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] >= 9) {
-                                                                echo "value = ''";
-                                                              } else {
-                                                                echo "value = '$cost'";
-                                                              }
-                                                            }
+        //AMOUNT COMPUTATION
+        if (isset($_POST['compute'])) {
+          function to_24_hour($hours, $minutes, $meridiem)
+          {
+            $hours = sprintf('%02d', (int) $hours);
+            $minutes = sprintf('%02d', (int) $minutes);
+            $meridiem = (strtolower($meridiem) == 'am') ? 'am' : 'pm';
+            return date('H:i', strtotime("{$hours}:{$minutes} {$meridiem}"));
+          }
+          $timeFrom = to_24_hour($_POST['hrFrom'], 00, $_POST['ampmFrom']);
+          $timeTo = to_24_hour($_POST['hrTo'], 00, $_POST['ampmTo']);
+          $timeFrom = strtotime($timeFrom);
+          $timeTo = strtotime($timeTo);
+          $difference = ($timeTo - $timeFrom);
+          $totalHrs = ($difference / 3600);
+          $totalHrs = number_format((float) $totalHrs, 2, '.', '');
+          $res = $con->query("SELECT * FROM amenities WHERE amenity_name = '$amenity'") or die($mysqli->error);
+          $row = $res->fetch_assoc();
+          $cost = $totalHrs * $row['price'];
+          if ($cost < 0) {
+            echo "value = ''";
+          } else if ($_POST['ampmFrom'] == 'am' and $_POST['hrFrom'] < 6) {
+            echo "value = ''";
+          } else if ($_POST['ampmFrom'] == 'pm' and $_POST['hrFrom'] >= 9) {
+            echo "value = ''";
+          } else if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] >= 9) {
+            echo "value = ''";
+          } else {
+            echo "value = '$cost'";
+          }
+        }
 
 
 
-                                                            ?> />
+        ?> />
         <br>
         <button name="compute" class="btnCompute">Compute</button>
         <button class="btnSubmit" name="submitReservation" id="submitPost">Submit Reservation</button> -->
@@ -357,17 +360,20 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
 
     </div> -->
 
-      <div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">Availed Services</h5>
-              <button type="button" class="btn-close discardChanges" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close discardChanges" data-bs-dismiss="modal"
+                aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <table class="tblAmenity">
                 <tr>
-                  <th><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..."></th>
+                  <th><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                  </th>
                   <th>Amenity</th>
                   <th>Subdivision</th>
                   <th>Renter</th>
@@ -376,7 +382,7 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
                   <th>To</th>
                   <th>Cost</th>
                 </tr>
-                <?php while ($row = $resultRes->fetch_assoc()) : ?>
+                <?php while ($row = $resultRes->fetch_assoc()): ?>
                   <tr>
                     <td>
                       <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
@@ -407,13 +413,13 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
                 <?php endwhile; ?>
                 <div><label>Date</label>
                   <input required type="date" name="date" <?php
-                                                          if (isset($_POST['compute'])) {
-                                                            $date = $_POST['date'];
-                                                            echo "value = '$date'";
-                                                          }
-                                                          $date = date('Y-m-d', strtotime('today'));
-                                                          echo "min='$date'"
-                                                          ?>>
+                  if (isset($_POST['compute'])) {
+                    $date = $_POST['date'];
+                    echo "value = '$date'";
+                  }
+                  $date = date('Y-m-d', strtotime('today'));
+                  echo "min='$date'"
+                    ?>>
                 </div>
                 <div class="timeinput">
                   <label>Time</label>
@@ -434,17 +440,17 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
                   <select name="ampmFrom" id="" required>
                     <option value="">am/pm</option>
                     <option value="am" <?php
-                                        if (isset($_POST['compute'])) {
-                                          if ($_POST['ampmFrom'] == "am")
-                                            echo 'selected="selected"';
-                                        }
-                                        ?>>am</option>
+                    if (isset($_POST['compute'])) {
+                      if ($_POST['ampmFrom'] == "am")
+                        echo 'selected="selected"';
+                    }
+                    ?>>am</option>
                     <option value="pm" <?php
-                                        if (isset($_POST['compute'])) {
-                                          if ($_POST['ampmFrom'] == "pm")
-                                            echo 'selected="selected"';
-                                        }
-                                        ?>>pm</option>
+                    if (isset($_POST['compute'])) {
+                      if ($_POST['ampmFrom'] == "pm")
+                        echo 'selected="selected"';
+                    }
+                    ?>>pm</option>
                   </select>
                   <label>To</label>
                   <select name="hrTo" id="" required>
@@ -465,17 +471,17 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
                   <select name="ampmTo" id="" required>
                     <option value="">am/pm</option>
                     <option value="am" <?php
-                                        if (isset($_POST['compute'])) {
-                                          if ($_POST['ampmTo'] == "am")
-                                            echo 'selected="selected"';
-                                        }
-                                        ?>>am</option>
+                    if (isset($_POST['compute'])) {
+                      if ($_POST['ampmTo'] == "am")
+                        echo 'selected="selected"';
+                    }
+                    ?>>am</option>
                     <option value="pm" <?php
-                                        if (isset($_POST['compute'])) {
-                                          if ($_POST['ampmTo'] == "pm")
-                                            echo 'selected="selected"';
-                                        }
-                                        ?>>pm</option>
+                    if (isset($_POST['compute'])) {
+                      if ($_POST['ampmTo'] == "pm")
+                        echo 'selected="selected"';
+                    }
+                    ?>>pm</option>
                   </select>
                 </div>
               </table>
@@ -483,7 +489,7 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
           </div>
         </div>
       </div>
-
+    </div>
 
   </form>
   <?php
