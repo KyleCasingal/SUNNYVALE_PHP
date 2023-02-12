@@ -122,7 +122,123 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          About the Subdivision
+          <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <table>
+                  <tr>
+                    <td>Sunnyvale 1 Officers</td>
+                  </tr>
+                  <tr>
+                    <td>President:</td>
+                    <td>name here</td>
+                  </tr>
+                  <tr>
+                    <td>Vice President:</td>
+                    <td>name here</td>
+                  </tr>
+                  <tr>
+                    <td>Secretary:</td>
+                    <td>name here</td>
+                  </tr>
+                  <tr>
+                    <td>Treasurer:</td>
+                    <td>name here</td>
+                  </tr>
+                  <tr>
+                  </tr>
+                </table>
+              </div>
+              <div class="carousel-item">
+                <table>
+                  <tr>
+                    <td>Sunnyvale 2 Officers</td>
+                  </tr>
+                  <tr>
+                    <td>President:</td>
+                    <td>name here</td>
+                  </tr>
+                  <tr>
+                    <td>Vice President:</td>
+                    <td>name here</td>
+                  </tr>
+                  <tr>
+                    <td>Secretary:</td>
+                    <td>name here</td>
+                  </tr>
+                  <tr>
+                    <td>Treasurer:</td>
+                    <td>name here</td>
+                  </tr>
+                  <tr>
+                  </tr>
+                </table>
+              </div>
+              <div class="carousel-item">
+                <table>
+                  <tr>
+                    <td>Sunnyvale 3 Officers</td>
+                  </tr>
+                  <tr>
+                    <td>President:</td>
+                    <td>name here</td>
+                  </tr>
+                  <tr>
+                    <td>Vice President:</td>
+                    <td>name here</td>
+                  </tr>
+                  <tr>
+                    <td>Secretary:</td>
+                    <td>name here</td>
+                  </tr>
+                  <tr>
+                    <td>Treasurer:</td>
+                    <td>name here</td>
+                  </tr>
+                  <tr>
+                  </tr>
+                </table>
+              </div>
+              <div class="carousel-item">
+                <table>
+                  <tr>
+                    <td>Sunnyvale 4 Officers</td>
+                  </tr>
+                  <tr>
+                    <td>President:</td>
+                    <td>name here</td>
+                  </tr>
+                  <tr>
+                    <td>Vice President:</td>
+                    <td>name here</td>
+                  </tr>
+                  <tr>
+                    <td>Secretary:</td>
+                    <td>name here</td>
+                  </tr>
+                  <tr>
+                    <td>Treasurer:</td>
+                    <td>name here</td>
+                  </tr>
+                  <tr>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -173,7 +289,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          About the Subdivision
+          devs
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
