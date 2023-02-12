@@ -345,7 +345,26 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
         text-decoration: none;
         color: white;
     }
-    
+
+    .buttonGrpRegister {
+        display: flex;
+        justify-content: end;
+        gap: 1em;
+    }
+
+    .btnImportReg {
+        background-color: orange;
+        border: 0;
+        padding: 0.5vw;
+        max-width: 50vw;
+        width: 10vw;
+        font-family: "Poppins", sans-sans-serif;
+        font-size: 1vw;
+        margin-top: 2vw;
+        color: white;
+        border-radius: 0.8vw;
+        cursor: pointer;
+    }
 </style>
 <script>
     $("#form_id").trigger("reset");
@@ -490,56 +509,92 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                                     <input type="text" name="employer" id="" placeholder="employer" value="<?php echo $employer ?? ''; ?>" required />
                                     <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
-                                <td>
-                                    <div class="modal fade" id="homeowner_submit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Do you really want to add this homeowner profile?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button name="homeowner_submit" type="submit" class="btn btn-primary">Save changes</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal fade" id="homeowner_update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Do you really want to update this homeowner profile?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button name="homeowner_update" type="submit" class="btn btn-primary">Save changes</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <?php if ($update == true) : ?>
-                                        <button data-bs-toggle="modal" data-bs-target="#homeowner_update" type="button" class="btnUpdateReg">
-                                            Update
-                                        </button>
-                                    <?php else : ?>
-                                        <button data-bs-toggle="modal" data-bs-target="#homeowner_submit" type="button" class="btnSubmitReg">
-                                            Submit
-                                        </button>
-                                    <?php endif; ?>
-                                </td>
-                                <td>
-                                    <button type="button" value="" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        Clear
-                                    </button>
-                                </td>
+
+
+
                             </tr>
                         </table>
+                        <div class="buttonGrpRegister">
+                            <div class="modal fade" id="homeowner_submit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Do you really want to add this homeowner profile?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button name="homeowner_submit" type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="homeowner_update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Do you really want to update this homeowner profile?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button name="homeowner_update" type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php if ($update == true) : ?>
+                                <button data-bs-toggle="modal" data-bs-target="#homeowner_update" type="button" class="btnUpdateReg">
+                                    Update
+                                </button>
+                            <?php else : ?>
+                                <button data-bs-toggle="modal" data-bs-target="#homeowner_submit" type="button" class="btnSubmitReg">
+                                    Submit
+                                </button>
+                            <?php endif; ?>
+
+
+                            <button type="button" value="" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Clear
+                            </button>
+
+
+                            <button type="button" value="" class="btnImportReg" data-bs-toggle="modal" data-bs-target="#importCSVModal">
+                                Import CSV
+                            </button>
+
+                            <div class="modal fade" id="importCSVModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">About</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div>
+                                                <label>Select CSV file:</label>
+                                                <input type="file" name="file" id="file" class="input-large">
+                                            </div>
+                                            <div>
+                                                <label>Import data:</label>
+                                                <button type="button" value="" class="btnImportReg" >
+                                                    Import CSV
+                                                </button>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
                     </div>
                     <label class="lblRegistration">Registered Homeowners</label>
                     <div class="tblContainer">
