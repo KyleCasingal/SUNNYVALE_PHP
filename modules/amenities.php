@@ -2,30 +2,10 @@
 require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM amenities WHERE availability =  'Available' ORDER BY subdivision_name ASC") or die($mysqli->error);
 $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
-$resultReservation = $con->query("SELECT * FROM facility_renting WHERE date_from BETWEEN NOW() AND NOW() + INTERVAL 1 DAY;");
 $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
 $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
 
 $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . "") or die($mysqli->error);;
-if (isset($_POST['applyDateTime'])) {
-  function to_24_hour($hours, $minutes, $meridiem)
-  {
-    $hours = sprintf('%02d', (int) $hours);
-    $meridiem = (strtolower($meridiem) == 'am') ? 'am' : 'pm';
-    return date('H:i', strtotime("{$hours}:{$minutes} {$meridiem}"));
-  }
-  $timeFrom = to_24_hour($_POST['hrFrom'], '00', $_POST['ampmFrom']);
-  $timeTo = to_24_hour($_POST['hrTo'], '00', $_POST['ampmTo']);
-  $date = $_POST['date'];
-  $dateTimeFrom = $date . " " . $timeFrom;
-  $dateTimeTo = $date . " " . $timeTo;
-  if (isset($_POST['checkbox'])) {
-    foreach ($_POST['checkbox'] as $transaction_id) {
-      $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo' WHERE transaction_id = '$transaction_id'";
-      $result = mysqli_query($con, $sql);
-    }
-  }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -324,62 +304,8 @@ if (isset($_POST['applyDateTime'])) {
         <select name="purpose" id="purpose_id" required>
           <option value="">Select Amenity first...</option>
         </select>
-
-        <!-- <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked="">
-          <label class="form-check-label" for="flexRadioDefault2">
-            Day
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-          <label class="form-check-label" for="flexRadioDefault1">
-            Night
-          </label>
-        </div> -->
-
         <button class="btnSubmit" name="addToCart" id="add">Add</button>
-        <button type="button" class="btnSubmit" name="" id="" data-bs-toggle="modal" data-bs-target="#editProfile">Availed Services</button>
-        <!-- <label>Amount</label>
-        <input name="cost" type="text" id="price" readOnly <?php
-                                                            //AMOUNT COMPUTATION
-                                                            if (isset($_POST['compute'])) {
-                                                              function to_24_hour($hours, $minutes, $meridiem)
-                                                              {
-                                                                $hours = sprintf('%02d', (int) $hours);
-                                                                $minutes = sprintf('%02d', (int) $minutes);
-                                                                $meridiem = (strtolower($meridiem) == 'am') ? 'am' : 'pm';
-                                                                return date('H:i', strtotime("{$hours}:{$minutes} {$meridiem}"));
-                                                              }
-                                                              $timeFrom = to_24_hour($_POST['hrFrom'], 00, $_POST['ampmFrom']);
-                                                              $timeTo = to_24_hour($_POST['hrTo'], 00, $_POST['ampmTo']);
-                                                              $timeFrom = strtotime($timeFrom);
-                                                              $timeTo = strtotime($timeTo);
-                                                              $difference = ($timeTo - $timeFrom);
-                                                              $totalHrs = ($difference / 3600);
-                                                              $totalHrs = number_format((float) $totalHrs, 2, '.', '');
-                                                              $res = $con->query("SELECT * FROM amenities WHERE amenity_name = '$amenity'") or die($mysqli->error);
-                                                              $row = $res->fetch_assoc();
-                                                              $cost = $totalHrs * $row['price'];
-                                                              if ($cost < 0) {
-                                                                echo "value = ''";
-                                                              } else if ($_POST['ampmFrom'] == 'am' and $_POST['hrFrom'] < 6) {
-                                                                echo "value = ''";
-                                                              } else if ($_POST['ampmFrom'] == 'pm' and $_POST['hrFrom'] >= 9) {
-                                                                echo "value = ''";
-                                                              } else if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] >= 9) {
-                                                                echo "value = ''";
-                                                              } else {
-                                                                echo "value = '$cost'";
-                                                              }
-                                                            }
-
-
-
-                                                            ?> />
         <br>
-        <button name="compute" class="btnCompute">Compute</button>
-        <button class="btnSubmit" name="submitReservation" id="submitPost">Submit Reservation</button> -->
       </div>
       <!-- <div class="paymentForm">
         <label class="writeText">Upload proof of payment here:</label>
@@ -388,134 +314,139 @@ if (isset($_POST['applyDateTime'])) {
           <img class="imagePrev" id="imagePreview" src=# alt="" />
         </div>
         <label for="image" class="upload">Upload Photo</label>
-      </div>
-
-    </div> -->
-
-      <div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">Availed Services</h5>
-              <button type="button" class="btn-close discardChanges" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <table class="tblAmenity">
-                <tr>
-                  <th><input type="checkbox" name="select-all" id="select-all" /></th>
-                  <th>Amenity</th>
-                  <th>Subdivision</th>
-                  <th>Renter</th>
-                  <th>Purpose</th>
-                  <th>From</th>
-                  <th>To</th>
-                  <th>Cost</th>
-                </tr>
-                <?php while ($row = $resultRes->fetch_assoc()) : ?>
-                  <tr>
-                    <td>
-                      <input type="checkbox" value=<?php echo $row['transaction_id']; ?> name="checkbox[]" id="checkbox">
-                    </td>
-                    <td>
-                      <?php echo $row['amenity_name'] ?>
-                    </td>
-                    <td>
-                      <?php echo $row['subdivision_name'] ?>
-                    </td>
-                    <td>
-                      <?php echo $row['renter_name'] ?>
-                    </td>
-
-                    <td>
-                      <?php echo $row['amenity_purpose'] ?>
-                    </td>
-                    <td>
-                      <?php echo $row['date_from'] ?>
-                    </td>
-                    <td>
-                      <?php echo $row['date_to'] ?>
-                    </td>
-                    <td>
-                      <?php echo $row['cost'] ?>
-                    </td>
-                  </tr>
-                <?php endwhile; ?>
-                <div><label>Date</label>
-                  <input required id="date1" type="date" name="date" <?php
-                                                                      if (isset($_POST['compute'])) {
-                                                                        $date = $_POST['date'];
-                                                                        echo "value = '$date'";
-                                                                      }
-                                                                      $date = date('Y-m-d', strtotime('today'));
-                                                                      echo "min='$date'"
-                                                                      ?>>
-                </div>
-                <div class="timeinput">
-                  <label>Time</label>
-                  <select name="hrFrom" id="from1" required>
-                    <option value="">hr</option>
-                    <?php
-                    for ($x = 1; $x <= 12; $x++) {
-                      $x = sprintf("%02d", $x);
-                      echo "<option value='$x'>$x";
-                    }
-                    ?>
-                  </select>
-                  <select name="ampmFrom" id="from2" required>
-                    <option value="">am/pm</option>
-                    <option value="am" <?php
-                                        if (isset($_POST['compute'])) {
-                                          if ($_POST['ampmFrom'] == "am")
-                                            echo 'selected="selected"';
-                                        }
-                                        ?>>am</option>
-                    <option value="pm" <?php
-                                        if (isset($_POST['compute'])) {
-                                          if ($_POST['ampmFrom'] == "pm")
-                                            echo 'selected="selected"';
-                                        }
-                                        ?>>pm</option>
-                  </select>
-                  <label>To</label>
-                  <select name="hrTo" id="to1" required>
-                    <option value="">hr</option>
-                    <?php
-                    for ($x = 1; $x <= 12; $x++) {
-                      $x = sprintf("%02d", $x);
-                      echo "<option value='$x'";
-                      if (isset($_POST['compute'])) {
-                        if ($_POST['hrTo'] == $x)
-                          echo "selected='selected'";
-                      }
-                      echo ">  $x ";
-                    }
-                    ?>
-                  </select>
-                  </option>
-                  <select name="ampmTo" id="to2" required>
-                    <option value="">am/pm</option>
-                    <option value="am" <?php
-                                        if (isset($_POST['compute'])) {
-                                          if ($_POST['ampmTo'] == "am")
-                                            echo 'selected="selected"';
-                                        }
-                                        ?>>am</option>
-                    <option value="pm" <?php
-                                        if (isset($_POST['compute'])) {
-                                          if ($_POST['ampmTo'] == "pm")
-                                            echo 'selected="selected"';
-                                        }
-                                        ?>>pm</option>
-                  </select>
-                </div>
-                <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>
-              </table>
-            </div>
+      </div> -->
+      <div class='amenitiesForm'>
+        <label>Availed Services</label>
+        <table class="tblAmenity">
+          <tr>
+            <th><input type="checkbox" name="select-all" id="select-all" /></th>
+            <th>Renter</th>
+            <th>Subdivision</th>
+            <th>Amenity</th>
+            <th>Purpose</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Cost</th>
+          </tr>
+          <?php while ($row = $resultRes->fetch_assoc()) : ?>
+            <tr>
+              <td>
+                <input type="checkbox" value=<?php echo $row['transaction_id']; ?> name="checkbox[]" id="checkbox">
+              </td>
+              <td>
+                <?php echo $row['renter_name'] ?>
+              </td>
+              <td>
+                <?php echo $row['subdivision_name'] ?>
+              </td>
+              <td>
+                <?php echo $row['amenity_name'] ?>
+              </td>
+              <td>
+                <?php
+                $amenity_purpose_id = $row['amenity_purpose'];
+                $resultPurpose = $con->query("SELECT * FROM amenity_purpose WHERE amenity_purpose_id = '$amenity_purpose_id'");
+                $rowPurpose = $resultPurpose->fetch_assoc();
+                echo $rowPurpose['amenity_purpose'];
+                ?>
+              </td>
+              <td>
+                <?php
+                if ($row['date_from'] != NULL) {
+                  $date = $row['date_from'];
+                  echo date('h:i a ', strtotime($date));
+                } else {
+                  echo $row['date_from'];
+                }
+                ?>
+              </td>
+              <td>
+                <?php
+                if ($row['date_to'] != NULL) {
+                  $date = $row['date_to'];
+                  echo date('h:i a ', strtotime($date));
+                } else {
+                  echo $row['date_to'];
+                }
+                ?>
+              </td>
+              <td>
+                <?php echo $row['cost'] ?>
+              </td>
+            </tr>
+          <?php endwhile; ?>
+          <div><label>Date</label>
+            <input required id="date1" type="date" name="date" <?php
+                                                                if (isset($_POST['compute'])) {
+                                                                  $date = $_POST['date'];
+                                                                  echo "value = '$date'";
+                                                                }
+                                                                $date = date('Y-m-d', strtotime('today'));
+                                                                echo "min='$date'"
+                                                                ?>>
           </div>
-        </div>
+          <div class="timeinput">
+            <label>Time</label>
+            <select name="hrFrom" id="from1" required>
+              <option value="">hr</option>
+              <?php
+              for ($x = 1; $x <= 12; $x++) {
+                $x = sprintf("%02d", $x);
+                echo "<option value='$x'>$x";
+              }
+              ?>
+            </select>
+            <select name="ampmFrom" id="from2" required>
+              <option value="">am/pm</option>
+              <option value="am" <?php
+                                  if (isset($_POST['compute'])) {
+                                    if ($_POST['ampmFrom'] == "am")
+                                      echo 'selected="selected"';
+                                  }
+                                  ?>>am</option>
+              <option value="pm" <?php
+                                  if (isset($_POST['compute'])) {
+                                    if ($_POST['ampmFrom'] == "pm")
+                                      echo 'selected="selected"';
+                                  }
+                                  ?>>pm</option>
+            </select>
+            <label>To</label>
+            <select name="hrTo" id="to1" required>
+              <option value="">hr</option>
+              <?php
+              for ($x = 1; $x <= 12; $x++) {
+                $x = sprintf("%02d", $x);
+                echo "<option value='$x'";
+                if (isset($_POST['compute'])) {
+                  if ($_POST['hrTo'] == $x)
+                    echo "selected='selected'";
+                }
+                echo ">  $x ";
+              }
+              ?>
+            </select>
+            </option>
+            <select name="ampmTo" id="to2" required>
+              <option value="">am/pm</option>
+              <option value="am" <?php
+                                  if (isset($_POST['compute'])) {
+                                    if ($_POST['ampmTo'] == "am")
+                                      echo 'selected="selected"';
+                                  }
+                                  ?>>am</option>
+              <option value="pm" <?php
+                                  if (isset($_POST['compute'])) {
+                                    if ($_POST['ampmTo'] == "pm")
+                                      echo 'selected="selected"';
+                                  }
+                                  ?>>pm</option>
+            </select>
+          </div>
+          <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>
+        </table>
       </div>
     </div>
-
   </form>
   <?php
   require '../marginals/footer2.php';
