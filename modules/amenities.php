@@ -5,7 +5,7 @@ $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision
 $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
 $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
 
-$resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . "") or die($mysqli->error);;
+$resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . " AND cart='Yes'") or die($mysqli->error);;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -311,6 +311,20 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
       $("#purpose_id").removeAttr("required");
     });
   });
+
+  $(document).ready(function() {
+    $("#removeID").click(function() {
+      $("#date1").removeAttr("required");
+      $("#from1").removeAttr("required");
+      $("#from2").removeAttr("required");
+      $("#to1").removeAttr("required");
+      $("#to2").removeAttr("required");
+      $("#subdivision_id").removeAttr("required");
+      $("#amenity_id").removeAttr("required");
+      $("#purpose_id").removeAttr("required");
+    });
+  });
+
 </script>
 
 <body>
@@ -487,7 +501,7 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
           </div>
           <div>
             <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>
-            <button class="btnCompute" name="applyDateTime" id="dateTime">Remove Selected</button>
+            <button class="btnCompute" name="removeSelected" id="removeID">Remove Selected</button>
           </div>
         </table>
       </div>

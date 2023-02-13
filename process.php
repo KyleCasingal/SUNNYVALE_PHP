@@ -794,6 +794,17 @@ if (isset($_POST['addToCart'])) {
   $result = mysqli_query($con, $sql);
 }
 
+// REMOVING FROM CART AMENITIES
+if (isset($_POST['removeSelected'])) {
+  if (isset($_POST['checkbox'])) {
+    foreach ($_POST['checkbox'] as $transaction_id) {
+
+      $sql = "UPDATE amenity_renting SET cart='Removed' WHERE transaction_id = '$transaction_id'";
+      $result = mysqli_query($con, $sql);
+    }
+  }
+}
+
 //FACILITY RENTING APPLY DATE AND COST
 if (isset($_POST['applyDateTime'])) {
   function to_24_hour($hours, $minutes, $meridiem)
