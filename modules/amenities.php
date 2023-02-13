@@ -229,6 +229,38 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
   });
 
   $(document).ready(function() {
+    $("#subdivision_id").on('click', function() {
+      var subdivision_id = $(this).val();
+      if (subdivision_id) {
+        $.ajax({
+          type: 'POST',
+          url: '../process.php/',
+          data: 'subdivision_id=' + subdivision_id,
+          success: function(html) {
+            $("#amenity_id").html(html);
+          }
+        });
+      }
+    });
+  });
+
+  $(document).ready(function() {
+    $("#subdivision_id").on('click', function() {
+      var subdivision_id = $(this).val();
+      if (subdivision_id) {
+        $.ajax({
+          type: 'POST',
+          url: '../process.php/',
+          data: 'subdivision_id=' + subdivision_id,
+          success: function(html) {
+            $("#purpose_id").html(html);
+          }
+        });
+      }
+    });
+  });
+
+  $(document).ready(function() {
     $("#amenity_id").on('click', function() {
       var amenity_id = $(this).val();
       if (amenity_id) {
@@ -245,20 +277,22 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
   });
 
   $(document).ready(function() {
-    $("#subdivision_id").on('click', function() {
-      var subdivision_id = $(this).val();
-      if (subdivision_id) {
+    $("#purpose_id").on('click', function() {
+      var purpose_id = $(this).val();
+      if (purpose_id) {
         $.ajax({
           type: 'POST',
           url: '../process.php/',
-          data: 'subdivision_id=' + subdivision_id,
+          data: 'purpose_id=' + purpose_id,
           success: function(html) {
-            $("#amenity_id").html(html);
+            $("#day_id").html(html);
+            $("#night_id").html(html);
           }
         });
       }
     });
   });
+
 
   $(document).ready(function() {
     $("#add").click(function() {
@@ -289,7 +323,7 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
 
         <label>Subdivision</label>
         <select name="subdivision" id="subdivision_id" required>
-          <option value="">Select...</option>
+          <option value="0" selected="selected">Select...</option>
           <?php
           while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
             echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
@@ -298,12 +332,20 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
         </select>
         <label>Amenity</label>
         <select name="amenity" id="amenity_id" required>
-          <option value="">Select Subdivision first...</option>
+          <option value="0">Select Subdivision first...</option>
         </select>
         <label>Purpose</label>
         <select name="purpose" id="purpose_id" required>
-          <option value="">Select Amenity first...</option>
+          <option value="0">Select Amenity first...</option>
         </select>
+        <label>Rate per Hour</label>
+        <div>
+          <label>Day</label>
+          <input type="text" id="day_id" size="6" readonly>
+          <label>Night</label>
+          <input type="text" id="night_id" size="6" readonly>
+          <label>Night rate starts at 6pm</label>
+        </div>
         <button class="btnSubmit" name="addToCart" id="add">Add</button>
         <br>
       </div>
@@ -354,7 +396,7 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
                 <?php
                 if ($row['date_from'] != NULL) {
                   $date = $row['date_from'];
-                  echo date('h:i a ', strtotime($date));
+                  echo date('m/d/Y h:ia ', strtotime($date));
                 } else {
                   echo $row['date_from'];
                 }
@@ -364,7 +406,7 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
                 <?php
                 if ($row['date_to'] != NULL) {
                   $date = $row['date_to'];
-                  echo date('h:i a ', strtotime($date));
+                  echo date('m/d/Y h:ia ', strtotime($date));
                 } else {
                   echo $row['date_to'];
                 }
@@ -443,7 +485,10 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
                                   ?>>pm</option>
             </select>
           </div>
-          <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>
+          <div>
+            <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>
+            <button class="btnCompute" name="applyDateTime" id="dateTime">Remove Selected</button>
+          </div>
         </table>
       </div>
     </div>

@@ -342,28 +342,6 @@ if (isset($_POST['homeownerReset'])) {
   header("Location: homeownerRegistration.php");
 }
 
-//FACILITY RENTING
-if (isset($_POST['applyDateTime'])) {
-  function to_24_hour($hours, $minutes, $meridiem)
-  {
-    $hours = sprintf('%02d', (int) $hours);
-    $meridiem = (strtolower($meridiem) == 'am') ? 'am' : 'pm';
-    return date('H:i', strtotime("{$hours}:{$minutes} {$meridiem}"));
-  }
-  $timeFrom = to_24_hour($_POST['hrFrom'], '00', $_POST['ampmFrom']);
-  $timeTo = to_24_hour($_POST['hrTo'], '00', $_POST['ampmTo']);
-  $date = $_POST['date'];
-  $dateTimeFrom = $date . " " . $timeFrom;
-  $dateTimeTo = $date . " " . $timeTo;
-  if (isset($_POST['checkbox'])) {
-    foreach ($_POST['checkbox'] as $transaction_id) {
-      $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo' WHERE transaction_id = '$transaction_id'";
-      $result = mysqli_query($con, $sql);
-    }
-  }
-  echo("<meta http-equiv='refresh' content='1'>");
-}
-
 // if (isset($_POST['submitReservation'])) {
 //   function to_24_hour($hours, $minutes, $meridiem)
 //   {
@@ -741,39 +719,60 @@ if (isset($_POST['editProfilePhoto'])) {
       </div>";
 }
 
+// CASCADING DROP DOWN FOR AMENITY
 if (isset($_POST['subdivision_id'])) {
   $subdivision_id = $_POST['subdivision_id'];
 
   $result = $con->query("SELECT * FROM amenities WHERE subdivision_id=$subdivision_id ORDER BY amenity_name DESC");
-  
 
-  if(mysqli_num_rows($result)>0){
+  if (mysqli_num_rows($result) > 0) {
     echo '<option value="">Select Amenity...</option>';
-    while ($row = $result->fetch_assoc()){
-      echo '<option value="'.$row['amenity_id'].'">'.$row['amenity_name'].'</option>';
+    while ($row = $result->fetch_assoc()) {
+      echo '<option value="' . $row['amenity_id'] . '">' . $row['amenity_name'] . '</option>';
     }
-  }else{
-    echo '<option value="">No Amenity Found</option>';
+  } else {
+    echo '<option value="0">No Amenity Found</option>';
+    echo '<script type="text/javascript">
+  document.getElementById("day_id").setAttribute("value","");
+  document.getElementById("night_id").setAttribute("value","");
+</script>';
   }
 }
 
 if (isset($_POST['amenity_id'])) {
   $amenity_id = $_POST['amenity_id'];
   $result = $con->query("SELECT * FROM amenity_purpose WHERE amenity_id=$amenity_id ORDER BY amenity_purpose DESC");
-  
-  if(mysqli_num_rows($result)>0){
+
+  if (mysqli_num_rows($result) > 0) {
     echo '<option value="">Select Purpose...</option>';
-    while ($row = $result->fetch_assoc()){
-      echo '<option value="'.$row['amenity_id'].'">'.$row['amenity_purpose'].'</option>';
+    while ($row = $result->fetch_assoc()) {
+      echo '<option value="' . $row['amenity_purpose_id'] . '">' . $row['amenity_purpose'] . '</option>';
     }
-  }else{
-    echo '<option value="">No Purpose Found</option>';
+  } else {
+    echo '<option value="0">No Purpose Found</option>';
+    echo '<script type="text/javascript"> 
+  document.getElementById("day_id").setAttribute("value","");
+  document.getElementById("night_id").setAttribute("value","");
+</script>';
+  }
+}
+
+if (isset($_POST['purpose_id'])) {
+  $purpose_id = $_POST['purpose_id'];
+  $result = $con->query("SELECT * FROM amenity_purpose WHERE amenity_purpose_id=$purpose_id");
+  $row = $result->fetch_assoc();
+
+  if (mysqli_num_rows($result) > 0) {
+    echo '<script type="text/javascript"> 
+  document.getElementById("day_id").setAttribute("value",' . $row['day_rate'] . ');
+  document.getElementById("night_id").setAttribute("value",' . $row['night_rate'] . ');
+</script>';
   }
 }
 
 // ADDING TO CART AMENITIES
 
-if (isset($_POST['addToCart'])){
+if (isset($_POST['addToCart'])) {
   $renter_name = $_POST['renter_name'];
   $subdivision_id = $_POST['subdivision'];
   $amenity_id = $_POST['amenity'];
@@ -793,5 +792,71 @@ if (isset($_POST['addToCart'])){
 
   $sql = "INSERT INTO amenity_renting (user_id, renter_name, subdivision_name, amenity_name, amenity_purpose, cart) VALUES('" . $rowID['user_id'] . "', '$renter_name', '" . $rowSubdivision['subdivision_name'] . "', '" . $rowAmenity['amenity_name'] . "', '$amenity_purpose_id', 'Yes')";
   $result = mysqli_query($con, $sql);
+}
 
+//FACILITY RENTING APPLY DATE AND COST
+if (isset($_POST['applyDateTime'])) {
+  function to_24_hour($hours, $minutes, $meridiem)
+  {
+    $hours = sprintf('%02d', (int) $hours);
+    $meridiem = (strtolower($meridiem) == 'am') ? 'am' : 'pm';
+    return date('H:i', strtotime("{$hours}:{$minutes} {$meridiem}"));
+  }
+  $timeFrom = to_24_hour($_POST['hrFrom'], '00', $_POST['ampmFrom']);
+  $timeTo = to_24_hour($_POST['hrTo'], '00', $_POST['ampmTo']);
+  $date = $_POST['date'];
+  $dateTimeFrom = $date . " " . $timeFrom;
+  $dateTimeTo = $date . " " . $timeTo;
+  if (isset($_POST['checkbox'])) {
+    foreach ($_POST['checkbox'] as $transaction_id) {
+
+      $resultID = $con->query("SELECT * FROM amenity_renting WHERE transaction_id = '$transaction_id'");
+      $rowID = $resultID->fetch_assoc();
+
+      $resultRate = $con->query("SELECT * FROM amenity_purpose WHERE amenity_purpose_id = '" . $rowID['amenity_purpose'] . "'");
+      $rowRate = $resultRate->fetch_assoc();
+      if ($_POST['hrTo'] >= 6 and $_POST['ampmTo'] == 'pm') {
+
+        $nightStart = strtotime('18:00');
+
+        $timeTo = strtotime($timeTo);
+        $nightDifference = ($timeTo - $nightStart);
+        $totalNightHrs = ($nightDifference / 3600);
+
+        $timeFrom = strtotime($timeFrom);
+        $dayDifference = ($nightStart - $timeFrom);
+        $totalDayHrs = ($dayDifference / 3600);
+
+        $nightCost = $totalNightHrs * $rowRate['night_rate'];
+        $dayCost = $totalDayHrs * $rowRate['day_rate'];
+        $totalCost = $nightCost + $dayCost;
+
+        $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE transaction_id = '$transaction_id'";
+        $result = mysqli_query($con, $sql);
+      } else if ($_POST['hrFrom'] >= 6 and $_POST['ampmFrom'] == 'pm' and $_POST['hrTo'] >= 6 and $_POST['ampmTo'] == 'pm') {
+
+        $nightStart = strtotime('18:00');
+
+        $timeTo = strtotime($timeTo);
+        $timeFrom = strtotime($timeFrom);
+        $difference = ($timeTo - $timeFrom);
+        $totalHrs = ($difference / 3600);
+
+        $totalCost = $totalHrs * $rowRate['night_rate'];
+
+        $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE transaction_id = '$transaction_id'";
+        $result = mysqli_query($con, $sql);
+      } else {
+        $timeTo = strtotime($timeTo);
+        $timeFrom = strtotime($timeFrom);
+        $difference = ($timeTo - $timeFrom);
+        $totalHrs = ($difference / 3600);
+
+        $totalCost = $totalHrs * $rowRate['day_rate'];
+
+        $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE transaction_id = '$transaction_id'";
+        $result = mysqli_query($con, $sql);
+      }
+    }
+  }
 }
