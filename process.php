@@ -297,7 +297,7 @@ if (isset($_POST['importSubmit'])) {
       fgetcsv($csvFile);
 
       while (($line = fgetcsv($csvFile)) !== FALSE) {
-        $homeowner_id	= $line[0];
+        $homeowner_id  = $line[0];
         $last_name = $line[1];
         $first_name = $line[2];
         $middle_name = $line[3];
@@ -387,50 +387,6 @@ if (isset($_POST['homeownerReset'])) {
   header("Location: homeownerRegistration.php");
 }
 
-// if (isset($_POST['submitReservation'])) {
-//   function to_24_hour($hours, $minutes, $meridiem)
-//   {
-//     $hours = sprintf('%02d', (int) $hours);
-//     $minutes = sprintf('%02d', (int) $minutes);
-//     $meridiem = (strtolower($meridiem) == 'am') ? 'am' : 'pm';
-//     return date('H:i', strtotime("{$hours}:{$minutes} {$meridiem}"));
-//   }
-//   $targetDir = '../media/paymentProof/';
-//   $fileName = '' . $_FILES['image']['name'];
-//   $targetFilePath = $targetDir . $fileName;
-//   $amenity = $_POST['amenity'];
-//   $name = $_POST['full_name'];
-//   $cost = $_POST['cost'];
-//   $timeFrom = to_24_hour($_POST['hrFrom'], $_POST['minsFrom'], $_POST['ampmFrom']);
-//   $timeTo = to_24_hour($_POST['hrTo'], $_POST['minsTo'], $_POST['ampmTo']);
-//   $date = $_POST['date'];
-//   $dateTimeFrom = $date . " " . $timeFrom;
-//   $dateTimeTo = $date . " " . $timeTo;
-
-//   if ($cost == '') {
-//     echo "<div class='messageFail'>
-//     <label >
-//       Please compute your reservation first!
-//     </label>
-//   </div>";
-//   } else if ($_FILES['image']['size'] == 0) {
-//     echo "<div class='messageFail'>
-//     <label >
-//       Please upload your proof of payment!
-//     </label>
-//   </div>";
-//   } else if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
-//     $sql = "INSERT INTO facility_renting(amenity_name, renter_name, date_from, date_to, cost, payment_proof) VALUES ('$amenity','$name','$dateTimeFrom','$dateTimeTo','$cost','$fileName')";
-//     mysqli_query($con, $sql);
-//     $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('$name' ,  'reserved an amenity', NOW())";
-//     mysqli_query($con, $sql1);
-//     echo "<div class='messageSuccess'>
-//     <label >
-//       Your reservation has been set!
-//     </label>
-//   </div>";
-//   }
-// }
 
 // AMENITY ERROR 
 if (isset($_POST['compute'])) {
@@ -800,7 +756,6 @@ if (isset($_POST['amenity_id'])) {
   document.getElementById("day_id").setAttribute("value","");
   document.getElementById("night_id").setAttribute("value","");
 </script>';
-      
     }
   } else {
     echo '<option value="0">No Purpose Found</option>';
@@ -856,9 +811,9 @@ if (isset($_POST['addToCart'])) {
 // REMOVING FROM CART AMENITIES
 if (isset($_POST['removeSelected'])) {
   if (isset($_POST['checkbox'])) {
-    foreach ($_POST['checkbox'] as $transaction_id) {
+    foreach ($_POST['checkbox'] as $amenity_renting_id) {
 
-      $sql = "UPDATE amenity_renting SET cart='Removed' WHERE transaction_id = '$transaction_id'";
+      $sql = "UPDATE amenity_renting SET cart='Removed' WHERE amenity_renting_id = '$amenity_renting_id'";
       $result = mysqli_query($con, $sql);
     }
   }
@@ -878,14 +833,14 @@ if (isset($_POST['applyDateTime'])) {
   $dateTimeFrom = $date . " " . $timeFrom;
   $dateTimeTo = $date . " " . $timeTo;
   if (isset($_POST['checkbox'])) {
-    foreach ($_POST['checkbox'] as $transaction_id) {
+    foreach ($_POST['checkbox'] as $amenity_renting_id) {
 
-      $resultID = $con->query("SELECT * FROM amenity_renting WHERE transaction_id = '$transaction_id'");
+      $resultID = $con->query("SELECT * FROM amenity_renting WHERE amenity_renting_id = '$amenity_renting_id'");
       $rowID = $resultID->fetch_assoc();
 
       $resultRate = $con->query("SELECT * FROM amenity_purpose WHERE amenity_purpose_id = '" . $rowID['amenity_purpose'] . "'");
       $rowRate = $resultRate->fetch_assoc();
-      if ($_POST['hrTo'] >= 6 and $_POST['ampmTo'] == 'pm') {
+      if ($_POST['hrTo'] >= 6 and $_POST['hrTo'] < 12 and $_POST['ampmTo'] == 'pm') {
 
         $nightStart = strtotime('18:00');
 
@@ -901,7 +856,7 @@ if (isset($_POST['applyDateTime'])) {
         $dayCost = $totalDayHrs * $rowRate['day_rate'];
         $totalCost = $nightCost + $dayCost;
 
-        $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE transaction_id = '$transaction_id'";
+        $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE amenity_renting_id = '$amenity_renting_id'";
         $result = mysqli_query($con, $sql);
       } else if ($_POST['hrFrom'] >= 6 and $_POST['ampmFrom'] == 'pm' and $_POST['hrTo'] >= 6 and $_POST['ampmTo'] == 'pm') {
 
@@ -914,8 +869,9 @@ if (isset($_POST['applyDateTime'])) {
 
         $totalCost = $totalHrs * $rowRate['night_rate'];
 
-        $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE transaction_id = '$transaction_id'";
+        $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE amenity_renting_id = '$amenity_renting_id'";
         $result = mysqli_query($con, $sql);
+      } else if ($_POST['hrTo'] == 12 and $_POST['ampmFrom'] == 'pm') {
       } else {
         $timeTo = strtotime($timeTo);
         $timeFrom = strtotime($timeFrom);
@@ -924,9 +880,26 @@ if (isset($_POST['applyDateTime'])) {
 
         $totalCost = $totalHrs * $rowRate['day_rate'];
 
-        $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE transaction_id = '$transaction_id'";
+        $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE amenity_renting_id = '$amenity_renting_id'";
         $result = mysqli_query($con, $sql);
       }
     }
+  }
+}
+
+// AMENITY RENTING CHECKOUT
+
+if (isset($_POST['checkout'])) {
+  $targetDir = '../media/paymentProof/';
+  $fileName = '' . $_FILES['image']['name'];
+  $targetFilePath = $targetDir . $fileName;
+
+  $resultID = $con->query("SELECT MAX(transaction_id) AS max FROM amenity_renting");
+  $rowID = $resultID->fetch_assoc();
+  $max = $rowID['max'];
+
+  if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
+    $sql = "UPDATE amenity_renting SET cart = 'Pending', payment_proof = '$fileName', transaction_id = $max + 1 WHERE cart='Yes' AND user_id= '" . $_SESSION['user_id'] . "'";
+    $result = mysqli_query($con, $sql);
   }
 }

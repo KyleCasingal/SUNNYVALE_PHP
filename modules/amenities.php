@@ -4,8 +4,8 @@ $result = $con->query("SELECT * FROM amenities WHERE availability =  'Available'
 $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
 $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
 $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
-
-$resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . " AND cart='Yes'") or die($mysqli->error);;
+$resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . " AND cart='Yes'") or die($mysqli->error);
+$resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . " AND cart='Yes'") or die($mysqli->error);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -213,20 +213,6 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
   if (window.history.replaceState) {
     window.history.replaceState(null, null, window.location.href);
   }
-  // function readURL(input, id) {
-  //   if (input.files && input.files[0]) {
-  //     var reader = new FileReader();
-
-  //     reader.onload = function(e) {
-  //       $('#' + id).attr('src', e.target.result);
-  //     }
-
-  //     reader.readAsDataURL(input.files[0]);
-  //   }
-  // }
-  $("#image").change(function() {
-    readURL(this, 'imagePreview');
-  });
 
   $(document).ready(function() {
     $("#subdivision_id").on('click', function() {
@@ -301,6 +287,7 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
       $("#from2").removeAttr("required");
       $("#to1").removeAttr("required");
       $("#to2").removeAttr("required");
+      $("#image").removeAttr("required");
     });
   });
 
@@ -309,6 +296,7 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
       $("#subdivision_id").removeAttr("required");
       $("#amenity_id").removeAttr("required");
       $("#purpose_id").removeAttr("required");
+      $("#image").removeAttr("required");
     });
   });
 
@@ -322,9 +310,22 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
       $("#subdivision_id").removeAttr("required");
       $("#amenity_id").removeAttr("required");
       $("#purpose_id").removeAttr("required");
+      $("#image").removeAttr("required");
     });
   });
 
+  $(document).ready(function() {
+    $("#checkout_id").click(function() {
+      $("#date1").removeAttr("required");
+      $("#from1").removeAttr("required");
+      $("#from2").removeAttr("required");
+      $("#to1").removeAttr("required");
+      $("#to2").removeAttr("required");
+      $("#subdivision_id").removeAttr("required");
+      $("#amenity_id").removeAttr("required");
+      $("#purpose_id").removeAttr("required");
+    });
+  });
 </script>
 
 <body>
@@ -363,14 +364,6 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
         <button class="btnSubmit" name="addToCart" id="add">Add</button>
         <br>
       </div>
-      <!-- <div class="paymentForm">
-        <label class="writeText">Upload proof of payment here:</label>
-        <div class="BlogWrite">
-          <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()"></input>
-          <img class="imagePrev" id="imagePreview" src=# alt="" />
-        </div>
-        <label for="image" class="upload">Upload Photo</label>
-      </div> -->
       <div class='amenitiesForm'>
         <label>Availed Services</label>
         <table class="tblAmenity">
@@ -387,7 +380,7 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
           <?php while ($row = $resultRes->fetch_assoc()) : ?>
             <tr>
               <td>
-                <input type="checkbox" value=<?php echo $row['transaction_id']; ?> name="checkbox[]" id="checkbox">
+                <input type="checkbox" value=<?php echo $row['amenity_renting_id']; ?> name="checkbox[]" id="checkbox">
               </td>
               <td>
                 <?php echo $row['renter_name'] ?>
@@ -504,6 +497,22 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
             <button class="btnCompute" name="removeSelected" id="removeID">Remove Selected</button>
           </div>
         </table>
+        <div>
+          <label>Total Cost:</label>
+          <input type="text" id="total_id" size="6" value="<?php
+                                                            $rowTotal = $resultTotal->fetch_assoc();
+                                                            echo $rowTotal['total_cost'];
+                                                            ?>" readonly>
+          <div class="paymentForm">
+            <label class="writeText">Upload proof of payment here:</label>
+            <div class="BlogWrite">
+              <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()" required></input>
+              <img class="imagePrev" id="imagePreview" src=# alt="" />
+            </div>
+            <label for="image" class="upload">Upload Photo</label>
+          </div>
+          <button class="btnSubmit" name="checkout" id="checkout_id">Checkout All</button>
+        </div>
       </div>
     </div>
   </form>
@@ -524,6 +533,22 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
         this.checked = false;
       });
     }
+  });
+
+  function readURL(input, id) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        $('#' + id).attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#image").change(function() {
+    readURL(this, 'imagePreview');
   });
 </script>
 

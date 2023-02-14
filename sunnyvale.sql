@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Feb 10, 2023 at 11:47 AM
+-- Generation Time: Feb 14, 2023 at 11:11 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -65,14 +65,15 @@ CREATE TABLE IF NOT EXISTS `amenity_purpose` (
   `day_rate` int(10) NOT NULL,
   `night_rate` int(10) NOT NULL,
   PRIMARY KEY (`amenity_purpose_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenity_purpose`
 --
 
 INSERT INTO `amenity_purpose` (`amenity_purpose_id`, `amenity_id`, `amenity_purpose`, `day_rate`, `night_rate`) VALUES
-(1, 1, 'Basketball', 50, 100);
+(1, 1, 'Basketball', 50, 150),
+(3, 1, 'Volleyball', 50, 150);
 
 -- --------------------------------------------------------
 
@@ -82,7 +83,8 @@ INSERT INTO `amenity_purpose` (`amenity_purpose_id`, `amenity_id`, `amenity_purp
 
 DROP TABLE IF EXISTS `amenity_renting`;
 CREATE TABLE IF NOT EXISTS `amenity_renting` (
-  `transaction_id` int(11) NOT NULL AUTO_INCREMENT,
+  `amenity_renting_id` int(11) NOT NULL AUTO_INCREMENT,
+  `transaction_id` int(10) DEFAULT NULL,
   `user_id` int(10) NOT NULL,
   `renter_name` varchar(255) NOT NULL,
   `subdivision_name` varchar(255) NOT NULL,
@@ -93,16 +95,24 @@ CREATE TABLE IF NOT EXISTS `amenity_renting` (
   `cost` int(11) DEFAULT NULL,
   `payment_proof` varchar(255) DEFAULT NULL,
   `cart` varchar(10) NOT NULL,
-  PRIMARY KEY (`transaction_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`amenity_renting_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenity_renting`
 --
 
-INSERT INTO `amenity_renting` (`transaction_id`, `user_id`, `renter_name`, `subdivision_name`, `amenity_name`, `amenity_purpose`, `date_from`, `date_to`, `cost`, `payment_proof`, `cart`) VALUES
-(2, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', 'Basketball', NULL, NULL, NULL, NULL, 'Yes'),
-(3, 1, 'Mon Carlo Delima', '', '', '', NULL, NULL, NULL, NULL, 'Yes');
+INSERT INTO `amenity_renting` (`amenity_renting_id`, `transaction_id`, `user_id`, `renter_name`, `subdivision_name`, `amenity_name`, `amenity_purpose`, `date_from`, `date_to`, `cost`, `payment_proof`, `cart`) VALUES
+(9, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-13 01:00:00', '2023-02-13 02:00:00', 50, NULL, 'Removed'),
+(8, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-12 18:00:00', '2023-02-12 21:00:00', 450, NULL, 'Removed'),
+(7, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-15 13:00:00', '2023-02-15 17:00:00', NULL, NULL, 'Removed'),
+(13, 1, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-14 09:00:00', '2023-02-14 21:00:00', 900, '328148270_726681382138928_1391919010667224674_n.png', 'Pending'),
+(12, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', NULL, NULL, NULL, NULL, 'Removed'),
+(14, 1, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '3', '2023-02-15 09:00:00', '2023-02-15 12:00:00', 150, '328148270_726681382138928_1391919010667224674_n.png', 'Pending'),
+(15, 1, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-16 18:00:00', '2023-02-16 21:00:00', 450, '328148270_726681382138928_1391919010667224674_n.png', 'Pending'),
+(16, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', NULL, NULL, NULL, NULL, 'Removed'),
+(17, 2, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '3', '2023-02-22 18:00:00', '2023-02-22 19:00:00', 150, 'Delima, Mon Carlo Z..png', 'Pending'),
+(18, 3, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-25 13:00:00', '2023-02-25 14:00:00', 50, '315887907_1137649846869408_655406644278059076_n.png', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -117,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=364 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=389 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -472,7 +482,32 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (360, 'SV1_Admin', 'logged out', '2023-02-07 17:01:41'),
 (361, 'Mon Carlo Delima', 'logged in', '2023-02-07 17:01:48'),
 (362, 'Mon Carlo Delima', 'logged out', '2023-02-07 17:19:20'),
-(363, 'Mon Carlo Delima', 'logged in', '2023-02-10 10:25:18');
+(363, 'Mon Carlo Delima', 'logged in', '2023-02-10 10:25:18'),
+(364, 'Mon Carlo Delima', 'logged out', '2023-02-10 14:25:46'),
+(365, 'SV1_Admin', 'logged in', '2023-02-10 14:25:50'),
+(366, 'Mon Carlo Delima', 'logged in', '2023-02-10 14:26:11'),
+(367, 'Mon Carlo Delima', 'logged out', '2023-02-10 14:26:37'),
+(368, 'Mon Carlo Delima', 'logged in', '2023-02-10 14:26:39'),
+(369, 'SV1_Admin', 'logged out', '2023-02-11 13:10:56'),
+(370, 'Mon Carlo Delima', 'logged in', '2023-02-11 13:11:18'),
+(371, 'Mon Carlo Delima', 'logged out', '2023-02-11 14:38:43'),
+(372, 'SV1_Admin', 'logged in', '2023-02-11 14:38:46'),
+(373, 'SV1_Admin', 'logged out', '2023-02-11 15:53:23'),
+(374, 'Mon Carlo Delima', 'logged in', '2023-02-11 15:53:25'),
+(375, 'Mon Carlo Delima', 'logged out', '2023-02-11 15:56:19'),
+(376, 'SV1_Admin', 'logged in', '2023-02-11 15:58:47'),
+(377, 'SV1_Admin', 'logged out', '2023-02-11 15:58:51'),
+(378, 'Mon Carlo Delima', 'logged in', '2023-02-11 15:58:56'),
+(379, 'Mon Carlo Delima', 'logged out', '2023-02-12 16:35:26'),
+(380, 'Mon Carlo Delima', 'logged in', '2023-02-12 16:35:36'),
+(381, 'Mon Carlo Delima', 'logged out', '2023-02-14 18:24:06'),
+(382, 'SV1_Admin', 'logged in', '2023-02-14 18:24:11'),
+(383, 'SV1_Admin', 'logged out', '2023-02-14 21:32:16'),
+(384, 'SV1_Admin', 'logged in', '2023-02-14 21:32:22'),
+(385, 'SV1_Admin', 'logged out', '2023-02-14 21:32:26'),
+(386, 'Mon Carlo Delima', 'logged in', '2023-02-14 21:32:29'),
+(387, 'Mon Carlo Delima', 'logged out', '2023-02-14 22:22:38'),
+(388, 'Mon Carlo Delima', 'logged in', '2023-02-14 22:23:01');
 
 -- --------------------------------------------------------
 
@@ -735,14 +770,7 @@ INSERT INTO `subdivision` (`subdivision_id`, `subdivision_name`, `barangay`) VAL
 (1, 'Sunnyvale 1', 'Pantok'),
 (2, 'Sunnyvale 2', 'Palangoy'),
 (3, 'Sunnyvale 3', 'Palangoy'),
-(4, 'Sunnyvale 4', 'Pantok'),
-(5, 'Sunnyvale 5', 'Darangan'),
-(6, 'Sunnyvale 6', 'Darangan'),
-(7, 'Sunnyvale 7', 'Bilibiran'),
-(9, 'Sunnyvale 8', 'Palangoy'),
-(10, 'Sunnyvale 9', 'Darangan'),
-(11, 'Sunnyvale 10', 'Calumpang'),
-(12, 'Sunnyvale 11', 'Bilibiran');
+(4, 'Sunnyvale 4', 'Pantok');
 
 -- --------------------------------------------------------
 
