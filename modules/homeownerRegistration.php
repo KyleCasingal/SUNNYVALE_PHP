@@ -352,7 +352,8 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
         gap: 1em;
     }
 
-    .btnImportReg {
+    .btnImportReg,
+    .btnImport {
         background-color: orange;
         border: 0;
         padding: 0.5vw;
@@ -370,8 +371,25 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
     $("#form_id").trigger("reset");
 
     $(document).ready(function() {
-        $('.btnImportReg2').click(function() {
+        $('.btnImport').click(function() {
             $('#confirmation').modal('show');
+        });
+    });
+    $(document).ready(function() {
+        $("#saveIMP").click(function() {
+            $("#first_id").removeAttr("required");
+            $("#middle_id").removeAttr("required");
+            $("#last_id").removeAttr("required");
+            $("#suffix_id").removeAttr("required");
+            $("#birth_id").removeAttr("required");
+            $("#sex_id").removeAttr("required");
+            $("#email_id").removeAttr("required");
+            $("#mobile_id").removeAttr("required");
+            $("#street_id").removeAttr("required");
+            $("#subd_id").removeAttr("required");
+            $("#bussy_id").removeAttr("required");
+            $("#occupation_id").removeAttr("required");
+            $("#employer_id").removeAttr("required");
         });
     });
 </script>
@@ -400,22 +418,22 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                             <tr>
                                 <td>First Name:</td>
                                 <td>
-                                    <input type="text" name="first_name" id="" placeholder="first name" value="<?php echo $first_name ?? ''; ?>" required />
+                                    <input type="text" name="first_name" id="first_id" placeholder="first name" value="<?php echo $first_name ?? ''; ?>" required />
                                 </td>
                                 <td>Date of Birth:</td>
                                 <td>
-                                    <input type="date" data-date-format="yyyy-mm-dd" name="birthdate" value="<?php echo $birthdate ?? ''; ?>" id="" required />
+                                    <input type="date" data-date-format="yyyy-mm-dd" name="birthdate" value="<?php echo $birthdate ?? ''; ?>" id="birth_id" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Middle Name:</td>
                                 <td>
-                                    <input type="text" name="middle_name" id="" placeholder="middle name" value="<?php echo $middle_name ?? ''; ?>" required />
+                                    <input type="text" name="middle_name" id="middle_id" placeholder="middle name" value="<?php echo $middle_name ?? ''; ?>" required />
                                 </td>
                                 <td>Sex:</td>
                                 <td>
-                                    <select name="sex" id="">
-                                        <option value="" required>Select...</option>
+                                    <select name="sex" id="sex_id" required>
+                                        <option value="">Select...</option>
                                         <option value="Male" <?php
                                                                 if (isset($_GET['homeowner_id'])) {
                                                                     if ($sex == "Male") {
@@ -436,30 +454,30 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                             <tr>
                                 <td>Last Name:</td>
                                 <td>
-                                    <input type="text" name="last_name" id="" placeholder="last name" value="<?php echo $last_name ?? ''; ?>" required />
+                                    <input type="text" name="last_name" id="last_id" placeholder="last name" value="<?php echo $last_name ?? ''; ?>" required />
                                 </td>
                                 <td>Email:</td>
                                 <td>
-                                    <input type="text" name="email_address" id="" placeholder="email" value="<?php echo $email_address ?? ''; ?>" required />
+                                    <input type="text" name="email_address" id="email_id" placeholder="email" value="<?php echo $email_address ?? ''; ?>" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Suffix:</td>
                                 <td>
-                                    <input type="text" name="suffix" id="" placeholder="suffix" value="<?php echo $suffix ?? ''; ?>" required />
+                                    <input type="text" name="suffix" id="suffix_id" placeholder="suffix" value="<?php echo $suffix ?? ''; ?>" required />
                                 </td>
                                 <td>Mobile Number:</td>
                                 <td>
-                                    <input type="text" name="mobile_number" id="" placeholder="mobile no." value="<?php echo $mobile_number ?? ''; ?>" required />
+                                    <input type="text" name="mobile_number" id="mobile_id" placeholder="mobile no." value="<?php echo $mobile_number ?? ''; ?>" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Residence Address:</td>
                                 <td>
-                                    <input type="text" name="street" id="" placeholder="Lot and Block" value="<?php echo $street ?? ''; ?>" required />
+                                    <input type="text" name="street" id="street_id" placeholder="Lot and Block" value="<?php echo $street ?? ''; ?>" required />
                                 </td>
                                 <td>
-                                    <select name="subdivision" id="">
+                                    <select name="subdivision" id="subd_id" required>
                                         <option value="">Select...</option>
                                         <?php while ($row = $resultSubd->fetch_assoc()) : ?>
                                             <option value="<?php echo $row['subdivision_name'] ?>" <?php
@@ -495,7 +513,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                             <tr>
                                 <td>Business Address:</td>
                                 <td class="NA">
-                                    <input type="text" name="business_address" id="" placeholder="business address" value="<?php echo $business_address ?? ''; ?>" required />
+                                    <input type="text" name="business_address" id="bussy_id" placeholder="business address" value="<?php echo $business_address ?? ''; ?>" required />
                                     <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
                             </tr>
@@ -505,14 +523,14 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                             <tr>
                                 <td>Occupation:</td>
                                 <td class="NA">
-                                    <input type="text" name="occupation" id="" placeholder="occupation" value="<?php echo $occupation ?? ''; ?>" required />
+                                    <input type="text" name="occupation" id="occupation_id" placeholder="occupation" value="<?php echo $occupation ?? ''; ?>" required />
                                     <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Employer:</td>
                                 <td class="NAemployer">
-                                    <input type="text" name="employer" id="" placeholder="employer" value="<?php echo $employer ?? ''; ?>" required />
+                                    <input type="text" name="employer" id="employer_id" placeholder="employer" value="<?php echo $employer ?? ''; ?>" required />
                                     <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
                             </tr>
@@ -565,37 +583,54 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                             <button type="button" value="" class="btnImportReg" data-bs-toggle="modal" data-bs-target="#importCSVModal">
                                 Import CSV
                             </button>
+
+                            <div class="modal fade" id="confirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Do you really want to save your changes?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button name="importSubmit" type="submit" class="btn btn-success" id="saveIMP">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="modal fade" id="importCSVModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-lg">
                                     <div class="modal-content">
-                                        <form action="" method="post" name="frmCSVImport" id="frmCSVImport" enctype="multipart/form-data" onsubmit="return validateFile()">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">About</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div>
-                                                    <label>Select CSV file:</label>
-                                                    <input type="file" name="file" id="file" class="file" accept=".csv,.xls,.xlsx">
-                                                </div>
-                                                <div>
-                                                    <label>Import data:</label>
-                                                    <button type="submit" value="" class="btnImportReg" name="importSubmit">
-                                                        Import CSV
-                                                    </button>
-                                                </div>
-                                        </form>
 
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">CSV FILE</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div>
+                                                <label>Select CSV file:</label>
+                                                <input type="file" name="file" id="file" class="file" accept=".csv,.xls,.xlsx">
+                                            </div>
+                                            <div>
+                                                <label>Import data:</label>
+                                                <button type="button" value="" class="btnImport" name="importSubmit">
+                                                    Import CSV
+                                                </button>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
+
                     </div>
-
-
-
-                </div>
-                <!-- <label class="lblRegistration">Registered Homeowners</label>
+                    <!-- <label class="lblRegistration">Registered Homeowners</label>
                     <div class="tblContainer">
                         <table class="tblHomeowners table-hover">
                             <thead>
@@ -649,8 +684,8 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                             <?php endwhile; ?>
                         </table>
                     </div> -->
+                </div>
             </div>
-        </div>
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -664,6 +699,22 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                     </div>
                     <div class="modal-footer">
                         <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" onclick="location.href='homeownerRegistration.php'">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="discardConfirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Your changes will be discarded!
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" onclick="location.href='memberPanel.php'">Discard changes</button>
                     </div>
                 </div>
             </div>
