@@ -223,7 +223,7 @@ if (isset($_POST['login'])) {
 if (isset($_POST['submitPost'])) {
   $targetDir = '../media/postsPhotos/';
   $title = mysqli_real_escape_string($con, $_POST['title']);
-  $content = mysqli_real_escape_string($con,  $_POST['content']);
+  $content = mysqli_real_escape_string($con, $_POST['content']);
   $fileName = '' . $_FILES['image']['name'] ?? '';
   $targetFilePath = $targetDir . $fileName;
   $result = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
@@ -276,11 +276,56 @@ if (isset($_POST['homeowner_submit'])) {
 
   $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $row = $resultSession->fetch_assoc();
-  $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" .  'added homeowner' . ' ' . "$first_name" . ' ' . "$last_name" . "' , NOW())";
+  $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" . 'added homeowner' . ' ' . "$first_name" . ' ' . "$last_name" . "' , NOW())";
   mysqli_query($con, $sql1);
   header("Location: homeownerRegistration.php");
 }
 
+
+if (isset($_POST['importSubmit'])) {
+
+  $csvMimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain');
+  if (!empty($_FILES['file']['name']) && in_array($_FILES['file']['type'], $csvMimes)) {
+
+    // If the file is uploaded
+    if (is_uploaded_file($_FILES['file']['tmp_name'])) {
+
+      // Open uploaded CSV file with read-only mode
+      $csvFile = fopen($_FILES['file']['tmp_name'], 'r');
+
+      // Skip the first line
+      fgetcsv($csvFile);
+
+      while (($line = fgetcsv($csvFile)) !== FALSE) {
+        $homeowner_id	= $line[0];
+        $last_name = $line[1];
+        $first_name = $line[2];
+        $middle_name = $line[3];
+        $suffix = $line[4];
+        $sex = $line[5];
+        $street = $line[6];
+        $subdivision = $line[7];
+        $barangay = $line[8];
+        $bussiness_address = $line[9];
+        $occupation = $line[10];
+        $email_address = $line[11];
+        $birthdate = $line[12];
+        $mobile_number = $line[13];
+        $employer  = $line[14];
+
+
+        $sql = "INSERT INTO homeowner_profile(homeowner_id, last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer, display_picture) VALUES ('$homeowner_id','$last_name','$first_name','$middle_name','$suffix','$sex', '$street', '$subdivision', '$barangay', '$bussiness_address','$occupation','$email_address','$birthdate','$mobile_number','$employer','default.png')";
+        $result = mysqli_query($con, $sql);
+
+        $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+        $row = $resultSession->fetch_assoc();
+        $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" . 'added homeowner' . ' ' . "$first_name" . ' ' . "$last_name" . "' , NOW())";
+        mysqli_query($con, $sql1);
+        header("Location: homeownerRegistration.php");
+      }
+    }
+  }
+}
 // SELECTING A REGISTERED HOMEOWNER TO EDIT
 $update = false;
 if (isset($_GET['homeowner_id'])) {
@@ -332,7 +377,7 @@ if (isset($_POST['homeowner_update'])) {
   $result = mysqli_query($con, $sql2);
   $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $row = $resultSession->fetch_assoc();
-  $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" .  'updated homeowner' . ' ' . "$first_name" . ' ' . "$last_name" . "' , NOW())";
+  $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" . 'updated homeowner' . ' ' . "$first_name" . ' ' . "$last_name" . "' , NOW())";
   mysqli_query($con, $sql1);
   header("Location: homeownerRegistration.php");
 }
@@ -561,7 +606,7 @@ if (isset($_POST['sysAccAdd'])) {
     $sql = "INSERT INTO user(user_homeowner_id, full_name, user_type, password, email_address, account_status, verification_code, email_verified_at) VALUES ('$user_homeowner_id', '$systemAccount', '$userType', '$password', '$systemAccount', 'Activated', NULL, NULL)";
     $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
     $row = $result->fetch_assoc();
-    $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'added a new system account' . ' ' . "$systemAccount" . '-' . "$userType"  . "', NOW())";
+    $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'added a new system account' . ' ' . "$systemAccount" . '-' . "$userType" . "', NOW())";
     mysqli_query($con, $sql1);
     mysqli_query($con, $sql);
     header("Location: settings.php#settingsSystemAccounts");
@@ -591,7 +636,7 @@ if (isset($_POST['sysAccUpdate'])) {
   $con->query("UPDATE user SET password = '$password', user_type = '$account_type', account_status = '$account_status' WHERE user_id = '$account_id'");
   $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $row = $result->fetch_assoc();
-  $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an existing system account' . ' ' . "$full_name" . '-' . "$account_type"  . "', NOW())";
+  $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an existing system account' . ' ' . "$full_name" . '-' . "$account_type" . "', NOW())";
   mysqli_query($con, $sql1);
   header("Location: settings.php#settingsSystemAccounts");
 }
@@ -604,7 +649,7 @@ if (isset($_POST['officerAdd'])) {
   $sql = "INSERT INTO officers(subdivision_name, officer_name, position_name) VALUES ('$subdivision_name', '$officer_name', '$position_name')";
   $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $row = $result->fetch_assoc();
-  $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'added a new subdivision officer' . ' ' . "$officer_name" . '-' . "$position_name"  . "', NOW())";
+  $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'added a new subdivision officer' . ' ' . "$officer_name" . '-' . "$position_name" . "', NOW())";
   mysqli_query($con, $sql1);
   mysqli_query($con, $sql);
   header("Location: settings.php#settingsOfficers");
@@ -631,7 +676,7 @@ if (isset($_POST['officerUpdate'])) {
   $con->query("UPDATE officers SET subdivision_name = '$subdivision_name', officer_name = '$officer_name', position_name = '$position_name' WHERE officer_id = '$officer_id'");
   $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $row = $result->fetch_assoc();
-  $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an existing subdivision officer' . ' ' . "$officer_name" . '-' . "$position_name"  . "', NOW())";
+  $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an existing subdivision officer' . ' ' . "$officer_name" . '-' . "$position_name" . "', NOW())";
   mysqli_query($con, $sql1);
   header("Location: settings.php#settingsOfficers");
 }
