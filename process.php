@@ -771,9 +771,13 @@ if (isset($_POST['subdivision_id'])) {
   $result = $con->query("SELECT * FROM amenities WHERE subdivision_id=$subdivision_id ORDER BY amenity_name DESC");
 
   if (mysqli_num_rows($result) > 0) {
-    echo '<option value="">Select Amenity...</option>';
+    echo '<option value="0">Select Amenity...</option>';
     while ($row = $result->fetch_assoc()) {
       echo '<option value="' . $row['amenity_id'] . '">' . $row['amenity_name'] . '</option>';
+      echo '<script type="text/javascript"> 
+  document.getElementById("day_id").setAttribute("value","");
+  document.getElementById("night_id").setAttribute("value","");
+</script>';
     }
   } else {
     echo '<option value="0">No Amenity Found</option>';
@@ -789,9 +793,14 @@ if (isset($_POST['amenity_id'])) {
   $result = $con->query("SELECT * FROM amenity_purpose WHERE amenity_id=$amenity_id ORDER BY amenity_purpose DESC");
 
   if (mysqli_num_rows($result) > 0) {
-    echo '<option value="">Select Purpose...</option>';
+    echo '<option value="0">Select Purpose...</option>';
     while ($row = $result->fetch_assoc()) {
       echo '<option value="' . $row['amenity_purpose_id'] . '">' . $row['amenity_purpose'] . '</option>';
+      echo '<script type="text/javascript"> 
+  document.getElementById("day_id").setAttribute("value","");
+  document.getElementById("night_id").setAttribute("value","");
+</script>';
+      
     }
   } else {
     echo '<option value="0">No Purpose Found</option>';
@@ -811,6 +820,11 @@ if (isset($_POST['purpose_id'])) {
     echo '<script type="text/javascript"> 
   document.getElementById("day_id").setAttribute("value",' . $row['day_rate'] . ');
   document.getElementById("night_id").setAttribute("value",' . $row['night_rate'] . ');
+</script>';
+  } else {
+    echo '<script type="text/javascript"> 
+  document.getElementById("day_id").setAttribute("value","");
+  document.getElementById("night_id").setAttribute("value","");
 </script>';
   }
 }
