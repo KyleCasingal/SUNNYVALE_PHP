@@ -98,7 +98,7 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
 
   .amenitiesForm {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     padding: 2vw;
     margin: 1.5vw;
     width: 60%;

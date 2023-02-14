@@ -357,7 +357,7 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
                                     ?> src="<?= $imageURL ?>" alt="" />
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="../modules/MemberPanel.php">Member Profile</a>
+              <a class="dropdown-item" href="../modules/memberPanel.php">Member Profile</a>
               <a class="dropdown-item" href="../modules/inboxPanel.php">Inbox</a>
               <?php
               if ($row['user_type'] == 'Homeowner') {

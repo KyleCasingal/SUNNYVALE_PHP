@@ -228,7 +228,7 @@ if (isset($_SESSION['user_id'])) {
                 <i class="topIconRegister">SUNNYVALE</i>
             </div>
             <div class="topRightRegister">
-                <p>Already have an Account?</p>
+                <p>Already activated your ccount?</p>
                 <button class="loginButtonReg" name="loginButtonReg" id="loginButtonReg">
                     Login
                 </button>

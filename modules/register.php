@@ -111,26 +111,29 @@
     background-color: lightcoral;
     color: white;
   }
+  label{
+    padding-top: 1vw;
+  }
 </style>
 
 <body>
   <div class="topbar">
   </div>
   <div class="register">
-    <span class="registerTitle">Register your Account</span>
+    <span class="registerTitle">Activate your Account</span>
     <form class="registerForm" method="post">
-      <label>First Name</label>
-      <input type="text" name="first_name" id="first_name" class="registerInput" placeholder="Enter your first name..." value="" required />
-      <label>Last Name</label>
+      <label>Email</label>
+      <input type="text" name="email" id="email" class="registerInput" placeholder="Enter your email..." value="" required />
+      <!-- <label>Last Name</label>
       <input type="text" name="last_name" id="last_name" class="registerInput" placeholder="Enter your last name..." value="" required />
       <label>Email</label>
       <input type="text" name="email_address" id="email_address" class="registerInput" placeholder="Enter your email..." value="" required />
       <label>Password</label>
       <input type="password" name="password" id="password" class="registerInput" placeholder="Enter your password..." value="" required />
       <label>Confirm password</label>
-      <input type="password" name="confirm_password" id="confirm_password" class="registerInput" placeholder="Enter your password..." value="" />
+      <input type="password" name="confirm_password" id="confirm_password" class="registerInput" placeholder="Enter your password..." value="" /> -->
       <button class="registerButton" name="register" id="register">
-        Register
+        Activate
       </button>
       <button class="guestButtonRegister" id="" name="guestButtonRegister" formnovalidate>
         Continue as Guest

@@ -95,6 +95,26 @@
     color: black;
     cursor: pointer;
   }
+
+  .carousel-item {
+    padding-left: 10vw;
+    padding-right: 10vw;
+    padding-bottom: 5vw;
+
+  }
+
+  .aboutTitle {
+    font-size: 1.5vw;
+  }
+
+  .modal-officers {
+    margin: 0;
+  }
+ 
+ 
+  td {
+    padding: 1.5vw;
+  }
 </style>
 
 <body>
@@ -121,18 +141,20 @@
           <h1 class="modal-title fs-5" id="exampleModalLabel">About</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+        <div class="modal-body modal-officers">
+          <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="true">
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+
             </div>
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <table>
                   <tr>
-                    <td>Sunnyvale 1 Officers</td>
+                    <td class="aboutTitle">Sunnyvale 1 Officers</td>
                   </tr>
                   <tr>
                     <td>President:</td>
@@ -157,7 +179,7 @@
               <div class="carousel-item">
                 <table>
                   <tr>
-                    <td>Sunnyvale 2 Officers</td>
+                    <td class="aboutTitle">Sunnyvale 2 Officers</td>
                   </tr>
                   <tr>
                     <td>President:</td>
@@ -182,7 +204,7 @@
               <div class="carousel-item">
                 <table>
                   <tr>
-                    <td>Sunnyvale 3 Officers</td>
+                    <td class="aboutTitle">Sunnyvale 3 Officers</td>
                   </tr>
                   <tr>
                     <td>President:</td>
@@ -207,7 +229,7 @@
               <div class="carousel-item">
                 <table>
                   <tr>
-                    <td>Sunnyvale 4 Officers</td>
+                    <td class="aboutTitle">Sunnyvale 4 Officers</td>
                   </tr>
                   <tr>
                     <td>President:</td>
