@@ -368,12 +368,12 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
 </style>
 <script>
     $("#form_id").trigger("reset");
-    
+
     $(document).ready(function() {
-    $('.btnImportReg2').click(function() {
-      $('#confirmation').modal('show');
+        $('.btnImportReg2').click(function() {
+            $('#confirmation').modal('show');
+        });
     });
-  });
 </script>
 
 <body>
@@ -515,9 +515,6 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                                     <input type="text" name="employer" id="" placeholder="employer" value="<?php echo $employer ?? ''; ?>" required />
                                     <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
-
-
-
                             </tr>
                         </table>
                         <div class="buttonGrpRegister">
@@ -571,35 +568,34 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                             <div class="modal fade" id="importCSVModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-lg">
                                     <div class="modal-content">
-                                    <form action="" method="post" name="frmCSVImport" id="frmCSVImport" enctype="multipart/form-data" onsubmit="return validateFile()">
-
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">About</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div>
-                                                <label>Select CSV file:</label>
-                                                <input type="file" name="file" id="file" class="file" accept=".csv,.xls,.xlsx">
+                                        <form action="" method="post" name="frmCSVImport" id="frmCSVImport" enctype="multipart/form-data" onsubmit="return validateFile()">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">About</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <div>
-                                                <label>Import data:</label>
-                                                <button type="submit" value="" class="btnImportReg" name="importSubmit">
-                                                    Import CSV
-                                                </button>
-                                            </div>
-                                            </form>
+                                            <div class="modal-body">
+                                                <div>
+                                                    <label>Select CSV file:</label>
+                                                    <input type="file" name="file" id="file" class="file" accept=".csv,.xls,.xlsx">
+                                                </div>
+                                                <div>
+                                                    <label>Import data:</label>
+                                                    <button type="submit" value="" class="btnImportReg" name="importSubmit">
+                                                        Import CSV
+                                                    </button>
+                                                </div>
+                                        </form>
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
-                    <!-- <label class="lblRegistration">Registered Homeowners</label>
+
+
+
+                </div>
+                <!-- <label class="lblRegistration">Registered Homeowners</label>
                     <div class="tblContainer">
                         <table class="tblHomeowners table-hover">
                             <thead>
@@ -653,8 +649,8 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                             <?php endwhile; ?>
                         </table>
                     </div> -->
-                </div>
             </div>
+        </div>
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -671,18 +667,18 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                     </div>
                 </div>
             </div>
-        </div>              
+        </div>
     </form>
     <script>
         function validateFile() {
-    var csvInputFile = document.forms["frmCSVImport"]["file"].value;
-    if (csvInputFile == "") {
-      error = "No source found to import. Please choose a CSV file. ";
-      $("#response").html(error).addClass("error");;
-      return false;
-    }
-    return true;
-  }
+            var csvInputFile = document.forms["frmCSVImport"]["file"].value;
+            if (csvInputFile == "") {
+                error = "No source found to import. Please choose a CSV file. ";
+                $("#response").html(error).addClass("error");;
+                return false;
+            }
+            return true;
+        }
     </script>
     <?php
     require '../marginals/footer2.php'
