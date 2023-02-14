@@ -58,6 +58,7 @@ $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SES
   }
 
   select {
+    background-color: white;
     max-width: 50vw;
     height: 2vw;
     font-size: 1.2vw;
