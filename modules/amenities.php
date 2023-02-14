@@ -58,6 +58,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   }
 
   select {
+    background-color: white;
     max-width: 50vw;
     height: 2vw;
     font-size: 1.2vw;

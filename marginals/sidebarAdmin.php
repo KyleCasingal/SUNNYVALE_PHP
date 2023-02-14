@@ -124,7 +124,7 @@
                         Homeowner <i class="fa-sharp fa-solid fa-chevron-right"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li id="Amenities" onclick="location.href='../modules/homeownerlist.php'">Register Homeowners
+                        <li id="Amenities" onclick="location.href='../modules/homeownerlist.php'">Registered Homeowners
                         </li>
                         <li id="Subdivision" onclick="location.href='../modules/homeownerRegistration.php'">Homeowner
                             Registration</li>

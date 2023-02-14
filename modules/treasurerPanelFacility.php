@@ -1,17 +1,24 @@
 <?php
-$con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
-$resultAmenity = $con->query("SELECT * FROM facility_renting WHERE date_from BETWEEN NOW() AND NOW() + INTERVAL 1 DAY;");
+require '../marginals/topbar.php';
+$result = $con->query("SELECT * FROM amenities WHERE availability =  'Available' ORDER BY subdivision_name ASC") or die($mysqli->error);
+$resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
+$resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
+$resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
 
+$resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . " AND cart='Yes'") or die($mysqli->error);;
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+  <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#000000" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <title>SUNNYVALE</title>
 </head>
 <style>
@@ -19,87 +26,24 @@ $resultAmenity = $con->query("SELECT * FROM facility_renting WHERE date_from BET
     margin: 0;
   }
 
-  .treasurer {
-    width: 100%;
+  .messageSuccess {
     display: flex;
-  }
-
-  .facilityRenting {
-    display: flex;
-    justify-content: center;
-    padding: 2vw;
-    margin: 1.5vw;
-    width: 70%;
-    border-radius: 1vw;
-    flex-direction: column;
-    background-color: rgb(170, 192, 175, 0.3);
-    font-family: "Newsreader", serif;
-  }
-
-
-
-  .treasurerPanel {
-    flex: 8;
-    width: 100%;
-    overflow-y: scroll;
-  }
-
-
-
-
-
-
-
-  .table-responsive {
-    font-size: max(1vw, min(10px));
-    max-height: 500px;
-    min-height: 20vw;
-  }
-
-  .table {
-    margin-top: 1vw;
-    margin-bottom: 2vw;
-    overflow-y: scroll;
-    align-items: center;
-    justify-self: center;
-    margin: 2vw;
-    max-width: 95%;
-  }
-
-  .lblTable {
-    font-size: 2vw;
-    font-family: "Poppins", sans-serif;
-    margin-left: 2vw;
-    margin-bottom: -2vw;
-    padding: 0;
-    color: rgb(89, 89, 89);
-    font-weight: 800;
-  }
-
-  thead {
-    top: 0;
-    position: sticky;
-    text-align: center;
-    background-color: rgb(170, 192, 175, 0.3);
-  }
-
-  th,
-  td {
-    text-align: center;
-    padding: 0.8vw;
-    border: 1px solid lightgray;
-  }
-
-  .amenitiesForm {
-    display: flex;
-    justify-content: center;
-    padding: 2vw;
-    margin: 1.5vw;
-    width: 95%;
-    border-radius: 1vw;
-    flex-direction: column;
-    background-color: rgb(170, 192, 175, 0.3);
+    padding: 1vw;
+    justify-content: space-between;
     font-family: 'Poppins', sans-serif;
+    font-size: 1.5vw;
+    background-color: darkseagreen;
+    color: white;
+  }
+
+  .messageFail {
+    display: flex;
+    padding: 1vw;
+    justify-content: space-between;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5vw;
+    background-color: lightcoral;
+    color: white;
   }
 
   input {
@@ -114,6 +58,7 @@ $resultAmenity = $con->query("SELECT * FROM facility_renting WHERE date_from BET
   }
 
   select {
+    background-color: white;
     max-width: 50vw;
     height: 2vw;
     font-size: 1.2vw;
@@ -130,6 +75,55 @@ $resultAmenity = $con->query("SELECT * FROM facility_renting WHERE date_from BET
   label {
     font-size: 2vw;
     padding: 0.5vw;
+  }
+
+  .form-check-label {
+    font-size: 1.5em;
+
+  }
+
+  .form-check {
+    display: flex;
+    align-items: stretch;
+
+  }
+
+  .form-check-input {
+    align-self: flex-end;
+  }
+
+  .amenities {
+    display: flex;
+
+  }
+
+  .amenitiesForm {
+    display: flex;
+    /* justify-content: center; */
+    padding: 2vw;
+    margin: 1.5vw;
+    width: 60%;
+    border-radius: 1vw;
+    flex-direction: column;
+    background-color: rgb(170, 192, 175, 0.3);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .paymentForm {
+    display: flex;
+    padding: 2vw;
+    margin: 1.5vw;
+    width: 40%;
+    border-radius: 1vw;
+    flex-direction: column;
+    background-color: rgb(170, 192, 175, 0.3);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .imagePrev {
+    max-width: 30vw;
+    max-height: 20vw;
+    margin-bottom: 1vw;
   }
 
   .btnSubmit {
@@ -167,200 +161,391 @@ $resultAmenity = $con->query("SELECT * FROM facility_renting WHERE date_from BET
   .btnSubmit:hover {
     background-color: rgba(167, 197, 167);
   }
+
+  .upload {
+    text-align: center;
+    background-color: rgb(248, 186, 55);
+    border: 0;
+    padding: 0.5vw;
+    max-width: 50vw;
+    width: 15vw;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.5vw;
+    color: white;
+    border-radius: 0.8vw;
+    cursor: pointer;
+    margin-bottom: 1vw;
+  }
+
+  .upload:hover {
+    background-color: rgb(253, 200, 86);
+  }
+
+  .tblAmenity {
+    width: 90%;
+    margin-bottom: 2vw;
+    overflow-x: auto;
+    overflow-y: auto;
+    text-align: center;
+    margin: 2vw;
+    margin-right: 2vw;
+  }
+
+  .tblAmenity thead,
+  th {
+    padding: 0.5vw;
+    text-align: center;
+    font-size: 1.2vw;
+    background-color: rgb(170, 192, 175, 0.3);
+    width: max-content;
+    white-space: nowrap;
+  }
+
+  .tblAmenity td {
+    width: max-content;
+    white-space: nowrap;
+  }
+
+  .tblAmenity tr:hover {
+    background-color: rgb(211, 211, 211);
+  }
+
+  .treasurer {
+    width: 100%;
+    display: flex;
+  }
+
+  .treasurerPanel {
+    flex: 8;
+    width: 100%;
+    overflow-y: scroll;
+  }
 </style>
+<script type="text/javascript">
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
+  // function readURL(input, id) {
+  //   if (input.files && input.files[0]) {
+  //     var reader = new FileReader();
+
+  //     reader.onload = function(e) {
+  //       $('#' + id).attr('src', e.target.result);
+  //     }
+
+  //     reader.readAsDataURL(input.files[0]);
+  //   }
+  // }
+  $("#image").change(function() {
+    readURL(this, 'imagePreview');
+  });
+
+  $(document).ready(function() {
+    $("#subdivision_id").on('click', function() {
+      var subdivision_id = $(this).val();
+      if (subdivision_id) {
+        $.ajax({
+          type: 'POST',
+          url: '../process.php/',
+          data: 'subdivision_id=' + subdivision_id,
+          success: function(html) {
+            $("#amenity_id").html(html);
+          }
+        });
+      }
+    });
+  });
+
+  $(document).ready(function() {
+    $("#subdivision_id").on('click', function() {
+      var subdivision_id = $(this).val();
+      if (subdivision_id) {
+        $.ajax({
+          type: 'POST',
+          url: '../process.php/',
+          data: 'subdivision_id=' + subdivision_id,
+          success: function(html) {
+            $("#purpose_id").html(html);
+          }
+        });
+      }
+    });
+  });
+
+  $(document).ready(function() {
+    $("#amenity_id").on('click', function() {
+      var amenity_id = $(this).val();
+      if (amenity_id) {
+        $.ajax({
+          type: 'POST',
+          url: '../process.php/',
+          data: 'amenity_id=' + amenity_id,
+          success: function(html) {
+            $("#purpose_id").html(html);
+          }
+        });
+      }
+    });
+  });
+
+  $(document).ready(function() {
+    $("#purpose_id").on('click', function() {
+      var purpose_id = $(this).val();
+      if (purpose_id) {
+        $.ajax({
+          type: 'POST',
+          url: '../process.php/',
+          data: 'purpose_id=' + purpose_id,
+          success: function(html) {
+            $("#day_id").html(html);
+            $("#night_id").html(html);
+          }
+        });
+      }
+    });
+  });
+
+
+  $(document).ready(function() {
+    $("#add").click(function() {
+      $("#date1").removeAttr("required");
+      $("#from1").removeAttr("required");
+      $("#from2").removeAttr("required");
+      $("#to1").removeAttr("required");
+      $("#to2").removeAttr("required");
+    });
+  });
+
+  $(document).ready(function() {
+    $("#dateTime").click(function() {
+      $("#subdivision_id").removeAttr("required");
+      $("#amenity_id").removeAttr("required");
+      $("#purpose_id").removeAttr("required");
+    });
+  });
+
+  $(document).ready(function() {
+    $("#removeID").click(function() {
+      $("#date1").removeAttr("required");
+      $("#from1").removeAttr("required");
+      $("#from2").removeAttr("required");
+      $("#to1").removeAttr("required");
+      $("#to2").removeAttr("required");
+      $("#subdivision_id").removeAttr("required");
+      $("#amenity_id").removeAttr("required");
+      $("#purpose_id").removeAttr("required");
+    });
+  });
+</script>
 
 <body>
-  <?php require '../marginals/topbar.php'; ?>
   <div class="treasurer">
     <?php require '../marginals/sidebarTreasurerPanel.php'; ?>
     <div class="treasurerPanel">
-      <div class="amenitiesForm">
-        <label>Name</label>
-        <input type="text" name="full_name" id="name" value="<?php echo $row['full_name'] ?>" readonly />
-        <div class="timeinput">
-          <label>Time</label>
-          <select name="hrFrom" id="" required>
-            <option value="">hr</option>
-            <?php
-            for ($x = 1; $x <= 12; $x++) {
-              $x = sprintf("%02d", $x);
-              echo "<option value='$x'";
-              if (isset($_POST['compute'])) {
-                if ($_POST['hrFrom'] == $x) echo "selected='selected'";
+      <form method="post" enctype="multipart/form-data">
+
+        <div class='amenities'>
+          <div class="amenitiesForm">
+            <label>Name</label>
+            <input type="text" name="renter_name" id="name" value="<?php echo $row['full_name'] ?>" readonly />
+
+            <label>Subdivision</label>
+            <select name="subdivision" id="subdivision_id" required>
+              <option value="0" selected="selected">Select...</option>
+              <?php
+              while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
+                echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
               }
-              echo ">  $x ";
-            }
-            ?>
-          </select>
-          <select name="minsFrom" id="" required>
-            <option value="">mins</option>
-            <?php
-            for ($x = 0; $x <= 55; $x = $x + 5) {
-              $x = sprintf("%02d", $x);
-              echo "<option value='$x'";
-              if (isset($_POST['compute'])) {
-                if ($_POST['minsFrom'] == $x) echo "selected='selected'";
-              }
-              echo ">  $x ";
-            }
-            ?>
-          </select>
-          <select name="ampmFrom" id="" required>
-            <option value="">am/pm</option>
-            <option value="am" <?php
-                                if (isset($_POST['compute'])) {
-                                  if ($_POST['ampmFrom'] == "am") echo 'selected="selected"';
-                                }
-                                ?>>am</option>
-            <option value="pm" <?php
-                                if (isset($_POST['compute'])) {
-                                  if ($_POST['ampmFrom'] == "pm") echo 'selected="selected"';
-                                }
-                                ?>>pm</option>
-          </select>
-          <label>To</label>
-          <select name="hrTo" id="" required>
-            <option value="">hr</option>
-            <?php
-            for ($x = 1; $x <= 12; $x++) {
-              $x = sprintf("%02d", $x);
-              echo "<option value='$x'";
-              if (isset($_POST['compute'])) {
-                if ($_POST['hrTo'] == $x) echo "selected='selected'";
-              }
-              echo ">  $x ";
-            }
-            ?>
-          </select>
-          </option>
-          </select>
-          <select name="minsTo" id="" required>
-            <option value="">mins</option>
-            <?php
-            for ($x = 0; $x <= 55; $x = $x + 05) {
-              $x = sprintf("%02d", $x);
-              echo "<option value='$x'";
-              if (isset($_POST['compute'])) {
-                if ($_POST['minsTo'] == $x) echo "selected='selected'";
-              }
-              echo ">  $x ";
-            }
-            ?>
-          </select>
-          <select name="ampmTo" id="" required>
-            <option value="">am/pm</option>
-            <option value="am" <?php
-                                if (isset($_POST['compute'])) {
-                                  if ($_POST['ampmTo'] == "am") echo 'selected="selected"';
-                                }
-                                ?>>am</option>
-            <option value="pm" <?php
-                                if (isset($_POST['compute'])) {
-                                  if ($_POST['ampmTo'] == "pm") echo 'selected="selected"';
-                                }
-                                ?>>pm</option>
-          </select>
-          <label>6:00am to 9:00pm only</label>
-        </div>
-        <label>Date</label>
-        <input required type="date" name="date" <?php
-                                                if (isset($_POST['compute'])) {
-                                                  $date = $_POST['date'];
-                                                  echo "value = '$date'";
-                                                }
-                                                $date = date('Y-m-d', strtotime('today'));
-                                                echo "min='$date'"
-                                                ?>>
-        <label>Amenity</label>
-        <select name="amenity" id="" required>
-          <option value="">Select...</option>
-          <?php
-          while ($row = $result->fetch_assoc()) :
-            $price =  $row['price']
-          ?>
-            <option <?php
-                    if (isset($_POST['compute'])) {
-                      $amenity = $_POST['amenity'];
-                      if ($amenity == $row['amenity_name']) {
-                        echo 'selected="selected"';
-                      }
+              ?>
+            </select>
+            <label>Amenity</label>
+            <select name="amenity" id="amenity_id" required>
+              <option value="0">Select Subdivision first...</option>
+            </select>
+            <label>Purpose</label>
+            <select name="purpose" id="purpose_id" required>
+              <option value="0">Select Amenity first...</option>
+            </select>
+            <label>Rate per Hour</label>
+            <div>
+              <div class="day-rate">
+                <label>Day</label>
+                <input type="text" id="day_id" size="6" readonly>
+              </div>
+
+              <div class="night-rate">
+                <label>Night</label>
+                <input type="text" id="night_id" size="6" readonly>
+              </div>
+              <label>Night rate starts at 6pm</label>
+            </div>
+            <button class="btnSubmit" name="addToCart" id="add">Add</button>
+            <br>
+          </div>
+          <!-- <div class="paymentForm">
+            <label class="writeText">Upload proof of payment here:</label>
+            <div class="BlogWrite">
+              <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()"></input>
+              <img class="imagePrev" id="imagePreview" src=# alt="" />
+            </div>
+            <label for="image" class="upload">Upload Photo</label>
+          </div> -->
+          <div class='amenitiesForm'>
+            <label>Availed Services</label>
+            <table class="tblAmenity">
+              <tr>
+                <th><input type="checkbox" name="select-all" id="select-all" /></th>
+                <th>Renter</th>
+                <th>Subdivision</th>
+                <th>Amenity</th>
+                <th>Purpose</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Cost</th>
+              </tr>
+              <?php while ($row = $resultRes->fetch_assoc()) : ?>
+                <tr>
+                  <td>
+                    <input type="checkbox" value=<?php echo $row['transaction_id']; ?> name="checkbox[]" id="checkbox">
+                  </td>
+                  <td>
+                    <?php echo $row['renter_name'] ?>
+                  </td>
+                  <td>
+                    <?php echo $row['subdivision_name'] ?>
+                  </td>
+                  <td>
+                    <?php echo $row['amenity_name'] ?>
+                  </td>
+                  <td>
+                    <?php
+                    $amenity_purpose_id = $row['amenity_purpose'];
+                    $resultPurpose = $con->query("SELECT * FROM amenity_purpose WHERE amenity_purpose_id = '$amenity_purpose_id'");
+                    $rowPurpose = $resultPurpose->fetch_assoc();
+                    echo $rowPurpose['amenity_purpose'];
+                    ?>
+                  </td>
+                  <td>
+                    <?php
+                    if ($row['date_from'] != NULL) {
+                      $date = $row['date_from'];
+                      echo date('m/d/Y h:ia ', strtotime($date));
+                    } else {
+                      echo $row['date_from'];
                     }
-                    ?>>
-              <?php echo $row['amenity_name'] ?>
-            </option>
-          <?php endwhile; ?>
-        </select>
-        <label>Amount</label>
-        <input name="cost" type="text" id="price" readOnly <?php
-                                                            //AMOUNT COMPUTATION
-                                                            if (isset($_POST['compute'])) {
-                                                              function to_24_hour($hours, $minutes, $meridiem)
-                                                              {
-                                                                $hours = sprintf('%02d', (int) $hours);
-                                                                $minutes = sprintf('%02d', (int) $minutes);
-                                                                $meridiem = (strtolower($meridiem) == 'am') ? 'am' : 'pm';
-                                                                return date('H:i', strtotime("{$hours}:{$minutes} {$meridiem}"));
-                                                              }
-                                                              $timeFrom = to_24_hour($_POST['hrFrom'], $_POST['minsFrom'], $_POST['ampmFrom']);
-                                                              $timeTo = to_24_hour($_POST['hrTo'], $_POST['minsTo'], $_POST['ampmTo']);
-                                                              $timeFrom = strtotime($timeFrom);
-                                                              $timeTo = strtotime($timeTo);
-                                                              $difference = ($timeTo - $timeFrom);
-                                                              $totalHrs = ($difference / 3600);
-                                                              $totalHrs = number_format((float)$totalHrs, 2, '.', '');
-                                                              $res = $con->query("SELECT * FROM amenities WHERE amenity_name = '$amenity'") or die($mysqli->error);
-                                                              $row = $res->fetch_assoc();
-                                                              $cost = $totalHrs * $row['price'];
-
-                                                              if ($cost < 0) {
-                                                                echo "value = ''";
-                                                              } else if ($_POST['ampmFrom'] == 'am' and $_POST['hrFrom'] < 6) {
-                                                                echo "value = ''";
-                                                              } else if ($_POST['ampmFrom'] == 'pm' and $_POST['hrFrom'] >= 9 and $_POST['minsFrom'] >= 0) {
-                                                                echo "value = ''";
-                                                              } else if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] >= 9 and $_POST['minsTo'] >= 1) {
-                                                                echo "value = ''";
-                                                              } else {
-                                                                echo "value = '$cost'";
-                                                              }
-                                                            }
-
-
-
-                                                            ?> />
-        <br>
-        <button name="compute" class="btnCompute">Compute</button>
-        <button class="btnSubmit" name="submitReservation" id="submitPost">Submit Reservation</button>
-      </div>
-      <div class="table-responsive">
-        <label class="lblTable">Current Scheduled Amenities</label>
-        <table class="table table-hover">
-          <thead>
-            <th>Amenity</th>
-            <th>Renter</th>
-            <th>Date/time from</th>
-            <th>Date/time to</th>
-            <th>cost</th>
-          </thead>
-          <?php while ($row = $resultAmenity->fetch_assoc()) : ?>
-            <tr>
-              <td><?php echo $row['amenity_name']; ?></td>
-              <td><?php echo $row['renter_name']; ?></td>
-              <td><?php echo $row['date_from']; ?></td>
-              <td><?php echo $row['date_to']; ?></td>
-              <td><?php echo $row['cost']; ?></td>
-            </tr>
-          <?php endwhile; ?>
-
-
-        </table>
-      </div>
+                    ?>
+                  </td>
+                  <td>
+                    <?php
+                    if ($row['date_to'] != NULL) {
+                      $date = $row['date_to'];
+                      echo date('m/d/Y h:ia ', strtotime($date));
+                    } else {
+                      echo $row['date_to'];
+                    }
+                    ?>
+                  </td>
+                  <td>
+                    <?php echo $row['cost'] ?>
+                  </td>
+                </tr>
+              <?php endwhile; ?>
+              <div><label>Date</label>
+                <input required id="date1" type="date" name="date" <?php
+                                                                    if (isset($_POST['compute'])) {
+                                                                      $date = $_POST['date'];
+                                                                      echo "value = '$date'";
+                                                                    }
+                                                                    $date = date('Y-m-d', strtotime('today'));
+                                                                    echo "min='$date'"
+                                                                    ?>>
+              </div>
+              <div class="timeinput">
+                <label>Time</label>
+                <select name="hrFrom" id="from1" required>
+                  <option value="">hr</option>
+                  <?php
+                  for ($x = 1; $x <= 12; $x++) {
+                    $x = sprintf("%02d", $x);
+                    echo "<option value='$x'>$x";
+                  }
+                  ?>
+                </select>
+                <select name="ampmFrom" id="from2" required>
+                  <option value="">am/pm</option>
+                  <option value="am" <?php
+                                      if (isset($_POST['compute'])) {
+                                        if ($_POST['ampmFrom'] == "am")
+                                          echo 'selected="selected"';
+                                      }
+                                      ?>>am</option>
+                  <option value="pm" <?php
+                                      if (isset($_POST['compute'])) {
+                                        if ($_POST['ampmFrom'] == "pm")
+                                          echo 'selected="selected"';
+                                      }
+                                      ?>>pm</option>
+                </select>
+                <label>To</label>
+                <select name="hrTo" id="to1" required>
+                  <option value="">hr</option>
+                  <?php
+                  for ($x = 1; $x <= 12; $x++) {
+                    $x = sprintf("%02d", $x);
+                    echo "<option value='$x'";
+                    if (isset($_POST['compute'])) {
+                      if ($_POST['hrTo'] == $x)
+                        echo "selected='selected'";
+                    }
+                    echo ">  $x ";
+                  }
+                  ?>
+                </select>
+                </option>
+                <select name="ampmTo" id="to2" required>
+                  <option value="">am/pm</option>
+                  <option value="am" <?php
+                                      if (isset($_POST['compute'])) {
+                                        if ($_POST['ampmTo'] == "am")
+                                          echo 'selected="selected"';
+                                      }
+                                      ?>>am</option>
+                  <option value="pm" <?php
+                                      if (isset($_POST['compute'])) {
+                                        if ($_POST['ampmTo'] == "pm")
+                                          echo 'selected="selected"';
+                                      }
+                                      ?>>pm</option>
+                </select>
+              </div>
+              <div>
+                <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>
+                <button class="btnCompute" name="removeSelected" id="removeID">Remove Selected</button>
+              </div>
+            </table>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
-
   <?php
-  require '../marginals/footer2.php'
+  require '../marginals/footer2.php';
   ?>
+
 </body>
+<script>
+  $('#select-all').click(function(event) {
+    if (this.checked) {
+      // Iterate each checkbox
+      $(':checkbox').each(function() {
+        this.checked = true;
+      });
+    } else {
+      $(':checkbox').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+</script>
 
 </html>
