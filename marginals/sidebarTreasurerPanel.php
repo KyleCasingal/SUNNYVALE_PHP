@@ -44,8 +44,8 @@
         <form method="post">
             <ul class="treasurerSideBar">
                 <li id="dues" onclick="location.href='../modules/treasurerPanel.php'">Monthly Dues</li>
-                <li id="facility" onclick="location.href='../modules/treasurerPanelFacility.php'">
-                    Facility Renting</li>
+                <li id="facility" onclick="location.href='../modules/treasurerPanelFacility.php'">Facility Renting</li>
+                <li id="billing" onclick="location.href='../modules/billing.php'">Billing</li>
             </ul>
         </form>
     </div>

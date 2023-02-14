@@ -28,11 +28,12 @@ $resultSubd = $con->query("SELECT * FROM subdivision");
     font-size: 1.2vw;
     border: 0;
     border-radius: 0.8vw;
-    font-family: "Newsreader", serif;
     margin-bottom: 1vw;
   }
 
   select {
+    background-color: white;
+    font-family: 'Poppins', sans-serif;
     margin-right: 2vw;
     width: 15vw;
     max-width: 15vw;
@@ -40,7 +41,6 @@ $resultSubd = $con->query("SELECT * FROM subdivision");
     font-size: 1.2vw;
     border: 0;
     border-radius: 0.8vw;
-    font-family: "Newsreader", serif;
     margin-bottom: 1vw;
   }
 
@@ -49,6 +49,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision");
   }
 
   label {
+    font-family: 'Poppins', sans-serif;
     margin-right: 0.5vw;
     font-size: max(1.5vw, min(10px));
     padding: 0.5vw;
@@ -149,6 +150,9 @@ $resultSubd = $con->query("SELECT * FROM subdivision");
     color: rgb(89, 89, 89);
     font-weight: 800;
   }
+  .select-homeowner{
+    width:80%;
+  }
 </style>
 
 <body>
@@ -159,7 +163,9 @@ $resultSubd = $con->query("SELECT * FROM subdivision");
       <div class="monthlyDues" id="monthlyDues">
         <div class="treasurerForm">
           <label>Name:</label>
-          <input type="text" name="name" id="name" />
+          <select name="name" id="name" class="select-homeowner">
+            <option value="">Select...</option>
+          </select>
           <div class="date">
             <label>Month:</label>
             <select name="month" id="month">
