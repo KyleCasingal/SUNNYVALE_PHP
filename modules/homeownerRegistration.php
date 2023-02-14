@@ -596,7 +596,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
 
 
                     </div>
-                    <label class="lblRegistration">Registered Homeowners</label>
+                    <!-- <label class="lblRegistration">Registered Homeowners</label>
                     <div class="tblContainer">
                         <table class="tblHomeowners table-hover">
                             <thead>
@@ -649,7 +649,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                                 </tr>
                             <?php endwhile; ?>
                         </table>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
