@@ -158,7 +158,7 @@
                     <ul class="dropdown-menu">
                         <li id="Collection Report" onclick="location.href='../reports/reportAmenities.php'"
                             target="_blank">Collection Report</li>
-                        <li id="Home Owner List" onclick="location.href='../reports/reportMonthlyDues.php'"
+                        <li id="Home Owner List" onclick="location.href='../reports/reportHomeOwnerList.php'"
                             target="_blank">Home Owner List</li>
                         <li id="Audit Trail" onclick="location.href='../reports/reportAuditTrail.php'" target="_blank">
                             Audit Trail</li>

@@ -370,13 +370,13 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
 <script>
     $("#form_id").trigger("reset");
 
+    // $(document).ready(function() {
+    //     $('.btnImport').click(function() {
+    //         $('#confirmation').modal('show');
+    //     });
+    // });
     $(document).ready(function() {
-        $('.btnImport').click(function() {
-            $('#confirmation').modal('show');
-        });
-    });
-    $(document).ready(function() {
-        $("#saveIMP").click(function() {
+        $(".btnImport").click(function() {
             $("#first_id").removeAttr("required");
             $("#middle_id").removeAttr("required");
             $("#last_id").removeAttr("required");
@@ -584,7 +584,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                                 Import CSV
                             </button>
 
-                            <div class="modal fade" id="confirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <!-- <div class="modal fade" id="confirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -599,38 +599,39 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="modal fade" id="importCSVModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-lg">
                                     <div class="modal-content">
-
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">CSV FILE</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div>
-                                                <label>Select CSV file:</label>
-                                                <input type="file" name="file" id="file" class="file" accept=".csv,.xls,.xlsx">
+                                        <form method="post" enctype="multipart/form-data">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">CSV FILE</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <div>
-                                                <label>Import data:</label>
-                                                <button type="button" value="" class="btnImport" name="importSubmit">
-                                                    Import CSV
-                                                </button>
-                                            </div>
+                                            <div class="modal-body">
+                                                <div>
+                                                    <label>Select CSV file:</label>
+                                                    <input type="file" name="file" id="file" class="file" accept=".csv,.xls,.xlsx">
+                                                </div>
+                                                <div>
+                                                    <label>Import data:</label>
+                                                    <button type="submit" value="" class="btnImportReg" name="importSubmit">
+                                                        Import CSV
+                                                    </button>
+                                                </div>
+                                        </form>
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
-                    <!-- <label class="lblRegistration">Registered Homeowners</label>
+
+
+
+                </div>
+                <!-- <label class="lblRegistration">Registered Homeowners</label>
                     <div class="tblContainer">
                         <table class="tblHomeowners table-hover">
                             <thead>
@@ -684,8 +685,8 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                             <?php endwhile; ?>
                         </table>
                     </div> -->
-                </div>
             </div>
+        </div>
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
