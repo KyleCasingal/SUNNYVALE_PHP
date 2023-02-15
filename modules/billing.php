@@ -159,6 +159,9 @@ $resultSubd = $con->query("SELECT * FROM subdivision");
     .lblTitle {
         font-size: 2vw;
     }
+    .tblBilling-form td{
+        text-align: left;
+    }
 </style>
 
 <body>
@@ -177,54 +180,77 @@ $resultSubd = $con->query("SELECT * FROM subdivision");
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" >
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
                         <label class="form-check-label" for="flexRadioDefault2">
                             Month
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" >
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
                         <label class="form-check-label" for="flexRadioDefault2">
                             Year
                         </label>
                     </div>
                     <div>
-                        <label for="">Select Homeowner</label>
-                        <select name="homeowner" id="homeowner">
-                            <option value="">Select...</option>
-                        </select>
-                        <label for="">From:</label>
-                        <select name="" id="">
-                            <option value="">January</option>
-                            <option value="">Fenruary</option>
-                            <option value="">March</option>
-                            <option value="">April</option>
-                            <option value="">May</option>
-                            <option value="">June</option>
-                            <option value="">July</option>
-                            <option value="">August</option>
-                            <option value="">September</option>
-                            <option value="">October</option>
-                            <option value="">November</option>
-                            <option value="">December</option>
+                        <table class="tblBilling-form">
+                            <tr>
+                                <td> <label for="">Search for Homeowner</label> </td>
+                                <td><input type="search" name="" id=""></td>
+                                <td><label for="">Select Subdivision</label></td>
+                                <td> <select name="homeowner" id="homeowner">
+                                        <option value="">Select...</option>
+                                        <?php
+                                        while ($rowSubdivision = $resultSubd->fetch_assoc()) {
+                                            echo '<option value="' . $rowSubd['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
+                                        }
+                                        ?>
+                                    </select></td>
+                            </tr>
+                            <tr>
+                                <td><label for="">From:</label></td>
+                                <td>
+                                    <select name="" id="">
+                                        <option value="">January</option>
+                                        <option value="">Fenruary</option>
+                                        <option value="">March</option>
+                                        <option value="">April</option>
+                                        <option value="">May</option>
+                                        <option value="">June</option>
+                                        <option value="">July</option>
+                                        <option value="">August</option>
+                                        <option value="">September</option>
+                                        <option value="">October</option>
+                                        <option value="">November</option>
+                                        <option value="">December</option>
 
-                        </select>
-                        <label for="">To:</label>
-                        <select name="" id="">
-                            <option value="">January</option>
-                            <option value="">Fenruary</option>
-                            <option value="">March</option>
-                            <option value="">April</option>
-                            <option value="">May</option>
-                            <option value="">June</option>
-                            <option value="">July</option>
-                            <option value="">August</option>
-                            <option value="">September</option>
-                            <option value="">October</option>
-                            <option value="">November</option>
-                            <option value="">December</option>
+                                    </select>
+                                </td>
+                                <td><label for="">To:</label></td>
+                                <td><select name="" id="">
+                                        <option value="">January</option>
+                                        <option value="">Fenruary</option> 
+                                        <option value="">March</option>
+                                        <option value="">April</option>
+                                        <option value="">May</option>
+                                        <option value="">June</option>
+                                        <option value="">July</option>
+                                        <option value="">August</option>
+                                        <option value="">September</option>
+                                        <option value="">October</option>
+                                        <option value="">November</option>
+                                        <option value="">December</option>
 
-                        </select>
+                                    </select></td>
+                            </tr>
+                        </table>
+
+
+
+
+
+
+
+
                     </div>
                     <button class="btnSubmitPost" name="submitPost" id="submitPost">Generate</button>
                 </div>
