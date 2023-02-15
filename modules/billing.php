@@ -29,11 +29,11 @@ $resultSubd = $con->query("SELECT * FROM subdivision");
         border: 0;
         border-radius: 0.8vw;
         margin-bottom: 1vw;
+        font-family: 'Poppins', sans-serif;
     }
 
     select {
         background-color: white;
-        font-family: 'Poppins', sans-serif;
         margin-right: 2vw;
         width: 15vw;
         max-width: 15vw;
@@ -42,6 +42,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision");
         border: 0;
         border-radius: 0.8vw;
         margin-bottom: 1vw;
+        font-family: 'Poppins', sans-serif;
     }
 
     input[type="file"] {
