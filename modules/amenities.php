@@ -446,20 +446,19 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
               }
               ?>
             </select>
+            <select name="minsFrom" id="from3" required>
+              <option value="">mins</option>
+              <?php
+              for ($x = 0; $x <= 59; $x++) {
+                $x = sprintf("%02d", $x);
+                echo "<option value='$x'>$x";
+              }
+              ?>
+            </select>
             <select name="ampmFrom" id="from2" required>
               <option value="">am/pm</option>
-              <option value="am" <?php
-                                  if (isset($_POST['compute'])) {
-                                    if ($_POST['ampmFrom'] == "am")
-                                      echo 'selected="selected"';
-                                  }
-                                  ?>>am</option>
-              <option value="pm" <?php
-                                  if (isset($_POST['compute'])) {
-                                    if ($_POST['ampmFrom'] == "pm")
-                                      echo 'selected="selected"';
-                                  }
-                                  ?>>pm</option>
+              <option value="am">am</option>
+              <option value="pm">pm</option>
             </select>
             <label>To</label>
             <select name="hrTo" id="to1" required>
@@ -467,31 +466,29 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
               <?php
               for ($x = 1; $x <= 12; $x++) {
                 $x = sprintf("%02d", $x);
-                echo "<option value='$x'";
-                if (isset($_POST['compute'])) {
-                  if ($_POST['hrTo'] == $x)
-                    echo "selected='selected'";
-                }
-                echo ">  $x ";
+                echo "<option value='$x'> $x ";
+              }
+              ?>
+            </select>
+            <select name="minsTo" id="to3" required>
+              <option value="">mins</option>
+              <?php
+              for ($x = 0; $x <= 59; $x++) {
+                $x = sprintf("%02d", $x);
+                echo "<option value='$x'>$x";
               }
               ?>
             </select>
             </option>
             <select name="ampmTo" id="to2" required>
               <option value="">am/pm</option>
-              <option value="am" <?php
-                                  if (isset($_POST['compute'])) {
-                                    if ($_POST['ampmTo'] == "am")
-                                      echo 'selected="selected"';
-                                  }
-                                  ?>>am</option>
-              <option value="pm" <?php
-                                  if (isset($_POST['compute'])) {
-                                    if ($_POST['ampmTo'] == "pm")
-                                      echo 'selected="selected"';
-                                  }
-                                  ?>>pm</option>
+              <option value="am">am</option>
+              <option value="pm">pm</option>
             </select>
+          </div>
+          <div>
+            <label>Total Hours:</label>
+            <input type="text" id="total_id" size="6">
           </div>
           <div>
             <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>

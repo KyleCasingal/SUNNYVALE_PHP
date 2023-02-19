@@ -1,5 +1,8 @@
 <?php
-require_once './process.php';
+require './process.php';
+if (isset($_SESSION['user_id'])) {
+    header("Location: ./modules/blogHome.php");
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
