@@ -1,7 +1,8 @@
 <?php
+require '../marginals/topbar.php';
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
 $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
-$resultSubd = $con->query("SELECT * FROM subdivision");
+$resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
 
 ?>
 <!DOCTYPE html>
@@ -157,24 +158,255 @@ $resultSubd = $con->query("SELECT * FROM subdivision");
     }
 
     .lblTitle {
-        font-size: 2vw;
+        font-size: 1.5vw;
     }
-    .tblBilling-form td{
+
+    .tblBilling-form td {
         text-align: left;
+        border: none;
+        padding: 0;
+        vertical-align: center;
+    }
+
+    .accordion {
+        background-color: rgb(170, 192, 175, 0.3);
+        border: none !important;
+    }
+
+    .accordion-header {
+        border: none !important;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .accordion-button {
+        border: none !important;
+        background-color: rgb(170, 192, 175, 0.3);
+        font-size: 1.2vw;
+    }
+
+    .accordion-body {
+        background-color: rgb(170, 192, 175, 0.3);
+        border: none !important;
+    }
+
+    .accordion-collapse {
+        border: none !important;
     }
 </style>
 
 <body>
-    <?php require '../marginals/topbar.php'; ?>
+
     <div class="treasurer">
         <?php require '../marginals/sidebarTreasurerPanel.php'; ?>
         <div class="treasurerPanel">
             <div class="monthlyDues" id="monthlyDues">
                 <div class="treasurerForm">
-                    <label class="lblTitle">Generate billing</label>
-                    <label>Generate for: </label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                    <label class="lblTitle">Generate billing for:</label>
+
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Homeowner
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <table class="tblBilling-form">
+                                        <tr>
+                                            <td> <label for="">Search for Homeowner</label> </td>
+                                            <td><input type="search" name="" id=""></td>
+                                            <td><label for="">Select Subdivision</label></td>
+                                            <td> <select name="homeowner" id="homeowner">
+                                                    <option value="">Select...</option>
+                                                    <?php
+                                                    while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
+                                                        echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
+                                                    }
+                                                    ?>
+                                                </select></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="">From:</label></td>
+                                            <td>
+                                                <select name="" id="">
+                                                    <option value="">January</option>
+                                                    <option value="">Fenruary</option>
+                                                    <option value="">March</option>
+                                                    <option value="">April</option>
+                                                    <option value="">May</option>
+                                                    <option value="">June</option>
+                                                    <option value="">July</option>
+                                                    <option value="">August</option>
+                                                    <option value="">September</option>
+                                                    <option value="">October</option>
+                                                    <option value="">November</option>
+                                                    <option value="">December</option>
+
+                                                </select>
+                                            </td>
+                                            <td><label for="">To:</label></td>
+                                            <td><select name="" id="">
+                                                    <option value="">January</option>
+                                                    <option value="">Fenruary</option>
+                                                    <option value="">March</option>
+                                                    <option value="">April</option>
+                                                    <option value="">May</option>
+                                                    <option value="">June</option>
+                                                    <option value="">July</option>
+                                                    <option value="">August</option>
+                                                    <option value="">September</option>
+                                                    <option value="">October</option>
+                                                    <option value="">November</option>
+                                                    <option value="">December</option>
+
+                                                </select></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button class="btnSubmitPost" name="billHomeowner" id="billHomeowner">Generate</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Month
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <table class="tblBilling-form">
+                                        <tr>
+                                            <td><label for="">Select Subdivision</label></td>
+                                            <td> <select name="homeowner" id="homeowner">
+                                                    <option value="">Select...</option>
+                                                    <?php
+                                                    while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
+                                                        echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
+                                                    }
+                                                    ?>
+                                                </select></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="">From:</label></td>
+                                            <td>
+                                                <select name="" id="">
+                                                    <option value="">January</option>
+                                                    <option value="">Fenruary</option>
+                                                    <option value="">March</option>
+                                                    <option value="">April</option>
+                                                    <option value="">May</option>
+                                                    <option value="">June</option>
+                                                    <option value="">July</option>
+                                                    <option value="">August</option>
+                                                    <option value="">September</option>
+                                                    <option value="">October</option>
+                                                    <option value="">November</option>
+                                                    <option value="">December</option>
+
+                                                </select>
+                                            </td>
+                                            <td><label for="">To:</label></td>
+                                            <td><select name="" id="">
+                                                    <option value="">January</option>
+                                                    <option value="">Fenruary</option>
+                                                    <option value="">March</option>
+                                                    <option value="">April</option>
+                                                    <option value="">May</option>
+                                                    <option value="">June</option>
+                                                    <option value="">July</option>
+                                                    <option value="">August</option>
+                                                    <option value="">September</option>
+                                                    <option value="">October</option>
+                                                    <option value="">November</option>
+                                                    <option value="">December</option>
+
+                                                </select></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button class="btnSubmitPost" name="billMonth" id="billMonth">Generate</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Annual
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <table class="tblBilling-form">
+                                        <tr>
+                                            <td> <label for="">Search for Homeowner</label> </td>
+                                            <td><input type="search" name="" id=""></td>
+                                            <td><label for="">Select Subdivision</label></td>
+                                            <td> <select name="homeowner" id="homeowner">
+                                                    <option value="">Select...</option>
+                                                    <?php
+                                                    while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
+                                                        echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
+                                                    }
+                                                    ?>
+                                                </select></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="">From:</label></td>
+                                            <td>
+                                                <select name="" id="">
+                                                    <option value="">January</option>
+                                                    <option value="">Fenruary</option>
+                                                    <option value="">March</option>
+                                                    <option value="">April</option>
+                                                    <option value="">May</option>
+                                                    <option value="">June</option>
+                                                    <option value="">July</option>
+                                                    <option value="">August</option>
+                                                    <option value="">September</option>
+                                                    <option value="">October</option>
+                                                    <option value="">November</option>
+                                                    <option value="">December</option>
+
+                                                </select>
+                                            </td>
+                                            <td><label for="">To:</label></td>
+                                            <td><select name="" id="">
+                                                    <option value="">January</option>
+                                                    <option value="">Fenruary</option>
+                                                    <option value="">March</option>
+                                                    <option value="">April</option>
+                                                    <option value="">May</option>
+                                                    <option value="">June</option>
+                                                    <option value="">July</option>
+                                                    <option value="">August</option>
+                                                    <option value="">September</option>
+                                                    <option value="">October</option>
+                                                    <option value="">November</option>
+                                                    <option value="">December</option>
+
+                                                </select></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button class="btnSubmitPost" name="billAnnual" id="billAnnual">Generate</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="HomeownerRadio" data-toggle="collapse" data-target="#collapseOne">
                         <label class="form-check-label" for="flexRadioDefault1">
                             Homeowner
                         </label>
@@ -190,69 +422,8 @@ $resultSubd = $con->query("SELECT * FROM subdivision");
                         <label class="form-check-label" for="flexRadioDefault2">
                             Year
                         </label>
-                    </div>
-                    <div>
-                        <table class="tblBilling-form">
-                            <tr>
-                                <td> <label for="">Search for Homeowner</label> </td>
-                                <td><input type="search" name="" id=""></td>
-                                <td><label for="">Select Subdivision</label></td>
-                                <td> <select name="homeowner" id="homeowner">
-                                        <option value="">Select...</option>
-                                        <?php
-                                        while ($rowSubdivision = $resultSubd->fetch_assoc()) {
-                                            echo '<option value="' . $rowSubd['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
-                                        }
-                                        ?>
-                                    </select></td>
-                            </tr>
-                            <tr>
-                                <td><label for="">From:</label></td>
-                                <td>
-                                    <select name="" id="">
-                                        <option value="">January</option>
-                                        <option value="">Fenruary</option>
-                                        <option value="">March</option>
-                                        <option value="">April</option>
-                                        <option value="">May</option>
-                                        <option value="">June</option>
-                                        <option value="">July</option>
-                                        <option value="">August</option>
-                                        <option value="">September</option>
-                                        <option value="">October</option>
-                                        <option value="">November</option>
-                                        <option value="">December</option>
+                    </div> -->
 
-                                    </select>
-                                </td>
-                                <td><label for="">To:</label></td>
-                                <td><select name="" id="">
-                                        <option value="">January</option>
-                                        <option value="">Fenruary</option> 
-                                        <option value="">March</option>
-                                        <option value="">April</option>
-                                        <option value="">May</option>
-                                        <option value="">June</option>
-                                        <option value="">July</option>
-                                        <option value="">August</option>
-                                        <option value="">September</option>
-                                        <option value="">October</option>
-                                        <option value="">November</option>
-                                        <option value="">December</option>
-
-                                    </select></td>
-                            </tr>
-                        </table>
-
-
-
-
-
-
-
-
-                    </div>
-                    <button class="btnSubmitPost" name="submitPost" id="submitPost">Generate</button>
                 </div>
                 <!-- <label class="lblTable">Recent Monthly Dues Payments</label>
                 <div class="table-responsive">

@@ -1,4 +1,5 @@
 <?php
+require '../marginals/topbar.php';
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
 $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
 $resultSubd = $con->query("SELECT * FROM subdivision");
@@ -156,7 +157,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision");
 </style>
 
 <body>
-  <?php require '../marginals/topbar.php'; ?>
+  
   <div class="treasurer">
     <?php require '../marginals/sidebarTreasurerPanel.php'; ?>
     <div class="treasurerPanel">
