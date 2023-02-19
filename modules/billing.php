@@ -1,8 +1,10 @@
 <?php
 require '../marginals/topbar.php';
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
+$row = $result->fetch_assoc();
 $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
 $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
+$resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ")
 
 ?>
 <!DOCTYPE html>
@@ -39,7 +41,7 @@ $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision
         width: 15vw;
         max-width: 15vw;
         height: 2vw;
-        font-size: 1.2vw;
+        font-size: 1vw;
         border: 0;
         border-radius: 0.8vw;
         margin-bottom: 1vw;
@@ -53,7 +55,7 @@ $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision
     label {
         font-family: 'Poppins', sans-serif;
         margin-right: 0.5vw;
-        font-size: max(1.5vw, min(10px));
+        font-size: max(1.2vw, min(10px));
         padding: 0.5vw;
     }
 
@@ -162,10 +164,11 @@ $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision
     }
 
     .tblBilling-form td {
+
         text-align: left;
         border: none;
         padding: 0;
-        vertical-align: center;
+        vertical-align: top;
     }
 
     .accordion {
@@ -192,6 +195,10 @@ $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision
     .accordion-collapse {
         border: none !important;
     }
+    .Homeowner-table{
+        width: 100%;
+        font-family: 'Poppins', sans-serif;
+    }
 </style>
 
 <body>
@@ -214,10 +221,10 @@ $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision
                                 <div class="accordion-body">
                                     <table class="tblBilling-form">
                                         <tr>
-                                            <td> <label for="">Search for Homeowner</label> </td>
-                                            <td><input type="search" name="" id=""></td>
-                                            <td><label for="">Select Subdivision</label></td>
-                                            <td> <select name="homeowner" id="homeowner">
+                                            <td><label>Name:</label></td>
+                                            <td><input type="text" readonly></td>
+                                            <td><label for="">Select Subdivision:</label></td>
+                                            <td> <select name="subdivision" id="subdivision">
                                                     <option value="">Select...</option>
                                                     <?php
                                                     while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
@@ -226,6 +233,7 @@ $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision
                                                     ?>
                                                 </select></td>
                                         </tr>
+
                                         <tr>
                                             <td><label for="">From:</label></td>
                                             <td>
@@ -425,35 +433,38 @@ $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision
                     </div> -->
 
                 </div>
-                <!-- <label class="lblTable">Recent Monthly Dues Payments</label>
-                <div class="table-responsive">
-                    <table id="dtBasicExample" class="table table-hover" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
+                <div class="treasurerForm">
+                    <div class="filter-area">
+                        <label>Search:</label>
+                        <input type="search" name="" id="">
+                        <label for="">filter by Subdivision:</label>
+                        <select name="homeowner" id="homeowner">
+                            <option value="">Select...</option>
+                            <?php
+                            while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
+                                echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="table-area">
+                        <table class="Homeowner-table">
+                            <thead>
+                                <th>Full name</th>
                                 <th>Subdivision</th>
-                                <th>Month</th>
-                                <th>Year</th>
-                                <th>Address</th>
-                                <th>Paid at</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($row = $resultDues->fetch_assoc()) : ?>
+                                <th>Email</th>
+                            </thead>
+                            <?php while ($row = $resultHomeowners->fetch_assoc()) : ?>
                                 <tr>
-                                    <td><?php echo $row['homeowner_name'] ?></td>
+                                    <td><?php echo $row['fullname'] ?></td>
                                     <td><?php echo $row['subdivision'] ?></td>
-                                    <td><?php echo $row['month'] ?></td>
-                                    <td><?php echo $row['year'] ?></td>
-                                    <td><?php echo $row['address'] ?></td>
-                                    <td><?php echo $row['paid_at'] ?></td>
-                                    <td><?php echo $row['status'] ?></td>
-                                <?php endwhile; ?>
+                                    <td><?php echo $row['email_address'] ?></td>
                                 </tr>
-                        </tbody>
-                    </table>
-                </div> -->
+                            <?php endwhile; ?>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
