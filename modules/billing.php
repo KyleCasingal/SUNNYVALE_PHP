@@ -195,10 +195,17 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
     .accordion-collapse {
         border: none !important;
     }
-    .Homeowner-table{
+
+    .Homeowner-table {
         width: 100%;
         font-family: 'Poppins', sans-serif;
     }
+
+    .Homeowner-table-data-row:hover {
+        background-color: lightgray;
+    }
+
+   
 </style>
 
 <body>
@@ -455,7 +462,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                 <th>Email</th>
                             </thead>
                             <?php while ($row = $resultHomeowners->fetch_assoc()) : ?>
-                                <tr>
+                                <tr class="Homeowner-table-data-row">
                                     <td><?php echo $row['fullname'] ?></td>
                                     <td><?php echo $row['subdivision'] ?></td>
                                     <td><?php echo $row['email_address'] ?></td>
