@@ -227,14 +227,10 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
             }
         });
     });
-
-    $('#accordion-button').click(function() {
-        // SEARCH TEXTBOX CONTROLS INSIDE A DIV AND CLEAR THE VALUES.
-        $('#accordion-body').find('input:text').each(function() {
-            $('input:text[id=' + $(this).attr('id') + ']').val('');
+    $(document).ready(function() {
+        $('.accordion-button').on("click", function(e) {
+            $("#subdivisionHomeowner_id").val("0");
         });
-
-        
     });
 </script>
 
@@ -262,7 +258,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                             <td><input type="text" readonly></td>
                                             <td><label for="">Select Subdivision:</label></td>
                                             <td> <select name="subdivision" id="subdivisionHomeowner_id">
-                                                    <option value="">Select...</option>
+                                                    <option value="0">Select...</option>
                                                     <?php
                                                     while ($rowSubdivision = $resultSubdivision->fetch_assoc()) : {
                                                             echo '<option value="' . $rowSubdivision['monthly_dues_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
@@ -334,7 +330,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                             </h2>
                             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                 <div class="accordion-body" id="accordion-body">
-                                    <form action="" method="post">
+                                    <form action="" method="post" id="myForm">
                                         <table class="tblBilling-form">
                                             <tr>
                                                 <td><label for="">Select Subdivision</label></td>
