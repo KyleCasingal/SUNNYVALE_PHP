@@ -920,4 +920,22 @@ if (isset($_POST['billAnnual'])){
     $result = mysqli_query($con, $sql);
     $i++;
   }
-} 
+}
+
+//retrieve monthly dues amount
+if (isset($_POST['monthly_dues_id'])) {
+  $monthly_dues_id = $_POST['monthly_dues_id'];
+  $result = $con->query("SELECT * FROM monthly_dues WHERE monthly_dues_id=$monthly_dues_id");
+  $row = $result->fetch_assoc();
+
+  if (mysqli_num_rows($result) > 0) {
+    echo '<script type="text/javascript"> 
+  document.getElementById("subdivisionMonthlyAmount").setAttribute("value",' . $row['amount'] . ');
+  
+</script>';
+  } else {
+    echo '<script type="text/javascript"> 
+  document.getElementById("subdivisionMonthlyAmount").setAttribute("value","");
+</script>';
+  }
+}

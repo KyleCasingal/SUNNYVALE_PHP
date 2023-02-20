@@ -1,12 +1,13 @@
 <?php
 require '../marginals/topbar.php';
-$con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
+
 $row = $result->fetch_assoc();
 $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
-$resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
-$resultSubdivision1 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
-$resultSubdivision2 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
-$resultSubdivision3 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
+$resultSubdivision4 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
+$resultSubdivision = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
+$resultSubdivision1 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
+$resultSubdivision2 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
+$resultSubdivision3 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
 $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ")
 
 ?>
@@ -19,6 +20,8 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
     <meta name="theme-color" content="#000000" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <title>SUNNYVALE</title>
 </head>
 <style>
@@ -208,6 +211,32 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
         background-color: lightgray;
     }
 </style>
+<script>
+    $(document).ready(function() {
+        $("#monthly_dues_id").on('click', function() {
+            var monthly_dues_id = $(this).val();
+            if (monthly_dues_id) {
+                $.ajax({
+                    type: 'POST',
+                    url: '../process.php/',
+                    data: 'monthly_dues_id=' + monthly_dues_id,
+                    success: function(html) {
+                        $("#subdivisionMonthlyAmount").html(html);
+                    }
+                });
+            }
+        });
+    });
+
+    $('#accordion-button').click(function() {
+        // SEARCH TEXTBOX CONTROLS INSIDE A DIV AND CLEAR THE VALUES.
+        $('#accordion-body').find('input:text').each(function() {
+            $('input:text[id=' + $(this).attr('id') + ']').val('');
+        });
+
+        
+    });
+</script>
 
 <body>
 
@@ -221,22 +250,22 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <button class="accordion-button" id="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                     Homeowner
                                 </button>
                             </h2>
                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
+                                <div class="accordion-body" id="accordion-body">
                                     <table class="tblBilling-form">
                                         <tr>
                                             <td><label>Name:</label></td>
                                             <td><input type="text" readonly></td>
                                             <td><label for="">Select Subdivision:</label></td>
-                                            <td> <select name="subdivision" id="subdivision">
+                                            <td> <select name="subdivision" id="subdivisionHomeowner_id">
                                                     <option value="">Select...</option>
                                                     <?php
                                                     while ($rowSubdivision = $resultSubdivision->fetch_assoc()) : {
-                                                            echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
+                                                            echo '<option value="' . $rowSubdivision['monthly_dues_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
                                                         }
                                                     ?>
                                                     <?php endwhile; ?>
@@ -304,68 +333,70 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                 </button>
                             </h2>
                             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <table class="tblBilling-form">
-                                        <tr>
-                                            <td><label for="">Select Subdivision</label></td>
-                                            <td> <select name="subdivision-monthly" id="subdivision-monthly">
-                                                    <option value="">Select...</option>
-                                                    <?php
-                                                    while ($rowSubdivision1 = $resultSubdivision1->fetch_assoc()) : {
-                                                            echo '<option value="' . $rowSubdivision1['subdivision_id'] . '">' . $rowSubdivision1['subdivision_name'] . '</option>';
-                                                        }
-                                                    ?>
-                                                    <?php endwhile; ?>
-                                                </select></td>
-                                        </tr>
-                                        <tr>
-                                            <td><label for="">From:</label></td>
-                                            <td>
-                                                <select name="" id="">
-                                                    <option value="">January</option>
-                                                    <option value="">Fenruary</option>
-                                                    <option value="">March</option>
-                                                    <option value="">April</option>
-                                                    <option value="">May</option>
-                                                    <option value="">June</option>
-                                                    <option value="">July</option>
-                                                    <option value="">August</option>
-                                                    <option value="">September</option>
-                                                    <option value="">October</option>
-                                                    <option value="">November</option>
-                                                    <option value="">December</option>
+                                <div class="accordion-body" id="accordion-body">
+                                    <form action="" method="post">
+                                        <table class="tblBilling-form">
+                                            <tr>
+                                                <td><label for="">Select Subdivision</label></td>
+                                                <td> <select name="subdivision-monthly" id="monthly_dues_id">
+                                                        <option value="0">Select...</option>
+                                                        <?php
+                                                        while ($rowSubdivision1 = $resultSubdivision1->fetch_assoc()) : {
+                                                                echo '<option value="' . $rowSubdivision1['monthly_dues_id'] . '">' . $rowSubdivision1['subdivision_name'] . '</option>';
+                                                            }
+                                                        ?>
+                                                        <?php endwhile; ?>
+                                                    </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label for="">From:</label></td>
+                                                <td>
+                                                    <select name="" id="">
+                                                        <option value="">January</option>
+                                                        <option value="">Fenruary</option>
+                                                        <option value="">March</option>
+                                                        <option value="">April</option>
+                                                        <option value="">May</option>
+                                                        <option value="">June</option>
+                                                        <option value="">July</option>
+                                                        <option value="">August</option>
+                                                        <option value="">September</option>
+                                                        <option value="">October</option>
+                                                        <option value="">November</option>
+                                                        <option value="">December</option>
 
-                                                </select>
-                                            </td>
-                                            <td><label for="">To:</label></td>
-                                            <td><select name="" id="">
-                                                    <option value="">January</option>
-                                                    <option value="">Fenruary</option>
-                                                    <option value="">March</option>
-                                                    <option value="">April</option>
-                                                    <option value="">May</option>
-                                                    <option value="">June</option>
-                                                    <option value="">July</option>
-                                                    <option value="">August</option>
-                                                    <option value="">September</option>
-                                                    <option value="">October</option>
-                                                    <option value="">November</option>
-                                                    <option value="">December</option>
+                                                    </select>
+                                                </td>
+                                                <td><label for="">To:</label></td>
+                                                <td><select name="" id="">
+                                                        <option value="">January</option>
+                                                        <option value="">Fenruary</option>
+                                                        <option value="">March</option>
+                                                        <option value="">April</option>
+                                                        <option value="">May</option>
+                                                        <option value="">June</option>
+                                                        <option value="">July</option>
+                                                        <option value="">August</option>
+                                                        <option value="">September</option>
+                                                        <option value="">October</option>
+                                                        <option value="">November</option>
+                                                        <option value="">December</option>
 
-                                                </select></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label for="">Amount: </label>
-                                            </td>
-                                            <td><input type="text" value="" readonly></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <button class="btnSubmitPost" name="billMonth" id="billMonth">Generate</button>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                                    </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label for="">Amount: </label>
+                                                </td>
+                                                <td><input type="text" value="" id="subdivisionMonthlyAmount" readonly></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <button class="btnSubmitPost" name="billMonth" id="billMonth">Generate</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -376,17 +407,17 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                 </button>
                             </h2>
                             <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
+                                <div class="accordion-body" id="accordion-body">
                                     <table class="tblBilling-form">
                                         <tr>
                                             <td> <label for="">Search for Homeowner</label> </td>
                                             <td><input type="search" name="" id=""></td>
                                             <td><label for="">Select Subdivision</label></td>
-                                            <td> <select name="subdivision-annual" id="subdivision-annual">
+                                            <td> <select name="subdivision-annual" id="subdivisionAnnual_id">
                                                     <option value="">Select...</option>
                                                     <?php
                                                     while ($rowSubdivision2 = $resultSubdivision2->fetch_assoc()) : {
-                                                            echo '<option value="' . $rowSubdivision2['subdivision_id'] . '">' . $rowSubdivision2['subdivision_name'] . '</option>';
+                                                            echo '<option value="' . $rowSubdivision2['monthly_dues_id'] . '">' . $rowSubdivision2['subdivision_name'] . '</option>';
                                                         }
                                                     ?>
                                                     <?php endwhile; ?>
@@ -447,26 +478,6 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                             </div>
                         </div>
                     </div>
-
-                    <!-- <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="HomeownerRadio" data-toggle="collapse" data-target="#collapseOne">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Homeowner
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            Month
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            Year
-                        </label>
-                    </div> -->
-
                 </div>
                 <div class="treasurerForm">
                     <div class="filter-area">
@@ -477,7 +488,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                             <option value="">Select...</option>
                             <?php
                             while ($rowSubdivision3 = $resultSubdivision3->fetch_assoc()) : {
-                                    echo '<option value="' . $rowSubdivision3['subdivision_id'] . '">' . $rowSubdivision3['subdivision_name'] . '</option>';
+                                    echo '<option value="' . $rowSubdivision3['monthly_dues_id'] . '">' . $rowSubdivision3['subdivision_name'] . '</option>';
                                 }
                             ?>
                             <?php endwhile; ?>
