@@ -2,7 +2,7 @@
 require './process.php';
 if (isset($_SESSION['user_id'])) {
     header("Location: ./modules/blogHome.php");
-  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,10 +18,13 @@ if (isset($_SESSION['user_id'])) {
     <title>SUNNYVALE</title>
 </head>
 <style>
+    @import "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css";
+
     * {
         margin: 0;
         font-family: 'Poppins', sans-serif;
     }
+
 
     .topbar {
         top: 0;
@@ -180,10 +183,31 @@ if (isset($_SESSION['user_id'])) {
         align-items: center;
         padding-bottom: 2vw;
     }
+
+    .nav-colored {
+        background-color: #000;
+    }
+
+    .nav-transparent {
+        /* background-color: transparent; */
+    }
 </style>
 
+<script>
+    var myNav = document.getElementById('mynav');
+    window.onscroll = function() {
+        if (document.body.scrollTop >= 200 || document.documentElement.scrollTop >= 200) {
+            myNav.classList.add("nav-colored");
+            myNav.classList.remove("nav-transparent");
+        } else {
+            myNav.classList.add("nav-transparent");
+            myNav.classList.remove("nav-colored");
+        }
+    };
+</script>
+
 <body>
-    <div class="topbar">
+    <div class="topbar" id="mynav">
         <?php
         require './marginals/topbarLanding.php';
         $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' ORDER BY post_id DESC") or die($mysqli->error);

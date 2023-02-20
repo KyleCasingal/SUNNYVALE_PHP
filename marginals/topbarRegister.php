@@ -225,10 +225,10 @@ if (isset($_SESSION['user_id'])) {
         <div class="topRegister">
             <div class="topLeftRegister">
                 <img src="..\img\logoSV.png" alt="" />
-                <i class="topIconRegister">SUNNYVALE</i>
+                <i class="topIconRegister" onclick="location.href='../index.php'">SUNNYVALE</i>
             </div>
             <div class="topRightRegister">
-                <p>Already activated your ccount?</p>
+                <p>Already activated your account?</p>
                 <button class="loginButtonReg" name="loginButtonReg" id="loginButtonReg">
                     Login
                 </button>

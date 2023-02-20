@@ -135,9 +135,9 @@
       <button class="registerButton" name="register" id="register">
         Activate
       </button>
-      <button class="guestButtonRegister" id="" name="guestButtonRegister" formnovalidate>
+      <!-- <button class="guestButtonRegister" id="" name="guestButtonRegister" formnovalidate>
         Continue as Guest
-      </button>
+      </button> -->
     </form>
   </div>
   <?php

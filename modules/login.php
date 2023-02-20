@@ -142,9 +142,9 @@
       <button class="loginButton" id="login" name="login">
         Login
       </button>
-      <button class="guestButtonLogin" id="guestButtonLogin" name="guestButtonLogin" formnovalidate>
+      <!-- <button class="guestButtonLogin" id="guestButtonLogin" name="guestButtonLogin" formnovalidate>
         Continue as Guest
-      </button>
+      </button> -->
       <div class="verifyLinkLbl">
         <p>Verify your account </p>
         <a class="verifyLink" href="../modules/inputEmailVerify.php"> here</a>

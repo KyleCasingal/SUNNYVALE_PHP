@@ -204,8 +204,6 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
     .Homeowner-table-data-row:hover {
         background-color: lightgray;
     }
-
-   
 </style>
 
 <body>
@@ -234,11 +232,15 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                             <td> <select name="subdivision" id="subdivision">
                                                     <option value="">Select...</option>
                                                     <?php
-                                                    while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
+                                                    while ($rowSubdivision = $resultSubdivision->fetch_assoc()) : {
                                                         echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
                                                     }
                                                     ?>
-                                                </select></td>
+                                                    <?php endwhile; ?>
+
+                                                </select>
+
+                                            </td>
                                         </tr>
 
                                         <tr>
@@ -297,13 +299,14 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                     <table class="tblBilling-form">
                                         <tr>
                                             <td><label for="">Select Subdivision</label></td>
-                                            <td> <select name="homeowner" id="homeowner">
+                                            <td> <select name="subdivision-monthly" id="subdivision-monthly">
                                                     <option value="">Select...</option>
                                                     <?php
-                                                    while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
-                                                        echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
+                                                    while ($rowSubdivision1 = $resultSubdivision->fetch_assoc()) : {
+                                                        echo '<option value="' . $rowSubdivision1['subdivision_id'] . '">' . $rowSubdivision1['subdivision_name'] . '</option>';
                                                     }
                                                     ?>
+                                                     <?php endwhile; ?>
                                                 </select></td>
                                         </tr>
                                         <tr>
@@ -364,13 +367,14 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                             <td> <label for="">Search for Homeowner</label> </td>
                                             <td><input type="search" name="" id=""></td>
                                             <td><label for="">Select Subdivision</label></td>
-                                            <td> <select name="homeowner" id="homeowner">
+                                            <td> <select name="subdivision-annual" id="subdivision-annual">
                                                     <option value="">Select...</option>
                                                     <?php
-                                                    while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
-                                                        echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
-                                                    }
+                                                    while ($rowSubdivision2 = $resultSubdivision->fetch_assoc()) : {
+                                                            echo '<option value="' . $rowSubdivision2['subdivision_id'] . '">' . $rowSubdivision2['subdivision_name'] . '</option>';
+                                                        }
                                                     ?>
+                                                    <?php endwhile; ?>
                                                 </select></td>
                                         </tr>
                                         <tr>
@@ -448,10 +452,11 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                         <select name="homeowner" id="homeowner">
                             <option value="">Select...</option>
                             <?php
-                            while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
-                                echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
+                            while ($rowSubdivision3 = $resultSubdivision->fetch_assoc()) : {
+                                echo '<option value="' . $rowSubdivision3['subdivision_id'] . '">' . $rowSubdivision3['subdivision_name'] . '</option>';
                             }
                             ?>
+                             <?php endwhile; ?>
                         </select>
                     </div>
                     <div class="table-area">

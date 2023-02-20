@@ -229,12 +229,12 @@ if (isset($_SESSION['user_id'])) {
     <div class="topLogin">
       <div class="topLeftLogin">
         <img src="..\img\logoSV.png" alt= />
-        <i class="topIconLogin">SUNNYVALE</i>
+        <i class="topIconLogin" onclick="location.href='../index.php'">SUNNYVALE</i>
       </div>
       <div class="topRightLogin">
         <p>Already an Association Member?</p>
         <button class="registerButtonTop" name="registerButtonTop" id="registerButtonTop">
-          Register your Account
+          Activate your Account
         </button>
       </div>
     </div>
