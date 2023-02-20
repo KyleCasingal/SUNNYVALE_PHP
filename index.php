@@ -26,10 +26,6 @@ if (isset($_SESSION['user_id'])) {
     }
 
 
-    .topbar {
-        top: 0;
-        position: sticky;
-    }
 
     html {
         scroll-behavior: smooth;
@@ -184,30 +180,26 @@ if (isset($_SESSION['user_id'])) {
         padding-bottom: 2vw;
     }
 
-    .nav-colored {
-        background-color: #000;
+    .navbar-fixed-top.scrolled{
+        top: 0;
+        position: sticky;
+        background-color: gray;
+        transition: background-color 200ms linear;
     }
-
-    .nav-transparent {
-        /* background-color: transparent; */
-    }
+    
 </style>
 
 <script>
-    var myNav = document.getElementById('mynav');
-    window.onscroll = function() {
-        if (document.body.scrollTop >= 200 || document.documentElement.scrollTop >= 200) {
-            myNav.classList.add("nav-colored");
-            myNav.classList.remove("nav-transparent");
-        } else {
-            myNav.classList.add("nav-transparent");
-            myNav.classList.remove("nav-colored");
-        }
-    };
+    $(function() {
+        $(document).scroll(function() {
+            var $nav = $(".navbar-fixed-top");
+            $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+        });
+    });
 </script>
 
 <body>
-    <div class="topbar" id="mynav">
+    <div class="navbar-fixed-top">
         <?php
         require './marginals/topbarLanding.php';
         $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' ORDER BY post_id DESC") or die($mysqli->error);
