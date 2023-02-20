@@ -4,6 +4,9 @@ $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con
 $row = $result->fetch_assoc();
 $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
 $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
+$resultSubdivision1 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
+$resultSubdivision2 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
+$resultSubdivision3 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
 $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ")
 
 ?>
@@ -233,8 +236,8 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                                     <option value="">Select...</option>
                                                     <?php
                                                     while ($rowSubdivision = $resultSubdivision->fetch_assoc()) : {
-                                                        echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
-                                                    }
+                                                            echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
+                                                        }
                                                     ?>
                                                     <?php endwhile; ?>
 
@@ -281,6 +284,12 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                         </tr>
                                         <tr>
                                             <td>
+                                                <label for="">Amount: </label>
+                                            </td>
+                                            <td><input type="text" value="" readonly></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
                                                 <button class="btnSubmitPost" name="billHomeowner" id="billHomeowner">Generate</button>
                                             </td>
                                         </tr>
@@ -302,11 +311,11 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                             <td> <select name="subdivision-monthly" id="subdivision-monthly">
                                                     <option value="">Select...</option>
                                                     <?php
-                                                    while ($rowSubdivision1 = $resultSubdivision->fetch_assoc()) : {
-                                                        echo '<option value="' . $rowSubdivision1['subdivision_id'] . '">' . $rowSubdivision1['subdivision_name'] . '</option>';
-                                                    }
+                                                    while ($rowSubdivision1 = $resultSubdivision1->fetch_assoc()) : {
+                                                            echo '<option value="' . $rowSubdivision1['subdivision_id'] . '">' . $rowSubdivision1['subdivision_name'] . '</option>';
+                                                        }
                                                     ?>
-                                                     <?php endwhile; ?>
+                                                    <?php endwhile; ?>
                                                 </select></td>
                                         </tr>
                                         <tr>
@@ -347,6 +356,12 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                         </tr>
                                         <tr>
                                             <td>
+                                                <label for="">Amount: </label>
+                                            </td>
+                                            <td><input type="text" value="" readonly></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
                                                 <button class="btnSubmitPost" name="billMonth" id="billMonth">Generate</button>
                                             </td>
                                         </tr>
@@ -370,7 +385,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                             <td> <select name="subdivision-annual" id="subdivision-annual">
                                                     <option value="">Select...</option>
                                                     <?php
-                                                    while ($rowSubdivision2 = $resultSubdivision->fetch_assoc()) : {
+                                                    while ($rowSubdivision2 = $resultSubdivision2->fetch_assoc()) : {
                                                             echo '<option value="' . $rowSubdivision2['subdivision_id'] . '">' . $rowSubdivision2['subdivision_name'] . '</option>';
                                                         }
                                                     ?>
@@ -415,7 +430,16 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                         </tr>
                                         <tr>
                                             <td>
-                                                <button class="btnSubmitPost" name="billAnnual" id="billAnnual">Generate</button>
+                                                <label for="">Amount: </label>
+                                            </td>
+                                            <td><input type="text" value="" readonly></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <form action="" method="post">
+
+                                                    <button type="submit" class="btnSubmitPost" name="billAnnual" id="billAnnual">Generate</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     </table>
@@ -452,11 +476,11 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                         <select name="homeowner" id="homeowner">
                             <option value="">Select...</option>
                             <?php
-                            while ($rowSubdivision3 = $resultSubdivision->fetch_assoc()) : {
-                                echo '<option value="' . $rowSubdivision3['subdivision_id'] . '">' . $rowSubdivision3['subdivision_name'] . '</option>';
-                            }
+                            while ($rowSubdivision3 = $resultSubdivision3->fetch_assoc()) : {
+                                    echo '<option value="' . $rowSubdivision3['subdivision_id'] . '">' . $rowSubdivision3['subdivision_name'] . '</option>';
+                                }
                             ?>
-                             <?php endwhile; ?>
+                            <?php endwhile; ?>
                         </select>
                     </div>
                     <div class="table-area">
