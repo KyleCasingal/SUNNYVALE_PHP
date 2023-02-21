@@ -234,9 +234,30 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
             $("#month-select-homeowner-from").val("January");
             $("#month-select-homeowner-to").val("January");
 
+            
+            $("#monthly_dues_id").val("0");
+            $("#homeowner-name").val("");
+            $("#month-select-monthly-dues-from").val("January");
+            $("#month-select-monthly-dues-to").val("January");
+            $("#subdivisionMonthlyAmount").val("");
+
+            $("#subdivisionAnnual_id").val("0");
+            $("#month-select-annual-from").val("January");
+            $("#month-select-annual-to").val("January");
 
         });
     });
+    // $(document).ready(function() {
+    //     $('.accordion-button').on("click", function(e) {
+    //         $("#monthly_dues_id").val("0");
+    //         $("#homeowner-name").val("");
+    //         $("#month-select-monthly-dues-from").val("January");
+    //         $("#month-select-monthly-dues-to").val("January");
+    //         $("#subdivisionAnnual_id").val("0");
+    //         $("#month-select-annual-from").val("January");
+    //         $("#month-select-annual-to").val("January");
+    //     });
+    // });
 </script>
 
 <body>
@@ -316,7 +337,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                             <td>
                                                 <label for="">Amount: </label>
                                             </td>
-                                            <td><input type="text" value="" readonly></td>
+                                            <td><input type="text" value="" id="homeowner-amount" readonly></td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -352,7 +373,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                             <tr>
                                                 <td><label for="">From:</label></td>
                                                 <td>
-                                                    <select name="" id="">
+                                                    <select name="" id="month-select-monthly-dues-from">
                                                        <option value="January">January</option>
                                                     <option value="February">February</option>
                                                     <option value="March">March</option>
@@ -368,7 +389,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                                     </select>
                                                 </td>
                                                 <td><label for="">To:</label></td>
-                                                <td><select name="" id="">
+                                                <td><select name="" id="month-select-monthly-dues-to">
                                                        <option value="January">January</option>
                                                     <option value="February">February</option>
                                                     <option value="March">March</option>
@@ -413,7 +434,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                             <td><input type="search" name="" id=""></td>
                                             <td><label for="">Select Subdivision</label></td>
                                             <td> <select name="subdivision-annual" id="subdivisionAnnual_id">
-                                                    <option value="">Select...</option>
+                                                    <option value="0">Select...</option>
                                                     <?php
                                                     while ($rowSubdivision2 = $resultSubdivision2->fetch_assoc()) : {
                                                             echo '<option value="' . $rowSubdivision2['monthly_dues_id'] . '">' . $rowSubdivision2['subdivision_name'] . '</option>';
@@ -425,7 +446,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                         <tr>
                                             <td><label for="">From:</label></td>
                                             <td>
-                                                <select name="" id="">
+                                                <select name="" id="month-select-annual-from">
                                                     <option value="January">January</option>
                                                     <option value="February">February</option>
                                                     <option value="March">March</option>
@@ -442,7 +463,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                                 </select>
                                             </td>
                                             <td><label for="">To:</label></td>
-                                            <td><select name="" id="">
+                                            <td><select name="" id="month-select-annual-to">
                                                     <option value="January">January</option>
                                                     <option value="February">February</option>
                                                     <option value="March">March</option>
