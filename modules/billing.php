@@ -230,6 +230,11 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
     $(document).ready(function() {
         $('.accordion-button').on("click", function(e) {
             $("#subdivisionHomeowner_id").val("0");
+            $("#homeowner-name").val("");
+            $("#month-select-homeowner-from").val("January");
+            $("#month-select-homeowner-to").val("January");
+
+
         });
     });
 </script>
@@ -255,7 +260,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                     <table class="tblBilling-form">
                                         <tr>
                                             <td><label>Name:</label></td>
-                                            <td><input type="text" readonly></td>
+                                            <td><input type="text" id="homeowner-name" readonly></td>
                                             <td><label for="">Select Subdivision:</label></td>
                                             <td> <select name="subdivision" id="subdivisionHomeowner_id">
                                                     <option value="0">Select...</option>
@@ -274,36 +279,36 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                         <tr>
                                             <td><label for="">From:</label></td>
                                             <td>
-                                                <select name="" id="">
-                                                    <option value="">January</option>
-                                                    <option value="">Fenruary</option>
-                                                    <option value="">March</option>
-                                                    <option value="">April</option>
-                                                    <option value="">May</option>
-                                                    <option value="">June</option>
-                                                    <option value="">July</option>
-                                                    <option value="">August</option>
-                                                    <option value="">September</option>
-                                                    <option value="">October</option>
-                                                    <option value="">November</option>
-                                                    <option value="">December</option>
+                                                <select name="" id="month-select-homeowner-from">
+                                                    <option value="January">January</option>
+                                                    <option value="February">February</option>
+                                                    <option value="March">March</option>
+                                                    <option value="April">April</option>
+                                                    <option value="May">May</option>
+                                                    <option value="June">June</option>
+                                                    <option value="July">July</option>
+                                                    <option value="August">August</option>
+                                                    <option value="September">September</option>
+                                                    <option value="October">October</option>
+                                                    <option value="November">November</option>
+                                                    <option value="December">December</option>
 
                                                 </select>
                                             </td>
                                             <td><label for="">To:</label></td>
-                                            <td><select name="" id="">
-                                                    <option value="">January</option>
-                                                    <option value="">Fenruary</option>
-                                                    <option value="">March</option>
-                                                    <option value="">April</option>
-                                                    <option value="">May</option>
-                                                    <option value="">June</option>
-                                                    <option value="">July</option>
-                                                    <option value="">August</option>
-                                                    <option value="">September</option>
-                                                    <option value="">October</option>
-                                                    <option value="">November</option>
-                                                    <option value="">December</option>
+                                            <td><select name="" id="month-select-homeowner-to">
+                                                    <option value="January">January</option>
+                                                    <option value="February">February</option>
+                                                    <option value="March">March</option>
+                                                    <option value="April">April</option>
+                                                    <option value="May">May</option>
+                                                    <option value="June">June</option>
+                                                    <option value="July">July</option>
+                                                    <option value="August">August</option>
+                                                    <option value="September">September</option>
+                                                    <option value="October">October</option>
+                                                    <option value="November">November</option>
+                                                    <option value="December">December</option>
 
                                                 </select></td>
                                         </tr>
@@ -348,36 +353,34 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                                 <td><label for="">From:</label></td>
                                                 <td>
                                                     <select name="" id="">
-                                                        <option value="">January</option>
-                                                        <option value="">Fenruary</option>
-                                                        <option value="">March</option>
-                                                        <option value="">April</option>
-                                                        <option value="">May</option>
-                                                        <option value="">June</option>
-                                                        <option value="">July</option>
-                                                        <option value="">August</option>
-                                                        <option value="">September</option>
-                                                        <option value="">October</option>
-                                                        <option value="">November</option>
-                                                        <option value="">December</option>
-
+                                                       <option value="January">January</option>
+                                                    <option value="February">February</option>
+                                                    <option value="March">March</option>
+                                                    <option value="April">April</option>
+                                                    <option value="May">May</option>
+                                                    <option value="June">June</option>
+                                                    <option value="July">July</option>
+                                                    <option value="August">August</option>
+                                                    <option value="September">September</option>
+                                                    <option value="October">October</option>
+                                                    <option value="November">November</option>
+                                                    <option value="December">December</option>
                                                     </select>
                                                 </td>
                                                 <td><label for="">To:</label></td>
                                                 <td><select name="" id="">
-                                                        <option value="">January</option>
-                                                        <option value="">Fenruary</option>
-                                                        <option value="">March</option>
-                                                        <option value="">April</option>
-                                                        <option value="">May</option>
-                                                        <option value="">June</option>
-                                                        <option value="">July</option>
-                                                        <option value="">August</option>
-                                                        <option value="">September</option>
-                                                        <option value="">October</option>
-                                                        <option value="">November</option>
-                                                        <option value="">December</option>
-
+                                                       <option value="January">January</option>
+                                                    <option value="February">February</option>
+                                                    <option value="March">March</option>
+                                                    <option value="April">April</option>
+                                                    <option value="May">May</option>
+                                                    <option value="June">June</option>
+                                                    <option value="July">July</option>
+                                                    <option value="August">August</option>
+                                                    <option value="September">September</option>
+                                                    <option value="October">October</option>
+                                                    <option value="November">November</option>
+                                                    <option value="December">December</option>
                                                     </select></td>
                                             </tr>
                                             <tr>
@@ -423,35 +426,35 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                             <td><label for="">From:</label></td>
                                             <td>
                                                 <select name="" id="">
-                                                    <option value="">January</option>
-                                                    <option value="">Fenruary</option>
-                                                    <option value="">March</option>
-                                                    <option value="">April</option>
-                                                    <option value="">May</option>
-                                                    <option value="">June</option>
-                                                    <option value="">July</option>
-                                                    <option value="">August</option>
-                                                    <option value="">September</option>
-                                                    <option value="">October</option>
-                                                    <option value="">November</option>
-                                                    <option value="">December</option>
+                                                    <option value="January">January</option>
+                                                    <option value="February">February</option>
+                                                    <option value="March">March</option>
+                                                    <option value="April">April</option>
+                                                    <option value="May">May</option>
+                                                    <option value="June">June</option>
+                                                    <option value="July">July</option>
+                                                    <option value="August">August</option>
+                                                    <option value="September">September</option>
+                                                    <option value="October">October</option>
+                                                    <option value="November">November</option>
+                                                    <option value="December">December</option>
 
                                                 </select>
                                             </td>
                                             <td><label for="">To:</label></td>
                                             <td><select name="" id="">
-                                                    <option value="">January</option>
-                                                    <option value="">Fenruary</option>
-                                                    <option value="">March</option>
-                                                    <option value="">April</option>
-                                                    <option value="">May</option>
-                                                    <option value="">June</option>
-                                                    <option value="">July</option>
-                                                    <option value="">August</option>
-                                                    <option value="">September</option>
-                                                    <option value="">October</option>
-                                                    <option value="">November</option>
-                                                    <option value="">December</option>
+                                                    <option value="January">January</option>
+                                                    <option value="February">February</option>
+                                                    <option value="March">March</option>
+                                                    <option value="April">April</option>
+                                                    <option value="May">May</option>
+                                                    <option value="June">June</option>
+                                                    <option value="July">July</option>
+                                                    <option value="August">August</option>
+                                                    <option value="September">September</option>
+                                                    <option value="October">October</option>
+                                                    <option value="November">November</option>
+                                                    <option value="December">December</option>
 
                                                 </select></td>
                                         </tr>
