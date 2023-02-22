@@ -909,14 +909,14 @@ if (isset($_POST['checkout'])) {
 
 //BILLING PERIOD 
 //add new annual 
-if (isset($_POST['billAnnual'])){
-
+if (isset($_POST['billingPeriodAdd'])){
+  
   $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   $i = 0;
-
+  $year = $_POST['year'];
   while ($i < count($months)){
 
-    $sql = "INSERT INTO billing_period (month, year) VALUE ('$months[$i]', '2023')";
+    $sql = "INSERT INTO billing_period (month, year) VALUE ('$months[$i]', '2024')";
     $result = mysqli_query($con, $sql);
     $i++;
   }

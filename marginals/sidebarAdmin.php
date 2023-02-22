@@ -143,6 +143,9 @@
                         </li>
                         <li id="Monthly Dues" onclick="location.href='../modules/settingsMonthlydues.php'">Monthly Dues
                         </li>
+                        <li id="billing-period" onclick="location.href='../modules/settingsBillingPeriod.php'">Billing Period
+
+                        </li>
                         <li id="System Accounts" onclick="location.href='../modules/settingsSystemAcc.php'">System
                             Accounts</li>
                         <li id="Subdivision Officers"
