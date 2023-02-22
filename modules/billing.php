@@ -227,23 +227,58 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
             }
         });
     });
+    
+    $(document).ready(function() {
+        $("#subdivisionHomeowner_id").on('click', function() {
+            var monthly_dues_id = $(this).val();
+            if (monthly_dues_id) {
+                $.ajax({
+                    type: 'POST',
+                    url: '../process.php/',
+                    data: 'monthly_dues_id=' + monthly_dues_id,
+                    success: function(html) {
+                        $("#homeowner-amount").html(html);
+                    }
+                });
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $("#subdivisionAnnual_id").on('click', function() {
+            var monthly_dues_id = $(this).val();
+            if (monthly_dues_id) {
+                $.ajax({
+                    type: 'POST',
+                    url: '../process.php/',
+                    data: 'monthly_dues_id=' + monthly_dues_id,
+                    success: function(html) {
+                        $("#AnnualAmount").html(html);
+                    }
+                });
+            }
+        });
+    });
+    
     $(document).ready(function() {
         $('.accordion-button').on("click", function(e) {
             $("#subdivisionHomeowner_id").val("0");
             $("#homeowner-name").val("");
             $("#month-select-homeowner-from").val("January");
             $("#month-select-homeowner-to").val("January");
+            document.getElementById("homeowner-amount").setAttribute("value", "");
 
 
             $("#monthly_dues_id").val("0");
             $("#homeowner-name").val("");
             $("#month-select-monthly-dues-from").val("January");
             $("#month-select-monthly-dues-to").val("January");
-            // $("#subdivisionMonthlyAmount").val("");
+            document.getElementById("subdivisionMonthlyAmount").setAttribute("value", "");
 
             $("#subdivisionAnnual_id").val("0");
             $("#month-select-annual-from").val("January");
             $("#month-select-annual-to").val("January");
+            document.getElementById("AnnualAmount").setAttribute("value", "");
 
         });
     });
@@ -278,79 +313,81 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                             </h2>
                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                 <div class="accordion-body" id="accordion-body">
-                                    <table class="tblBilling-form">
-                                        <tr>
-                                            <td><label>Name:</label></td>
-                                            <td><input type="text" id="homeowner-name" readonly></td>
-                                            <td><label for="">Select Subdivision:</label></td>
-                                            <td> <select name="subdivision" id="subdivisionHomeowner_id">
-                                                    <option value="0">Select...</option>
-                                                    <?php
-                                                    while ($rowSubdivision = $resultSubdivision->fetch_assoc()) : {
-                                                            echo '<option value="' . $rowSubdivision['monthly_dues_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
-                                                        }
-                                                    ?>
-                                                    <?php endwhile; ?>
+                                    <form action="" method="post" id="myForm">
+                                        <table class="tblBilling-form">
+                                            <tr>
+                                                <td><label>Name:</label></td>
+                                                <td><input type="text" id="homeowner-name" readonly></td>
+                                                <td><label for="">Select Subdivision:</label></td>
+                                                <td> <select name="subdivision" id="subdivisionHomeowner_id">
+                                                        <option value="0">Select...</option>
+                                                        <?php
+                                                        while ($rowSubdivision = $resultSubdivision->fetch_assoc()) : {
+                                                                echo '<option value="' . $rowSubdivision['monthly_dues_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
+                                                            }
+                                                        ?>
+                                                        <?php endwhile; ?>
 
-                                                </select>
+                                                    </select>
 
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
 
-                                        <tr>
-                                            <td><label for="">From:</label></td>
-                                            <td>
-                                                <select name="" id="month-select-homeowner-from">
-                                                    <option value="January">January</option>
-                                                    <option value="February">February</option>
-                                                    <option value="March">March</option>
-                                                    <option value="April">April</option>
-                                                    <option value="May">May</option>
-                                                    <option value="June">June</option>
-                                                    <option value="July">July</option>
-                                                    <option value="August">August</option>
-                                                    <option value="September">September</option>
-                                                    <option value="October">October</option>
-                                                    <option value="November">November</option>
-                                                    <option value="December">December</option>
+                                            <tr>
+                                                <td><label for="">From:</label></td>
+                                                <td>
+                                                    <select name="" id="month-select-homeowner-from">
+                                                        <option value="January">January</option>
+                                                        <option value="February">February</option>
+                                                        <option value="March">March</option>
+                                                        <option value="April">April</option>
+                                                        <option value="May">May</option>
+                                                        <option value="June">June</option>
+                                                        <option value="July">July</option>
+                                                        <option value="August">August</option>
+                                                        <option value="September">September</option>
+                                                        <option value="October">October</option>
+                                                        <option value="November">November</option>
+                                                        <option value="December">December</option>
 
-                                                </select>
-                                            </td>
-                                            <td><label for="">To:</label></td>
-                                            <td><select name="" id="month-select-homeowner-to">
-                                                    <option value="January">January</option>
-                                                    <option value="February">February</option>
-                                                    <option value="March">March</option>
-                                                    <option value="April">April</option>
-                                                    <option value="May">May</option>
-                                                    <option value="June">June</option>
-                                                    <option value="July">July</option>
-                                                    <option value="August">August</option>
-                                                    <option value="September">September</option>
-                                                    <option value="October">October</option>
-                                                    <option value="November">November</option>
-                                                    <option value="December">December</option>
+                                                    </select>
+                                                </td>
+                                                <td><label for="">To:</label></td>
+                                                <td><select name="" id="month-select-homeowner-to">
+                                                        <option value="January">January</option>
+                                                        <option value="February">February</option>
+                                                        <option value="March">March</option>
+                                                        <option value="April">April</option>
+                                                        <option value="May">May</option>
+                                                        <option value="June">June</option>
+                                                        <option value="July">July</option>
+                                                        <option value="August">August</option>
+                                                        <option value="September">September</option>
+                                                        <option value="October">October</option>
+                                                        <option value="November">November</option>
+                                                        <option value="December">December</option>
 
-                                                </select></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label for="">Amount: </label>
-                                            </td>
-                                            <td><input type="text" value="" id="homeowner-amount" readonly></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <button class="btnSubmitPost" name="billHomeowner" id="billHomeowner">Generate</button>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                                    </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label for="">Amount: </label>
+                                                </td>
+                                                <td><input type="text" value="" id="homeowner-amount" readonly></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <button class="btnSubmitPost" name="billHomeowner" id="billHomeowner">Generate</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <button onclick="ClearFields();" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     Month
                                 </button>
                             </h2>
@@ -428,72 +465,74 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                             </h2>
                             <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                 <div class="accordion-body" id="accordion-body">
-                                    <table class="tblBilling-form">
-                                        <tr>
-                                            <!-- <td> <label for="">Search for Homeowner</label> </td>
+                                    <form action="" method="post" id="myForm">
+                                        <table class="tblBilling-form">
+                                            <tr>
+                                                <!-- <td> <label for="">Search for Homeowner</label> </td>
                                             <td><input type="search" name="" id=""></td> -->
-                                            <td><label for="">Select Subdivision</label></td>
-                                            <td> <select name="subdivision-annual" id="subdivisionAnnual_id">
-                                                    <option value="0">Select...</option>
-                                                    <?php
-                                                    while ($rowSubdivision2 = $resultSubdivision2->fetch_assoc()) : {
-                                                            echo '<option value="' . $rowSubdivision2['monthly_dues_id'] . '">' . $rowSubdivision2['subdivision_name'] . '</option>';
-                                                        }
-                                                    ?>
-                                                    <?php endwhile; ?>
-                                                </select></td>
-                                        </tr>
-                                        <tr>
-                                            <td><label for="">From:</label></td>
-                                            <td>
-                                                <select name="" id="month-select-annual-from">
-                                                    <option value="January">January</option>
-                                                    <option value="February">February</option>
-                                                    <option value="March">March</option>
-                                                    <option value="April">April</option>
-                                                    <option value="May">May</option>
-                                                    <option value="June">June</option>
-                                                    <option value="July">July</option>
-                                                    <option value="August">August</option>
-                                                    <option value="September">September</option>
-                                                    <option value="October">October</option>
-                                                    <option value="November">November</option>
-                                                    <option value="December">December</option>
+                                                <td><label for="">Select Subdivision</label></td>
+                                                <td> <select name="subdivision-annual" id="subdivisionAnnual_id">
+                                                        <option value="0">Select...</option>
+                                                        <?php
+                                                        while ($rowSubdivision2 = $resultSubdivision2->fetch_assoc()) : {
+                                                                echo '<option value="' . $rowSubdivision2['monthly_dues_id'] . '">' . $rowSubdivision2['subdivision_name'] . '</option>';
+                                                            }
+                                                        ?>
+                                                        <?php endwhile; ?>
+                                                    </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label for="">From:</label></td>
+                                                <td>
+                                                    <select name="" id="month-select-annual-from">
+                                                        <option value="January">January</option>
+                                                        <option value="February">February</option>
+                                                        <option value="March">March</option>
+                                                        <option value="April">April</option>
+                                                        <option value="May">May</option>
+                                                        <option value="June">June</option>
+                                                        <option value="July">July</option>
+                                                        <option value="August">August</option>
+                                                        <option value="September">September</option>
+                                                        <option value="October">October</option>
+                                                        <option value="November">November</option>
+                                                        <option value="December">December</option>
 
-                                                </select>
-                                            </td>
-                                            <td><label for="">To:</label></td>
-                                            <td><select name="" id="month-select-annual-to">
-                                                    <option value="January">January</option>
-                                                    <option value="February">February</option>
-                                                    <option value="March">March</option>
-                                                    <option value="April">April</option>
-                                                    <option value="May">May</option>
-                                                    <option value="June">June</option>
-                                                    <option value="July">July</option>
-                                                    <option value="August">August</option>
-                                                    <option value="September">September</option>
-                                                    <option value="October">October</option>
-                                                    <option value="November">November</option>
-                                                    <option value="December">December</option>
+                                                    </select>
+                                                </td>
+                                                <td><label for="">To:</label></td>
+                                                <td><select name="" id="month-select-annual-to">
+                                                        <option value="January">January</option>
+                                                        <option value="February">February</option>
+                                                        <option value="March">March</option>
+                                                        <option value="April">April</option>
+                                                        <option value="May">May</option>
+                                                        <option value="June">June</option>
+                                                        <option value="July">July</option>
+                                                        <option value="August">August</option>
+                                                        <option value="September">September</option>
+                                                        <option value="October">October</option>
+                                                        <option value="November">November</option>
+                                                        <option value="December">December</option>
 
-                                                </select></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label for="">Amount: </label>
-                                            </td>
-                                            <td><input type="text" value="" readonly></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <form action="" method="post">
+                                                    </select></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label for="">Amount: </label>
+                                                </td>
+                                                <td><input type="text" value="" id="AnnualAmount" readonly></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <form action="" method="post">
 
-                                                    <button type="submit" class="btnSubmitPost" name="billAnnual" id="billAnnual">Generate</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                                        <button type="submit" class="btnSubmitPost" name="billAnnual" id="billAnnual">Generate</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </form>
                                 </div>
                             </div>
                         </div>
