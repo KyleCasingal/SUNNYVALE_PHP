@@ -954,9 +954,11 @@ margin-top: 2vw;
   $(document).ready(function(){
     $(".calendarshow").click(function() {
     var x = document.getElementById("mycalendarshow");
-
+    if (x.style.display === "none") {
     x.style.display = "block"
-
+  } else {
+    x.style.display = "none";
+  }
   });
 });
 
