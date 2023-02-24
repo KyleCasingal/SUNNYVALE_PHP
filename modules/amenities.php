@@ -585,7 +585,7 @@ margin-top: 2vw;
   }
 
   /* add tick in event after */
-  .events .event::after {
+  /* .events .event::after {
     content: "✓";
     position: absolute;
     top: 50%;
@@ -602,7 +602,7 @@ margin-top: 2vw;
 
   .events .event:hover::after {
     display: flex;
-  }
+  } */
 
   .add-event {
     position: absolute;
@@ -777,7 +777,7 @@ margin-top: 2vw;
       padding: 20px 0;
     }
 
-    .calendar::before,
+    /* .calendar::before,
     .calendar::after {
       top: 100%;
       left: 50%;
@@ -785,12 +785,12 @@ margin-top: 2vw;
       height: 12px;
       border-radius: 0 0 5px 5px;
       transform: translateX(-50%);
-    }
+    } */
 
-    .calendar::before {
+    /* .calendar::before {
       width: 94%;
       top: calc(100% + 12px);
-    }
+    } */
 
     .events {
       padding-bottom: 340px;
@@ -954,7 +954,7 @@ margin-top: 2vw;
   $(document).ready(function(){
     $(".calendarshow").click(function() {
     var x = document.getElementById("mycalendarshow");
-    
+
     x.style.display = "block"
 
   });
