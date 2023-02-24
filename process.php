@@ -317,7 +317,7 @@ if (isset($_POST['importSubmit'])) {
 
         $sql = "INSERT IGNORE INTO homeowner_profile(homeowner_id, last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer, display_picture) VALUES ('$homeowner_id','$last_name','$first_name','$middle_name','$suffix','$sex', '$street', '$subdivision', '$barangay', '$bussiness_address','$occupation','$email_address','$birthdate','$mobile_number','$employer','$display_picture') ON DUPLICATE KEY UPDATE first_name =  '$first_name', middle_name = '$middle_name', last_name = '$last_name', suffix = '$suffix', sex = '$sex', street = '$street', subdivision = '$subdivision', barangay = '$barangay', business_address = '$barangay', occupation = '$occupation', email_address = '$email_address', birthdate = '$birthdate', mobile_number = '$mobile_number', employer = '$employer', display_picture = '$display_picture'";
         $result = mysqli_query($con, $sql);
-        
+
 
         // $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
         // $row = $resultSession->fetch_assoc();
@@ -909,14 +909,14 @@ if (isset($_POST['checkout'])) {
 
 //BILLING PERIOD 
 //add new annual 
-if (isset($_POST['billAnnual'])){
+if (isset($_POST['billingPeriodAdd'])) {
 
   $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   $i = 0;
+  $year = $_POST['year'];
+  while ($i < count($months)) {
 
-  while ($i < count($months)){
-
-    $sql = "INSERT INTO billing_period (month, year) VALUE ('$months[$i]', '2023')";
+    $sql = "INSERT INTO billing_period (month, year) VALUE ('$months[$i]', '2024')";
     $result = mysqli_query($con, $sql);
     $i++;
   }
@@ -939,3 +939,37 @@ if (isset($_POST['monthly_dues_id'])) {
 </script>';
   }
 }
+if (isset($_POST['monthly_dues_id'])) {
+  $monthly_dues_id = $_POST['monthly_dues_id'];
+  $result = $con->query("SELECT * FROM monthly_dues WHERE monthly_dues_id=$monthly_dues_id");
+  $row = $result->fetch_assoc();
+
+  if (mysqli_num_rows($result) > 0) {
+    echo '<script type="text/javascript"> 
+  document.getElementById("homeowner-amount").setAttribute("value",' . $row['amount'] . ');
+  
+</script>';
+  } else {
+    echo '<script type="text/javascript"> 
+  document.getElementById("homeowner-amount").setAttribute("value","");
+</script>';
+  }
+}
+if (isset($_POST['monthly_dues_id'])) {
+  $monthly_dues_id = $_POST['monthly_dues_id'];
+  $result = $con->query("SELECT * FROM monthly_dues WHERE monthly_dues_id=$monthly_dues_id");
+  $row = $result->fetch_assoc();
+
+  if (mysqli_num_rows($result) > 0) {
+    echo '<script type="text/javascript"> 
+  document.getElementById("AnnualAmount").setAttribute("value",' . $row['amount'] . ');
+  
+</script>';
+  } else {
+    echo '<script type="text/javascript"> 
+  document.getElementById("AnnualAmount").setAttribute("value","");
+</script>';
+  }
+}
+
+
