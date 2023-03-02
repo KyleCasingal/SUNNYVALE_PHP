@@ -964,13 +964,14 @@ margin-top: 2vw;
 
 $(document).ready(function() {
     $("#calendarshow").click(function() {
-      $("#date1").removeAttr("required");
-      $("#from1").removeAttr("required");
-      $("#from2").removeAttr("required");
-      $("#from3").removeAttr("required");
-      $("#to1").removeAttr("required");
-      $("#to2").removeAttr("required");
-      $("#to3").removeAttr("required");
+
+      // $("#date1").removeAttr("required");
+      // $("#from1").removeAttr("required");
+      // $("#from2").removeAttr("required");
+      // $("#from3").removeAttr("required");
+      // $("#to1").removeAttr("required");
+      // $("#to2").removeAttr("required");
+      // $("#to3").removeAttr("required");
     });
   });
 </script>
@@ -1193,8 +1194,8 @@ $(document).ready(function() {
         </div>
         <div class="right">
           <div class="today-date">
-            <div class="event-day">wed</div>
-            <div class="event-date">12th december 2022</div>
+            <div class="event-day"></div>
+            <div class="event-date"></div>
           </div>
           <div class="events"></div>
           <div class="add-event-wrapper">

@@ -3,13 +3,13 @@ require '../marginals/topbar.php';
 
 $row = $result->fetch_assoc();
 $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
-$resultSubdivision4 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
 $resultSubdivision = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
 $resultSubdivision1 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
 $resultSubdivision2 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
 $resultSubdivision3 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
-$resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ")
-
+$resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ");
+$resultYearToday = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
+$resultYearToday1 = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -227,7 +227,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
             }
         });
     });
-    
+
     $(document).ready(function() {
         $("#subdivisionHomeowner_id").on('click', function() {
             var monthly_dues_id = $(this).val();
@@ -259,25 +259,25 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
             }
         });
     });
-    
+
     $(document).ready(function() {
         $('.accordion-button').on("click", function(e) {
-            $("#subdivisionHomeowner_id").val("0");
+            $("#subdivisionHomeowner_id").val("");
             $("#homeowner-name").val("");
-            $("#month-select-homeowner-from").val("January");
-            $("#month-select-homeowner-to").val("January");
+            $("#month-select-homeowner-from").val("");
+            $("#month-select-homeowner-to").val("");
             document.getElementById("homeowner-amount").setAttribute("value", "");
 
 
-            $("#monthly_dues_id").val("0");
+            $("#monthly_dues_id").val("");
             $("#homeowner-name").val("");
-            $("#month-select-monthly-dues-from").val("January");
-            $("#month-select-monthly-dues-to").val("January");
+            $("#month-select-monthly-dues-from").val("");
+            $("#month-select-monthly-dues-to").val("");
             document.getElementById("subdivisionMonthlyAmount").setAttribute("value", "");
 
-            $("#subdivisionAnnual_id").val("0");
-            $("#month-select-annual-from").val("January");
-            $("#month-select-annual-to").val("January");
+            $("#subdivisionAnnual_id").val("");
+            $("#month-select-annual-from").val("");
+            $("#month-select-annual-to").val("");
             document.getElementById("AnnualAmount").setAttribute("value", "");
 
         });
@@ -320,14 +320,13 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                                 <td><input type="text" id="homeowner-name" readonly></td>
                                                 <td><label for="">Select Subdivision:</label></td>
                                                 <td> <select name="subdivision" id="subdivisionHomeowner_id">
-                                                        <option value="0">Select...</option>
+                                                        <option value="">Select...</option>
                                                         <?php
                                                         while ($rowSubdivision = $resultSubdivision->fetch_assoc()) : {
                                                                 echo '<option value="' . $rowSubdivision['monthly_dues_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
                                                             }
                                                         ?>
                                                         <?php endwhile; ?>
-
                                                     </select>
 
                                                 </td>
@@ -336,36 +335,38 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                             <tr>
                                                 <td><label for="">From:</label></td>
                                                 <td>
-                                                    <select name="" id="month-select-homeowner-from">
-                                                        <option value="January">January</option>
-                                                        <option value="February">February</option>
-                                                        <option value="March">March</option>
-                                                        <option value="April">April</option>
-                                                        <option value="May">May</option>
-                                                        <option value="June">June</option>
-                                                        <option value="July">July</option>
-                                                        <option value="August">August</option>
-                                                        <option value="September">September</option>
-                                                        <option value="October">October</option>
-                                                        <option value="November">November</option>
-                                                        <option value="December">December</option>
+                                                    <select name="month_select_homeowner_from" id="month-select-homeowner-from">
+                                                        <option value="">Select...</option>
+                                                        <option value="1">January</option>
+                                                        <option value="2">February</option>
+                                                        <option value="3">March</option>
+                                                        <option value="4">April</option>
+                                                        <option value="5">May</option>
+                                                        <option value="6">June</option>
+                                                        <option value="7">July</option>
+                                                        <option value="8">August</option>
+                                                        <option value="9">September</option>
+                                                        <option value="10">October</option>
+                                                        <option value="11">November</option>
+                                                        <option value="12">December</option>
 
                                                     </select>
                                                 </td>
                                                 <td><label for="">To:</label></td>
-                                                <td><select name="" id="month-select-homeowner-to">
-                                                        <option value="January">January</option>
-                                                        <option value="February">February</option>
-                                                        <option value="March">March</option>
-                                                        <option value="April">April</option>
-                                                        <option value="May">May</option>
-                                                        <option value="June">June</option>
-                                                        <option value="July">July</option>
-                                                        <option value="August">August</option>
-                                                        <option value="September">September</option>
-                                                        <option value="October">October</option>
-                                                        <option value="November">November</option>
-                                                        <option value="December">December</option>
+                                                <td><select name="month_select_homeowner_to" id="month-select-homeowner-to">
+                                                        <option value="">Select...</option>
+                                                        <option value="1">January</option>
+                                                        <option value="2">February</option>
+                                                        <option value="3">March</option>
+                                                        <option value="4">April</option>
+                                                        <option value="5">May</option>
+                                                        <option value="6">June</option>
+                                                        <option value="7">July</option>
+                                                        <option value="8">August</option>
+                                                        <option value="9">September</option>
+                                                        <option value="10">October</option>
+                                                        <option value="11">November</option>
+                                                        <option value="12">December</option>
 
                                                     </select></td>
                                             </tr>
@@ -398,7 +399,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                             <tr>
                                                 <td><label for="">Select Subdivision</label></td>
                                                 <td> <select name="subdivision-monthly" id="monthly_dues_id">
-                                                        <option value="0">Select...</option>
+                                                        <option value="">Select...</option>
                                                         <?php
                                                         while ($rowSubdivision1 = $resultSubdivision1->fetch_assoc()) : {
                                                                 echo '<option value="' . $rowSubdivision1['monthly_dues_id'] . '">' . $rowSubdivision1['subdivision_name'] . '</option>';
@@ -410,46 +411,40 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                             <tr>
                                                 <td><label for="">From:</label></td>
                                                 <td>
-                                                    <select name="" id="month-select-monthly-dues-from">
-                                                        <option value="January">January</option>
-                                                        <option value="February">February</option>
-                                                        <option value="March">March</option>
-                                                        <option value="April">April</option>
-                                                        <option value="May">May</option>
-                                                        <option value="June">June</option>
-                                                        <option value="July">July</option>
-                                                        <option value="August">August</option>
-                                                        <option value="September">September</option>
-                                                        <option value="October">October</option>
-                                                        <option value="November">November</option>
-                                                        <option value="December">December</option>
+                                                    <select name="month_select_monthly_dues_from" id="month-select-monthly-dues-from">
+                                                        <option value="">Select...</option>
+                                                        <?php
+                                                        while ($rowMonth = $resultYearToday->fetch_assoc()) : {
+                                                                echo '<option value="' . $rowMonth['billingPeriod_id'] . '">' . $rowMonth['month'] . '</option>';
+                                                            }
+                                                        ?>
+                                                        <?php endwhile; ?>
                                                     </select>
                                                 </td>
                                                 <td><label for="">To:</label></td>
-                                                <td><select name="" id="month-select-monthly-dues-to">
-                                                        <option value="January">January</option>
-                                                        <option value="February">February</option>
-                                                        <option value="March">March</option>
-                                                        <option value="April">April</option>
-                                                        <option value="May">May</option>
-                                                        <option value="June">June</option>
-                                                        <option value="July">July</option>
-                                                        <option value="August">August</option>
-                                                        <option value="September">September</option>
-                                                        <option value="October">October</option>
-                                                        <option value="November">November</option>
-                                                        <option value="December">December</option>
+                                                <td><select name="month_select_monthly_dues_to" id="month-select-monthly-dues-to">
+                                                        <option value="">Select...</option>
+                                                        <?php
+                                                        while ($rowMonth = $resultYearToday1->fetch_assoc()) : {
+                                                                echo '<option value="' . $rowMonth['billingPeriod_id'] . '">' . $rowMonth['month'] . '</option>';
+                                                            }
+                                                        ?>
+                                                        <?php endwhile; ?>
                                                     </select></td>
+                                                <td><input type="text" <?php
+                                                                        $dateYear = date('Y');
+                                                                        echo "value = '$dateYear'";
+                                                                        ?> id="" readonly></td>
                                             </tr>
                                             <tr>
                                                 <td>
                                                     <label for="">Amount: </label>
                                                 </td>
-                                                <td><input type="text" value="" id="subdivisionMonthlyAmount" readonly></td>
+                                                <td><input name="monthlyAmount" type="text" value="" id="subdivisionMonthlyAmount" readonly></td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <button class="btnSubmitPost" name="billMonth" id="billMonth">Generate</button>
+                                                    <button type="submit" class="btnSubmitPost" name="billMonth" id="billMonth">Generate</button>
                                                 </td>
                                             </tr>
                                         </table>
@@ -472,7 +467,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                             <td><input type="search" name="" id=""></td> -->
                                                 <td><label for="">Select Subdivision</label></td>
                                                 <td> <select name="subdivision-annual" id="subdivisionAnnual_id">
-                                                        <option value="0">Select...</option>
+                                                        <option value="">Select...</option>
                                                         <?php
                                                         while ($rowSubdivision2 = $resultSubdivision2->fetch_assoc()) : {
                                                                 echo '<option value="' . $rowSubdivision2['monthly_dues_id'] . '">' . $rowSubdivision2['subdivision_name'] . '</option>';
@@ -485,6 +480,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                                 <td><label for="">From:</label></td>
                                                 <td>
                                                     <select name="" id="month-select-annual-from">
+                                                        <option value="">Select...</option>
                                                         <option value="January">January</option>
                                                         <option value="February">February</option>
                                                         <option value="March">March</option>
@@ -502,6 +498,7 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                                 </td>
                                                 <td><label for="">To:</label></td>
                                                 <td><select name="" id="month-select-annual-to">
+                                                        <option value="">Select...</option>
                                                         <option value="January">January</option>
                                                         <option value="February">February</option>
                                                         <option value="March">March</option>
@@ -514,7 +511,6 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
                                                         <option value="October">October</option>
                                                         <option value="November">November</option>
                                                         <option value="December">December</option>
-
                                                     </select></td>
                                             </tr>
                                             <tr>

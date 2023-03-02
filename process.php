@@ -939,6 +939,7 @@ if (isset($_POST['monthly_dues_id'])) {
 </script>';
   }
 }
+//retrieve homeowner dues amount
 if (isset($_POST['monthly_dues_id'])) {
   $monthly_dues_id = $_POST['monthly_dues_id'];
   $result = $con->query("SELECT * FROM monthly_dues WHERE monthly_dues_id=$monthly_dues_id");
@@ -955,6 +956,7 @@ if (isset($_POST['monthly_dues_id'])) {
 </script>';
   }
 }
+//retrieve annual dues amount
 if (isset($_POST['monthly_dues_id'])) {
   $monthly_dues_id = $_POST['monthly_dues_id'];
   $result = $con->query("SELECT * FROM monthly_dues WHERE monthly_dues_id=$monthly_dues_id");
@@ -972,4 +974,23 @@ if (isset($_POST['monthly_dues_id'])) {
   }
 }
 
+//Inserting monthly dues billing to all homeowners
+if (isset($_POST['billMonth'])) {
+  $monthly_dues_id = $_POST['subdivision-monthly'];
+  $billingPeriod_id_from = $_POST['month_select_monthly_dues_from'];
+  $billingPeriod_id_to = $_POST['month_select_monthly_dues_to'];
+  $monthlyAmount = $_POST['monthlyAmount'];
+  $resultSubdivision = $con->query("SELECT * FROM monthly_dues WHERE monthly_dues_id=$monthly_dues_id");
+  $rowSubdivision = $resultSubdivision->fetch_assoc();
 
+  $resultHomeowner = $con->query("SELECT * FROM homeowner_profile WHERE subdivision='" . $rowSubdivision['subdivision_name'] . "'");
+  $rowHomeowner = $resultHomeowner->fetch_assoc();
+  $firstName = $rowHomeowner['first_name'];
+  $lastName = $rowHomeowner['last_name'];
+  $fullName = $firstName . " " . $lastName;
+
+  for ($x = $billingPeriod_id_from; $x <= $billingPeriod_id_to; $x++) {
+    $sql = "INSERT INTO bill_consumer (billingPeriod_id, homeowner_id, fullname, amount, status) VALUES ('$x', '" . $rowHomeowner['homeowner_id'] . "', '$fullName', '$monthlyAmount', 'UNPAID')";
+    $result = mysqli_query($con, $sql);
+  }
+}
