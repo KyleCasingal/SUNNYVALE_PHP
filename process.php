@@ -982,15 +982,85 @@ if (isset($_POST['billMonth'])) {
   $monthlyAmount = $_POST['monthlyAmount'];
   $resultSubdivision = $con->query("SELECT * FROM monthly_dues WHERE monthly_dues_id=$monthly_dues_id");
   $rowSubdivision = $resultSubdivision->fetch_assoc();
+ 
 
   $resultHomeowner = $con->query("SELECT * FROM homeowner_profile WHERE subdivision='" . $rowSubdivision['subdivision_name'] . "'");
-  $rowHomeowner = $resultHomeowner->fetch_assoc();
-  $firstName = $rowHomeowner['first_name'];
-  $lastName = $rowHomeowner['last_name'];
-  $fullName = $firstName . " " . $lastName;
+  // $rowHomeowner = $resultHomeowner->fetch_assoc();
+  // $firstName = $rowHomeowner['first_name'];
+  // $lastName = $rowHomeowner['last_name'];
+  // $fullName = $firstName . " " . $lastName;
+  
+  $homeownerList = array();
+  if (mysqli_num_rows($resultHomeowner) >= 0) {
+    while($rowHomeowner = $resultHomeowner->fetch_assoc()){
+      $homeownerList[] = $rowHomeowner['homeowner_id'];
+      
+    }
+  }
 
+
+  $homeowner_id_array = [];
+  foreach ($homeownerList as $HOlist){
+     $homeowner_id_array[] = $HOlist;
+  }
+
+
+
+
+ 
   for ($x = $billingPeriod_id_from; $x <= $billingPeriod_id_to; $x++) {
-    $sql = "INSERT INTO bill_consumer (billingPeriod_id, homeowner_id, fullname, amount, status) VALUES ('$x', '" . $rowHomeowner['homeowner_id'] . "', '$fullName', '$monthlyAmount', 'UNPAID')";
-    $result = mysqli_query($con, $sql);
+    $i = 0;
+    while ($i < count($homeowner_id_array)){
+      $resultFullname = $con->query("SELECT * FROM homeowner_profile WHERE homeowner_id = '$homeowner_id_array[$i]'");
+      $rowFullname = $resultFullname->fetch_assoc();
+      $first_name = $rowFullname['first_name'];
+      $last_name = $rowFullname['last_name'];
+      $fullname = $first_name . " " . $last_name;
+      
+
+      $sql = "INSERT INTO bill_consumer (billingPeriod_id, homeowner_id, fullname, amount, status) VALUES ('$x', '$homeowner_id_array[$i]', '$fullname', '$monthlyAmount', 'UNPAID')";
+      $result = mysqli_query($con, $sql);
+      $i++;
+    }
+   
   }
 }
+
+if (isset($_POST['test'])) {
+  $monthly_dues_id = $_POST['subdivision-monthly'];
+  $billingPeriod_id_from = $_POST['month_select_monthly_dues_from'];
+  $billingPeriod_id_to = $_POST['month_select_monthly_dues_to'];
+  $monthlyAmount = $_POST['monthlyAmount'];
+  $resultSubdivision = $con->query("SELECT * FROM monthly_dues WHERE monthly_dues_id=$monthly_dues_id");
+  $rowSubdivision = $resultSubdivision->fetch_assoc();
+ 
+
+  $resultHomeowner = $con->query("SELECT * FROM homeowner_profile WHERE subdivision='" . $rowSubdivision['subdivision_name'] . "'");
+  // $rowHomeowner = $resultHomeowner->fetch_assoc();
+  // $firstName = $rowHomeowner['first_name'];
+  // $lastName = $rowHomeowner['last_name'];
+  // $fullName = $firstName . " " . $lastName;
+  
+  
+  $homeownerList = array();
+  if (mysqli_num_rows($resultHomeowner) >= 0) {
+    while($rowHomeowner = $resultHomeowner->fetch_assoc()){
+      $homeownerList[] = $rowHomeowner['homeowner_id'];
+      $firstName = $rowHomeowner['first_name'];
+      $lastName = $rowHomeowner['last_name'];
+      $fullName = $firstName . " " . $lastName;
+    }
+  }
+
+
+  $homeowner_id_array = [];
+  foreach ($homeownerList as $HOlist){
+     $homeowner_id_array[] = $HOlist;
+  }
+
+  print_r($homeowner_id_array);
+
+ 
+  
+}
+

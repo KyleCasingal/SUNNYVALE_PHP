@@ -965,13 +965,13 @@ margin-top: 2vw;
 $(document).ready(function() {
     $("#calendarshow").click(function() {
 
-      // $("#date1").removeAttr("required");
-      // $("#from1").removeAttr("required");
-      // $("#from2").removeAttr("required");
-      // $("#from3").removeAttr("required");
-      // $("#to1").removeAttr("required");
-      // $("#to2").removeAttr("required");
-      // $("#to3").removeAttr("required");
+      $("#date1").removeAttr("required");
+      $("#from1").removeAttr("required");
+      $("#from2").removeAttr("required");
+      $("#from3").removeAttr("required");
+      $("#to1").removeAttr("required");
+      $("#to2").removeAttr("required");
+      $("#to3").removeAttr("required");
     });
   });
 </script>
