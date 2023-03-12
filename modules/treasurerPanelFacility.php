@@ -414,7 +414,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
               <?php while ($row = $resultRes->fetch_assoc()) : ?>
                 <tr>
                   <td>
-                    <input type="checkbox" value=<?php echo $row['amenity_renting_id']; ?> name="checkbox[]" id="checkbox">
+                    <input type="checkbox" value=<?php echo $row['transaction_id']; ?> name="checkbox[]" id="checkbox">
                   </td>
                   <td>
                     <?php echo $row['renter_name'] ?>
