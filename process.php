@@ -1025,6 +1025,58 @@ if (isset($_POST['billMonth'])) {
    
   }
 }
+if (isset($_POST['billAnnual'])) {
+  $subdivisionAnnual_id = $_POST['subdivision-annual'];
+  $billingPeriod_id_from = $_POST['month_select_annual_from'];
+  $billingPeriod_id_to = $_POST['month_select_annual_to'];
+  $AnnualAmount = $_POST['AnnualAmount'];
+
+  $resultSubdivision = $con->query("SELECT * FROM annual_dues WHERE annual_dues_id=$subdivisionAnnual_id");
+  $rowSubdivision = $resultSubdivision->fetch_assoc();
+ 
+
+  $resultHomeowner = $con->query("SELECT * FROM homeowner_profile WHERE subdivision='" . $rowSubdivision['subdivision_name'] . "'");
+  // $rowHomeowner = $resultHomeowner->fetch_assoc();
+  // $firstName = $rowHomeowner['first_name'];
+  // $lastName = $rowHomeowner['last_name'];
+  // $fullName = $firstName . " " . $lastName;
+  
+  $homeownerList = array();
+  if (mysqli_num_rows($resultHomeowner) >= 0) {
+    while($rowHomeowner = $resultHomeowner->fetch_assoc()){
+      $homeownerList[] = $rowHomeowner['homeowner_id'];
+      
+    }
+  }
+
+
+  $homeowner_id_array = [];
+  foreach ($homeownerList as $HOlist){
+     $homeowner_id_array[] = $HOlist;
+  }
+
+
+
+
+ 
+  for ($x = $billingPeriod_id_from; $x <= $billingPeriod_id_to; $x++) {
+    $i = 0;
+    while ($i < count($homeowner_id_array)){
+      $resultFullname = $con->query("SELECT * FROM homeowner_profile WHERE homeowner_id = '$homeowner_id_array[$i]'");
+      $rowFullname = $resultFullname->fetch_assoc();
+      $first_name = $rowFullname['first_name'];
+      $last_name = $rowFullname['last_name'];
+      $fullname = $first_name . " " . $last_name;
+      
+
+      $sql = "INSERT INTO bill_consumer (billingPeriod_id, homeowner_id, fullname, amount, status) VALUES ('$x', '$homeowner_id_array[$i]', '$fullname', '$AnnualAmount', 'UNPAID')";
+      $result = mysqli_query($con, $sql);
+      $i++;
+    }
+   
+  }
+}
+
 
 if (isset($_POST['test'])) {
   $monthly_dues_id = $_POST['subdivision-monthly'];
@@ -1060,8 +1112,6 @@ if (isset($_POST['test'])) {
 
   print_r($homeowner_id_array);
 
- 
-  
 }
 
 
