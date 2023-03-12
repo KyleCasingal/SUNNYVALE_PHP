@@ -6,6 +6,39 @@ $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") o
 $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
 $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . " AND cart='Yes'") or die($mysqli->error);
 $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . " AND cart='Yes'") or die($mysqli->error);
+// $display_query = "select * from amenity_renting";
+// $results = mysqli_query($con,$display_query);   
+// $count = mysqli_num_rows($results);  
+// if($count>0) 
+// {
+// 	$data_arr=array();
+//     $i=1;
+// 	while($data_row = mysqli_fetch_array($results, MYSQLI_ASSOC))
+// 	{	
+// 	$data_arr[$i]['event_id'] = $data_row['event_id'];
+// 	$data_arr[$i]['title'] = $data_row['event_name'];
+// 	$data_arr[$i]['start'] = date("Y-m-d", strtotime($data_row['event_start_date']));
+// 	$data_arr[$i]['end'] = date("Y-m-d", strtotime($data_row['event_end_date']));
+// 	$data_arr[$i]['color'] = '#'.substr(uniqid(),-6); // 'green'; pass colour name
+// 	$data_arr[$i]['url'] = 'https://www.shinerweb.com';
+// 	$i++;
+// 	}
+	
+// 	$data = array(
+//                 'status' => true,
+//                 'msg' => 'successfully!',
+// 				'data' => $data_arr
+//             );
+// }
+// else
+// {
+// 	$data = array(
+//                 'status' => false,
+//                 'msg' => 'Error!'				
+//             );
+// }
+// echo json_encode($data);   
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +53,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
     integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -358,7 +391,15 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
 
 
 
-     
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth'
+        });
+        calendar.render();
+      });
+
+    
 </script>
 
 <body>
@@ -415,7 +456,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
           <?php while ($row = $resultRes->fetch_assoc()) : ?>
             <tr>
               <td>
-                <input type="checkbox" value=<?php echo $row['transaction_id']; ?> name="checkbox[]" id="checkbox">
+                <input type="checkbox" value=<?php echo $row['amenity_renting_id']; ?> name="checkbox[]" id="checkbox">
               </td>
               <td>
                 <?php echo $row['renter_name'] ?>
@@ -589,8 +630,85 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   $(document).ready(function() {
 	display_events();
 });
+function display_events() {
+	var events = new Array();
+$.ajax({
+    url: 'display_event.php',  
+    dataType: 'json',
+    success: function (response) {
+         
+    var result=response.data;
+    $.each(result, function (i, item) {
+    	events.push({
+            event_id: result[i].event_id,
+            title: result[i].title,
+            start: result[i].start,
+            end: result[i].end,
+            color: result[i].color,
+            url: result[i].url
+        }); 	
+    })
+	var calendar = $('#calendar').fullCalendar({
+	    defaultView: 'month',
+		 timeZone: 'local',
+	    editable: true,
+        selectable: true,
+		selectHelper: true,
+        select: function(start, end) {
+				alert(start);
+				alert(end);
+				$('#event_start_date').val(moment(start).format('YYYY-MM-DD'));
+				$('#event_end_date').val(moment(end).format('YYYY-MM-DD'));
+				$('#event_entry_modal').modal('show');
+			},
+        events: events,
+	    eventRender: function(event, element, view) { 
+            element.bind('click', function() {
+					alert(event.event_id);
+				});
+    	}
+		}); //end fullCalendar block	
+	  },//end success block
+	  error: function (xhr, status) {
+	  alert(response.msg);
+	  }
+	});//end ajax block	
+}
 
-
+function save_event()
+{
+var event_name=$("#event_name").val();
+var event_start_date=$("#event_start_date").val();
+var event_end_date=$("#event_end_date").val();
+if(event_name=="" || event_start_date=="" || event_end_date=="")
+{
+alert("Please enter all required details.");
+return false;
+}
+$.ajax({
+ url:"save_event.php",
+ type:"POST",
+ dataType: 'json',
+ data: {event_name:event_name,event_start_date:event_start_date,event_end_date:event_end_date},
+ success:function(response){
+   $('#event_entry_modal').modal('hide');  
+   if(response.status == true)
+   {
+	alert(response.msg);
+	location.reload();
+   }
+   else
+   {
+	 alert(response.msg);
+   }
+  },
+  error: function (xhr, status) {
+  console.log('ajax error = ' + xhr.statusText);
+  alert(response.msg);
+  }
+});    
+return false;
+}
 </script>
 
 </html>

@@ -835,9 +835,9 @@ if (isset($_POST['applyDateTime'])) {
   $dateTimeFrom = $date . " " . $timeFrom;
   $dateTimeTo = $date . " " . $timeTo;
   if (isset($_POST['checkbox'])) {
-    foreach ($_POST['checkbox'] as $transaction_id) {
+    foreach ($_POST['checkbox'] as $amenity_renting_id) {
 
-      $resultID = $con->query("SELECT * FROM amenity_renting WHERE transaction_id = '$transaction_id'");
+      $resultID = $con->query("SELECT * FROM amenity_renting WHERE amenity_renting_id = '$amenity_renting_id'");
       $rowID = $resultID->fetch_assoc();
 
       $resultRate = $con->query("SELECT * FROM amenity_purpose WHERE amenity_purpose_id = '" . $rowID['amenity_purpose'] . "'");
@@ -858,7 +858,7 @@ if (isset($_POST['applyDateTime'])) {
         $dayCost = $totalDayHrs * $rowRate['day_rate'];
         $totalCost = $nightCost + $dayCost;
 
-        $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE transaction_id = '$transaction_id'";
+        $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE amenity_renting_id = '$amenity_renting_id'";
         $result = mysqli_query($con, $sql);
       } else if ($_POST['hrFrom'] >= 6 and $_POST['ampmFrom'] == 'pm' and $_POST['hrTo'] >= 6 and $_POST['ampmTo'] == 'pm') {
 
@@ -871,7 +871,7 @@ if (isset($_POST['applyDateTime'])) {
 
         $totalCost = $totalHrs * $rowRate['night_rate'];
 
-        $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE transaction_id = '$transaction_id'";
+        $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE amenity_renting_id = '$amenity_renting_id'";
         $result = mysqli_query($con, $sql);
       } else if ($_POST['hrTo'] == 12 and $_POST['ampmFrom'] == 'pm') {
       } else {
@@ -882,7 +882,7 @@ if (isset($_POST['applyDateTime'])) {
 
         $totalCost = $totalHrs * $rowRate['day_rate'];
 
-        $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE transaction_id = '$transaction_id'";
+        $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE amenity_renting_id = '$amenity_renting_id'";
         $result = mysqli_query($con, $sql);
       }
     }
@@ -1064,5 +1064,5 @@ if (isset($_POST['test'])) {
   
 }
 
-// $eventDate = $_POST['eventDate'];
+
 
