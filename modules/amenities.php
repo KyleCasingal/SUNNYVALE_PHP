@@ -53,7 +53,10 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
+  <!--calendar -->
+  <link href="js/fullcalendar/lib/main.css" rel="stylesheet" />
+<script src="js/fullcalendar/lib/main.js"></script>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
     integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -177,21 +180,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     border-radius: 0.8vw;
     cursor: pointer;
   }
-  /* .calendarshow{
-    background-color: darkseagreen;
-    border: 0;
-    padding: 0.5vw;
-    max-width: 50vw;
-    width: 15vw;
-    font-family: "Poppins", sans-serif;
-    font-size: 1.5vw;
-    margin-top: 2vw;
-    color: white;
-    border-radius: 0.8vw;
-    cursor: pointer;
-    
   
-  } */
 
   .btnCompute {
     background-color: rgb(248, 186, 55);
@@ -262,9 +251,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   .tblAmenity tr:hover {
     background-color: rgb(211, 211, 211);
   }
-#fullcalendar {
-justify-content: center;
-}
  
 </style>
 <script type="text/javascript">
@@ -392,16 +378,6 @@ justify-content: center;
   });
 
 
-
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth'
-        });
-        calendar.render();
-      });
-
-    
 </script>
 
 <body>
@@ -590,9 +566,11 @@ justify-content: center;
         </div>
       </div>
     </div>
-    <!-- <div class='amenitiesForm' id=fullcalendar>
-    <div id='calendar'></div>
-    </div> -->
+    <!-- calendar -->
+    <div class='amenitiesForm' id=fullcalendar>
+      
+
+    </div>
     </div>
   </form>
   <?php
@@ -601,6 +579,10 @@ justify-content: center;
 
 </body>
 <script>
+
+
+
+
   $('#select-all').click(function(event) {
     if (this.checked) {
       // Iterate each checkbox
@@ -633,86 +615,9 @@ justify-content: center;
 	display_events();
 });
 
-// //calendar
-// function display_events() {
-// 	var events = new Array();
-// $.ajax({
-//     url: 'display_event.php',  
-//     dataType: 'json',
-//     success: function (response) {
-         
-//     var result=response.data;
-//     $.each(result, function (i, item) {
-//     	events.push({
-//             event_id: result[i].event_id,
-//             title: result[i].title,
-//             start: result[i].start,
-//             end: result[i].end,
-//             color: result[i].color,
-//             url: result[i].url
-//         }); 	
-//     })
-// 	var calendar = $('#calendar').fullCalendar({
-// 	    defaultView: 'month',
-// 		 timeZone: 'local',
-// 	    editable: true,
-//         selectable: true,
-// 		selectHelper: true,
-//         select: function(start, end) {
-// 				alert(start);
-// 				alert(end);
-// 				$('#event_start_date').val(moment(start).format('YYYY-MM-DD'));
-// 				$('#event_end_date').val(moment(end).format('YYYY-MM-DD'));
-// 				$('#event_entry_modal').modal('show');
-// 			},
-//         events: events,
-// 	    eventRender: function(event, element, view) { 
-//             element.bind('click', function() {
-// 					alert(event.event_id);
-// 				});
-//     	}
-// 		}); //end fullCalendar block	
-// 	  },//end success block
-// 	  error: function (xhr, status) {
-// 	  alert(response.msg);
-// 	  }
-// 	});//end ajax block	
-// }
 
-// function save_event()
-// {
-// var event_name=$("#event_name").val();
-// var event_start_date=$("#event_start_date").val();
-// var event_end_date=$("#event_end_date").val();
-// if(event_name=="" || event_start_date=="" || event_end_date=="")
-// {
-// alert("Please enter all required details.");
-// return false;
-// }
-// $.ajax({
-//  url:"save_event.php",
-//  type:"POST",
-//  dataType: 'json',
-//  data: {event_name:event_name,event_start_date:event_start_date,event_end_date:event_end_date},
-//  success:function(response){
-//    $('#event_entry_modal').modal('hide');  
-//    if(response.status == true)
-//    {
-// 	alert(response.msg);
-// 	location.reload();
-//    }
-//    else
-//    {
-// 	 alert(response.msg);
-//    }
-//   },
-//   error: function (xhr, status) {
-//   console.log('ajax error = ' + xhr.statusText);
-//   alert(response.msg);
-//   }
-// });    
-// return false;
-// }
+
+ 
 </script>
 
 </html>

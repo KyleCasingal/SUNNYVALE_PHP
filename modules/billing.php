@@ -8,6 +8,8 @@ $resultSubdivision1 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_d
 $resultSubdivision2 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
 $resultSubdivision3 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
 $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ");
+$resultHomeowners1 = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ");
+
 $resultYearToday = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
 $resultYearToday1 = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
 $resultYearToday2 = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
@@ -230,6 +232,7 @@ $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . d
         });
     });
 
+    
     $(document).ready(function() {
         $("#subdivisionHomeowner_id").on('click', function() {
             var monthly_dues_id = $(this).val();
@@ -278,23 +281,26 @@ $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . d
             document.getElementById("subdivisionMonthlyAmount").setAttribute("value", "");
 
             $("#subdivisionAnnual_id").val("");
-            $("#month-select-annual-from").val("");
-            $("#month-select-annual-to").val("");
             document.getElementById("AnnualAmount").setAttribute("value", "");
 
         });
     });
-    // $(document).ready(function() {
-    //     $('.accordion-button').on("click", function(e) {
-    //         $("#monthly_dues_id").val("0");
-    //         $("#homeowner-name").val("");
-    //         $("#month-select-monthly-dues-from").val("January");
-    //         $("#month-select-monthly-dues-to").val("January");
-    //         $("#subdivisionAnnual_id").val("0");
-    //         $("#month-select-annual-from").val("January");
-    //         $("#month-select-annual-to").val("January");
-    //     });
-    // });
+    $(document).ready(function() {
+        $("#subdivisionHomeowner_id").on('click', function() {
+            var subdivisionHomeowner_id = $(this).val();
+            if (subdivisionHomeowner_id) {
+                $.ajax({
+                    type: 'POST',
+                    url: '../process.php/',
+                    data: 'subdivisionHomeowner_id=' + subdivisionHomeowner_id,
+                    success: function(html) {
+                        $("#Homeowner_id").html(html);
+                    }
+                });
+            }
+        });
+    });
+
 </script>
 
 <body>
@@ -320,8 +326,9 @@ $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . d
                                             <tr>
                                                 <td><label>Name:</label></td>
                                                 <td><select name="homeowner" id="Homeowner_id">
-                                                <option value="">Select...</option>
-                                                </td>
+                                                <option value="" >Select...</option>
+                                                
+                                                </select></td>
                                                 <!-- para sa homeowner i echo lahat ng mga homeowner tas ppili nalang din kagaya ng subdivision, pero pwede i 
                                                 filter kung ano ano lalabas gamit subdivision, at kung nahanap na yung homeowner ay mag auto na lagay yung subdivision.
                                                 or pwede din mag lagay nalang ng button dun sa babang table para i echo nalang yung laman nung full name dito sa name-->
@@ -409,9 +416,9 @@ $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . d
                                                 <td><label for="">From:</label></td>
                                                 <td>
                                                     <select name="month_select_monthly_dues_from" id="month-select-monthly-dues-from">
-                                                        <option value="">Select...</option>
+                                                    <option value="">Select...</option>
                                                         <?php
-                                                        while ($rowMonth = $resultYearToday->fetch_assoc()) : {
+                                                        while ($rowMonth = $resultYearToday2->fetch_assoc()) : {
                                                                 echo '<option value="' . $rowMonth['billingPeriod_id'] . '">' . $rowMonth['month'] . '</option>';
                                                             }
                                                         ?>
@@ -420,9 +427,9 @@ $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . d
                                                 </td>
                                                 <td><label for="">To:</label></td>
                                                 <td><select name="month_select_monthly_dues_to" id="month-select-monthly-dues-to">
-                                                        <option value="">Select...</option>
+                                                <option value="" >Select...</option>
                                                         <?php
-                                                        while ($rowMonth = $resultYearToday1->fetch_assoc()) : {
+                                                        while ($rowMonth = $resultYearToday3->fetch_assoc()) : {
                                                                 echo '<option value="' . $rowMonth['billingPeriod_id'] . '">' . $rowMonth['month'] . '</option>';
                                                             }
                                                         ?>
@@ -477,26 +484,12 @@ $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . d
                                             <tr>
                                                 <td><label for="">From:</label></td>
                                                 <td>
-                                                    <select name="month_select_annual_from" id="month-select-annual-from">
-                                                        <option value="">Select...</option>
-                                                        <?php
-                                                        while ($rowMonth = $resultYearToday2->fetch_assoc()) : {
-                                                                echo '<option value="' . $rowMonth['billingPeriod_id'] . '">' . $rowMonth['month'] . '</option>';
-                                                            }
-                                                        ?>
-                                                        <?php endwhile; ?>
-                                                    </select>
+                                                    <input type ="text" name="month_select_annual_from" id="month-select-annual-from"  value= "January" readonly>
+                                                        </input>
                                                 </td>
                                                 <td><label for="">To:</label></td>
-                                                <td><select name="month_select_annual_to" id="month-select-annual-to">
-                                                        <option value="">Select...</option>
-                                                        <?php
-                                                        while ($rowMonth = $resultYearToday3->fetch_assoc()) : {
-                                                                echo '<option value="' . $rowMonth['billingPeriod_id'] . '">' . $rowMonth['month'] . '</option>';
-                                                            }
-                                                        ?>
-                                                        <?php endwhile; ?>
-                                                    </select></td>
+                                                <td><input type="text" name="month_select_annual_to" id="month-select-annual-to" value="December" readonly >
+                                                        </input></td>
                                                 <td><input type="text" <?php
                                                                         $dateYear = date('Y');
                                                                         echo "value = '$dateYear'";
