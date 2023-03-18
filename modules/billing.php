@@ -285,21 +285,21 @@ $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . d
 
         });
     });
-    $(document).ready(function() {
-        $("#subdivisionHomeowner_id").on('click', function() {
-            var subdivisionHomeowner_id = $(this).val();
-            if (subdivisionHomeowner_id) {
-                $.ajax({
-                    type: 'POST',
-                    url: '../process.php/',
-                    data: 'subdivisionHomeowner_id=' + subdivisionHomeowner_id,
-                    success: function(html) {
-                        $("#Homeowner_id").html(html);
-                    }
-                });
-            }
-        });
-    });
+    // $(document).ready(function() {
+    //     $("#subdivisionHomeowner_id").on('click', function() {
+    //         var subdivisionHomeowner_id = $(this).val();
+    //         if (subdivisionHomeowner_id) {
+    //             $.ajax({
+    //                 type: 'POST',
+    //                 url: '../process.php/',
+    //                 data: 'subdivisionHomeowner_id=' + subdivisionHomeowner_id,
+    //                 success: function(html) {
+    //                     $("#Homeowner_id").html(html);
+    //                 }
+    //             });
+    //         }
+    //     });
+    // });
 
 </script>
 
@@ -323,11 +323,18 @@ $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . d
                                 <div class="accordion-body" id="accordion-body">
                                     <form action="" method="post" id="myForm">
                                         <table class="tblBilling-form">
+                                        
                                             <tr>
                                                 <td><label>Name:</label></td>
                                                 <td><select name="homeowner" id="Homeowner_id">
-                                                <option value="" >Select...</option>
                                                 
+                                                <option value="" >Select...</option>
+                                                <?php
+                                                        while ($rowHomeowner = $resultHomeowners1->fetch_assoc()) : {
+                                                                echo '<option value="' . '">' . $rowHomeowner['fullname'] . '</option>';
+                                                            }
+                                                        ?>
+                                                        <?php endwhile; ?>
                                                 </select></td>
                                                 <!-- para sa homeowner i echo lahat ng mga homeowner tas ppili nalang din kagaya ng subdivision, pero pwede i 
                                                 filter kung ano ano lalabas gamit subdivision, at kung nahanap na yung homeowner ay mag auto na lagay yung subdivision.
@@ -342,6 +349,7 @@ $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . d
                                                         ?>
                                                         <?php endwhile; ?>
                                                     </select>
+                
 
                                                 </td>
                                             </tr>
@@ -378,7 +386,7 @@ $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . d
                                                 <td>
                                                     <label for="">Amount: </label>
                                                 </td>
-                                                <td><input type="text" value="" id="homeowner-amount" readonly></td>
+                                                <td><input name="homeownerAmount" type="text" value="" id="homeowner-amount" readonly></td>
                                             </tr>
                                             <tr>
                                                 <td>
@@ -519,9 +527,9 @@ $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . d
                 <div class="treasurerForm">
                     <div class="filter-area">
                         <label>Search:</label>
-                        <input type="search" name="" id="">
+                        <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names..">
                         <label for="">filter by Subdivision:</label>
-                        <select name="homeowner" id="homeowner">
+                        <select name="homeowner" id="homeowner" onclick="myFunction1()">
                             <option value="">Select...</option>
                             <?php
                             while ($rowSubdivision3 = $resultSubdivision3->fetch_assoc()) : {
@@ -532,19 +540,19 @@ $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . d
                         </select>
                     </div>
                     <div class="table-area">
-                        <table class="Homeowner-table">
+                        <table class="Homeowner-table" id="Homeowner_table">
                             <thead>
                                 <th>Full name</th>
                                 <th>Subdivision</th>
                                 <th>Email</th>
                             </thead>
                             <?php while ($row = $resultHomeowners->fetch_assoc()) : ?>
-                                <tr class="Homeowner-table-data-row">
+                                <tr class="Homeowner-table-data-row" id="Homeowner_table_data_row">
                                     <td><?php echo $row['fullname'] ?></td>
                                     <td><?php echo $row['subdivision'] ?></td>
                                     <td><?php echo $row['email_address'] ?></td>
                                 </tr>
-                            <?php endwhile; ?>
+                                <?php endwhile; ?>
                         </table>
                     </div>
                 </div>
@@ -557,6 +565,50 @@ $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . d
     ?>
 </body>
 <script>
+function myFunction() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("search");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("Homeowner_table");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
+function myFunction1() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("homeowner");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("Homeowner_table");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+};
+
 
 </script>
 
