@@ -14,6 +14,8 @@ $resultYearToday = $con->query("SELECT * FROM billing_period WHERE year= '" . da
 $resultYearToday1 = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
 $resultYearToday2 = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
 $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
+$resultYearToday4 = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
+$resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -492,12 +494,25 @@ $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . d
                                             <tr>
                                                 <td><label for="">From:</label></td>
                                                 <td>
-                                                    <input type ="text" name="month_select_annual_from" id="month-select-annual-from"  value= "January" readonly>
-                                                        </input>
+                                                     <select name="month_select_annual_from" id="month-select-annual-from">
+                                                        <option value="">Select...</option>
+                                                        <?php
+                                                        while ($rowMonth = $resultYearToday4->fetch_assoc()) : {
+                                                                echo '<option value="' . $rowMonth['billingPeriod_id'] . '">' . $rowMonth['month'] . '</option>';
+                                                            }
+                                                        ?>
+                                                        <?php endwhile; ?>
                                                 </td>
                                                 <td><label for="">To:</label></td>
-                                                <td><input type="text" name="month_select_annual_to" id="month-select-annual-to" value="December" readonly >
-                                                        </input></td>
+                                                <td><select name="month_select_annual_to" id="month-select-annual-to">
+                                                        <option value="">Select...</option>
+                                                        <?php
+                                                        while ($rowMonth = $resultYearToday5->fetch_assoc()) : {
+                                                                echo '<option value="' . $rowMonth['billingPeriod_id'] . '">' . $rowMonth['month'] . '</option>';
+                                                            }
+                                                        ?>
+                                                        <?php endwhile; ?>
+                                                    </td>
                                                 <td><input type="text" <?php
                                                                         $dateYear = date('Y');
                                                                         echo "value = '$dateYear'";

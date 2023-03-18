@@ -1030,6 +1030,7 @@ if (isset($_POST['billMonth'])) {
     }
   }
 }
+
 //annual
 if (isset($_POST['billAnnual'])) {
   $subdivisionAnnual_id = $_POST['subdivision-annual'];
@@ -1037,7 +1038,7 @@ if (isset($_POST['billAnnual'])) {
   $billingPeriod_id_to = $_POST['month_select_annual_to'];
   $AnnualAmount = $_POST['AnnualAmount'];
 
-  $resultSubdivision = $con->query("SELECT * FROM annual_dues WHERE annual_dues_id=$subdivisionAnnual_id");
+  $resultSubdivision = $con->query("SELECT * FROM monthly_dues WHERE monthly_dues_id=$subdivisionAnnual_id");
   $rowSubdivision = $resultSubdivision->fetch_assoc();
 
 
@@ -1066,6 +1067,7 @@ if (isset($_POST['billAnnual'])) {
 
   for ($x = $billingPeriod_id_from; $x <= $billingPeriod_id_to; $x++) {
     $i = 0;
+    $s= 12;
     while ($i < count($homeowner_id_array)) {
       $resultFullname = $con->query("SELECT * FROM homeowner_profile WHERE homeowner_id = '$homeowner_id_array[$i]'");
       $rowFullname = $resultFullname->fetch_assoc();
@@ -1080,6 +1082,7 @@ if (isset($_POST['billAnnual'])) {
     }
   }
 }
+
 //homeowner
 if (isset($_POST['billHomeowner'])) {
   $homeowner = $_POST['homeowner'];
@@ -1088,14 +1091,19 @@ if (isset($_POST['billHomeowner'])) {
   $month_select_monthly_dues_to = $_POST['month_select_monthly_dues_to'];
   $homeownerAmount = $_POST['homeownerAmount'];
 
-  // $resultHomeowner = $con->query("SELECT * FROM homeowner_profile WHERE homeowner='$homeowner'");
-  // $rowHomeownerid = $resultHomeowner->fetch_assoc();
-  // $homeowner_id = $rowHomeownerid['homeowner_id'];
-  
+  $resultHomeowner = $con->query("SELECT * FROM homeowner_profile WHERE subdivision='$subdivision'");
+  $rowHomeownerid = $resultHomeowner->fetch_assoc();
+
+
+    while ($rowHomeowner = $resultHomeowner->fetch_assoc()) {
+      $homeowner_id = $rowHomeowner['homeowner_id'];
   for ($x = $month_select_monthly_dues_from; $x <= $month_select_monthly_dues_to; $x++) {
-      $sql = "INSERT INTO bill_consumer (billingPeriod_id, homeowner_id, fullname, amount, status) VALUES ('$x', '$homeowner_id', '$homeowner', '$homeownerAmount', 'UNPAID')";
-      $result = mysqli_query($con, $sql);
+    $sql = "INSERT INTO bill_consumer (billingPeriod_id, homeowner_id, fullname, amount, status) VALUES ('$x', '$homeowner_id', '$homeowner', '$homeownerAmount', 'UNPAID')";
+    $result = mysqli_query($con, $sql);
+  }
 }
+
+
   // $resultSubdivision = $con->query("SELECT * FROM annual_dues WHERE annual_dues_id=$subdivisionAnnual_id");
   // $rowSubdivision = $resultSubdivision->fetch_assoc();
 
