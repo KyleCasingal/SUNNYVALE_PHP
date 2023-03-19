@@ -966,7 +966,7 @@ if (isset($_POST['monthly_dues_id'])) {
   $monthly_dues_id = $_POST['monthly_dues_id'];
   $result = $con->query("SELECT * FROM monthly_dues WHERE monthly_dues_id=$monthly_dues_id");
   $row = $result->fetch_assoc();
-  $annualfinal =  $row['amount'] * 12;
+  $annualfinal =  $row['amount'];
 
 
   if (mysqli_num_rows($result) > 0) {
@@ -1067,7 +1067,6 @@ if (isset($_POST['billAnnual'])) {
 
   for ($x = $billingPeriod_id_from; $x <= $billingPeriod_id_to; $x++) {
     $i = 0;
-    $s= 12;
     while ($i < count($homeowner_id_array)) {
       $resultFullname = $con->query("SELECT * FROM homeowner_profile WHERE homeowner_id = '$homeowner_id_array[$i]'");
       $rowFullname = $resultFullname->fetch_assoc();
@@ -1092,11 +1091,14 @@ if (isset($_POST['billHomeowner'])) {
   $homeownerAmount = $_POST['homeownerAmount'];
 
   $resultHomeowner = $con->query("SELECT * FROM homeowner_profile WHERE subdivision='$subdivision'");
+  $resultHomeowners1 = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname FROM `homeowner_profile` WHERE `subdivision` subdivision ='$subdivision'' ");
   $rowHomeownerid = $resultHomeowner->fetch_assoc();
 
 
     while ($rowHomeowner = $resultHomeowner->fetch_assoc()) {
       $homeowner_id = $rowHomeowner['homeowner_id'];
+
+
   for ($x = $month_select_monthly_dues_from; $x <= $month_select_monthly_dues_to; $x++) {
     $sql = "INSERT INTO bill_consumer (billingPeriod_id, homeowner_id, fullname, amount, status) VALUES ('$x', '$homeowner_id', '$homeowner', '$homeownerAmount', 'UNPAID')";
     $result = mysqli_query($con, $sql);

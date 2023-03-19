@@ -23,7 +23,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
 // 	$data_arr[$i]['url'] = 'https://www.shinerweb.com';
 // 	$i++;
 // 	}
-	
+
 // 	$data = array(
 //                 'status' => true,
 //                 'msg' => 'successfully!',
@@ -48,18 +48,21 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#000000" />
+  
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-  <!--calendar -->
-  <link href="js/fullcalendar/lib/main.css" rel="stylesheet" />
-<script src="js/fullcalendar/lib/main.js"></script>
+<!-- calendar -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>-->
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script> 
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>SUNNYVALE</title>
 </head>
 <style>
@@ -180,7 +183,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     border-radius: 0.8vw;
     cursor: pointer;
   }
-  
+
 
   .btnCompute {
     background-color: rgb(248, 186, 55);
@@ -251,7 +254,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   .tblAmenity tr:hover {
     background-color: rgb(211, 211, 211);
   }
- 
 </style>
 <script type="text/javascript">
   if (window.history.replaceState) {
@@ -377,7 +379,14 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     });
   });
 
-
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth'
+    });
+    calendar.render();
+  });
+  
 </script>
 
 <body>
@@ -414,7 +423,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
           <label>Night rate starts at 6pm</label>
         </div>
         <button class="btnSubmit" name="addToCart" id="add">Add</button>
-        
+
         <br>
         <!-- <button class="calendarshow" name="" id="calendarshow">Show Calendar</button> -->
       </div>
@@ -566,12 +575,16 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
         </div>
       </div>
     </div>
+
     <!-- calendar -->
-    <div class='amenitiesForm' id=fullcalendar>
-      
+    <div class="amenitiesForm">
+    <div id="calendar"></div>
+    
 
     </div>
-    </div>
+
+
+
   </form>
   <?php
   require '../marginals/footer2.php';
@@ -579,10 +592,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
 
 </body>
 <script>
-
-
-
-
   $('#select-all').click(function(event) {
     if (this.checked) {
       // Iterate each checkbox
@@ -611,13 +620,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   $("#image").change(function() {
     readURL(this, 'imagePreview');
   });
-  $(document).ready(function() {
-	display_events();
-});
-
-
-
- 
+  
 </script>
 
 </html>
