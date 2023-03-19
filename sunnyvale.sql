@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Feb 20, 2023 at 05:08 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Host: 127.0.0.1:3306
+-- Generation Time: Mar 19, 2023 at 05:07 AM
+-- Server version: 5.7.36
+-- PHP Version: 7.4.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,14 +27,16 @@ SET time_zone = "+00:00";
 -- Table structure for table `amenities`
 --
 
-CREATE TABLE `amenities` (
-  `amenity_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `amenities`;
+CREATE TABLE IF NOT EXISTS `amenities` (
+  `amenity_id` int(11) NOT NULL AUTO_INCREMENT,
   `amenity_name` varchar(255) NOT NULL,
   `subdivision_id` int(11) NOT NULL,
   `subdivision_name` varchar(50) NOT NULL,
   `price` int(11) NOT NULL,
-  `availability` varchar(50) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `availability` varchar(50) NOT NULL,
+  PRIMARY KEY (`amenity_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenities`
@@ -55,13 +57,15 @@ INSERT INTO `amenities` (`amenity_id`, `amenity_name`, `subdivision_id`, `subdiv
 -- Table structure for table `amenity_purpose`
 --
 
-CREATE TABLE `amenity_purpose` (
-  `amenity_purpose_id` int(10) NOT NULL,
+DROP TABLE IF EXISTS `amenity_purpose`;
+CREATE TABLE IF NOT EXISTS `amenity_purpose` (
+  `amenity_purpose_id` int(10) NOT NULL AUTO_INCREMENT,
   `amenity_id` int(10) NOT NULL,
   `amenity_purpose` varchar(100) NOT NULL,
   `day_rate` int(10) NOT NULL,
-  `night_rate` int(10) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `night_rate` int(10) NOT NULL,
+  PRIMARY KEY (`amenity_purpose_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenity_purpose`
@@ -77,8 +81,9 @@ INSERT INTO `amenity_purpose` (`amenity_purpose_id`, `amenity_id`, `amenity_purp
 -- Table structure for table `amenity_renting`
 --
 
-CREATE TABLE `amenity_renting` (
-  `amenity_renting_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `amenity_renting`;
+CREATE TABLE IF NOT EXISTS `amenity_renting` (
+  `amenity_renting_id` int(11) NOT NULL AUTO_INCREMENT,
   `transaction_id` int(10) DEFAULT NULL,
   `user_id` int(10) NOT NULL,
   `renter_name` varchar(255) NOT NULL,
@@ -89,8 +94,9 @@ CREATE TABLE `amenity_renting` (
   `date_to` datetime DEFAULT NULL,
   `cost` int(11) DEFAULT NULL,
   `payment_proof` varchar(255) DEFAULT NULL,
-  `cart` varchar(10) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `cart` varchar(10) NOT NULL,
+  PRIMARY KEY (`amenity_renting_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenity_renting`
@@ -106,7 +112,38 @@ INSERT INTO `amenity_renting` (`amenity_renting_id`, `transaction_id`, `user_id`
 (15, 1, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-16 18:00:00', '2023-02-16 21:00:00', 450, '328148270_726681382138928_1391919010667224674_n.png', 'Pending'),
 (16, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', NULL, NULL, NULL, NULL, 'Removed'),
 (17, 2, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '3', '2023-02-22 18:00:00', '2023-02-22 19:00:00', 150, 'Delima, Mon Carlo Z..png', 'Pending'),
-(18, 3, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-25 13:00:00', '2023-02-25 14:00:00', 50, '315887907_1137649846869408_655406644278059076_n.png', 'Pending');
+(18, 3, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-25 13:00:00', '2023-02-25 14:00:00', 50, '315887907_1137649846869408_655406644278059076_n.png', 'Pending'),
+(19, NULL, 48, 'SV1_Treasurer', 'Sunnyvale 1', 'Court', '3', '2023-03-12 02:00:00', '2023-03-12 15:00:00', 0, NULL, 'Yes'),
+(20, NULL, 48, 'SV1_Treasurer', 'Sunnyvale 1', 'Court', '3', NULL, NULL, NULL, NULL, 'Yes');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `annual_dues`
+--
+
+DROP TABLE IF EXISTS `annual_dues`;
+CREATE TABLE IF NOT EXISTS `annual_dues` (
+  `annual_dues_id` int(11) NOT NULL AUTO_INCREMENT,
+  `subdivision_name` varchar(255) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `updated_at` date NOT NULL,
+  PRIMARY KEY (`annual_dues_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `annual_dues`
+--
+
+INSERT INTO `annual_dues` (`annual_dues_id`, `subdivision_name`, `amount`, `updated_at`) VALUES
+(1, 'Sunnyvale 1', 200, '2022-11-27'),
+(2, 'Sunnyvale 2', 250, '2022-11-27'),
+(3, 'Sunnyvale 3', 500, '2022-11-29'),
+(4, 'Sunnyvale 4', 350, '2022-11-27'),
+(5, 'Sunnyvale 7', 500, '2022-11-27'),
+(6, 'Sunnyvale 5', 500, '2022-11-29'),
+(7, 'Sunnyvale 5', 300, '2022-11-29'),
+(11, 'Sunnyvale 10', 720, '2022-11-29');
 
 -- --------------------------------------------------------
 
@@ -114,12 +151,14 @@ INSERT INTO `amenity_renting` (`amenity_renting_id`, `transaction_id`, `user_id`
 -- Table structure for table `audit_trail`
 --
 
-CREATE TABLE `audit_trail` (
-  `audit_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `audit_trail`;
+CREATE TABLE IF NOT EXISTS `audit_trail` (
+  `audit_id` int(11) NOT NULL AUTO_INCREMENT,
   `user` varchar(50) NOT NULL,
   `action` varchar(255) NOT NULL,
-  `datetime` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `datetime` datetime NOT NULL,
+  PRIMARY KEY (`audit_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=402 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -507,7 +546,12 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (393, 'SV1_Treasurer', 'logged in', '2023-02-20 08:30:38'),
 (394, 'SV1_Treasurer', 'logged out', '2023-02-20 08:50:17'),
 (395, 'SV1_Treasurer', 'logged in', '2023-02-20 11:00:09'),
-(396, 'SV1_Treasurer', 'logged in', '2023-02-20 11:41:51');
+(396, 'SV1_Treasurer', 'logged in', '2023-02-20 11:41:51'),
+(397, 'SV1_Treasurer', 'logged in', '2023-03-18 18:44:00'),
+(398, 'SV1_Treasurer', 'logged out', '2023-03-18 22:04:11'),
+(399, 'SV1_Admin', 'logged in', '2023-03-18 22:04:14'),
+(400, 'SV1_Admin', 'logged out', '2023-03-18 22:04:33'),
+(401, 'SV1_Treasurer', 'logged in', '2023-03-18 22:05:22');
 
 -- --------------------------------------------------------
 
@@ -515,11 +559,13 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 -- Table structure for table `billing_period`
 --
 
-CREATE TABLE `billing_period` (
-  `billingPeriod_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `billing_period`;
+CREATE TABLE IF NOT EXISTS `billing_period` (
+  `billingPeriod_id` int(11) NOT NULL AUTO_INCREMENT,
   `month` varchar(45) NOT NULL,
-  `year` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `year` varchar(45) NOT NULL,
+  PRIMARY KEY (`billingPeriod_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `billing_period`
@@ -537,7 +583,19 @@ INSERT INTO `billing_period` (`billingPeriod_id`, `month`, `year`) VALUES
 (9, 'September', '2023'),
 (10, 'October', '2023'),
 (11, 'November', '2023'),
-(12, 'December', '2023');
+(12, 'December', '2023'),
+(13, 'January', '2024'),
+(14, 'February', '2024'),
+(15, 'March', '2024'),
+(16, 'April', '2024'),
+(17, 'May', '2024'),
+(18, 'June', '2024'),
+(19, 'July', '2024'),
+(20, 'August', '2024'),
+(21, 'September', '2024'),
+(22, 'October', '2024'),
+(23, 'November', '2024'),
+(24, 'December', '2024');
 
 -- --------------------------------------------------------
 
@@ -545,14 +603,142 @@ INSERT INTO `billing_period` (`billingPeriod_id`, `month`, `year`) VALUES
 -- Table structure for table `bill_consumer`
 --
 
-CREATE TABLE `bill_consumer` (
-  `billConsumer_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `bill_consumer`;
+CREATE TABLE IF NOT EXISTS `bill_consumer` (
+  `billConsumer_id` int(11) NOT NULL AUTO_INCREMENT,
   `billingPeriod_id` int(11) NOT NULL,
   `homeowner_id` int(11) NOT NULL,
   `fullname` varchar(250) NOT NULL,
   `amount` varchar(45) NOT NULL,
-  `status` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `status` varchar(45) NOT NULL,
+  PRIMARY KEY (`billConsumer_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bill_consumer`
+--
+
+INSERT INTO `bill_consumer` (`billConsumer_id`, `billingPeriod_id`, `homeowner_id`, `fullname`, `amount`, `status`) VALUES
+(1, 13, 1, 'Mon Carlo Delima', '2400', 'UNPAID'),
+(2, 13, 17, 'Roiemar Escueta', '2400', 'UNPAID'),
+(3, 13, 16, 'janwel castillo', '2400', 'UNPAID'),
+(4, 13, 30, 'John Doe', '2400', 'UNPAID'),
+(5, 13, 31, 'Amirah Lowery', '2400', 'UNPAID'),
+(6, 13, 32, 'Kian Miller', '2400', 'UNPAID'),
+(7, 13, 33, 'Leona Shepherd', '2400', 'UNPAID'),
+(8, 13, 34, 'Sophie Warner', '2400', 'UNPAID'),
+(9, 13, 35, 'Tristram Hudson', '2400', 'UNPAID'),
+(10, 13, 39, 'Marco Ivan Sta. Maria', '2400', 'UNPAID'),
+(11, 14, 1, 'Mon Carlo Delima', '2400', 'UNPAID'),
+(12, 14, 17, 'Roiemar Escueta', '2400', 'UNPAID'),
+(13, 14, 16, 'janwel castillo', '2400', 'UNPAID'),
+(14, 14, 30, 'John Doe', '2400', 'UNPAID'),
+(15, 14, 31, 'Amirah Lowery', '2400', 'UNPAID'),
+(16, 14, 32, 'Kian Miller', '2400', 'UNPAID'),
+(17, 14, 33, 'Leona Shepherd', '2400', 'UNPAID'),
+(18, 14, 34, 'Sophie Warner', '2400', 'UNPAID'),
+(19, 14, 35, 'Tristram Hudson', '2400', 'UNPAID'),
+(20, 14, 39, 'Marco Ivan Sta. Maria', '2400', 'UNPAID'),
+(21, 15, 1, 'Mon Carlo Delima', '2400', 'UNPAID'),
+(22, 15, 17, 'Roiemar Escueta', '2400', 'UNPAID'),
+(23, 15, 16, 'janwel castillo', '2400', 'UNPAID'),
+(24, 15, 30, 'John Doe', '2400', 'UNPAID'),
+(25, 15, 31, 'Amirah Lowery', '2400', 'UNPAID'),
+(26, 15, 32, 'Kian Miller', '2400', 'UNPAID'),
+(27, 15, 33, 'Leona Shepherd', '2400', 'UNPAID'),
+(28, 15, 34, 'Sophie Warner', '2400', 'UNPAID'),
+(29, 15, 35, 'Tristram Hudson', '2400', 'UNPAID'),
+(30, 15, 39, 'Marco Ivan Sta. Maria', '2400', 'UNPAID'),
+(31, 16, 1, 'Mon Carlo Delima', '2400', 'UNPAID'),
+(32, 16, 17, 'Roiemar Escueta', '2400', 'UNPAID'),
+(33, 16, 16, 'janwel castillo', '2400', 'UNPAID'),
+(34, 16, 30, 'John Doe', '2400', 'UNPAID'),
+(35, 16, 31, 'Amirah Lowery', '2400', 'UNPAID'),
+(36, 16, 32, 'Kian Miller', '2400', 'UNPAID'),
+(37, 16, 33, 'Leona Shepherd', '2400', 'UNPAID'),
+(38, 16, 34, 'Sophie Warner', '2400', 'UNPAID'),
+(39, 16, 35, 'Tristram Hudson', '2400', 'UNPAID'),
+(40, 16, 39, 'Marco Ivan Sta. Maria', '2400', 'UNPAID'),
+(41, 17, 1, 'Mon Carlo Delima', '2400', 'UNPAID'),
+(42, 17, 17, 'Roiemar Escueta', '2400', 'UNPAID'),
+(43, 17, 16, 'janwel castillo', '2400', 'UNPAID'),
+(44, 17, 30, 'John Doe', '2400', 'UNPAID'),
+(45, 17, 31, 'Amirah Lowery', '2400', 'UNPAID'),
+(46, 17, 32, 'Kian Miller', '2400', 'UNPAID'),
+(47, 17, 33, 'Leona Shepherd', '2400', 'UNPAID'),
+(48, 17, 34, 'Sophie Warner', '2400', 'UNPAID'),
+(49, 17, 35, 'Tristram Hudson', '2400', 'UNPAID'),
+(50, 17, 39, 'Marco Ivan Sta. Maria', '2400', 'UNPAID'),
+(51, 18, 1, 'Mon Carlo Delima', '2400', 'UNPAID'),
+(52, 18, 17, 'Roiemar Escueta', '2400', 'UNPAID'),
+(53, 18, 16, 'janwel castillo', '2400', 'UNPAID'),
+(54, 18, 30, 'John Doe', '2400', 'UNPAID'),
+(55, 18, 31, 'Amirah Lowery', '2400', 'UNPAID'),
+(56, 18, 32, 'Kian Miller', '2400', 'UNPAID'),
+(57, 18, 33, 'Leona Shepherd', '2400', 'UNPAID'),
+(58, 18, 34, 'Sophie Warner', '2400', 'UNPAID'),
+(59, 18, 35, 'Tristram Hudson', '2400', 'UNPAID'),
+(60, 18, 39, 'Marco Ivan Sta. Maria', '2400', 'UNPAID'),
+(61, 19, 1, 'Mon Carlo Delima', '2400', 'UNPAID'),
+(62, 19, 17, 'Roiemar Escueta', '2400', 'UNPAID'),
+(63, 19, 16, 'janwel castillo', '2400', 'UNPAID'),
+(64, 19, 30, 'John Doe', '2400', 'UNPAID'),
+(65, 19, 31, 'Amirah Lowery', '2400', 'UNPAID'),
+(66, 19, 32, 'Kian Miller', '2400', 'UNPAID'),
+(67, 19, 33, 'Leona Shepherd', '2400', 'UNPAID'),
+(68, 19, 34, 'Sophie Warner', '2400', 'UNPAID'),
+(69, 19, 35, 'Tristram Hudson', '2400', 'UNPAID'),
+(70, 19, 39, 'Marco Ivan Sta. Maria', '2400', 'UNPAID'),
+(71, 20, 1, 'Mon Carlo Delima', '2400', 'UNPAID'),
+(72, 20, 17, 'Roiemar Escueta', '2400', 'UNPAID'),
+(73, 20, 16, 'janwel castillo', '2400', 'UNPAID'),
+(74, 20, 30, 'John Doe', '2400', 'UNPAID'),
+(75, 20, 31, 'Amirah Lowery', '2400', 'UNPAID'),
+(76, 20, 32, 'Kian Miller', '2400', 'UNPAID'),
+(77, 20, 33, 'Leona Shepherd', '2400', 'UNPAID'),
+(78, 20, 34, 'Sophie Warner', '2400', 'UNPAID'),
+(79, 20, 35, 'Tristram Hudson', '2400', 'UNPAID'),
+(80, 20, 39, 'Marco Ivan Sta. Maria', '2400', 'UNPAID'),
+(81, 21, 1, 'Mon Carlo Delima', '2400', 'UNPAID'),
+(82, 21, 17, 'Roiemar Escueta', '2400', 'UNPAID'),
+(83, 21, 16, 'janwel castillo', '2400', 'UNPAID'),
+(84, 21, 30, 'John Doe', '2400', 'UNPAID'),
+(85, 21, 31, 'Amirah Lowery', '2400', 'UNPAID'),
+(86, 21, 32, 'Kian Miller', '2400', 'UNPAID'),
+(87, 21, 33, 'Leona Shepherd', '2400', 'UNPAID'),
+(88, 21, 34, 'Sophie Warner', '2400', 'UNPAID'),
+(89, 21, 35, 'Tristram Hudson', '2400', 'UNPAID'),
+(90, 21, 39, 'Marco Ivan Sta. Maria', '2400', 'UNPAID'),
+(91, 22, 1, 'Mon Carlo Delima', '2400', 'UNPAID'),
+(92, 22, 17, 'Roiemar Escueta', '2400', 'UNPAID'),
+(93, 22, 16, 'janwel castillo', '2400', 'UNPAID'),
+(94, 22, 30, 'John Doe', '2400', 'UNPAID'),
+(95, 22, 31, 'Amirah Lowery', '2400', 'UNPAID'),
+(96, 22, 32, 'Kian Miller', '2400', 'UNPAID'),
+(97, 22, 33, 'Leona Shepherd', '2400', 'UNPAID'),
+(98, 22, 34, 'Sophie Warner', '2400', 'UNPAID'),
+(99, 22, 35, 'Tristram Hudson', '2400', 'UNPAID'),
+(100, 22, 39, 'Marco Ivan Sta. Maria', '2400', 'UNPAID'),
+(101, 23, 1, 'Mon Carlo Delima', '2400', 'UNPAID'),
+(102, 23, 17, 'Roiemar Escueta', '2400', 'UNPAID'),
+(103, 23, 16, 'janwel castillo', '2400', 'UNPAID'),
+(104, 23, 30, 'John Doe', '2400', 'UNPAID'),
+(105, 23, 31, 'Amirah Lowery', '2400', 'UNPAID'),
+(106, 23, 32, 'Kian Miller', '2400', 'UNPAID'),
+(107, 23, 33, 'Leona Shepherd', '2400', 'UNPAID'),
+(108, 23, 34, 'Sophie Warner', '2400', 'UNPAID'),
+(109, 23, 35, 'Tristram Hudson', '2400', 'UNPAID'),
+(110, 23, 39, 'Marco Ivan Sta. Maria', '2400', 'UNPAID'),
+(111, 24, 1, 'Mon Carlo Delima', '2400', 'UNPAID'),
+(112, 24, 17, 'Roiemar Escueta', '2400', 'UNPAID'),
+(113, 24, 16, 'janwel castillo', '2400', 'UNPAID'),
+(114, 24, 30, 'John Doe', '2400', 'UNPAID'),
+(115, 24, 31, 'Amirah Lowery', '2400', 'UNPAID'),
+(116, 24, 32, 'Kian Miller', '2400', 'UNPAID'),
+(117, 24, 33, 'Leona Shepherd', '2400', 'UNPAID'),
+(118, 24, 34, 'Sophie Warner', '2400', 'UNPAID'),
+(119, 24, 35, 'Tristram Hudson', '2400', 'UNPAID'),
+(120, 24, 39, 'Marco Ivan Sta. Maria', '2400', 'UNPAID');
 
 -- --------------------------------------------------------
 
@@ -560,14 +746,16 @@ CREATE TABLE `bill_consumer` (
 -- Table structure for table `concern`
 --
 
-CREATE TABLE `concern` (
-  `concern_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `concern`;
+CREATE TABLE IF NOT EXISTS `concern` (
+  `concern_id` int(11) NOT NULL AUTO_INCREMENT,
   `full_name` varchar(50) NOT NULL,
   `concern_subject` varchar(100) NOT NULL,
   `concern_description` varchar(255) NOT NULL,
   `status` varchar(50) NOT NULL,
-  `datetime` datetime DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `datetime` datetime DEFAULT NULL,
+  PRIMARY KEY (`concern_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `concern`
@@ -592,8 +780,9 @@ INSERT INTO `concern` (`concern_id`, `full_name`, `concern_subject`, `concern_de
 -- Table structure for table `homeowner_profile`
 --
 
-CREATE TABLE `homeowner_profile` (
-  `homeowner_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `homeowner_profile`;
+CREATE TABLE IF NOT EXISTS `homeowner_profile` (
+  `homeowner_id` int(11) NOT NULL AUTO_INCREMENT,
   `last_name` varchar(100) NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `middle_name` varchar(100) DEFAULT NULL,
@@ -608,8 +797,9 @@ CREATE TABLE `homeowner_profile` (
   `birthdate` date DEFAULT NULL,
   `mobile_number` varchar(20) NOT NULL,
   `employer` varchar(100) DEFAULT NULL,
-  `display_picture` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `display_picture` varchar(255) NOT NULL,
+  PRIMARY KEY (`homeowner_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `homeowner_profile`
@@ -642,12 +832,14 @@ INSERT INTO `homeowner_profile` (`homeowner_id`, `last_name`, `first_name`, `mid
 -- Table structure for table `monthly_dues`
 --
 
-CREATE TABLE `monthly_dues` (
-  `monthly_dues_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `monthly_dues`;
+CREATE TABLE IF NOT EXISTS `monthly_dues` (
+  `monthly_dues_id` int(11) NOT NULL AUTO_INCREMENT,
   `subdivision_name` varchar(255) NOT NULL,
   `amount` int(11) NOT NULL,
-  `updated_at` date NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `updated_at` date NOT NULL,
+  PRIMARY KEY (`monthly_dues_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `monthly_dues`
@@ -669,16 +861,18 @@ INSERT INTO `monthly_dues` (`monthly_dues_id`, `subdivision_name`, `amount`, `up
 -- Table structure for table `monthly_dues_bill`
 --
 
-CREATE TABLE `monthly_dues_bill` (
-  `monthlyDues_ID` int(11) NOT NULL,
+DROP TABLE IF EXISTS `monthly_dues_bill`;
+CREATE TABLE IF NOT EXISTS `monthly_dues_bill` (
+  `monthlyDues_ID` int(11) NOT NULL AUTO_INCREMENT,
   `homeowner_name` varchar(255) NOT NULL,
   `subdivision` varchar(45) NOT NULL,
   `month` varchar(45) NOT NULL,
   `year` varchar(45) NOT NULL,
   `address` varchar(255) NOT NULL,
   `paid_at` varchar(255) DEFAULT NULL,
-  `status` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `status` varchar(255) NOT NULL,
+  PRIMARY KEY (`monthlyDues_ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `monthly_dues_bill`
@@ -693,12 +887,14 @@ INSERT INTO `monthly_dues_bill` (`monthlyDues_ID`, `homeowner_name`, `subdivisio
 -- Table structure for table `officers`
 --
 
-CREATE TABLE `officers` (
-  `officer_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `officers`;
+CREATE TABLE IF NOT EXISTS `officers` (
+  `officer_id` int(11) NOT NULL AUTO_INCREMENT,
   `subdivision_name` varchar(50) NOT NULL,
   `officer_name` varchar(255) NOT NULL,
-  `position_name` varchar(50) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `position_name` varchar(50) NOT NULL,
+  PRIMARY KEY (`officer_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `officers`
@@ -723,12 +919,14 @@ INSERT INTO `officers` (`officer_id`, `subdivision_name`, `officer_name`, `posit
 -- Table structure for table `positions`
 --
 
-CREATE TABLE `positions` (
-  `position_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `positions`;
+CREATE TABLE IF NOT EXISTS `positions` (
+  `position_id` int(11) NOT NULL AUTO_INCREMENT,
   `subdivision_id` int(11) NOT NULL,
   `subdivision_name` varchar(50) NOT NULL,
-  `position_name` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `position_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`position_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `positions`
@@ -749,16 +947,18 @@ INSERT INTO `positions` (`position_id`, `subdivision_id`, `subdivision_name`, `p
 -- Table structure for table `post`
 --
 
-CREATE TABLE `post` (
-  `post_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `post`;
+CREATE TABLE IF NOT EXISTS `post` (
+  `post_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `full_name` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` varchar(255) DEFAULT NULL,
   `published_at` datetime NOT NULL,
   `content_image` varchar(255) DEFAULT NULL,
-  `officer_post` varchar(10) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `officer_post` varchar(10) NOT NULL,
+  PRIMARY KEY (`post_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `post`
@@ -785,11 +985,13 @@ INSERT INTO `post` (`post_id`, `user_id`, `full_name`, `title`, `content`, `publ
 -- Table structure for table `subdivision`
 --
 
-CREATE TABLE `subdivision` (
-  `subdivision_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `subdivision`;
+CREATE TABLE IF NOT EXISTS `subdivision` (
+  `subdivision_id` int(11) NOT NULL AUTO_INCREMENT,
   `subdivision_name` varchar(255) NOT NULL,
-  `barangay` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `barangay` varchar(255) NOT NULL,
+  PRIMARY KEY (`subdivision_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `subdivision`
@@ -807,8 +1009,9 @@ INSERT INTO `subdivision` (`subdivision_id`, `subdivision_name`, `barangay`) VAL
 -- Table structure for table `user`
 --
 
-CREATE TABLE `user` (
-  `user_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_homeowner_id` int(11) NOT NULL,
   `full_name` varchar(50) NOT NULL,
   `user_type` varchar(15) NOT NULL,
@@ -816,8 +1019,9 @@ CREATE TABLE `user` (
   `email_address` varchar(40) DEFAULT NULL,
   `account_status` varchar(15) NOT NULL,
   `verification_code` varchar(6) DEFAULT NULL,
-  `email_verified_at` datetime DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `email_verified_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
@@ -843,10 +1047,12 @@ INSERT INTO `user` (`user_id`, `user_homeowner_id`, `full_name`, `user_type`, `p
 -- Table structure for table `years`
 --
 
-CREATE TABLE `years` (
-  `yearID` int(11) NOT NULL,
-  `year` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `years`;
+CREATE TABLE IF NOT EXISTS `years` (
+  `yearID` int(11) NOT NULL AUTO_INCREMENT,
+  `year` varchar(45) NOT NULL,
+  PRIMARY KEY (`yearID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `years`
@@ -855,206 +1061,6 @@ CREATE TABLE `years` (
 INSERT INTO `years` (`yearID`, `year`) VALUES
 (1, '2023'),
 (2, '2024');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `amenities`
---
-ALTER TABLE `amenities`
-  ADD PRIMARY KEY (`amenity_id`);
-
---
--- Indexes for table `amenity_purpose`
---
-ALTER TABLE `amenity_purpose`
-  ADD PRIMARY KEY (`amenity_purpose_id`);
-
---
--- Indexes for table `amenity_renting`
---
-ALTER TABLE `amenity_renting`
-  ADD PRIMARY KEY (`amenity_renting_id`);
-
---
--- Indexes for table `audit_trail`
---
-ALTER TABLE `audit_trail`
-  ADD PRIMARY KEY (`audit_id`);
-
---
--- Indexes for table `billing_period`
---
-ALTER TABLE `billing_period`
-  ADD PRIMARY KEY (`billingPeriod_id`) USING BTREE;
-
---
--- Indexes for table `bill_consumer`
---
-ALTER TABLE `bill_consumer`
-  ADD PRIMARY KEY (`billConsumer_id`);
-
---
--- Indexes for table `concern`
---
-ALTER TABLE `concern`
-  ADD PRIMARY KEY (`concern_id`);
-
---
--- Indexes for table `homeowner_profile`
---
-ALTER TABLE `homeowner_profile`
-  ADD PRIMARY KEY (`homeowner_id`);
-
---
--- Indexes for table `monthly_dues`
---
-ALTER TABLE `monthly_dues`
-  ADD PRIMARY KEY (`monthly_dues_id`);
-
---
--- Indexes for table `monthly_dues_bill`
---
-ALTER TABLE `monthly_dues_bill`
-  ADD PRIMARY KEY (`monthlyDues_ID`);
-
---
--- Indexes for table `officers`
---
-ALTER TABLE `officers`
-  ADD PRIMARY KEY (`officer_id`);
-
---
--- Indexes for table `positions`
---
-ALTER TABLE `positions`
-  ADD PRIMARY KEY (`position_id`);
-
---
--- Indexes for table `post`
---
-ALTER TABLE `post`
-  ADD PRIMARY KEY (`post_id`);
-
---
--- Indexes for table `subdivision`
---
-ALTER TABLE `subdivision`
-  ADD PRIMARY KEY (`subdivision_id`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`);
-
---
--- Indexes for table `years`
---
-ALTER TABLE `years`
-  ADD PRIMARY KEY (`yearID`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `amenities`
---
-ALTER TABLE `amenities`
-  MODIFY `amenity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT for table `amenity_purpose`
---
-ALTER TABLE `amenity_purpose`
-  MODIFY `amenity_purpose_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `amenity_renting`
---
-ALTER TABLE `amenity_renting`
-  MODIFY `amenity_renting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
---
--- AUTO_INCREMENT for table `audit_trail`
---
-ALTER TABLE `audit_trail`
-  MODIFY `audit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=397;
-
---
--- AUTO_INCREMENT for table `billing_period`
---
-ALTER TABLE `billing_period`
-  MODIFY `billingPeriod_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT for table `bill_consumer`
---
-ALTER TABLE `bill_consumer`
-  MODIFY `billConsumer_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `concern`
---
-ALTER TABLE `concern`
-  MODIFY `concern_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
-
---
--- AUTO_INCREMENT for table `homeowner_profile`
---
-ALTER TABLE `homeowner_profile`
-  MODIFY `homeowner_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
-
---
--- AUTO_INCREMENT for table `monthly_dues`
---
-ALTER TABLE `monthly_dues`
-  MODIFY `monthly_dues_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT for table `monthly_dues_bill`
---
-ALTER TABLE `monthly_dues_bill`
-  MODIFY `monthlyDues_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `officers`
---
-ALTER TABLE `officers`
-  MODIFY `officer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT for table `positions`
---
-ALTER TABLE `positions`
-  MODIFY `position_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `post`
---
-ALTER TABLE `post`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
---
--- AUTO_INCREMENT for table `subdivision`
---
-ALTER TABLE `subdivision`
-  MODIFY `subdivision_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
-
---
--- AUTO_INCREMENT for table `years`
---
-ALTER TABLE `years`
-  MODIFY `yearID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
