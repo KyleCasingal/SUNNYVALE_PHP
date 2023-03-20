@@ -7,8 +7,8 @@ $resultSubdivision = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_du
 $resultSubdivision1 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
 $resultSubdivision2 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
 $resultSubdivision3 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
-$resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ");
-$resultHomeowners1 = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ");
+$resultHomeowners = $con->query("SELECT *, CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ");
+$resultHomeowners1 = $con->query("SELECT *, CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ");
 
 //homeowner
 $resultYearToday = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
@@ -221,6 +221,9 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
     .Homeowner-table-data-row:hover {
         background-color: lightgray;
     }
+    /* #homeowner_id{
+        display: none;
+    } */
 </style>
 <script>
     $(document).ready(function() {
@@ -294,16 +297,17 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
         });
     });
     // $(document).ready(function() {
-    //     $("#subdivisionHomeowner_id").on('click', function() {
-    //         var subdivisionHomeowner_id = $(this).val();
-    //         if (subdivisionHomeowner_id) {
+    //     $("#Homeowner").on('click', function() {
+    //         var Homeowner = $(this).val();
+    //         if (Homeowner) {
     //             $.ajax({
     //                 type: 'POST',
     //                 url: '../process.php/',
-    //                 data: 'subdivisionHomeowner_id=' + subdivisionHomeowner_id,
+    //                 data: 'Homeowner=' + Homeowner,
     //                 success: function(html) {
-    //                     $("#Homeowner_id").html(html);
-    //                 }
+    //                     $("#homeowner_id").html(html);
+
+    //                 }   
     //             });
     //         }
     //     });
@@ -334,14 +338,15 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
                                         
                                             <tr>
                                                 <td><label>Name:</label></td>
-                                                <td><select name="homeowner" id="Homeowner_id">
+                                                <td><select name="homeowner" id="Homeowner">
                                                 
                                                 <option value="" >Select...</option>
                                                 <?php
                                                         while ($rowHomeowner = $resultHomeowners1->fetch_assoc()) : {
-                                                                echo '<option value="' . '">' . $rowHomeowner['fullname'] . '</option>';
+                                                                echo '<option value="' . $rowHomeowner['homeowner_id'] . '">' . $rowHomeowner['fullname'] . '</option>';
                                                             }
                                                         ?>
+                                                        
                                                         <?php endwhile; ?>
                                                 </select></td>
                                                 <!-- para sa homeowner i echo lahat ng mga homeowner tas ppili nalang din kagaya ng subdivision, pero pwede i 
@@ -393,8 +398,10 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
                                             <tr>
                                                 <td>
                                                     <label for="">Amount: </label>
+
                                                 </td>
                                                 <td><input name="homeownerAmount" type="text" value="" id="homeowner-amount" readonly></td>
+                                                <!-- <td><input name="homeownerId" type="text" value="" id="homeowner_id" readonly></td> -->
                                             </tr>
                                             <tr>
                                                 <td>
