@@ -5,7 +5,7 @@ $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
 $resultSubd = $con->query("SELECT * FROM subdivision");
 $resultSubdivision3 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
 $resultBilling = $con->query(
-"SELECT billing_period.month, bill_consumer.fullname, bill_consumer.amount, bill_consumer.status 
+"SELECT bill_consumer.billConsumer_id, billing_period.month, bill_consumer.fullname, bill_consumer.amount, bill_consumer.status 
 FROM bill_consumer 
 INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id WHERE status = 'UNPAID';"
 );
@@ -182,16 +182,18 @@ INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.bil
     background-color: rgb(170, 192, 175);
     
   }
-</style>
+  </style>
 
 <body>
-
+  
   <div class="treasurer">
     <?php require '../marginals/sidebarTreasurerPanel.php'; ?>
     <div class="treasurerPanel">
       <div class="monthlyDues" id="monthlyDues">
         <div class="treasurerForm">
           <div class="filter-area">
+            <form action="" method="post">
+
             <label>Search:</label>
             <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names..">
             <!-- <label for="">filter by Subdivision:</label>
@@ -216,7 +218,7 @@ INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.bil
               </thead>
               <?php while ($row = $resultBilling->fetch_assoc()) : ?>
                 <tr class="Homeowner-table-data-row" id="Homeowner_table_data_row">
-                  <td> <input type="checkbox" name="" id=""> </td>
+                  <td> <input type="checkbox" value=<?php echo $row['billConsumer_id']; ?> name="checkbox[]" id="checkbox"> </td>
                   <td><?php echo $row['month'] ?></td>
                   <td><?php echo $row['fullname'] ?></td>
                   <td><?php echo $row['amount'] ?></td>
@@ -225,8 +227,8 @@ INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.bil
               <?php endwhile; ?>
             </table>
           </div>
-
-          <button type="submit" class="btnSubmitPost" name="billAnnual" id="billAnnual">Submit Payment</button>
+            <button type="submit" class="btnSubmitPost" name="payDues" id="payDues">Submit Payment</button>
+          </form>
         </div>
 
       </div>
