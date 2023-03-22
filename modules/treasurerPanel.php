@@ -5,9 +5,9 @@ $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
 $resultSubd = $con->query("SELECT * FROM subdivision");
 $resultSubdivision3 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
 $resultBilling = $con->query(
-  "SELECT billing_period.month, bill_consumer.fullname, bill_consumer.amount, bill_consumer.status 
-FROM bill_consumer
-INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id;"
+"SELECT billing_period.month, bill_consumer.fullname, bill_consumer.amount, bill_consumer.status 
+FROM bill_consumer 
+INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id WHERE status = 'UNPAID';"
 );
 
 ?>
@@ -172,6 +172,16 @@ INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.bil
   .Homeowner-table-data-row:hover {
     background-color: lightgray;
   }
+
+  .table-area {
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  .thead-bills-table {
+    background-color: rgb(170, 192, 175);
+    
+  }
 </style>
 
 <body>
@@ -197,7 +207,8 @@ INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.bil
           </div>
           <div class="table-area">
             <table class="Homeowner-table" id="Homeowner_table">
-              <thead>
+              <thead class="thead-bills-table">
+                <th> <input type="checkbox" name="" id=""> </th>
                 <th>Month</th>
                 <th>Full name</th>
                 <th>Amount</th>
@@ -205,6 +216,7 @@ INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.bil
               </thead>
               <?php while ($row = $resultBilling->fetch_assoc()) : ?>
                 <tr class="Homeowner-table-data-row" id="Homeowner_table_data_row">
+                  <td> <input type="checkbox" name="" id=""> </td>
                   <td><?php echo $row['month'] ?></td>
                   <td><?php echo $row['fullname'] ?></td>
                   <td><?php echo $row['amount'] ?></td>
@@ -214,9 +226,11 @@ INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.bil
             </table>
           </div>
 
+          <button type="submit" class="btnSubmitPost" name="billAnnual" id="billAnnual">Submit Payment</button>
         </div>
 
       </div>
+
     </div>
   </div>
   <?php
@@ -234,7 +248,7 @@ INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.bil
 
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[1];
+      td = tr[i].getElementsByTagName("td")[2];
       if (td) {
         txtValue = td.textContent || td.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
