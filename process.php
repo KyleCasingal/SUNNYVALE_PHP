@@ -945,9 +945,9 @@ if (isset($_POST['monthly_dues_id'])) {
   }
 }
 //retrieve homeowner dues amount
-if (isset($_POST['monthly_dues_id'])) {
-  $monthly_dues_id = $_POST['monthly_dues_id'];
-  $result = $con->query("SELECT * FROM monthly_dues WHERE monthly_dues_id=$monthly_dues_id");
+if (isset($_POST['subdivision_id'])) {
+  $monthly_dues_id = $_POST['subdivision_id'];
+  $result = $con->query("SELECT * FROM monthly_dues WHERE subdivision_id=$monthly_dues_id");
   $row = $result->fetch_assoc();
 
   if (mysqli_num_rows($result) > 0) {
