@@ -3,6 +3,12 @@ require '../marginals/topbar.php';
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
 $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
 $resultSubd = $con->query("SELECT * FROM subdivision");
+$resultSubdivision3 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
+$resultBilling = $con->query(
+  "SELECT billing_period.month, bill_consumer.fullname, bill_consumer.amount, bill_consumer.status 
+FROM bill_consumer
+INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id;"
+);
 
 ?>
 <!DOCTYPE html>
@@ -22,6 +28,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision");
   }
 
   input {
+    font-family: 'Poppins', sans-serif;
     margin-bottom: 2vw;
     padding: 0.5vw;
     max-width: 50vw;
@@ -52,9 +59,10 @@ $resultSubd = $con->query("SELECT * FROM subdivision");
   label {
     font-family: 'Poppins', sans-serif;
     margin-right: 0.5vw;
-    font-size: max(1.5vw, min(10px));
+    font-size: max(1.2vw, min(10px));
     padding: 0.5vw;
   }
+
 
   thead {
     top: 0;
@@ -151,87 +159,63 @@ $resultSubd = $con->query("SELECT * FROM subdivision");
     color: rgb(89, 89, 89);
     font-weight: 800;
   }
-  .select-homeowner{
-    width:80%;
+
+  .select-homeowner {
+    width: 80%;
+  }
+
+  .Homeowner-table {
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .Homeowner-table-data-row:hover {
+    background-color: lightgray;
   }
 </style>
 
 <body>
-  
+
   <div class="treasurer">
     <?php require '../marginals/sidebarTreasurerPanel.php'; ?>
     <div class="treasurerPanel">
       <div class="monthlyDues" id="monthlyDues">
         <div class="treasurerForm">
-          <label>Name:</label>
-          <select name="name" id="name" class="select-homeowner">
-            <option value="">Select...</option>
-          </select>
-          <div class="date">
-            <label>Month:</label>
-            <select name="month" id="month">
-              <option value="January">January</option>
-              <option value="February">February</option>
-              <option value="March">March</option>
-              <option value="April">April</option>
-              <option value="May">May</option>
-              <option value="June">June</option>
-              <option value="July">July</option>
-              <option value="August">August</option>
-              <option value="September">September</option>
-              <option value="October">October</option>
-              <option value="November">November</option>
-              <option value="December">December</option>
-            </select>
-            <label>Year:</label>
-            <select name="year" id="year">
-              <option value="2022">2022</option>
-              <option value="2023">2023</option>
-              <option value="2024">2024</option>
-              <option value="2025">2025</option>
-              <option value="2026">2026</option>
-            </select>
-            <label>Subdivision</label>
-            <select name="subdivision" id="">
+          <div class="filter-area">
+            <label>Search:</label>
+            <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names..">
+            <!-- <label for="">filter by Subdivision:</label>
+            <select name="homeowner" id="homeowner" onclick="myFunction1()">
               <option value="">Select...</option>
-              <?php while ($row = $resultSubd->fetch_assoc()) : ?>
-                <option value="<?php echo $row['subdivision_name'] ?>"><?php echo $row['subdivision_name'] ?></option>
+              <?php
+              while ($rowSubdivision3 = $resultSubdivision3->fetch_assoc()) : {
+                  echo '<option value="' . $rowSubdivision3['monthly_dues_id'] . '">' . $rowSubdivision3['subdivision_name'] . '</option>';
+                }
+              ?>
               <?php endwhile; ?>
-            </select>
+            </select> -->
           </div>
-          <label>Block and Lot Number:</label>
-          <input type="text" />
-          <button class="btnSubmitPost" name="submitPost" id="submitPost">Submit Payment</button>
-        </div>
-        <label class="lblTable">Recent Monthly Dues Payments</label>
-        <div class="table-responsive">
-          <table id="dtBasicExample" class="table table-hover" cellspacing="0" width="100%">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Subdivision</th>
+          <div class="table-area">
+            <table class="Homeowner-table" id="Homeowner_table">
+              <thead>
                 <th>Month</th>
-                <th>Year</th>
-                <th>Address</th>
-                <th>Paid at</th>
+                <th>Full name</th>
+                <th>Amount</th>
                 <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php while ($row = $resultDues->fetch_assoc()) : ?>
-                <tr>
-                  <td><?php echo $row['homeowner_name'] ?></td>
-                  <td><?php echo $row['subdivision'] ?></td>
+              </thead>
+              <?php while ($row = $resultBilling->fetch_assoc()) : ?>
+                <tr class="Homeowner-table-data-row" id="Homeowner_table_data_row">
                   <td><?php echo $row['month'] ?></td>
-                  <td><?php echo $row['year'] ?></td>
-                  <td><?php echo $row['address'] ?></td>
-                  <td><?php echo $row['paid_at'] ?></td>
+                  <td><?php echo $row['fullname'] ?></td>
+                  <td><?php echo $row['amount'] ?></td>
                   <td><?php echo $row['status'] ?></td>
-                <?php endwhile; ?>
                 </tr>
-            </tbody>
-          </table>
+              <?php endwhile; ?>
+            </table>
+          </div>
+
         </div>
+
       </div>
     </div>
   </div>
@@ -239,5 +223,50 @@ $resultSubd = $con->query("SELECT * FROM subdivision");
   require '../marginals/footer2.php'
   ?>
 </body>
+<script>
+  function myFunction() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("search");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("Homeowner_table");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function myFunction1() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("homeowner");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("Homeowner_table");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  };
+</script>
 
 </html>
