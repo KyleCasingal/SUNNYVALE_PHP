@@ -239,17 +239,18 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
         });
     });
 
-    
+
     $(document).ready(function() {
         $("#subdivisionHomeowner_id").on('click', function() {
-            var subdivision_id = $(this).val();
-            if (subdivision_id) {
+            var subdivision_id_homeowner = $(this).val();
+            if (subdivision_id_homeowner) {
                 $.ajax({
                     type: 'POST',
                     url: '../process.php/',
-                    data: 'subdivision_id=' + subdivision_id,
+                    data: 'subdivision_id_homeowner=' + subdivision_id_homeowner,
                     success: function(html) {
                         $("#homeowner-amount").html(html);
+                        $("#Homeowner_id").html(html);
                     }
                 });
             }
@@ -267,7 +268,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
                     success: function(html) {
                         $("#AnnualAmount").html(html);
 
-                    }   
+                    }
                 });
             }
         });
@@ -290,7 +291,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
 
             $("#subdivisionAnnual_id").val("");
             document.getElementById("AnnualAmount").setAttribute("value", "");
-           
+
         });
     });
     // $(document).ready(function() {
@@ -308,7 +309,6 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
     //         }
     //     });
     // });
-
 </script>
 
 <body>
@@ -331,7 +331,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
                                 <div class="accordion-body" id="accordion-body">
                                     <form action="" method="post" id="myForm">
                                         <table class="tblBilling-form">
-                                        
+
                                             <tr>
                                                 <!-- para sa homeowner i echo lahat ng mga homeowner tas ppili nalang din kagaya ng subdivision, pero pwede i 
                                                 filter kung ano ano lalabas gamit subdivision, at kung nahanap na yung homeowner ay mag auto na lagay yung subdivision.
@@ -346,20 +346,20 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
                                                         ?>
                                                         <?php endwhile; ?>
                                                     </select>
-                
+
 
                                                 </td>
                                                 <td><label>Name:</label></td>
                                                 <td><select name="homeowner" id="Homeowner_id">
-                                                
-                                                <option value="" >Select...</option>
-                                                <!-- <?php
-                                                        while ($rowHomeowner = $resultHomeowners1->fetch_assoc()) : {
-                                                                echo '<option value="' . '">' . $rowHomeowner['fullname'] . '</option>';
-                                                            }
-                                                        ?>
+
+                                                        <option value="">Select...</option>
+                                                        <!-- <?php
+                                                                while ($rowHomeowner = $resultHomeowners1->fetch_assoc()) : {
+                                                                        echo '<option value="' . '">' . $rowHomeowner['fullname'] . '</option>';
+                                                                    }
+                                                                ?>
                                                         <?php endwhile; ?> -->
-                                                </select></td>
+                                                    </select></td>
                                             </tr>
 
                                             <tr>
@@ -432,7 +432,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
                                                 <td><label for="">From:</label></td>
                                                 <td>
                                                     <select name="month_select_monthly_dues_from" id="month-select-monthly-dues-from">
-                                                    <option value="">Select...</option>
+                                                        <option value="">Select...</option>
                                                         <?php
                                                         while ($rowMonth = $resultYearToday2->fetch_assoc()) : {
                                                                 echo '<option value="' . $rowMonth['billingPeriod_id'] . '">' . $rowMonth['month'] . '</option>';
@@ -443,7 +443,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
                                                 </td>
                                                 <td><label for="">To:</label></td>
                                                 <td><select name="month_select_monthly_dues_to" id="month-select-monthly-dues-to">
-                                                <option value="" >Select...</option>
+                                                        <option value="">Select...</option>
                                                         <?php
                                                         while ($rowMonth = $resultYearToday3->fetch_assoc()) : {
                                                                 echo '<option value="' . $rowMonth['billingPeriod_id'] . '">' . $rowMonth['month'] . '</option>';
@@ -500,7 +500,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
                                             <tr>
                                                 <td><label for="">From:</label></td>
                                                 <td>
-                                                     <select name="month_select_annual_from" id="month-select-annual-from">
+                                                    <select name="month_select_annual_from" id="month-select-annual-from">
                                                         <!-- <option value="">Select...</option> -->
                                                         <?php
                                                         while ($rowMonth = $resultYearToday4->fetch_assoc()) : {
@@ -510,7 +510,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
                                                         <?php endwhile; ?>
                                                 </td>
                                                 <td><label for="">To:</label></td>
-                                                 <td> 
+                                                <td>
                                                     <select name="month_select_annual_to" id="month-select-annual-to">
                                                         <!-- <option value="">Select...</option> -->
                                                         <?php
@@ -519,12 +519,12 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
                                                             }
                                                         ?>
                                                         <?php endwhile; ?>
-                                                       
-                                                    </td>
+
+                                                </td>
                                                 <td><input type="text" name="yearNow" <?php
-                                                                        $dateYear = date('Y');
-                                                                        echo "value = '2024'";
-                                                                        ?> id="yearNow" readonly></td>
+                                                                                        $dateYear = date('Y');
+                                                                                        echo "value = '2024'";
+                                                                                        ?> id="yearNow" readonly></td>
                                             </tr>
                                             <tr>
                                                 <td>
@@ -575,7 +575,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
                                     <td><?php echo $row['subdivision'] ?></td>
                                     <td><?php echo $row['email_address'] ?></td>
                                 </tr>
-                                <?php endwhile; ?>
+                            <?php endwhile; ?>
                         </table>
                     </div>
                 </div>
@@ -588,51 +588,49 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
     ?>
 </body>
 <script>
-function myFunction() {
-  // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("search");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("Homeowner_table");
-  tr = table.getElementsByTagName("tr");
+    function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("Homeowner_table");
+        tr = table.getElementsByTagName("tr");
 
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
     }
-  }
-}
 
-function myFunction1() {
-  // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("homeowner");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("Homeowner_table");
-  tr = table.getElementsByTagName("tr");
+    function myFunction1() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("homeowner");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("Homeowner_table");
+        tr = table.getElementsByTagName("tr");
 
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[1];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }
-  }
-};
-
-
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    };
 </script>
 
 </html>

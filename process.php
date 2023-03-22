@@ -945,11 +945,13 @@ if (isset($_POST['monthly_dues_id'])) {
   }
 }
 //retrieve homeowner dues amount
-if (isset($_POST['subdivision_id'])) {
-  $monthly_dues_id = $_POST['subdivision_id'];
+if (isset($_POST['subdivision_id_homeowner'])) {
+  $monthly_dues_id = $_POST['subdivision_id_homeowner'];
+  
   $result = $con->query("SELECT * FROM monthly_dues WHERE subdivision_id=$monthly_dues_id");
   $row = $result->fetch_assoc();
-
+  $result2 = $con->query("SELECT *, CONCAT(first_name, ' ', last_name)  AS fullname FROM homeowner_profile WHERE subdivision='".$row['subdivision_name']."' ");
+  
   if (mysqli_num_rows($result) > 0) {
     echo '<script type="text/javascript"> 
   document.getElementById("homeowner-amount").setAttribute("value",' . $row['amount']  . ');
@@ -960,6 +962,18 @@ if (isset($_POST['subdivision_id'])) {
   document.getElementById("homeowner-amount").setAttribute("value","");
 </script>';
   }
+
+  if (mysqli_num_rows($result2) > 0) {
+    echo '<option value="0">Select...</option>';
+    while ($row2 = $result2->fetch_assoc()) {
+      echo '<option value="' . $row2['homeowner_id'] . '">' . $row2['fullname'] . '</option>';
+      
+    }
+  }
+  else{
+    echo '<option value="0">Select...</option>';
+  }
+  
 }
 //retrieve annual dues amount
 if (isset($_POST['monthly_dues_id'])) {
