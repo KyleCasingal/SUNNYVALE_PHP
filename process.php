@@ -41,31 +41,26 @@ use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 
 if (isset($_POST['register'])) {
-  $first_name = $_POST['first_name'];
-  $last_name = $_POST['last_name'];
-  $full_name = $first_name . " " . $last_name;
-  $password = $_POST['password'];
   $email_address = $_POST['email_address'];
-  $confirm_password = $_POST['confirm_password'];
-  $sql = "SELECT * FROM homeowner_profile WHERE first_name = '$first_name' AND last_name = '$last_name' AND email_address = '$email_address' ";
+  //   $password = $_POST['password'];
+  //   $confirm_password = $_POST['confirm_password'];
+  $sql = "SELECT * FROM homeowner_profile WHERE email_address = '$email_address' ";
   $result = mysqli_query($con, $sql);
   $row = $result->fetch_assoc();
+  $first_name = $row['first_name'];
+  $last_name = $row['last_name'];
+  $full_name = $first_name . " " . $last_name;
   $sql1 = "SELECT * FROM user WHERE email_address = '$email_address'";
   $result1 = mysqli_query($con, $sql1);
   $homeowner_id = $row['homeowner_id'] ?? '';
 
   if (mysqli_num_rows($result1) == 1) {
-    echo "<div class='messageFail'>
-        <label>
-          Your email is already associated with an existing user!
-        </label>
-      </div>";
-  } else if ($password !== $confirm_password) {
-    echo "<div class='messageFail'>
-        <label>
-        Passwords do not match!
-        </label>
-      </div>";
+    echo
+    "<div class='messageFail'>
+          <label>
+            Your email is already activated!
+          </label>
+        </div>";
   } else if (mysqli_num_rows($result) == 1) {
     $mail = new PHPMailer(true);
     try {
@@ -73,118 +68,119 @@ if (isset($_POST['register'])) {
       $mail->isSMTP();
       $mail->Host = 'smtp.gmail.com';
       $mail->SMTPAuth = true;
-      $mail->Username = 'sunnyvalesubdivision@gmail.com';
-      $mail->Password = 'xtxphqmvhpllutrz';
+      $mail->Username = 'sunnyvalesubdivision0@gmail.com';
+      $mail->Password = 'qfmixbvqlsbxrqob';
       $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
       $mail->Port = 587;
-      $mail->setFrom('sunnyvalesubdivision@gmail.com');
+      $mail->setFrom('sunnyvalesubdivision0@gmail.com');
       $mail->addAddress($email_address, $full_name);
       $mail->isHTML(true);
       $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
-      $mail->Subject = 'Email verification';
-      $mail->Body = '<p>Your verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
+      $mail->Subject = 'Account Activation';
+      $mail->Body = '<p>Your temporary password is: <b style="font-size: 30px;">' . $verification_code . '</b></p><p>Please change it immediately after successful login. </p>';
       $mail->send();
-      $sql = "INSERT INTO user (user_homeowner_id, full_name,password,user_type,email_address,account_status,verification_code,email_verified_at) VALUES('$homeowner_id', '$full_name', '$password','Homeowner','$email_address','Pending', '$verification_code', NULL)";
+      $sql = "INSERT INTO user (user_homeowner_id, full_name,password,user_type,email_address,account_status,verification_code,email_verified_at) VALUES('$homeowner_id', '$full_name', '$verification_code','Homeowner','$email_address','Activated', '$verification_code', NOW())";
       $result = mysqli_query($con, $sql);
       $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $first_name . ' ' . $last_name . "' ,  'created an account', NOW())";
       mysqli_query($con, $sql1);
-      header("Location: ../modules/verify.php? email_address=" . $email_address);
+      header("Location: ../modules/login.php");
       exit();
     } catch (Exception $e) {
       echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
   } else {
-    echo "<div class='messageFail'>
-        <label>
-        The information that you have provided is not found in the homeowners' list. Please try again.
-        </label>
-      </div>";
+    echo
+    "<div class='messageFail'>
+          <label>
+          The email address that you have provided is not found in the homeowners' list. Please try again.
+          </label>
+        </div>";
   }
 }
 
-// VERIFYING EMAIL USING OTP
-if (isset($_POST["verify"])) {
-  $email_address = $_POST["email_address"];
-  $verification_code = $_POST["verification_code"];
+// // VERIFYING EMAIL USING OTP
+// if (isset($_POST["verify"])) {
+//   $email_address = $_POST["email_address"];
+//   $verification_code = $_POST["verification_code"];
 
-  // mark email as verified
-  $sql = "UPDATE user SET email_verified_at = NOW() WHERE email_address = '" . $email_address . "' AND verification_code = '" . $verification_code . "'";
-  $result = mysqli_query($con, $sql);
+//   // mark email as verified
+//   $sql = "UPDATE user SET email_verified_at = NOW() WHERE email_address = '" . $email_address . "' AND verification_code = '" . $verification_code . "'";
+//   $result = mysqli_query($con, $sql);
 
-  if (mysqli_affected_rows($con) == 1) {
-    $result = mysqli_query($con, $sql);
-    $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('$email_address' ,  'verified their email', NOW())";
-    mysqli_query($con, $sql1);
-    echo "<div class='messageSuccess'>
-        <label >
-          Account is now verified. Please wait for the Admin to activate your account.
-        </label>
-        <form method='post'>
-            <button class='okBtn' name='okBtn' type='submit' >OK</button>
-        </form>
-      </div>";
-  } else {
-    echo "<div class='messageFail'>
-        <label >
-          Wrong OTP. Please try again.
-        </label>
-      </div>";
-  }
-}
+//   if (mysqli_affected_rows($con) == 1) {
+//     $result = mysqli_query($con, $sql);
+//     $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('$email_address' ,  'verified their email', NOW())";
+//     mysqli_query($con, $sql1);
+//     echo "<div class='messageSuccess'>
+//         <label >
+//           Account is now verified. Please wait for the Admin to activate your account.
+//         </label>
+//         <form method='post'>
+//             <button class='okBtn' name='okBtn' type='submit' >OK</button>
+//         </form>
+//       </div>";
+//   } else {
+//     echo "<div class='messageFail'>
+//         <label >
+//           Wrong OTP. Please try again.
+//         </label>
+//       </div>";
+//   }
+// }
 
-//REDIRECT TO INDEX AFTER OTP VERIFY
-if (isset($_POST["okBtn"])) {
-  header("Location: ../index.php");
-}
+// //REDIRECT TO INDEX AFTER OTP VERIFY
+// if (isset($_POST["okBtn"])) {
+//   header("Location: ../index.php");
+// }
 
-// RESEND OTP
-if (isset($_POST["emailVerify"])) {
-  $email_address = $_POST["email_verify"];
-  $sql = "SELECT * FROM user WHERE email_address = '$email_address' ";
-  $result = mysqli_query($con, $sql);
-  $sql1 = "SELECT * FROM user WHERE email_address = '$email_address' AND email_verified_at IS NOT NULL";
-  $result1 = mysqli_query($con, $sql);
-  $row = $result->fetch_assoc();
-  if (mysqli_num_rows($result) == 0) {
-    echo "<div class='messageFail'>
-        <label>
-        Your email is not registered with an existing account.
-        </label>
-      </div>";
-  } else if (mysqli_num_rows($result) == 1) {
-    echo "<div class='messageFail'>
-        <label>
-        Your email is already verified.
-        </label>
-      </div>";
-  } else {
-    $full_name = $row['full_name'];
-    $mail = new PHPMailer(true);
-    try {
-      $mail->SMTPDebug = 2;
-      $mail->isSMTP();
-      $mail->Host = 'smtp.gmail.com';
-      $mail->SMTPAuth = true;
-      $mail->Username = 'sunnyvalesubdivision@gmail.com';
-      $mail->Password = 'xmdyrdzqmopfjpbo';
-      $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-      $mail->Port = 587;
-      $mail->setFrom('sunnyvalesubdivision@gmail.com');
-      $mail->addAddress($email_address, $full_name);
-      $mail->isHTML(true);
-      $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
-      $mail->Subject = 'Email verification';
-      $mail->Body = '<p>Your new verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
-      $mail->send();
-      $sql = "UPDATE user SET verification_code =  '$verification_code' WHERE full_name = '" . $full_name . "'";
-      $result = mysqli_query($con, $sql);
-      header("Location: ../modules/verify.php?email_address=" . $email_address);
-      exit();
-    } catch (Exception $e) {
-      echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-    }
-  }
-}
+// // RESEND OTP
+// if (isset($_POST["emailVerify"])) {
+//   $email_address = $_POST["email_verify"];
+//   $sql = "SELECT * FROM user WHERE email_address = '$email_address' ";
+//   $result = mysqli_query($con, $sql);
+//   $sql1 = "SELECT * FROM user WHERE email_address = '$email_address' AND email_verified_at IS NOT NULL";
+//   $result1 = mysqli_query($con, $sql);
+//   $row = $result->fetch_assoc();
+//   if (mysqli_num_rows($result) == 0) {
+//     echo "<div class='messageFail'>
+//         <label>
+//         Your email is not registered with an existing account.
+//         </label>
+//       </div>";
+//   } else if (mysqli_num_rows($result) == 1) {
+//     echo "<div class='messageFail'>
+//         <label>
+//         Your email is already verified.
+//         </label>
+//       </div>";
+//   } else {
+//     $full_name = $row['full_name'];
+//     $mail = new PHPMailer(true);
+//     try {
+//       $mail->SMTPDebug = 2;
+//       $mail->isSMTP();
+//       $mail->Host = 'smtp.gmail.com';
+//       $mail->SMTPAuth = true;
+//       $mail->Username = 'sunnyvalesubdivision@gmail.com';
+//       $mail->Password = 'xmdyrdzqmopfjpbo';
+//       $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+//       $mail->Port = 587;
+//       $mail->setFrom('sunnyvalesubdivision@gmail.com');
+//       $mail->addAddress($email_address, $full_name);
+//       $mail->isHTML(true);
+//       $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
+//       $mail->Subject = 'Email verification';
+//       $mail->Body = '<p>Your new verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
+//       $mail->send();
+//       $sql = "UPDATE user SET verification_code =  '$verification_code' WHERE full_name = '" . $full_name . "'";
+//       $result = mysqli_query($con, $sql);
+//       header("Location: ../modules/verify.php?email_address=" . $email_address);
+//       exit();
+//     } catch (Exception $e) {
+//       echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+//     }
+//   }
+// }
 
 // LOGGING IN
 if (isset($_POST['login'])) {
@@ -947,11 +943,11 @@ if (isset($_POST['monthly_dues_id'])) {
 //retrieve homeowner dues amount
 if (isset($_POST['subdivision_id_homeowner'])) {
   $monthly_dues_id = $_POST['subdivision_id_homeowner'];
-  
+
   $result = $con->query("SELECT * FROM monthly_dues WHERE subdivision_id=$monthly_dues_id");
   $row = $result->fetch_assoc();
-  $result2 = $con->query("SELECT *, CONCAT(first_name, ' ', last_name)  AS fullname FROM homeowner_profile WHERE subdivision='".$row['subdivision_name']."' ");
-  
+  $result2 = $con->query("SELECT *, CONCAT(first_name, ' ', last_name)  AS fullname FROM homeowner_profile WHERE subdivision='" . $row['subdivision_name'] . "' ");
+
   if (mysqli_num_rows($result) > 0) {
     echo '<script type="text/javascript"> 
   document.getElementById("homeowner-amount").setAttribute("value",' . $row['amount']  . ');
@@ -967,13 +963,10 @@ if (isset($_POST['subdivision_id_homeowner'])) {
     echo '<option value="0">Select...</option>';
     while ($row2 = $result2->fetch_assoc()) {
       echo '<option value="' . $row2['homeowner_id'] . '">' . $row2['fullname'] . '</option>';
-      
     }
-  }
-  else{
+  } else {
     echo '<option value="0">Select...</option>';
   }
-  
 }
 //retrieve annual dues amount
 if (isset($_POST['monthly_dues_id'])) {
@@ -1111,17 +1104,14 @@ if (isset($_POST['billHomeowner'])) {
   $fullname = $rowFullname['fullname'];
 
 
-    // while ($rowHomeowner = $resultHomeowner->fetch_assoc()) {
-    //   $homeowner_id = $rowHomeowner['homeowner_id'];
+  // while ($rowHomeowner = $resultHomeowner->fetch_assoc()) {
+  //   $homeowner_id = $rowHomeowner['homeowner_id'];
 
 
   for ($x = $month_select_monthly_dues_from; $x <= $month_select_monthly_dues_to; $x++) {
     $sql = "INSERT INTO bill_consumer (billingPeriod_id, homeowner_id, fullname, amount, status) VALUES ('$x', '$homeowner_id', '$fullname', '$homeownerAmount', 'UNPAID')";
     $result = mysqli_query($con, $sql);
   }
-
-
-
 }
 
 //retrieve annual dues amount
@@ -1139,7 +1129,7 @@ if (isset($_POST['billHomeowner'])) {
 //   if (mysqli_num_rows($result) > 0) {
 //     echo '<script type="text/javascript"> 
 //   document.getElementById("homeowner_id").setAttribute("value",' . $homeownerfinal .  ');
-  
+
 // </script>';
 //   } else {
 //     echo '<script type="text/javascript"> 
@@ -1147,9 +1137,6 @@ if (isset($_POST['billHomeowner'])) {
 // </script>';
 //   }
 // }
-
-
-
 
 if (isset($_POST['test'])) {
   $monthly_dues_id = $_POST['subdivision-monthly'];
@@ -1197,4 +1184,12 @@ if (isset($_POST['payDues'])) {
       $result = mysqli_query($con, $sql);
     }
   }
+}
+
+// ADMIN MANUAL ARCHIVE POST BUTTON
+if (isset($_POST['archive_post'])) {
+  $post_id = $_POST['post_id'];
+
+  $sql = "UPDATE post SET post_status='Archived' WHERE post_id = '$post_id'";
+  $result = mysqli_query($con, $sql);
 }

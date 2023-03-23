@@ -146,8 +146,8 @@
         Continue as Guest
       </button> -->
       <div class="verifyLinkLbl">
-        <p>Verify your account </p>
-        <a class="verifyLink" href="../modules/inputEmailVerify.php"> here</a>
+        <p>Activate your account </p>
+        <a class="verifyLink" href="../modules/register.php"> here</a>
       </div>
 
     </form>

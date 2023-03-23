@@ -123,7 +123,7 @@
     <span class="registerTitle">Activate your Account</span>
     <form class="registerForm" method="post">
       <label>Email</label>
-      <input type="text" name="email" id="email" class="registerInput" placeholder="Enter your email..." value="" required />
+      <input type="text" name="email_address" id="email" class="registerInput" placeholder="Enter your email..." value="" required />
       <!-- <label>Last Name</label>
       <input type="text" name="last_name" id="last_name" class="registerInput" placeholder="Enter your last name..." value="" required />
       <label>Email</label>

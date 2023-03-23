@@ -1,8 +1,9 @@
 <?php
 require '../marginals/topbar.php';
-$result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'No' ORDER BY post_id DESC") or die($mysqli->error);
-$resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' ORDER BY post_id DESC") or die($mysqli->error);
-
+$result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'No' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
+$resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
+$resultUser = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
+$rowUser = $resultUser->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -429,34 +430,41 @@ $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_n
           </div>
         </div>
       </div>
-      <?php while ($row = $result->fetch_assoc()) : ?>
-        <div class="blogPost">
-          <div class="blogProfile">
-            <img class="avatarBlog" <?php
-                                    $imageURL = '../media/displayPhotos/' . $row['display_picture'];
-                                    ?> src="<?= $imageURL ?>" alt="" />
-            <div class="profileText">
-              <p class="profileName"><?php echo $row['full_name']; ?></p>
-              <p class="profileDate">
-                <?php
-                $datetime = strtotime($row['published_at']);
-                echo $phptime = date("g:i A m/d/y", $datetime);
-                ?>
+      <form method="post" enctype="multipart/form-data">
+        <?php while ($row = $result->fetch_assoc()) : ?>
+          <div class="blogPost">
+            <?php
+            if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
+              echo "<input type='text' name='post_id' value=" . $row['post_id'] . ">";
+              echo "<button name='archive_post' type='submit'>Archive</button>";
+            }
+            ?>
+            <div class="blogProfile">
+              <img class="avatarBlog" <?php
+                                      $imageURL = '../media/displayPhotos/' . $row['display_picture'];
+                                      ?> src="<?= $imageURL ?>" alt="" />
+              <div class="profileText">
+                <p class="profileName"><?php echo $row['full_name']; ?></p>
+                <p class="profileDate">
+                  <?php
+                  $datetime = strtotime($row['published_at']);
+                  echo $phptime = date("g:i A m/d/y", $datetime);
+                  ?>
+                </p>
+              </div>
+            </div>
+            <div class="postContent">
+              <img class="postImg" <?php
+                                    $imageURL = '../media/postsPhotos/' . $row['content_image'];
+                                    ?> src="<?= $imageURL ?>" alt="">
+              </img>
+              <p class="blogTitle"><?php echo $row['title']; ?></p>
+              <p class="blogBody">
+                <?php echo $row['content']; ?>
               </p>
             </div>
           </div>
-          <div class="postContent">
-            <img class="postImg" <?php
-                                  $imageURL = '../media/postsPhotos/' . $row['content_image'];
-                                  ?> src="<?= $imageURL ?>" alt="">
-            </img>
-            <p class="blogTitle"><?php echo $row['title']; ?></p>
-            <p class="blogBody">
-              <?php echo $row['content']; ?>
-            </p>
-          </div>
-        </div>
-      <?php endwhile; ?>
+        <?php endwhile; ?>
     </div>
 
     <div class="sideContent">
