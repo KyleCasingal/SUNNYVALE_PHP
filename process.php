@@ -1187,9 +1187,10 @@ if (isset($_POST['payDues'])) {
 }
 
 // ADMIN MANUAL ARCHIVE POST BUTTON
-if (isset($_POST['archive_post'])) {
-  $post_id = $_POST['post_id'];
+if (isset($_POST['archive'])) {
+  $post_id = $_POST['archive'];
 
-  $sql = "UPDATE post SET post_status='Archived' WHERE post_id = '$post_id'";
+  $sql = "DELETE post SET post_status='Archived' WHERE post_id = '$post_id'";
   $result = mysqli_query($con, $sql);
+  header("Location: ./blogHome.php");
 }

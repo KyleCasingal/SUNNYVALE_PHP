@@ -1,5 +1,4 @@
 <?php
-require './display_event.php';
 require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM amenities WHERE availability =  'Available' ORDER BY subdivision_name ASC") or die($mysqli->error);
 $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
@@ -132,7 +131,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     width: 40%;
     border-radius: 1vw;
     flex-direction: column;
-    background-color: rgb(170, 192, 175, 0.3);
+    background-color: rgb(170, 192, 175, 0.0);
     font-family: 'Poppins', sans-serif;
   }
 
@@ -225,6 +224,16 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
 
   .tblAmenity tr:hover {
     background-color: rgb(211, 211, 211);
+  }
+  .calendar-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2vw;
+  }
+
+  #calendar{
+    width: 70vw;
   }
 
   
@@ -365,6 +374,17 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
 <body>
   <form method="post" enctype="multipart/form-data">
 
+   
+
+    <!-- calendar -->
+   
+
+      <!-- calendar -->
+      <div class="calendar-container">
+        <div id="calendar"></div>
+      </div>
+
+  
     <div class='amenities'>
       <div class="amenitiesForm">
         <label>Name</label>
@@ -549,16 +569,8 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
       </div>
     </div>
 
-    <!-- calendar -->
-   
-
-      <!-- calendar -->
-      
-          <div id="calendar"></div>
- 
-
-      </div>
-    </div>
+      <!-- </div>
+    </div> -->
 
 
   </form>

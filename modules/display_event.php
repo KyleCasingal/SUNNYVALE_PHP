@@ -1,10 +1,10 @@
 <?php                
 $hostname = "localhost";
 $username = "root";
-$password = "";  
-$database = "sunnyvale";   
-$con=mysqli_connect($hostname,$username,$password,$database);   
-// $display_query = "SELECT * from amenity_renting WHERE cart = 'Approved' ";             
+$password = "";
+$database = "sunnyvale";
+$con = mysqli_connect($hostname, $username, $password, $database);
+$display_query = "SELECT * from amenity_renting WHERE cart = 'Approved' ";             
 $results = mysqli_query($con,$display_query);   
 $count = mysqli_num_rows($results);  
 if($count>0) 

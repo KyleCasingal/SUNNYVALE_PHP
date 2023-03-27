@@ -432,11 +432,13 @@ $rowUser = $resultUser->fetch_assoc();
       </div>
       <form method="post" enctype="multipart/form-data">
         <?php while ($row = $result->fetch_assoc()) : ?>
+
           <div class="blogPost">
             <?php
             if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-              echo "<input type='text' name='post_id' value=" . $row['post_id'] . ">";
-              echo "<button name='archive_post' type='submit'>Archive</button>";
+              // echo "<input type='text' name='post_id' value=" . $row['post_id'] . ">";
+              // echo "<button name='archive_post' type='submit'>Archive</button>";
+              echo "<a href='../process.php?archive=" . $row['post_id'] . "'>UUYUY</a>";
             }
             ?>
             <div class="blogProfile">
