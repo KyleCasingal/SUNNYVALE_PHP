@@ -22,16 +22,17 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
+
   <!-- calendar -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
-<!-- JS for jQuery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- JS for full calender -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
-<!-- bootstrap css and js -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <!-- JS for jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- JS for full calender -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+  <!-- bootstrap css and js -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>SUNNYVALE</title>
@@ -225,18 +226,30 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   .tblAmenity tr:hover {
     background-color: rgb(211, 211, 211);
   }
-  .calendar-container{
+
+  .calendar-container {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 2vw;
   }
 
-  #calendar{
-    width: 70vw;
+  .calendar {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: #878895;
+    border-radius: 5px;
+    background-color: #fff;
   }
 
-  
+  #calendar {
+    width: 70vw;
+  }
 </style>
 <script type="text/javascript">
   if (window.history.replaceState) {
@@ -374,202 +387,213 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
 <body>
   <form method="post" enctype="multipart/form-data">
 
-   
+
 
     <!-- calendar -->
-   
 
-      <!-- calendar -->
-      <div class="calendar-container">
-        <div id="calendar"></div>
-      </div>
+    <!-- calendar -->
+    <div class="calendar-container">
 
-  
-    <div class='amenities'>
-      <div class="amenitiesForm">
-        <label>Name</label>
-        <input type="text" name="renter_name" id="name" value="<?php echo $row['full_name'] ?>" readonly />
-
-        <label>Subdivision</label>
-        <select name="subdivision" id="subdivision_id" required>
-          <option value="0" selected="selected">Select...</option>
-          <?php
-          while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
-            echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
-          }
-          ?>
-        </select>
-        <label>Amenity</label>
-        <select name="amenity" id="amenity_id" required>
-          <option value="0">Select Subdivision first...</option>
-        </select>
-        <label>Purpose</label>
-        <select name="purpose" id="purpose_id" required>
-          <option value="0">Select Amenity first...</option>
-        </select>
-        <label>Rate per Hour</label>
-        <div>
-          <label>Day</label>
-          <input type="text" id="day_id" size="6" readonly>
-          <label>Night</label>
-          <input type="text" id="night_id" size="6" readonly>
-          <label>Night rate starts at 6pm</label>
+      <div class="left">
+        <div id="calendar" class="calendar">
         </div>
-        <button class="btnSubmit" name="addToCart" id="add">Add</button>
-
-        <br>
-        <!-- <button class="calendarshow" name="" id="calendarshow">Show Calendar</button> -->
       </div>
-      <div class='amenitiesForm'>
-        <label>Availed Services</label>
-        <table class="tblAmenity">
-          <tr>
-            <th><input type="checkbox" name="select-all" id="select-all" /></th>
-            <th>Renter</th>
-            <th>Subdivision</th>
-            <th>Amenity</th>
-            <th>Purpose</th>
-            <th>From</th>
-            <th>To</th>
-            <th>Cost</th>
-          </tr>
-          <?php while ($row = $resultRes->fetch_assoc()) : ?>
-            <tr>
-              <td>
-                <input type="checkbox" value=<?php echo $row['amenity_renting_id']; ?> name="checkbox[]" id="checkbox">
-              </td>
-              <td>
-                <?php echo $row['renter_name'] ?>
-              </td>
-              <td>
-                <?php echo $row['subdivision_name'] ?>
-              </td>
-              <td>
-                <?php echo $row['amenity_name'] ?>
-              </td>
-              <td>
-                <?php
-                $amenity_purpose_id = $row['amenity_purpose'];
-                $resultPurpose = $con->query("SELECT * FROM amenity_purpose WHERE amenity_purpose_id = '$amenity_purpose_id'");
-                $rowPurpose = $resultPurpose->fetch_assoc();
-                echo $rowPurpose['amenity_purpose'];
-                ?>
-              </td>
-              <td>
-                <?php
-                if ($row['date_from'] != NULL) {
-                  $date = $row['date_from'];
-                  echo date('m/d/Y h:ia ', strtotime($date));
-                } else {
-                  echo $row['date_from'];
-                }
-                ?>
-              </td>
-              <td>
-                <?php
-                if ($row['date_to'] != NULL) {
-                  $date = $row['date_to'];
-                  echo date('m/d/Y h:ia ', strtotime($date));
-                } else {
-                  echo $row['date_to'];
-                }
-                ?>
-              </td>
-              <td>
-                <?php echo $row['cost'] ?>
-              </td>
-            </tr>
-          <?php endwhile; ?>
-          <div><label>Date</label>
-            <input required id="date1" type="date" name="date" <?php
-                                                                if (isset($_POST['compute'])) {
-                                                                  $date = $_POST['date'];
-                                                                  echo "value = '$date'";
-                                                                }
-                                                                $date = date('Y-m-d', strtotime('today'));
-                                                                echo "min='$date'"
-                                                                ?>>
-          </div>
-          <div class="timeinput">
-            <label>Time</label>
-            <select name="hrFrom" id="from1" required>
-              <option value="">hr</option>
-              <?php
-              for ($x = 1; $x <= 12; $x++) {
-                $x = sprintf("%02d", $x);
-                echo "<option value='$x'>$x";
-              }
-              ?>
-            </select>
-            <select name="minsFrom" id="from3" required>
-              <option value="">mins</option>
-              <?php
-              for ($x = 0; $x <= 59; $x++) {
-                $x = sprintf("%02d", $x);
-                echo "<option value='$x'>$x";
-              }
-              ?>
-            </select>
-            <select name="ampmFrom" id="from2" required>
-              <option value="">am/pm</option>
-              <option value="am">am</option>
-              <option value="pm">pm</option>
-            </select>
-            <label>To</label>
-            <select name="hrTo" id="to1" required>
-              <option value="">hr</option>
-              <?php
-              for ($x = 1; $x <= 12; $x++) {
-                $x = sprintf("%02d", $x);
-                echo "<option value='$x'> $x ";
-              }
-              ?>
-            </select>
-            <select name="minsTo" id="to3" required>
-              <option value="">mins</option>
-              <?php
-              for ($x = 0; $x <= 59; $x++) {
-                $x = sprintf("%02d", $x);
-                echo "<option value='$x'>$x";
-              }
-              ?>
-            </select>
-            </option>
-            <select name="ampmTo" id="to2" required>
-              <option value="">am/pm</option>
-              <option value="am">am</option>
-              <option value="pm">pm</option>
-            </select>
-          </div>
-          <div>
-            <label>Total Hours:</label>
-            <input type="text" id="total_id" size="6">
-          </div>
-          <div>
-            <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>
-            <button class="btnCompute" name="removeSelected" id="removeID">Remove Selected</button>
-          </div>
-        </table>
-        <div>
-          <label>Total Cost:</label>
-          <input type="text" id="total_id" size="6" value="<?php
-                                                            $rowTotal = $resultTotal->fetch_assoc();
-                                                            echo $rowTotal['total_cost'];
-                                                            ?>" readonly>
-          <div class="paymentForm">
-            <label class="writeText">Upload proof of payment here:</label>
-            <div class="BlogWrite">
-              <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()" required></input>
-              <img class="imagePrev" id="imagePreview" src=# alt="" />
-            </div>
-            <label for="image" class="upload">Upload Photo</label>
-          </div>
-          <button class="btnSubmit" name="checkout" id="checkout_id">Checkout All</button>
+
+      <div class="right">
+        <div class="today-date">
+          <div class="event-day"></div>
+          <div class="event-date"></div>
+        </div>
+        <div class="events"></div>
         </div>
       </div>
     </div>
 
-      <!-- </div>
+        <div class='amenities'>
+          <div class="amenitiesForm">
+            <label>Name</label>
+            <input type="text" name="renter_name" id="name" value="<?php echo $row['full_name'] ?>" readonly />
+
+            <label>Subdivision</label>
+            <select name="subdivision" id="subdivision_id" required>
+              <option value="0" selected="selected">Select...</option>
+              <?php
+              while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
+                echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
+              }
+              ?>
+            </select>
+            <label>Amenity</label>
+            <select name="amenity" id="amenity_id" required>
+              <option value="0">Select Subdivision first...</option>
+            </select>
+            <label>Purpose</label>
+            <select name="purpose" id="purpose_id" required>
+              <option value="0">Select Amenity first...</option>
+            </select>
+            <label>Rate per Hour</label>
+            <div>
+              <label>Day</label>
+              <input type="text" id="day_id" size="6" readonly>
+              <label>Night</label>
+              <input type="text" id="night_id" size="6" readonly>
+              <label>Night rate starts at 6pm</label>
+            </div>
+            <button class="btnSubmit" name="addToCart" id="add">Add</button>
+
+            <br>
+            <!-- <button class="calendarshow" name="" id="calendarshow">Show Calendar</button> -->
+          </div>
+          <div class='amenitiesForm'>
+            <label>Availed Services</label>
+            <table class="tblAmenity">
+              <tr>
+                <th><input type="checkbox" name="select-all" id="select-all" /></th>
+                <th>Renter</th>
+                <th>Subdivision</th>
+                <th>Amenity</th>
+                <th>Purpose</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Cost</th>
+              </tr>
+              <?php while ($row = $resultRes->fetch_assoc()) : ?>
+                <tr>
+                  <td>
+                    <input type="checkbox" value=<?php echo $row['amenity_renting_id']; ?> name="checkbox[]" id="checkbox">
+                  </td>
+                  <td>
+                    <?php echo $row['renter_name'] ?>
+                  </td>
+                  <td>
+                    <?php echo $row['subdivision_name'] ?>
+                  </td>
+                  <td>
+                    <?php echo $row['amenity_name'] ?>
+                  </td>
+                  <td>
+                    <?php
+                    $amenity_purpose_id = $row['amenity_purpose'];
+                    $resultPurpose = $con->query("SELECT * FROM amenity_purpose WHERE amenity_purpose_id = '$amenity_purpose_id'");
+                    $rowPurpose = $resultPurpose->fetch_assoc();
+                    echo $rowPurpose['amenity_purpose'];
+                    ?>
+                  </td>
+                  <td>
+                    <?php
+                    if ($row['date_from'] != NULL) {
+                      $date = $row['date_from'];
+                      echo date('m/d/Y h:ia ', strtotime($date));
+                    } else {
+                      echo $row['date_from'];
+                    }
+                    ?>
+                  </td>
+                  <td>
+                    <?php
+                    if ($row['date_to'] != NULL) {
+                      $date = $row['date_to'];
+                      echo date('m/d/Y h:ia ', strtotime($date));
+                    } else {
+                      echo $row['date_to'];
+                    }
+                    ?>
+                  </td>
+                  <td>
+                    <?php echo $row['cost'] ?>
+                  </td>
+                </tr>
+              <?php endwhile; ?>
+              <div><label>Date</label>
+                <input required id="date1" type="date" name="date" <?php
+                                                                    if (isset($_POST['compute'])) {
+                                                                      $date = $_POST['date'];
+                                                                      echo "value = '$date'";
+                                                                    }
+                                                                    $date = date('Y-m-d', strtotime('today'));
+                                                                    echo "min='$date'"
+                                                                    ?>>
+              </div>
+              <div class="timeinput">
+                <label>Time</label>
+                <select name="hrFrom" id="from1" required>
+                  <option value="">hr</option>
+                  <?php
+                  for ($x = 1; $x <= 12; $x++) {
+                    $x = sprintf("%02d", $x);
+                    echo "<option value='$x'>$x";
+                  }
+                  ?>
+                </select>
+                <select name="minsFrom" id="from3" required>
+                  <option value="">mins</option>
+                  <?php
+                  for ($x = 0; $x <= 59; $x++) {
+                    $x = sprintf("%02d", $x);
+                    echo "<option value='$x'>$x";
+                  }
+                  ?>
+                </select>
+                <select name="ampmFrom" id="from2" required>
+                  <option value="">am/pm</option>
+                  <option value="am">am</option>
+                  <option value="pm">pm</option>
+                </select>
+                <label>To</label>
+                <select name="hrTo" id="to1" required>
+                  <option value="">hr</option>
+                  <?php
+                  for ($x = 1; $x <= 12; $x++) {
+                    $x = sprintf("%02d", $x);
+                    echo "<option value='$x'> $x ";
+                  }
+                  ?>
+                </select>
+                <select name="minsTo" id="to3" required>
+                  <option value="">mins</option>
+                  <?php
+                  for ($x = 0; $x <= 59; $x++) {
+                    $x = sprintf("%02d", $x);
+                    echo "<option value='$x'>$x";
+                  }
+                  ?>
+                </select>
+                </option>
+                <select name="ampmTo" id="to2" required>
+                  <option value="">am/pm</option>
+                  <option value="am">am</option>
+                  <option value="pm">pm</option>
+                </select>
+              </div>
+              <div>
+                <label>Total Hours:</label>
+                <input type="text" id="total_id" size="6">
+              </div>
+              <div>
+                <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>
+                <button class="btnCompute" name="removeSelected" id="removeID">Remove Selected</button>
+              </div>
+            </table>
+            <div>
+              <label>Total Cost:</label>
+              <input type="text" id="total_id" size="6" value="<?php
+                                                                $rowTotal = $resultTotal->fetch_assoc();
+                                                                echo $rowTotal['total_cost'];
+                                                                ?>" readonly>
+              <div class="paymentForm">
+                <label class="writeText">Upload proof of payment here:</label>
+                <div class="BlogWrite">
+                  <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()" required></input>
+                  <img class="imagePrev" id="imagePreview" src=# alt="" />
+                </div>
+                <label for="image" class="upload">Upload Photo</label>
+              </div>
+              <button class="btnSubmit" name="checkout" id="checkout_id">Checkout All</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- </div>
     </div> -->
 
 

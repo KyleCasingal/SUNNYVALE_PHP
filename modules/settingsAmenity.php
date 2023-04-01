@@ -6,6 +6,24 @@ $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") o
 $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
 ?>
 
+<?php 
+  
+  if ( isset($_GET['success']) && $_GET['success'] == 1 )
+{
+     echo 
+
+"<div class='alert alert-success alert-dismissible'>
+                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                <h4><i class='icon fa fa-check'></i> Alert!</h4>
+                Restore Success
+              </div>";
+}
+
+
+
+            
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
