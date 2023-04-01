@@ -241,16 +241,17 @@ if (isset($_POST['submitPost'])) {
   }
 
   if ($row['user_type'] != "Homeowner") {
-    $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, content_image, officer_post) VALUES ('$user_id','$full_name', '$title', '$content', now(), '$fileName', 'Yes')";
+    $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, content_image, officer_post, post_status) VALUES ('$user_id','$full_name', '$title', '$content', now(), '$fileName', 'Yes', 'Active')";
     mysqli_query($con, $sql);
   } else {
-    $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, content_image, officer_post) VALUES ('$user_id','$full_name', '$title', '$content', now(), '$fileName', 'No')";
+    $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, content_image, officer_post, post_status) VALUES ('$user_id','$full_name', '$title', '$content', now(), '$fileName', 'No', 'Active')";
     mysqli_query($con, $sql);
     echo "<div class='messageSuccess'>
         <label >
           Your post has been uploaded!
         </label>
       </div>";
+
   }
 
 
