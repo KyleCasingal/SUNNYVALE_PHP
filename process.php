@@ -193,9 +193,18 @@ if (isset($_POST['login'])) {
 
   if (mysqli_num_rows($result) == 1) {
     $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
-    $result = $con->query($sql = "SELECT * FROM user WHERE email_address = '$email_address'");
+    $result = $con->query("SELECT * FROM user WHERE email_address = '$email_address'");
     $row = $result->fetch_assoc();
     $_SESSION['user_id'] = $row['user_id'];
+
+    // $result1 = $con->query("SELECT * FROM post WHERE published_at < now() - interval 1 week");
+    // $row1 = $result1->fetch_assoc();
+    // if (mysqli_num_rows($result1) >= 1) {
+    //   while ($row1 = $result1->fetch_assoc()) {
+    //     echo $date[] = $row1['published_at'];
+    //   }
+    // }
+
     $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','logged in', NOW())";
     mysqli_query($con, $sql1);
     header("Location: ../modules/blogHome.php");
@@ -1187,10 +1196,10 @@ if (isset($_POST['payDues'])) {
 }
 
 // ADMIN MANUAL ARCHIVE POST BUTTON
-if (isset($_POST['archive'])) {
-  $post_id = $_POST['archive'];
+if (isset($_GET['post_archive'])) {
+  $post_id = $_GET['post_archive'];
 
-  $sql = "DELETE post SET post_status='Archived' WHERE post_id = '$post_id'";
+  $sql = "UPDATE post SET post_status='Archived' WHERE post_id = '$post_id'";
   $result = mysqli_query($con, $sql);
-  header("Location: ./blogHome.php");
+  header("Location: ./modules/blogHome.php");
 }

@@ -430,43 +430,41 @@ $rowUser = $resultUser->fetch_assoc();
           </div>
         </div>
       </div>
-      <form method="post" enctype="multipart/form-data">
-        <?php while ($row = $result->fetch_assoc()) : ?>
-
-          <div class="blogPost">
-            <?php
-            if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-              // echo "<input type='text' name='post_id' value=" . $row['post_id'] . ">";
-              // echo "<button name='archive_post' type='submit'>Archive</button>";
-              echo "<a href='../process.php?archive=" . $row['post_id'] . "'>UUYUY</a>";
-            }
-            ?>
-            <div class="blogProfile">
-              <img class="avatarBlog" <?php
-                                      $imageURL = '../media/displayPhotos/' . $row['display_picture'];
-                                      ?> src="<?= $imageURL ?>" alt="" />
-              <div class="profileText">
-                <p class="profileName"><?php echo $row['full_name']; ?></p>
-                <p class="profileDate">
-                  <?php
-                  $datetime = strtotime($row['published_at']);
-                  echo $phptime = date("g:i A m/d/y", $datetime);
-                  ?>
-                </p>
-              </div>
-            </div>
-            <div class="postContent">
-              <img class="postImg" <?php
-                                    $imageURL = '../media/postsPhotos/' . $row['content_image'];
-                                    ?> src="<?= $imageURL ?>" alt="">
-              </img>
-              <p class="blogTitle"><?php echo $row['title']; ?></p>
-              <p class="blogBody">
-                <?php echo $row['content']; ?>
+      <?php while ($row = $result->fetch_assoc()) : ?>
+        <div class="blogPost">
+          <?php
+          if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
+            // echo "<input type='text' name='post_id' value=" . $row['post_id'] . ">";
+            // echo "<button name='archive_post' type='submit'>Archive</button>";
+            echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='btn btn-danger'>ARCHIVE</a>";
+          }
+          ?>
+          <div class="blogProfile">
+            <img class="avatarBlog" <?php
+                                    $imageURL = '../media/displayPhotos/' . $row['display_picture'];
+                                    ?> src="<?= $imageURL ?>" alt="" />
+            <div class="profileText">
+              <p class="profileName"><?php echo $row['full_name']; ?></p>
+              <p class="profileDate">
+                <?php
+                $datetime = strtotime($row['published_at']);
+                echo $phptime = date("g:i A m/d/y", $datetime);
+                ?>
               </p>
             </div>
           </div>
-        <?php endwhile; ?>
+          <div class="postContent">
+            <img class="postImg" <?php
+                                  $imageURL = '../media/postsPhotos/' . $row['content_image'];
+                                  ?> src="<?= $imageURL ?>" alt="">
+            </img>
+            <p class="blogTitle"><?php echo $row['title']; ?></p>
+            <p class="blogBody">
+              <?php echo $row['content']; ?>
+            </p>
+          </div>
+        </div>
+      <?php endwhile; ?>
     </div>
 
     <div class="sideContent">
@@ -482,6 +480,12 @@ $rowUser = $resultUser->fetch_assoc();
                                                                                                           $datetime = strtotime($row['published_at']);
                                                                                                           echo $phptime = date("g:i A m/d/y", $datetime);
                                                                                                           ?></td>
+                <td><?php
+                    if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
+
+                      echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='btn btn-danger'>ARCHIVE</a>";
+                    }
+                    ?></td>
               </tr>
             <?php endwhile; ?>
           </table>
