@@ -409,14 +409,28 @@ $rowUser = $resultUser->fetch_assoc();
     <div class="blogScroll">
       <div class="blogHead">
         <p class="headTxt">Recent Posts</p>
-        <button id="newPost" type="button" class="newPostBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-          + New Post
-        </button>
+        <?php
+        if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
+          echo "<button id='newPost' type='button' class='newPostBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
+                  + New Announcement
+                </button>";
+        } else if ($rowUser['user_type'] == 'Homeowner') {
+          echo "<button id='newPost' type='button' class='newPostBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
+                  + New Post
+                </button>";
+        }
+        ?>
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog modal-xl">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Add new post</h5>
+                <?php
+                if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
+                  echo "<h5 class='modal-title' id='staticBackdropLabel'>Add new announcement</h5>";
+                } else if ($rowUser['user_type'] == 'Homeowner') {
+                  echo "<h5 class='modal-title' id='staticBackdropLabel'>Add new post</h5>";
+                }
+                ?>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="mdl-body">
@@ -434,8 +448,6 @@ $rowUser = $resultUser->fetch_assoc();
         <div class="blogPost">
           <?php
           if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-            // echo "<input type='text' name='post_id' value=" . $row['post_id'] . ">";
-            // echo "<button name='archive_post' type='submit'>Archive</button>";
             echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='btn btn-danger'>ARCHIVE</a>";
           }
           ?>

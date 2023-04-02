@@ -75,7 +75,7 @@
     width: 90%;
     border-radius: 1vw;
     flex-direction: column;
-    
+
     font-family: "Poppins", sans-serif;
   }
 
@@ -112,26 +112,39 @@
     max-height: 20vw;
     margin-bottom: 2vw;
   }
-  .lblPostForm{
+
+  .lblPostForm {
     padding-bottom: 1vw;
     padding-top: 1vw;
   }
 </style>
 
 <body>
-  <form method="post" enctype="multipart/form-data">
-    <div class="blogWrite">
-      <div class="blogWritePage">
-        <div class="formBlog">
-          <label class="writeText">Add Photos</label>
-          <input class="attInput" type="file" name="image" id="image" accept="image/*" onchange="preview()"></input>
-          <img class="imagePrev" id="imagePreview" src=# alt=""  />
-          <label for="image" class="upload">Upload Photo</label>
-          <label class="lblPostForm">Title</label>
-          <input type="text" name="title" id="title" />
-          <label class="lblPostForm">Description</label>
-          <textarea class="descInput" type="text" name="content" id="content" maxLength={255}></textarea>
-          <button class="btnSubmitPost" name="submitPost" id="submitPost">Submit</button>
+
+  <form method='post' enctype='multipart/form-data'>
+    <div class='blogWrite'>
+      <div class='blogWritePage'>
+        <div class='formBlog'>
+          <?php
+          if ($rowUser['user_type'] == 'Homeowner') {
+            echo "<label class='writeText'>Add Photos</label>
+            <input class='attInput' type='file' name='image' id='image' accept='image/*' onchange='preview()'></input>
+            <img class='imagePrev' id='imagePreview' src=# alt='' />
+            <label for='image' class='upload'>Upload Photo</label>";
+          }
+          ?>
+          <label class='lblPostForm'>Title</label>
+          <input type='text' name='title' id='title' />
+          <label class='lblPostForm'>Description</label>
+          <textarea class='descInput' type='text' name='content' id='content' maxLength={255}></textarea>
+          <?php
+          if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
+            echo " <label class='lblPostForm'>Archive Post after </label>
+            <input type='text' pattern='[0-9]+' name='days' id='' maxlength='3' size='3' />
+            <label class='lblPostForm'>Days</label>";
+          }
+          ?>
+          <button class='btnSubmitPost' name="submitPost" id="submitPost">Submit</button>
         </div>
       </div>
     </div>

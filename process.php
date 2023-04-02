@@ -229,29 +229,28 @@ if (isset($_POST['submitPost'])) {
   $targetDir = '../media/postsPhotos/';
   $title = mysqli_real_escape_string($con, $_POST['title']);
   $content = mysqli_real_escape_string($con, $_POST['content']);
-  $fileName = '' . $_FILES['image']['name'] ?? '';
-  $targetFilePath = $targetDir . $fileName;
+  $days = $_POST['days'] ?? '';
   $result = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
   $row = $result->fetch_assoc();
   $user_id = $row['user_id'];
   $full_name = $row['full_name'];
 
-  if ($_FILES['image']['size'] != 0) {
-    copy($_FILES['image']['tmp_name'], $targetFilePath);
-  }
-
   if ($row['user_type'] != "Homeowner") {
-    $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, content_image, officer_post, post_status) VALUES ('$user_id','$full_name', '$title', '$content', now(), '$fileName', 'Yes', 'Active')";
+    $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, days_archive, content_image, officer_post, post_status) VALUES ('$user_id','$full_name', '$title', '$content', now(), '$days', '', 'Yes', 'Active')";
     mysqli_query($con, $sql);
   } else {
-    $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, content_image, officer_post, post_status) VALUES ('$user_id','$full_name', '$title', '$content', now(), '$fileName', 'No', 'Active')";
+    $fileName = '' . $_FILES['image']['name'] ?? '';
+    $targetFilePath = $targetDir . $fileName;
+    if ($_FILES['image']['size'] != 0) {
+      copy($_FILES['image']['tmp_name'], $targetFilePath);
+    }
+    $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, days_archive, content_image, officer_post, post_status) VALUES ('$user_id','$full_name', '$title', '$content', now(), NULL, '$fileName', 'No', 'Active')";
     mysqli_query($con, $sql);
     echo "<div class='messageSuccess'>
         <label >
           Your post has been uploaded!
         </label>
       </div>";
-
   }
 
 
