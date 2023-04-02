@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Apr 01, 2023 at 11:09 PM
+-- Generation Time: Apr 02, 2023 at 01:36 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=437 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=470 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -586,7 +586,40 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (433, 'SV1_Admin', 'uploaded a new post', '2023-04-01 22:22:03'),
 (434, 'SV1_Admin', 'logged out', '2023-04-01 22:22:13'),
 (435, 'Mon Carlo Delima', 'logged in', '2023-04-01 22:22:16'),
-(436, 'Mon Carlo Delima', 'uploaded a new post', '2023-04-01 22:24:20');
+(436, 'Mon Carlo Delima', 'uploaded a new post', '2023-04-01 22:24:20'),
+(437, 'Mon Carlo Delima', 'logged out', '2023-04-02 12:33:54'),
+(438, 'SV1_Admin', 'logged in', '2023-04-02 12:33:57'),
+(439, 'SV1_Admin', 'logged out', '2023-04-02 12:37:58'),
+(440, 'SV1_Admin', 'logged in', '2023-04-02 12:38:01'),
+(441, 'SV1_Admin', 'logged out', '2023-04-02 12:38:05'),
+(442, 'SV1_Treasurer', 'logged in', '2023-04-02 12:38:09'),
+(443, 'SV1_Treasurer', 'logged out', '2023-04-02 12:38:13'),
+(444, 'SV1_Admin', 'logged in', '2023-04-02 12:38:15'),
+(445, 'SV1_Admin', 'logged out', '2023-04-02 12:39:45'),
+(446, 'Mon Carlo Delima', 'logged in', '2023-04-02 12:39:55'),
+(447, 'Mon Carlo Delima', 'logged out', '2023-04-02 12:42:58'),
+(448, 'SV1_Admin', 'logged in', '2023-04-02 12:43:00'),
+(449, 'SV1_Admin', 'logged out', '2023-04-02 12:44:11'),
+(450, 'SV1_Treasurer', 'logged in', '2023-04-02 12:44:15'),
+(451, 'SV1_Treasurer', 'logged out', '2023-04-02 12:44:41'),
+(452, 'Mon Carlo Delima', 'logged in', '2023-04-02 12:44:45'),
+(453, 'Mon Carlo Delima', 'logged out', '2023-04-02 12:45:10'),
+(454, 'SV1_Admin', 'logged in', '2023-04-02 12:45:13'),
+(455, 'SV1_Admin', 'logged out', '2023-04-02 12:51:02'),
+(456, 'SV1_Admin', 'logged in', '2023-04-02 12:51:06'),
+(457, 'SV1_Admin', 'logged out', '2023-04-02 12:58:30'),
+(458, 'Mon Carlo Delima', 'logged in', '2023-04-02 12:58:32'),
+(459, 'Mon Carlo Delima', 'uploaded a new post', '2023-04-02 12:59:46'),
+(460, 'Mon Carlo Delima', 'uploaded a new post', '2023-04-02 13:00:31'),
+(461, 'Mon Carlo Delima', 'logged out', '2023-04-02 13:00:40'),
+(462, 'SV1_Admin', 'logged in', '2023-04-02 13:00:45'),
+(463, 'SV1_Admin', 'uploaded a new post', '2023-04-02 13:01:32'),
+(464, 'SV1_Admin', 'uploaded a new post', '2023-04-02 13:03:49'),
+(465, 'SV1_Admin', 'uploaded a new post', '2023-04-02 13:04:24'),
+(466, 'SV1_Admin', 'uploaded a new post', '2023-04-02 13:04:37'),
+(467, 'SV1_Admin', 'uploaded a new post', '2023-04-02 13:05:10'),
+(468, 'SV1_Admin', 'uploaded a new post', '2023-04-02 13:05:16'),
+(469, 'SV1_Admin', 'uploaded a new post', '2023-04-02 13:06:44');
 
 -- --------------------------------------------------------
 
@@ -879,31 +912,35 @@ CREATE TABLE IF NOT EXISTS `post` (
   `title` varchar(255) NOT NULL,
   `content` varchar(255) DEFAULT NULL,
   `published_at` datetime NOT NULL,
+  `days_archive` int(11) DEFAULT NULL,
   `content_image` varchar(255) DEFAULT NULL,
   `officer_post` varchar(10) NOT NULL,
   `post_status` varchar(45) NOT NULL,
   PRIMARY KEY (`post_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `post`
 --
 
-INSERT INTO `post` (`post_id`, `user_id`, `full_name`, `title`, `content`, `published_at`, `content_image`, `officer_post`, `post_status`) VALUES
-(1, 28, 'Mon Carlo Delima', 'The moon is beautiful, isn\'t it?', '', '2022-11-24 01:09:01', '315906640_1753081135077201_6331420859846659098_n.png', 'No', 'Archived'),
-(2, 24, 'Jeune Paolus Flores', 'Fascinating art created by nature.', '', '2022-11-24 09:59:54', '316218368_829271824950879_360246867658747215_n.png', 'No', 'Archived'),
-(3, 23, 'Kyle Andrei Casingal', 'Reflection', 'Imagine seeing these astonishing cars, lively blue skies, and few waves of clouds in an upside-down world. Inconceivable, isn\'t it?', '2022-11-24 10:03:11', '316189223_691988422233113_5145406262467036356_n.png', 'No', 'Archived'),
-(4, 23, 'Kyle Andrei Casingal', 'Windows of truth shows the real beauty of nature.', '', '2022-11-24 10:04:40', '313194508_684251046380877_4560164667618025920_n.png', 'No', 'Archived'),
-(5, 28, 'Mon Carlo Delima', 'Vintage mansion represents calm, warm, and peace.', '', '2022-11-24 10:05:22', '312140489_698881924813395_203606755662892340_n.png', 'No', 'Archived'),
-(15, 52, 'Marco Ivan Sta. Maria', '', 'Oh well, the sun strengthens the health of the plant, does this photo represents a good day because of that?', '2022-12-01 06:37:21', 'Picture2.jpg', 'No', 'Archived'),
-(17, 53, 'Krishtalene BendaÃ±a', '', 'Just had a ride inside the Sunnyvale subdivision, I feel like this will be part of my everyday routine.', '2022-12-01 06:48:54', 'Picture4.png', 'No', 'Archived'),
-(18, 52, 'Marco Ivan Sta. Maria', '', 'The kids enjoyed the party in Sunnyvale Subdivision, it\'s great seeing them happy while watching the program.', '2022-12-01 06:49:23', 'Picture5.jpg', 'No', 'Archived'),
-(19, 53, 'Krishtalene BendaÃ±a', '', 'Hi everyone! Just want to share this beautiful view I took near Sunnyvale Subdivision. It\'s in ArtSector Gallery and Chimney Cafe 360Â°. Let\'s visit this place together.', '2022-12-01 06:50:15', 'Picture6.jpg', 'No', 'Archived'),
-(20, 52, 'Marco Ivan Sta. Maria', '', 'Sometimes it\'s good to be blue. How sweet to be a cloud and floating in blue. I never get tired of the blue sky.', '2022-12-01 06:51:00', 'Picture3.png', 'No', 'Archived'),
-(24, 55, 'Kyle Andrei Casingal', 'Light Bulb', 'insert description here', '2022-12-01 10:13:20', '188-1889845_a-very-simple-concept-infinitustoken-medium-light-bulb.png', 'No', 'Archived'),
-(28, 18, 'SV1_Admin', 'Water interruption', 'test', '2023-01-24 20:00:38', '', 'Yes', 'Active'),
-(29, 18, 'SV1_Admin', 'Chinese New Year event', 'test', '2023-01-24 20:06:20', '', 'Yes', 'Active'),
-(30, 1, 'Mon Carlo Delima', 'URS', 'University of Rizal System - Binangonan', '2023-04-01 22:24:20', 'URS.png', 'No', 'Active');
+INSERT INTO `post` (`post_id`, `user_id`, `full_name`, `title`, `content`, `published_at`, `days_archive`, `content_image`, `officer_post`, `post_status`) VALUES
+(1, 28, 'Mon Carlo Delima', 'The moon is beautiful, isn\'t it?', '', '2022-11-24 01:09:01', NULL, '315906640_1753081135077201_6331420859846659098_n.png', 'No', 'Archived'),
+(2, 24, 'Jeune Paolus Flores', 'Fascinating art created by nature.', '', '2022-11-24 09:59:54', NULL, '316218368_829271824950879_360246867658747215_n.png', 'No', 'Archived'),
+(3, 23, 'Kyle Andrei Casingal', 'Reflection', 'Imagine seeing these astonishing cars, lively blue skies, and few waves of clouds in an upside-down world. Inconceivable, isn\'t it?', '2022-11-24 10:03:11', NULL, '316189223_691988422233113_5145406262467036356_n.png', 'No', 'Archived'),
+(4, 23, 'Kyle Andrei Casingal', 'Windows of truth shows the real beauty of nature.', '', '2022-11-24 10:04:40', NULL, '313194508_684251046380877_4560164667618025920_n.png', 'No', 'Archived'),
+(5, 28, 'Mon Carlo Delima', 'Vintage mansion represents calm, warm, and peace.', '', '2022-11-24 10:05:22', NULL, '312140489_698881924813395_203606755662892340_n.png', 'No', 'Archived'),
+(15, 52, 'Marco Ivan Sta. Maria', '', 'Oh well, the sun strengthens the health of the plant, does this photo represents a good day because of that?', '2022-12-01 06:37:21', NULL, 'Picture2.jpg', 'No', 'Archived'),
+(17, 53, 'Krishtalene BendaÃ±a', '', 'Just had a ride inside the Sunnyvale subdivision, I feel like this will be part of my everyday routine.', '2022-12-01 06:48:54', NULL, 'Picture4.png', 'No', 'Archived'),
+(18, 52, 'Marco Ivan Sta. Maria', '', 'The kids enjoyed the party in Sunnyvale Subdivision, it\'s great seeing them happy while watching the program.', '2022-12-01 06:49:23', NULL, 'Picture5.jpg', 'No', 'Archived'),
+(19, 53, 'Krishtalene BendaÃ±a', '', 'Hi everyone! Just want to share this beautiful view I took near Sunnyvale Subdivision. It\'s in ArtSector Gallery and Chimney Cafe 360Â°. Let\'s visit this place together.', '2022-12-01 06:50:15', NULL, 'Picture6.jpg', 'No', 'Archived'),
+(20, 52, 'Marco Ivan Sta. Maria', '', 'Sometimes it\'s good to be blue. How sweet to be a cloud and floating in blue. I never get tired of the blue sky.', '2022-12-01 06:51:00', NULL, 'Picture3.png', 'No', 'Archived'),
+(24, 55, 'Kyle Andrei Casingal', 'Light Bulb', 'insert description here', '2022-12-01 10:13:20', NULL, '188-1889845_a-very-simple-concept-infinitustoken-medium-light-bulb.png', 'No', 'Archived'),
+(28, 18, 'SV1_Admin', 'Water interruption', 'test', '2023-01-24 20:00:38', NULL, '', 'Yes', 'Active'),
+(29, 18, 'SV1_Admin', 'Chinese New Year event', 'test', '2023-01-24 20:06:20', NULL, '', 'Yes', 'Active'),
+(30, 1, 'Mon Carlo Delima', 'URS', 'University of Rizal System - Binangonan', '2023-03-16 22:24:20', NULL, 'URS.png', 'No', 'Archived'),
+(31, 1, 'Mon Carlo Delima', 'Nihonjin Desu', 'Japan numba 1', '2023-04-02 12:59:46', NULL, 'lockscreen.png', 'No', 'Active'),
+(32, 1, 'Mon Carlo Delima', 'Magical World', 'I love Biringan', '2023-04-02 13:00:31', NULL, 'sEt5ph.jpg', 'No', 'Active'),
+(33, 18, 'SV1_Admin', 'test', 'test', '2023-04-02 13:06:44', 1, '', 'Yes', 'Active');
 
 -- --------------------------------------------------------
 
@@ -993,7 +1030,10 @@ DELIMITER $$
 -- Events
 --
 DROP EVENT IF EXISTS `archive`$$
-CREATE DEFINER=`root`@`localhost` EVENT `archive` ON SCHEDULE EVERY '0:1' MINUTE_SECOND STARTS '2023-04-01 21:59:31' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE `post` SET `post_status`='Archived' WHERE `published_at` < NOW() - INTERVAL 7 DAY AND `post_status` = 'Active' AND `officers_post`= 'No'$$
+CREATE DEFINER=`root`@`localhost` EVENT `archive` ON SCHEDULE EVERY '0:1' MINUTE_SECOND STARTS '2023-04-01 21:59:31' ON COMPLETION PRESERVE ENABLE DO UPDATE `post` SET `post_status`='Archived' WHERE `published_at` < NOW() - INTERVAL 7 DAY AND `post_status` = 'Active' AND `officer_post`= 'No'$$
+
+DROP EVENT IF EXISTS `days_archive`$$
+CREATE DEFINER=`root`@`localhost` EVENT `days_archive` ON SCHEDULE EVERY '0:1' MINUTE_SECOND STARTS '2023-04-02 13:29:33' ON COMPLETION PRESERVE ENABLE DO UPDATE `post` SET `post_status`='Archived' WHERE `published_at` < NOW() - INTERVAL `days_archive` DAY AND `post_status`='Active' AND `officer_post`= 'Yes'$$
 
 DELIMITER ;
 COMMIT;
