@@ -1203,3 +1203,36 @@ if (isset($_GET['post_archive'])) {
   $result = mysqli_query($con, $sql);
   header("Location: ./modules/blogHome.php");
 }
+
+// CHANGE PASSWORD HOMEOWNER PROFILE
+if (isset($_POST['editPassword'])) {
+  $oldPassword = $_POST['oldPassword'];
+  $newPassword = $_POST['newPassword'];
+  $confirmPassword = $_POST['confirmPassword'];
+
+  $sql = "SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "' ";
+  $result = mysqli_query($con, $sql);
+  $row = $result->fetch_assoc();
+
+  if($oldPassword != $row['password']){
+    echo "<div class='messageSuccess'>
+        <label >
+          Old password do not match!
+        </label>
+      </div>";
+  } else if($newPassword != $confirmPassword){
+    echo "<div class='messageSuccess'>
+        <label >
+          New and Confirm password do not match!
+        </label>
+      </div>";
+  } else {
+    $sql1 = "UPDATE user SET password='" . $newPassword . "' WHERE user_id = '" . $_SESSION['user_id'] . "'";
+    $result1 = mysqli_query($con, $sql1);
+    echo "<div class='messageSuccess'>
+        <label >
+          Password changes saved!
+        </label>
+      </div>";
+  }
+}

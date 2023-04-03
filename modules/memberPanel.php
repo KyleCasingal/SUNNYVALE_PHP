@@ -8,7 +8,7 @@ $resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id =
 
 ?>
 
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -564,16 +564,28 @@ $resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id =
     max-height: 20vw;
   }
 
-  .mdl-body{
+  .mdl-body {
     margin: 1vw;
   }
-  .formBlog{
+
+  .formBlog {
     display: flex;
     flex-direction: column;
   }
-  .formBlog label{
+
+  .formBlog label {
     padding-top: 1vw;
     font-size: 1.5vw;
+  }
+
+  .change-password {
+    width: 100px;
+    height: 50px;
+  }
+
+  .button-area {
+    display: flex;
+    align-items: flex-end;
   }
 </style>
 
@@ -648,6 +660,10 @@ $resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id =
               </tr>
             </tbody>
           </table>
+          <div class="button-area">
+            <button class="change-password" type="button" data-bs-toggle="modal" data-bs-target="#editPassword">change password</button>
+          </div>
+
         </div>
         <div class="table-responsive">
           <label class="lblTable">Paid Monthly Dues</label>
@@ -861,6 +877,62 @@ $resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id =
       </div>
     </div>
   </form>
+  <form action="" method="post">
+    <div class="modal fade" id="editPassword" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Change Password</h5>
+            <button type="button" class="btn-close discardChanges"></button>
+          </div>
+          <div class="modal-body">
+            <div class="regForm">
+              <table class="tblForm">
+                <tr>
+                  <td>Old Password:</td>
+                  <td><input type="text" name="oldPassword"></td>
+                </tr>
+                <tr>
+                  <td>New Password:</td>
+                  <td><input type="text" name="newPassword"></td>
+                </tr>
+                <tr>
+                  <td>Confirm Password:</td>
+                  <td><input type="text" name="confirmPassword"></td>
+                  <td>
+                    <button data-bs-toggle="modal" type="button" class="btnSubmitReg savePassword">
+                      Save
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" value="" class="btnClearReg discardChanges" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      Discard
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="passwordConfirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Do you really want to save your changes?
+          </div>
+          <div class="modal-footer">
+            <button name="editPassword" type="submit" class="btn btn-success">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
   <div class="modal fade" id="discardConfirmation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -893,6 +965,11 @@ $resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id =
   $(document).ready(function() {
     $('.savePhoto').click(function() {
       $('#photoConfirmation').modal('show');
+    });
+  });
+  $(document).ready(function() {
+    $('.savePassword').click(function() {
+      $('#passwordConfirmation').modal('show');
     });
   });
   $(document).ready(function() {
