@@ -33,6 +33,10 @@ if (isset($_POST['registerButtonGuest'])) {
 if (isset($_POST['loginButtonGuest'])) {
   header("Location: ../modules/login.php");
 }
+//Redirect to archived posts page when in blog home page
+if(isset($_POST['archivedPosts'])) {
+  header("Location: archivedPosts.php");
+}
 // REGISTER A NEW USER
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;

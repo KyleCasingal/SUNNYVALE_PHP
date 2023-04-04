@@ -409,17 +409,18 @@ $rowUser = $resultUser->fetch_assoc();
     <div class="blogScroll">
       <div class="blogHead">
         <p class="headTxt">Recent Posts</p>
-        <?php
-        if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-          echo "<button id='newPost' type='button' class='newPostBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
-                  + New Announcement
-                </button>";
-        } else if ($rowUser['user_type'] == 'Homeowner') {
-          echo "<button id='newPost' type='button' class='newPostBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
-                  + New Post
-                </button>";
-        }
-        ?>
+        <form action="" method="POST">
+          <?php
+          if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
+            echo "<button id='archivedPosts' name='archivedPosts' type='submit' class='newPostBtn'>Archived Posts</button>
+          <button id='newPost' type='button' class='newPostBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>+ New Announcement</button>";
+          } else if ($rowUser['user_type'] == 'Homeowner') {
+            echo "<button id='newPost' type='button' class='newPostBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
+                    + New Post
+                  </button>";
+          }
+          ?>
+        </form>
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog modal-xl">
             <div class="modal-content">

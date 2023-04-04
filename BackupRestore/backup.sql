@@ -64,7 +64,7 @@ INSERT INTO amenity_renting VALUES("15","1","1","Mon Carlo Delima","Sunnyvale 1"
 INSERT INTO amenity_renting VALUES("16","","1","Mon Carlo Delima","Sunnyvale 1","Court","1","","","","","Removed");
 INSERT INTO amenity_renting VALUES("17","2","1","Mon Carlo Delima","Sunnyvale 1","Court","3","2023-02-22 18:00:00","2023-02-22 19:00:00","150","Delima, Mon Carlo Z..png","Pending");
 INSERT INTO amenity_renting VALUES("18","3","1","Mon Carlo Delima","Sunnyvale 1","Court","1","2023-02-25 13:00:00","2023-02-25 14:00:00","50","315887907_1137649846869408_655406644278059076_n.png","Pending");
-INSERT INTO amenity_renting VALUES("19","","48","SV1_Treasurer","Sunnyvale 1","Court","3","2023-03-12 02:00:00","2023-03-12 15:00:00","0","","Yes");
+INSERT INTO amenity_renting VALUES("19","","48","SV1_Treasurer","Sunnyvale 1","Court","3","2023-03-12 02:00:00","2023-03-12 15:00:00","0","","Approved");
 INSERT INTO amenity_renting VALUES("20","","48","SV1_Treasurer","Sunnyvale 1","Court","3","","","","","Yes");
 
 
@@ -98,7 +98,7 @@ CREATE TABLE `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=406 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=472 DEFAULT CHARSET=utf8;
 
 INSERT INTO audit_trail VALUES("3","SV1_Admin","logged in","2022-11-29 12:32:22");
 INSERT INTO audit_trail VALUES("5","SV1_Admin","logged in","2022-11-29 12:36:16");
@@ -491,6 +491,72 @@ INSERT INTO audit_trail VALUES("402","SV1_Treasurer","logged in","2023-03-20 14:
 INSERT INTO audit_trail VALUES("403","SV1_Treasurer","logged in","2023-03-22 07:54:03");
 INSERT INTO audit_trail VALUES("404","SV1_Treasurer","logged in","2023-03-22 11:10:42");
 INSERT INTO audit_trail VALUES("405","SV1_Treasurer","logged in","2023-03-22 13:24:08");
+INSERT INTO audit_trail VALUES("406","SV1_Admin","logged in","2023-04-01 13:04:18");
+INSERT INTO audit_trail VALUES("407","SV1_Admin","logged out","2023-04-01 13:43:26");
+INSERT INTO audit_trail VALUES("408","SV1_Admin","logged in","2023-04-01 13:43:28");
+INSERT INTO audit_trail VALUES("409","SV1_Admin","logged out","2023-04-01 13:43:47");
+INSERT INTO audit_trail VALUES("410","SV1_Admin","logged in","2023-04-01 13:43:49");
+INSERT INTO audit_trail VALUES("411","SV1_Admin","logged out","2023-04-01 13:44:06");
+INSERT INTO audit_trail VALUES("412","SV1_Admin","logged in","2023-04-01 13:44:09");
+INSERT INTO audit_trail VALUES("413","SV1_Admin","logged out","2023-04-01 13:46:43");
+INSERT INTO audit_trail VALUES("414","SV1_Admin","logged in","2023-04-01 13:46:46");
+INSERT INTO audit_trail VALUES("415","SV1_Admin","logged out","2023-04-01 14:00:24");
+INSERT INTO audit_trail VALUES("416","SV1_Admin","logged in","2023-04-01 14:00:27");
+INSERT INTO audit_trail VALUES("417","SV1_Admin","logged out","2023-04-01 14:13:13");
+INSERT INTO audit_trail VALUES("418","SV1_Admin","logged in","2023-04-01 14:13:16");
+INSERT INTO audit_trail VALUES("419","SV1_Admin","logged out","2023-04-01 14:13:17");
+INSERT INTO audit_trail VALUES("420","Mon Carlo Delima","logged in","2023-04-01 14:13:21");
+INSERT INTO audit_trail VALUES("421","Mon Carlo Delima","logged out","2023-04-01 14:13:41");
+INSERT INTO audit_trail VALUES("422","SV1_Treasurer","logged in","2023-04-01 14:13:44");
+INSERT INTO audit_trail VALUES("423","SV1_Treasurer","logged out","2023-04-01 21:41:30");
+INSERT INTO audit_trail VALUES("424","SV1_Admin","logged in","2023-04-01 21:41:33");
+INSERT INTO audit_trail VALUES("425","SV1_Admin","logged out","2023-04-01 22:18:05");
+INSERT INTO audit_trail VALUES("426","Mon Carlo Delima","logged in","2023-04-01 22:18:08");
+INSERT INTO audit_trail VALUES("427","Mon Carlo Delima","uploaded a new post","2023-04-01 22:19:20");
+INSERT INTO audit_trail VALUES("428","Mon Carlo Delima","uploaded a new post","2023-04-01 22:20:08");
+INSERT INTO audit_trail VALUES("429","Mon Carlo Delima","uploaded a new post","2023-04-01 22:20:36");
+INSERT INTO audit_trail VALUES("430","Mon Carlo Delima","uploaded a new post","2023-04-01 22:21:36");
+INSERT INTO audit_trail VALUES("431","Mon Carlo Delima","logged out","2023-04-01 22:21:55");
+INSERT INTO audit_trail VALUES("432","SV1_Admin","logged in","2023-04-01 22:21:58");
+INSERT INTO audit_trail VALUES("433","SV1_Admin","uploaded a new post","2023-04-01 22:22:03");
+INSERT INTO audit_trail VALUES("434","SV1_Admin","logged out","2023-04-01 22:22:13");
+INSERT INTO audit_trail VALUES("435","Mon Carlo Delima","logged in","2023-04-01 22:22:16");
+INSERT INTO audit_trail VALUES("436","Mon Carlo Delima","uploaded a new post","2023-04-01 22:24:20");
+INSERT INTO audit_trail VALUES("437","Mon Carlo Delima","logged out","2023-04-02 12:33:54");
+INSERT INTO audit_trail VALUES("438","SV1_Admin","logged in","2023-04-02 12:33:57");
+INSERT INTO audit_trail VALUES("439","SV1_Admin","logged out","2023-04-02 12:37:58");
+INSERT INTO audit_trail VALUES("440","SV1_Admin","logged in","2023-04-02 12:38:01");
+INSERT INTO audit_trail VALUES("441","SV1_Admin","logged out","2023-04-02 12:38:05");
+INSERT INTO audit_trail VALUES("442","SV1_Treasurer","logged in","2023-04-02 12:38:09");
+INSERT INTO audit_trail VALUES("443","SV1_Treasurer","logged out","2023-04-02 12:38:13");
+INSERT INTO audit_trail VALUES("444","SV1_Admin","logged in","2023-04-02 12:38:15");
+INSERT INTO audit_trail VALUES("445","SV1_Admin","logged out","2023-04-02 12:39:45");
+INSERT INTO audit_trail VALUES("446","Mon Carlo Delima","logged in","2023-04-02 12:39:55");
+INSERT INTO audit_trail VALUES("447","Mon Carlo Delima","logged out","2023-04-02 12:42:58");
+INSERT INTO audit_trail VALUES("448","SV1_Admin","logged in","2023-04-02 12:43:00");
+INSERT INTO audit_trail VALUES("449","SV1_Admin","logged out","2023-04-02 12:44:11");
+INSERT INTO audit_trail VALUES("450","SV1_Treasurer","logged in","2023-04-02 12:44:15");
+INSERT INTO audit_trail VALUES("451","SV1_Treasurer","logged out","2023-04-02 12:44:41");
+INSERT INTO audit_trail VALUES("452","Mon Carlo Delima","logged in","2023-04-02 12:44:45");
+INSERT INTO audit_trail VALUES("453","Mon Carlo Delima","logged out","2023-04-02 12:45:10");
+INSERT INTO audit_trail VALUES("454","SV1_Admin","logged in","2023-04-02 12:45:13");
+INSERT INTO audit_trail VALUES("455","SV1_Admin","logged out","2023-04-02 12:51:02");
+INSERT INTO audit_trail VALUES("456","SV1_Admin","logged in","2023-04-02 12:51:06");
+INSERT INTO audit_trail VALUES("457","SV1_Admin","logged out","2023-04-02 12:58:30");
+INSERT INTO audit_trail VALUES("458","Mon Carlo Delima","logged in","2023-04-02 12:58:32");
+INSERT INTO audit_trail VALUES("459","Mon Carlo Delima","uploaded a new post","2023-04-02 12:59:46");
+INSERT INTO audit_trail VALUES("460","Mon Carlo Delima","uploaded a new post","2023-04-02 13:00:31");
+INSERT INTO audit_trail VALUES("461","Mon Carlo Delima","logged out","2023-04-02 13:00:40");
+INSERT INTO audit_trail VALUES("462","SV1_Admin","logged in","2023-04-02 13:00:45");
+INSERT INTO audit_trail VALUES("463","SV1_Admin","uploaded a new post","2023-04-02 13:01:32");
+INSERT INTO audit_trail VALUES("464","SV1_Admin","uploaded a new post","2023-04-02 13:03:49");
+INSERT INTO audit_trail VALUES("465","SV1_Admin","uploaded a new post","2023-04-02 13:04:24");
+INSERT INTO audit_trail VALUES("466","SV1_Admin","uploaded a new post","2023-04-02 13:04:37");
+INSERT INTO audit_trail VALUES("467","SV1_Admin","uploaded a new post","2023-04-02 13:05:10");
+INSERT INTO audit_trail VALUES("468","SV1_Admin","uploaded a new post","2023-04-02 13:05:16");
+INSERT INTO audit_trail VALUES("469","SV1_Admin","uploaded a new post","2023-04-02 13:06:44");
+INSERT INTO audit_trail VALUES("470","SV1_Admin","logged out","2023-04-02 13:36:57");
+INSERT INTO audit_trail VALUES("471","SV1_Admin","logged in","2023-04-04 11:57:08");
 
 
 
@@ -509,8 +575,8 @@ CREATE TABLE `bill_consumer` (
 INSERT INTO bill_consumer VALUES("1","1","1","Mon Carlo Delima","200","PAID");
 INSERT INTO bill_consumer VALUES("2","2","1","Mon Carlo Delima","200","PAID");
 INSERT INTO bill_consumer VALUES("3","3","1","Mon Carlo Delima","200","PAID");
-INSERT INTO bill_consumer VALUES("4","1","2","Kyle Andrei Casingal","500","UNPAID");
-INSERT INTO bill_consumer VALUES("5","2","2","Kyle Andrei Casingal","500","UNPAID");
+INSERT INTO bill_consumer VALUES("4","1","2","Kyle Andrei Casingal","500","PAID");
+INSERT INTO bill_consumer VALUES("5","2","2","Kyle Andrei Casingal","500","PAID");
 INSERT INTO bill_consumer VALUES("6","3","2","Kyle Andrei Casingal","500","UNPAID");
 INSERT INTO bill_consumer VALUES("7","4","2","Kyle Andrei Casingal","500","UNPAID");
 INSERT INTO bill_consumer VALUES("8","5","2","Kyle Andrei Casingal","500","UNPAID");
@@ -716,25 +782,30 @@ CREATE TABLE `post` (
   `title` varchar(255) NOT NULL,
   `content` varchar(255) DEFAULT NULL,
   `published_at` datetime NOT NULL,
+  `days_archive` int(11) DEFAULT NULL,
   `content_image` varchar(255) DEFAULT NULL,
   `officer_post` varchar(10) NOT NULL,
   `post_status` varchar(45) NOT NULL,
   PRIMARY KEY (`post_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
-INSERT INTO post VALUES("1","28","Mon Carlo Delima","The moon is beautiful, isn\'t it?","","2022-11-24 01:09:01","315906640_1753081135077201_6331420859846659098_n.png","No","Active");
-INSERT INTO post VALUES("2","24","Jeune Paolus Flores","Fascinating art created by nature.","","2022-11-24 09:59:54","316218368_829271824950879_360246867658747215_n.png","No","");
-INSERT INTO post VALUES("3","23","Kyle Andrei Casingal","Reflection","Imagine seeing these astonishing cars, lively blue skies, and few waves of clouds in an upside-down world. Inconceivable, isn\'t it?","2022-11-24 10:03:11","316189223_691988422233113_5145406262467036356_n.png","No","");
-INSERT INTO post VALUES("4","23","Kyle Andrei Casingal","Windows of truth shows the real beauty of nature.","","2022-11-24 10:04:40","313194508_684251046380877_4560164667618025920_n.png","No","");
-INSERT INTO post VALUES("5","28","Mon Carlo Delima","Vintage mansion represents calm, warm, and peace.","","2022-11-24 10:05:22","312140489_698881924813395_203606755662892340_n.png","No","");
-INSERT INTO post VALUES("15","52","Marco Ivan Sta. Maria","","Oh well, the sun strengthens the health of the plant, does this photo represents a good day because of that?","2022-12-01 06:37:21","Picture2.jpg","No","");
-INSERT INTO post VALUES("17","53","Krishtalene Bendaña","","Just had a ride inside the Sunnyvale subdivision, I feel like this will be part of my everyday routine.","2022-12-01 06:48:54","Picture4.png","No","");
-INSERT INTO post VALUES("18","52","Marco Ivan Sta. Maria","","The kids enjoyed the party in Sunnyvale Subdivision, it\'s great seeing them happy while watching the program.","2022-12-01 06:49:23","Picture5.jpg","No","");
-INSERT INTO post VALUES("19","53","Krishtalene Bendaña","","Hi everyone! Just want to share this beautiful view I took near Sunnyvale Subdivision. It\'s in ArtSector Gallery and Chimney Cafe 360°. Let\'s visit this place together.","2022-12-01 06:50:15","Picture6.jpg","No","");
-INSERT INTO post VALUES("20","52","Marco Ivan Sta. Maria","","Sometimes it\'s good to be blue. How sweet to be a cloud and floating in blue. I never get tired of the blue sky.","2022-12-01 06:51:00","Picture3.png","No","");
-INSERT INTO post VALUES("24","55","Kyle Andrei Casingal","Light Bulb","insert description here","2022-12-01 10:13:20","188-1889845_a-very-simple-concept-infinitustoken-medium-light-bulb.png","No","");
-INSERT INTO post VALUES("28","18","SV1_Admin","Water interruption","test","2023-01-24 20:00:38","","Yes","");
-INSERT INTO post VALUES("29","18","SV1_Admin","Chinese New Year event","test","2023-01-24 20:06:20","","Yes","");
+INSERT INTO post VALUES("1","28","Mon Carlo Delima","The moon is beautiful, isn\'t it?","","2022-11-24 01:09:01","","315906640_1753081135077201_6331420859846659098_n.png","No","Archived");
+INSERT INTO post VALUES("2","24","Jeune Paolus Flores","Fascinating art created by nature.","","2022-11-24 09:59:54","","316218368_829271824950879_360246867658747215_n.png","No","Archived");
+INSERT INTO post VALUES("3","23","Kyle Andrei Casingal","Reflection","Imagine seeing these astonishing cars, lively blue skies, and few waves of clouds in an upside-down world. Inconceivable, isn\'t it?","2022-11-24 10:03:11","","316189223_691988422233113_5145406262467036356_n.png","No","Archived");
+INSERT INTO post VALUES("4","23","Kyle Andrei Casingal","Windows of truth shows the real beauty of nature.","","2022-11-24 10:04:40","","313194508_684251046380877_4560164667618025920_n.png","No","Archived");
+INSERT INTO post VALUES("5","28","Mon Carlo Delima","Vintage mansion represents calm, warm, and peace.","","2022-11-24 10:05:22","","312140489_698881924813395_203606755662892340_n.png","No","Archived");
+INSERT INTO post VALUES("15","52","Marco Ivan Sta. Maria","","Oh well, the sun strengthens the health of the plant, does this photo represents a good day because of that?","2022-12-01 06:37:21","","Picture2.jpg","No","Archived");
+INSERT INTO post VALUES("17","53","Krishtalene Bendaña","","Just had a ride inside the Sunnyvale subdivision, I feel like this will be part of my everyday routine.","2022-12-01 06:48:54","","Picture4.png","No","Archived");
+INSERT INTO post VALUES("18","52","Marco Ivan Sta. Maria","","The kids enjoyed the party in Sunnyvale Subdivision, it\'s great seeing them happy while watching the program.","2022-12-01 06:49:23","","Picture5.jpg","No","Archived");
+INSERT INTO post VALUES("19","53","Krishtalene Bendaña","","Hi everyone! Just want to share this beautiful view I took near Sunnyvale Subdivision. It\'s in ArtSector Gallery and Chimney Cafe 360°. Let\'s visit this place together.","2022-12-01 06:50:15","","Picture6.jpg","No","Archived");
+INSERT INTO post VALUES("20","52","Marco Ivan Sta. Maria","","Sometimes it\'s good to be blue. How sweet to be a cloud and floating in blue. I never get tired of the blue sky.","2022-12-01 06:51:00","","Picture3.png","No","Archived");
+INSERT INTO post VALUES("24","55","Kyle Andrei Casingal","Light Bulb","insert description here","2022-12-01 10:13:20","","188-1889845_a-very-simple-concept-infinitustoken-medium-light-bulb.png","No","Archived");
+INSERT INTO post VALUES("28","18","SV1_Admin","Water interruption","test","2023-01-24 20:00:38","","","Yes","Active");
+INSERT INTO post VALUES("29","18","SV1_Admin","Chinese New Year event","test","2023-01-24 20:06:20","","","Yes","Active");
+INSERT INTO post VALUES("30","1","Mon Carlo Delima","URS","University of Rizal System - Binangonan","2023-03-16 22:24:20","","URS.png","No","Archived");
+INSERT INTO post VALUES("31","1","Mon Carlo Delima","Nihonjin Desu","Japan numba 1","2023-04-02 12:59:46","","lockscreen.png","No","Active");
+INSERT INTO post VALUES("32","1","Mon Carlo Delima","Magical World","I love Biringan","2023-04-02 13:00:31","","sEt5ph.jpg","No","Active");
+INSERT INTO post VALUES("33","18","SV1_Admin","test","test","2023-04-02 13:06:44","1","","Yes","Archived");
 
 
 
