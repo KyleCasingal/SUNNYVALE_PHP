@@ -19,6 +19,7 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <style>
     @import "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css";
+    
 
     * {
         margin: 0;
@@ -227,7 +228,7 @@ if (isset($_SESSION['user_id'])) {
     <div class="navbar-fixed-top">
         <?php
         require './marginals/topbarLanding.php';
-        $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' ORDER BY post_id DESC") or die($mysqli->error);
+        $resultOfficer = $con->query("SELECT * FROM post WHERE officer_post = 'Yes' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
         ?>
     </div>
     <div class="landingPage">

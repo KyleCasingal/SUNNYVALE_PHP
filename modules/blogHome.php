@@ -401,6 +401,28 @@ $rowUser = $resultUser->fetch_assoc();
     padding: 0.5em;
 
   }
+
+  .archived-post-btn {
+    background-color: rgb(248, 186, 55);
+    color: white;
+    justify-self: flex-end;
+    font-size: 1vw;
+    height: 3vw;
+    width: 10vw;
+    border-radius: 0.5vw;
+    border: 0 none;
+  }
+
+  .new-announcement-btn {
+    background-color: rgb(248, 186, 55);
+    color: white;
+    justify-self: flex-end;
+    font-size: 0.8vw;
+    height: 3vw;
+    width: 10vw;
+    border-radius: 0.5vw;
+    border: 0 none;
+  }
 </style>
 
 <body>
@@ -412,8 +434,8 @@ $rowUser = $resultUser->fetch_assoc();
         <form action="" method="POST">
           <?php
           if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-            echo "<button id='archivedPosts' name='archivedPosts' type='submit' class='newPostBtn'>Archived Posts</button>
-          <button id='newPost' type='button' class='newPostBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>+ New Announcement</button>";
+            echo "<button id='archivedPosts' name='archivedPosts' type='submit' class='archived-post-btn'>Archived Posts</button>
+          <button id='newPost' type='button' class='new-announcement-btn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>+ New Announcement</button>";
           } else if ($rowUser['user_type'] == 'Homeowner') {
             echo "<button id='newPost' type='button' class='newPostBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
                     + New Post
@@ -447,15 +469,12 @@ $rowUser = $resultUser->fetch_assoc();
       </div>
       <?php while ($row = $result->fetch_assoc()) : ?>
         <div class="blogPost">
-          <?php
-          if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-            echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='btn btn-danger'>ARCHIVE</a>";
-          }
-          ?>
+
           <div class="blogProfile">
             <img class="avatarBlog" <?php
                                     $imageURL = '../media/displayPhotos/' . $row['display_picture'];
                                     ?> src="<?= $imageURL ?>" alt="" />
+                                    
             <div class="profileText">
               <p class="profileName"><?php echo $row['full_name']; ?></p>
               <p class="profileDate">
@@ -464,7 +483,14 @@ $rowUser = $resultUser->fetch_assoc();
                 echo $phptime = date("g:i A m/d/y", $datetime);
                 ?>
               </p>
+
             </div>
+            <?php
+            if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
+              echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='btn btn-danger'>ARCHIVE</a>";
+            }
+            ?>
+
           </div>
           <div class="postContent">
             <img class="postImg" <?php
