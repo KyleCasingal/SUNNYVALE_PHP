@@ -106,7 +106,7 @@
 
     </div>
     <ul class="footerList">
-      <li class="footerListItem">ABOUT</li>
+      <li class="footerListItem">OFFICERS</li>
       <li class="footerListItem">CONTACT</li>
       <li class="footerListItem">PRIVACY</li>
       <li class="footerListItem">DEVELOPERS</li>

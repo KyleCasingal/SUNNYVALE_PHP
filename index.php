@@ -19,6 +19,7 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <style>
     @import "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css";
+    
 
     * {
         margin: 0;
@@ -64,17 +65,20 @@ if (isset($_SESSION['user_id'])) {
     }
 
     .RecentContent {
+        width: 80%;
         margin: 2em 2em;
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
     .landingIntroduction {
-        margin: 2em 2em;
+        margin: 2em 40em;
     }
 
     .landingTitles {
-        font-size: 2em;
+        font-size: 1.5vw;
         color: rgb(50, 50, 50);
     }
 
@@ -180,13 +184,37 @@ if (isset($_SESSION['user_id'])) {
         padding-bottom: 2vw;
     }
 
-    .navbar-fixed-top.scrolled{
+    .navbar-fixed-top.scrolled {
         top: 0;
         position: sticky;
         background-color: gray;
         transition: background-color 200ms linear;
     }
-    
+
+    .nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 2em 10em;
+    }
+
+    .nav-item {
+        font-size: 1.5vw;
+    }
+
+    .tab-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .tab-pane { 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 </style>
 
 <script>
@@ -202,7 +230,7 @@ if (isset($_SESSION['user_id'])) {
     <div class="navbar-fixed-top">
         <?php
         require './marginals/topbarLanding.php';
-        $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' ORDER BY post_id DESC") or die($mysqli->error);
+        $resultOfficer = $con->query("SELECT * FROM post WHERE officer_post = 'Yes' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
         ?>
     </div>
     <div class="landingPage">
@@ -214,99 +242,112 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </div>
 
-    <div class="RecentContent">
-        <label class="landingTitles">Recent Announcements</label>
-        <div class="announcementFlex">
-            <?php while ($row = $resultOfficer->fetch_assoc()) : ?>
-                <div class="blogPost">
-                    <div class="blogProfile">
-                        <img class="avatarBlog" <?php
-                                                $imageURL = './media/displayPhotos/' . $row['display_picture'];
-                                                ?> src="<?= $imageURL ?>" alt="" />
-                        <div class="profileText">
-                            <p class="profileName"><?php echo $row['full_name']; ?></p>
-                            <p class="profileDate">
-                                <?php
-                                $datetime = strtotime($row['published_at']);
-                                echo $phptime = date("g:i A m/d/y", $datetime);
-                                ?>
+
+
+
+
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Recent Announcements</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Mission and Vision</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Mapping</button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="pills-tabContent">
+
+        <div class="RecentContent tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            <label class="landingTitles">Recent Announcements</label>
+            <div class="announcementFlex">
+                <?php while ($row = $resultOfficer->fetch_assoc()) : ?>
+                    <div class="blogPost">
+                        
+                        <div class="postContent">
+                            <p class="blogTitle"><?php echo $row['title']; ?></p>
+                            <p class="blogBody">
+                                <?php echo $row['content']; ?>
                             </p>
                         </div>
+                        <div class="profileText">
+                                <p class="profileDate">
+                                    <?php
+                                    $datetime = strtotime($row['published_at']);
+                                    echo $phptime = date("g:i A m/d/y", $datetime);
+                                    ?>
+                                </p>
+                            </div>
                     </div>
-                    <div class="postContent">
-                        <img class="postImg" <?php
-                                                $imageURL = '../media/postsPhotos/' . $row['content_image'];
-                                                ?> src="<?= $imageURL ?>" alt="">
-                        </img>
-                        <p class="blogTitle"><?php echo $row['title']; ?></p>
-                        <p class="blogBody">
-                            <?php echo $row['content']; ?>
-                        </p>
-                    </div>
-                </div>
-            <?php endwhile; ?>
+                <?php endwhile; ?>
+
+            </div>
 
         </div>
 
-    </div>
+        <div class="landingIntroduction tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <label class="landingTitles">Mission</label>
+            <p class="landingText">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                mollis aliquet aliquet. Ut non porta lacus, in commodo ligula. Duis
+                dapibus ex a malesuada molestie. Vestibulum eu enim et orci laoreet
+                fringilla. Integer non sodales nibh. Nam sodales, orci id elementum
+                dictum, dolor diam malesuada metus, id ullamcorper dui diam id magna.
+                Curabitur sodales libero non purus pharetra, eu pharetra dolor
+                dapibus.
+            </p>
 
-    <div class="landingIntroduction">
-        <label class="landingTitles">Mission</label>
-        <p class="landingText">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            mollis aliquet aliquet. Ut non porta lacus, in commodo ligula. Duis
-            dapibus ex a malesuada molestie. Vestibulum eu enim et orci laoreet
-            fringilla. Integer non sodales nibh. Nam sodales, orci id elementum
-            dictum, dolor diam malesuada metus, id ullamcorper dui diam id magna.
-            Curabitur sodales libero non purus pharetra, eu pharetra dolor
-            dapibus.
-        </p>
+            <label class="landingTitles">Vision</label>
+            <p class="landingText">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                mollis aliquet aliquet. Ut non porta lacus, in commodo ligula. Duis
+                dapibus ex a malesuada molestie. Vestibulum eu enim et orci laoreet
+                fringilla. Integer non sodales nibh. Nam sodales, orci id elementum
+                dictum, dolor diam malesuada metus, id ullamcorper dui diam id magna.
+                Curabitur sodales libero non purus pharetra, eu pharetra dolor
+                dapibus.
+            </p>
 
-        <label class="landingTitles">Vision</label>
-        <p class="landingText">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            mollis aliquet aliquet. Ut non porta lacus, in commodo ligula. Duis
-            dapibus ex a malesuada molestie. Vestibulum eu enim et orci laoreet
-            fringilla. Integer non sodales nibh. Nam sodales, orci id elementum
-            dictum, dolor diam malesuada metus, id ullamcorper dui diam id magna.
-            Curabitur sodales libero non purus pharetra, eu pharetra dolor
-            dapibus.
-        </p>
+            <label class="landingTitles">Goals</label>
+            <p class="landingText">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                mollis aliquet aliquet. Ut non porta lacus, in commodo ligula. Duis
+                dapibus ex a malesuada molestie. Vestibulum eu enim et orci laoreet
+                fringilla. Integer non sodales nibh. Nam sodales, orci id elementum
+                dictum, dolor diam malesuada metus, id ullamcorper dui diam id magna.
+                Curabitur sodales libero non purus pharetra, eu pharetra dolor
+                dapibus.
+            </p>
+        </div>
 
-        <label class="landingTitles">Goals</label>
-        <p class="landingText">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            mollis aliquet aliquet. Ut non porta lacus, in commodo ligula. Duis
-            dapibus ex a malesuada molestie. Vestibulum eu enim et orci laoreet
-            fringilla. Integer non sodales nibh. Nam sodales, orci id elementum
-            dictum, dolor diam malesuada metus, id ullamcorper dui diam id magna.
-            Curabitur sodales libero non purus pharetra, eu pharetra dolor
-            dapibus.
-        </p>
-    </div>
-    <div class="mapAPI">
-        <label class="landingTitles">Sunnyvale Mapping and Location</label>
-        <div class="mapouter">
-            <div class="gmap_canvas"><iframe width="1000" height="650" id="gmap_canvas" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3862.693686289688!2d121.18504008032782!3d14.50226569107638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c1095fa7f5f3%3A0x844718961bfe7b61!2sSunnyvale%20II%20Subdivision!5e0!3m2!1sen!2sph!4v1676337760857!5m2!1sen!2sph" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href=""></a><br>
-                <style>
-                    .mapouter {
-                        position: relative;
-                        text-align: right;
-                        height: 650px;
-                        width: 1000px;
-                    }
-                </style><a href="https://www.embedgooglemap.net">embed map on website</a>
-                <style>
-                    .gmap_canvas {
-                        overflow: hidden;
-                        background: none !important;
-                        height: 650px;
-                        width: 1000px;
-                    }
-                </style>
+        <div class="mapAPI tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+            <label class="landingTitles">Sunnyvale Mapping and Location</label>
+            <div class="mapouter">
+                <div class="gmap_canvas"><iframe width="1000" height="650" id="gmap_canvas" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3862.693686289688!2d121.18504008032782!3d14.50226569107638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c1095fa7f5f3%3A0x844718961bfe7b61!2sSunnyvale%20II%20Subdivision!5e0!3m2!1sen!2sph!4v1676337760857!5m2!1sen!2sph" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href=""></a><br>
+                    <style>
+                        .mapouter {
+                            position: relative;
+                            text-align: right;
+                            height: 650px;
+                            width: 1000px;
+                        }
+                    </style><a href="https://www.embedgooglemap.net">embed map on website</a>
+                    <style>
+                        .gmap_canvas {
+                            overflow: hidden;
+                            background: none !important;
+                            height: 650px;
+                            width: 1000px;
+                        }
+                    </style>
+                </div>
             </div>
         </div>
+
     </div>
+
 
     <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3862.693686289688!2d121.18504008032782!3d14.50226569107638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c1095fa7f5f3%3A0x844718961bfe7b61!2sSunnyvale%20II%20Subdivision!5e0!3m2!1sen!2sph!4v1676337760857!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
 

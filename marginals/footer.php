@@ -103,17 +103,29 @@
 
   }
 
-  .aboutTitle {
+  .OfficersTitle {
     font-size: 1.5vw;
   }
 
-  .modal-officers {
+  .modal-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 0;
   }
- 
- 
+
+
   td {
-    padding: 1.5vw;
+    font-size: 1vw;
+    padding: 0.5vw;
+  }
+
+  .footerListText {
+    color: rgb(89, 89, 89);
+    margin: 0.8vw;
+    margin-top: 0.5vw;
+    font-size: 1vw;
+    font-weight: 300;
   }
 </style>
 
@@ -127,21 +139,23 @@
 
     </div>
     <ul class="footerList">
-      <li class="footerListItem" data-bs-toggle="modal" data-bs-target="#aboutModal">ABOUT</li>
+      <li class="footerListItem" data-bs-toggle="modal" data-bs-target="#OfficersModal">OFFICERS</li>
       <li class="footerListItem" data-bs-toggle="modal" data-bs-target="#contactModal">CONTACT</li>
       <li class="footerListItem" data-bs-toggle="modal" data-bs-target="#privacyModal">PRIVACY</li>
       <li class="footerListItem" data-bs-toggle="modal" data-bs-target="#developersModal">DEVELOPERS</li>
     </ul>
+    <label class="footerListText">© Sunnyvale Subdivisions, 2023</label>
   </div>
 
-  <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="OfficersModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">About</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Officers</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body modal-officers">
+
           <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="true">
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -152,25 +166,51 @@
             </div>
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <table>
+                <table class="tbl-officers-list">
                   <tr>
-                    <td class="aboutTitle">Sunnyvale 1 Officers</td>
+                    <td class="OfficersTitle" colspan="2">Sunnyvale 1 Officers</td>
                   </tr>
                   <tr>
                     <td>President:</td>
-                    <td>name here</td>
+                    <td>Basil Knowles</td>
                   </tr>
                   <tr>
                     <td>Vice President:</td>
-                    <td>name here</td>
+                    <td>Robin Rice</td>
                   </tr>
                   <tr>
                     <td>Secretary:</td>
-                    <td>name here</td>
+                    <td>Maxine Twitty</td>
                   </tr>
                   <tr>
                     <td>Treasurer:</td>
-                    <td>name here</td>
+                    <td>Alexis Stevenson</td>
+                  </tr>
+                  <tr>
+                  </tr>
+                </table>
+              </div>
+              <div class="carousel-item">
+
+                <table>
+                  <tr>
+                    <td class="OfficersTitle" colspan="2">Sunnyvale 2 Officers</td>
+                  </tr>
+                  <tr>
+                    <td>President:</td>
+                    <td>Wilmot Lane</td>
+                  </tr>
+                  <tr>
+                    <td>Vice President:</td>
+                    <td>Theo Cress</td>
+                  </tr>
+                  <tr>
+                    <td>Secretary:</td>
+                    <td>Jenson Newman</td>
+                  </tr>
+                  <tr>
+                    <td>Treasurer:</td>
+                    <td>Camilla Heath</td>
                   </tr>
                   <tr>
                   </tr>
@@ -179,23 +219,23 @@
               <div class="carousel-item">
                 <table>
                   <tr>
-                    <td class="aboutTitle">Sunnyvale 2 Officers</td>
+                    <td class="OfficersTitle" colspan="2">Sunnyvale 3 Officers</td>
                   </tr>
                   <tr>
                     <td>President:</td>
-                    <td>name here</td>
+                    <td>Grant Armstrong</td>
                   </tr>
                   <tr>
                     <td>Vice President:</td>
-                    <td>name here</td>
+                    <td>Tammy Barber</td>
                   </tr>
                   <tr>
                     <td>Secretary:</td>
-                    <td>name here</td>
+                    <td>Howell Norris</td>
                   </tr>
                   <tr>
                     <td>Treasurer:</td>
-                    <td>name here</td>
+                    <td>Roberta Woolridge</td>
                   </tr>
                   <tr>
                   </tr>
@@ -204,48 +244,23 @@
               <div class="carousel-item">
                 <table>
                   <tr>
-                    <td class="aboutTitle">Sunnyvale 3 Officers</td>
+                    <td class="OfficersTitle" colspan="2">Sunnyvale 4 Officers</td>
                   </tr>
                   <tr>
                     <td>President:</td>
-                    <td>name here</td>
+                    <td>Darcy Hardy</td>
                   </tr>
                   <tr>
                     <td>Vice President:</td>
-                    <td>name here</td>
+                    <td>Cecil Turner</td>
                   </tr>
                   <tr>
                     <td>Secretary:</td>
-                    <td>name here</td>
+                    <td>Teddy Annable</td>
                   </tr>
                   <tr>
                     <td>Treasurer:</td>
-                    <td>name here</td>
-                  </tr>
-                  <tr>
-                  </tr>
-                </table>
-              </div>
-              <div class="carousel-item">
-                <table>
-                  <tr>
-                    <td class="aboutTitle">Sunnyvale 4 Officers</td>
-                  </tr>
-                  <tr>
-                    <td>President:</td>
-                    <td>name here</td>
-                  </tr>
-                  <tr>
-                    <td>Vice President:</td>
-                    <td>name here</td>
-                  </tr>
-                  <tr>
-                    <td>Secretary:</td>
-                    <td>name here</td>
-                  </tr>
-                  <tr>
-                    <td>Treasurer:</td>
-                    <td>name here</td>
+                    <td>Ralph Garraway</td>
                   </tr>
                   <tr>
                   </tr>
@@ -273,11 +288,11 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">About</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Contact</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          About the Subdivision
+          Contacts
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -290,11 +305,11 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">About</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Officers</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          About the Subdivision
+          Officers the Subdivision
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -307,7 +322,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">About</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Officers</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
