@@ -537,7 +537,7 @@ $rowUser = $resultUser->fetch_assoc();
           <a class="footerLink" href="">Privacy</a>
           <a class="footerLink" href="">Developers</a>
         </div>
-        <label class="footerCopyright">© Sunnyvale Subdivisions</label>
+        <label class="footerCopyright">© Sunnyvale Subdivisions, 2023</label>
       </span>
     </div>
   </div>

@@ -119,6 +119,14 @@
     font-size: 1vw;
     padding: 0.5vw;
   }
+
+  .footerListText {
+    color: rgb(89, 89, 89);
+    margin: 0.8vw;
+    margin-top: 0.5vw;
+    font-size: 1vw;
+    font-weight: 300;
+  }
 </style>
 
 <body>
@@ -136,6 +144,7 @@
       <li class="footerListItem" data-bs-toggle="modal" data-bs-target="#privacyModal">PRIVACY</li>
       <li class="footerListItem" data-bs-toggle="modal" data-bs-target="#developersModal">DEVELOPERS</li>
     </ul>
+    <label class="footerListText">© Sunnyvale Subdivisions, 2023</label>
   </div>
 
   <div class="modal fade" id="OfficersModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
