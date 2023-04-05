@@ -65,10 +65,12 @@ if (isset($_SESSION['user_id'])) {
     }
 
     .RecentContent {
-        width: 70%;
+        width: 80%;
         margin: 2em 2em;
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
     .landingIntroduction {
