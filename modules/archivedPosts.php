@@ -1,7 +1,7 @@
 <?php
 require '../marginals/topbar.php';
-$result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'No' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
-$resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
+$result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'No' AND post_status = 'Archived' ORDER BY post_id DESC") or die($mysqli->error);
+$resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Archived' ORDER BY post_id DESC") or die($mysqli->error);
 $resultUser = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
 $rowUser = $resultUser->fetch_assoc();
 ?>
@@ -408,50 +408,10 @@ $rowUser = $resultUser->fetch_assoc();
   <div class='blogHome'>
     <div class="blogScroll">
       <div class="blogHead">
-        <p class="headTxt">Recent Posts</p>
-        <form action="" method="POST">
-          <?php
-          if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-            echo "<button id='archivedPosts' name='archivedPosts' type='submit' class='newPostBtn'>Archived Posts</button>
-          <button id='newPost' type='button' class='newPostBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>+ New Announcement</button>";
-          } else if ($rowUser['user_type'] == 'Homeowner') {
-            echo "<button id='newPost' type='button' class='newPostBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
-                    + New Post
-                  </button>";
-          }
-          ?>
-        </form>
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-              <div class="modal-header">
-                <?php
-                if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-                  echo "<h5 class='modal-title' id='staticBackdropLabel'>Add new announcement</h5>";
-                } else if ($rowUser['user_type'] == 'Homeowner') {
-                  echo "<h5 class='modal-title' id='staticBackdropLabel'>Add new post</h5>";
-                }
-                ?>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="mdl-body">
-                <form method="post" enctype="multipart/form-data">
-                  <?php
-                  require '../modules/blogWrite.php';
-                  ?>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+        <p class="headTxt">Archived Posts</p>
       </div>
       <?php while ($row = $result->fetch_assoc()) : ?>
         <div class="blogPost">
-          <?php
-          if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-            echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='btn btn-danger'>ARCHIVE</a>";
-          }
-          ?>
           <div class="blogProfile">
             <img class="avatarBlog" <?php
                                     $imageURL = '../media/displayPhotos/' . $row['display_picture'];
@@ -482,7 +442,7 @@ $rowUser = $resultUser->fetch_assoc();
 
     <div class="sideContent">
       <div class="sideText">
-        <label class="sideTitle">Announcements</label>
+        <label class="sideTitle"> Archived Announcements</label>
         <div class="announcementScroll">
           <table class="announcementTable">
             <?php while ($row = $resultOfficer->fetch_assoc()) : ?>
@@ -493,12 +453,6 @@ $rowUser = $resultUser->fetch_assoc();
                                                                                                           $datetime = strtotime($row['published_at']);
                                                                                                           echo $phptime = date("g:i A m/d/y", $datetime);
                                                                                                           ?></td>
-                <td><?php
-                    if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-
-                      echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='btn btn-danger'>ARCHIVE</a>";
-                    }
-                    ?></td>
               </tr>
             <?php endwhile; ?>
           </table>
