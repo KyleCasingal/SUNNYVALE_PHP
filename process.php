@@ -435,12 +435,15 @@ if (isset($_POST['compute'])) {
 // AMENITY ADD, EDIT
 if (isset($_POST['amenityAdd'])) {
   $newAmenity = $_POST['newAmenity'];
-  $rate = $_POST['rate'];
   $availability = $_POST['availability'];
   $subdivision_name = $_POST['subdivision_name'];
 
+  $result1 = $con->query("SELECT * FROM subdivision WHERE subdivision_name= '$subdivision_name'");
+  $row1 = $result1->fetch_assoc();
+  $subdivision_id = $row1['subdivision_id'];
 
-  $sql = "INSERT INTO amenities(amenity_name, subdivision_name, price, availability) VALUES ('$newAmenity', '$subdivision_name', '$rate', '$availability')";
+
+  $sql = "INSERT INTO amenities(amenity_name, subdivision_id, subdivision_name, availability) VALUES ('$newAmenity', '$subdivision_id', '$subdivision_name', '$availability')";
   mysqli_query($con, $sql);
   $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $row = $result->fetch_assoc();
@@ -456,26 +459,35 @@ if (isset($_GET['amenity_id'])) {
     $row = $result->fetch_array();
     $amenity_name = $row['amenity_name'];
     $subdivision_name = $row['subdivision_name'];
-    $price = $row['price'];
     $availability = $row['availability'];
   }
 }
 
 // UPDATING A ROW AMENITY
 if (isset($_POST['amenityUpdate'])) {
-  $amenity_id = $_POST['amenity_id'];
+  $amenity_id = $_POST['amenity_id_settings'];
   $amenity_name = $_POST['newAmenity'];
-  $subdivision_name = $_POST['subdivision_name'];
-  $rate = $_POST['rate'];
   $subdivision_name = $_POST['subdivision_name'];
   $availability = $_POST['availability'];
 
-  $con->query("UPDATE amenities SET amenity_name = '$amenity_name', subdivision_name = '$subdivision_name', price = '$rate', availability = '$availability' WHERE amenity_id = '$amenity_id'");
+  $con->query("UPDATE amenities SET amenity_name = '$amenity_name', subdivision_name = '$subdivision_name', availability = '$availability' WHERE amenity_id = '$amenity_id'");
   $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $row = $result->fetch_assoc();
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an exisiting amenity' . ' ' . "$subdivision_name" . '-' . "$amenity_name" . "', NOW())";
   mysqli_query($con, $sql1);
-  header("Location: settings.php#addAmenity");
+  header("Location: settingsAmenity.php");
+}
+
+//AMENITY PURPOSE ADD, EDIT
+if (isset($_POST['purposeAdd'])){
+  $amenity_id = $_POST['amenity'];
+  $amenity_purpose = $_POST['amenity_purpose'];
+  $dayRate = $_POST['dayRate'];
+  $nightRate = $_POST['nightRate'];
+  
+  $sql = "INSERT INTO amenity_purpose(amenity_id, amenity_purpose, day_rate, night_rate) VALUES ('$amenity_id', '$amenity_purpose', '$dayRate', '$nightRate')";
+  mysqli_query($con, $sql);
+  header("Location: settingsAmenity.php");
 }
 
 

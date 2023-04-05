@@ -3,16 +3,16 @@ require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
 $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
+$resultSubdivision_selectPurpose = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
+$resultAmenities = $con->query("SELECT * FROM amenities ORDER BY subdivision_name ASC") or die($mysqli->error);
 ?>
 
-<?php 
-  
-  if ( isset($_GET['success']) && $_GET['success'] == 1 )
-{
-     echo 
+<?php
 
-"<div class='alert alert-success alert-dismissible'>
+if (isset($_GET['success']) && $_GET['success'] == 1) {
+    echo
+
+    "<div class='alert alert-success alert-dismissible'>
                 <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
                 <h4><i class='icon fa fa-check'></i> Alert!</h4>
                 Restore Success
@@ -21,8 +21,8 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
 
 
 
-            
- ?>
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,9 +32,8 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <title>SUNNYVALE</title>
 </head>
 <style>
@@ -376,7 +375,23 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
         background-color: rgb(211, 211, 211);
     }
 </style>
-
+<script>
+    $(document).ready(function() {
+        $("#subdivision_id").on('click', function() {
+            var subdivision_id = $(this).val();
+            if (subdivision_id) {
+                $.ajax({
+                    type: 'POST',
+                    url: '../process.php/',
+                    data: 'subdivision_id=' + subdivision_id,
+                    success: function(html) {
+                        $("#amenity_id").html(html);
+                    }
+                });
+            }
+        });
+    });
+</script>
 
 <body>
     <div class="secretary">
@@ -390,21 +405,21 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
             <div class="settingsAddAmenity" id="AddAmenity">
                 <div class="addAmenityForm">
                     <form method="post" autocomplete="off">
-                        <input type="hidden" name="amenity_id" value="<?php echo $amenity_id ?? ''; ?>">
+                        <input type="hidden" name="amenity_id_settings" value="<?php echo $amenity_id ?? ''; ?>">
                         <table class="tblAmenityForm">
                             <tr>
                                 <td>Subdivision:</td>
                                 <td>
                                     <select name="subdivision_name" id="">
                                         <option value="">Select...</option>
-                                        <?php while ($row = $resultSubdivision_selectAmenities->fetch_assoc()): ?>
+                                        <?php while ($row = $resultSubdivision_selectAmenities->fetch_assoc()) : ?>
                                             <option value="<?php echo $row['subdivision_name'] ?>" <?php
-                                               if (isset($_GET['amenity_id'])) {
-                                                   if ($subdivision_name == $row['subdivision_name']) {
-                                                       echo 'selected="selected"';
-                                                   }
-                                               }
-                                               ?>><?php echo $row['subdivision_name'] ?></option>
+                                                                                                    if (isset($_GET['amenity_id'])) {
+                                                                                                        if ($subdivision_name == $row['subdivision_name']) {
+                                                                                                            echo 'selected="selected"';
+                                                                                                        }
+                                                                                                    }
+                                                                                                    ?>><?php echo $row['subdivision_name'] ?></option>
                                         <?php endwhile; ?>
                                     </select>
                                 </td>
@@ -412,15 +427,7 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
                             <tr>
                                 <td>Amenity:</td>
                                 <td>
-                                    <input name="newAmenity" value="<?php echo $amenity_name ?? ''; ?>" type="text"
-                                        placeholder="new amenity" required />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Amenity Rate Per Hour:</td>
-                                <td>
-                                    <input name="rate" value="<?php echo $price ?? ''; ?>" type="text"
-                                        placeholder="rate per hour" required />
+                                    <input name="newAmenity" value="<?php echo $amenity_name ?? ''; ?>" type="text" placeholder="new amenity" required />
                                 </td>
                             </tr>
                             <tr>
@@ -429,59 +436,53 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
                                     <select name="availability" id="" required>
                                         <option value="">Select...</option>
                                         <option value="Available" <?php
-                                        if (isset($_GET['amenity_id'])) {
-                                            if ($availability == "Available") {
-                                                echo 'selected="selected"';
-                                            }
-                                        }
-                                        ?>>Available</option>
+                                                                    if (isset($_GET['amenity_id'])) {
+                                                                        if ($availability == "Available") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Available</option>
                                         <option value="Unavailable" <?php
-                                        if (isset($_GET['amenity_id'])) {
-                                            if ($availability == "Unavailable") {
-                                                echo 'selected="selected"';
-                                            }
-                                        }
-                                        ?>>Unavailable</option>
+                                                                    if (isset($_GET['amenity_id'])) {
+                                                                        if ($availability == "Unavailable") {
+                                                                            echo 'selected="selected"';
+                                                                        }
+                                                                    }
+                                                                    ?>>Unavailable</option>
                                     </select>
                                 </td>
                             </tr>
                         </table>
 
                         <!--MODAL ADD AMENITY -->
-                        <div class="modal fade" id="addAmenityModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
+                        <div class="modal fade" id="addAmenityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         Do you really want to add this new amenity?
                                     </div>
                                     <div class="modal-footer">
-                                        <button name="amenityAdd" onclick="location.href = '#addAmenity'" type="submit"
-                                            class="btn btn-primary">Save changes</button>
+                                        <button name="amenityAdd" type="submit" class="btn btn-primary">Save changes</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="btnArea">
-                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal"
-                                data-bs-target="#addAmenityModal">
+                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addAmenityModal">
                                 Add amenity
                             </button>
 
                             <!-- MODAL UPDATE AMENITY -->
-                            <div class="modal fade" id="updateAmenityModal" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="updateAmenityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             Do you really want to update this amenity?
@@ -493,8 +494,7 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btnClearReg" data-bs-toggle="modal"
-                                data-bs-target="#updateAmenityModal">
+                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateAmenityModal">
                                 Update Amenity
                             </button>
                         </div>
@@ -508,36 +508,160 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
                             <th></th>
                             <th>Subdivision</th>
                             <th>Amenity</th>
-                            <th>Rate</th>
                             <th>Availabiliity</th>
                         </thead>
-                        <?php while ($row = $resultAmenities->fetch_assoc()): ?>
+                        <?php while ($row = $resultAmenities->fetch_assoc()) : ?>
                             <tr>
                                 <td>
-                                    <a href="settingsAmenity.php?amenity_id=<?php echo $row['amenity_id']; ?>"
-                                        class="btnEdit">Edit</a>
+                                    <a href="settingsAmenity.php?amenity_id=<?php echo $row['amenity_id']; ?>" class="btnEdit">Edit</a>
                                 </td>
                                 <td>
                                     <?php echo $row['subdivision_name'] ?>
                                 </td>
                                 <td><?php echo $row['amenity_name'] ?></td>
-                                <td>
-                                    <?php echo $row['price'] ?>
-                                </td>
                                 <td><?php echo $row['availability'] ?></td>
                             </tr>
                         <?php endwhile; ?>
                     </table>
                 </div>
             </div>
+            <div class="secretaryPanel">
+
+                <!-- SETTINGS AMENITY -->
+                <label class="lblSettings" id="amenity">Amenity Purpose</label>
+                <div class="settingsAddAmenity" id="AddAmenity">
+                    <div class="addAmenityForm">
+                        <form method="post" autocomplete="off">
+                            <input type="hidden" name="amenity_id_settings" value="<?php echo $amenity_id ?? ''; ?>">
+                            <table class="tblAmenityForm">
+                                <tr>
+                                    <td>Subdivision:</td>
+                                    <td>
+                                        <select name="subdivision_name_purpose" id="subdivision_id">
+                                            <option value="0">Select...</option>
+                                            <?php while ($row = $resultSubdivision_selectPurpose->fetch_assoc()) : ?>
+                                                <option value="<?php echo $row['subdivision_id'] ?>" <?php
+                                                                                                        if (isset($_GET['amenity_purpose_id'])) {
+                                                                                                            if ($subdivision_name == $row['subdivision_name']) {
+                                                                                                                echo 'selected="selected"';
+                                                                                                            }
+                                                                                                        }
+                                                                                                        ?>><?php echo $row['subdivision_name'] ?></option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Amenity:
+                                    </td>
+                                    <td>
+                                        <select name="amenity" id="amenity_id">
+                                            <option value="0">Select Subdivision First...</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Purpose:</td>
+                                    <td>
+                                        <input name="amenity_purpose" value="<?php echo $amenity_purpose ?? ''; ?>" type="text" placeholder="new amenity purpose" required />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Day Rate Per Hour:</td>
+                                    <td>
+                                        <input name="dayRate" value="<?php echo $dayRate ?? ''; ?>" type="text" placeholder="day rate per hour" required />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Night Rate Per Hour:</td>
+                                    <td>
+                                        <input name="nightRate" value="<?php echo $nightRate ?? ''; ?>" type="text" placeholder="night rate per hour" required />
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!--MODAL ADD AMENITY -->
+                            <div class="modal fade" id="addPurposeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Do you really want to add this new purpose?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button name="purposeAdd" type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btnArea">
+                                <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addPurposeModal">
+                                    Add Purpose
+                                </button>
+
+                                <!-- MODAL UPDATE AMENITY -->
+                                <div class="modal fade" id="updateAmenityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Do you really want to update this purpose?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button name="purposeUpdate" type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateAmenityModal">
+                                    Update Purpose
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- SETTINGS AMENITY TABLE -->
+                    <div class="tblAmenityContainer">
+                        <table class="table tblAmenity">
+                            <thead>
+                                <th></th>
+                                <th>Subdivision</th>
+                                <th>Amenity</th>
+                                <th>Purpose</th>
+                                <th>Day Rate</th>
+                                <th>Night Rate</th>
+                            </thead>
+                            <?php while ($row = $resultAmenities->fetch_assoc()) : ?>
+                                <tr>
+                                    <td>
+                                        <a href="settingsAmenity.php?amenity_id=<?php echo $row['amenity_id']; ?>" class="btnEdit">Edit</a>
+                                    </td>
+                                    <td>
+                                        <?php echo $row['subdivision_name'] ?>
+                                    </td>
+                                    <td><?php echo $row['amenity_name'] ?></td>
+                                    <td>
+                                        <?php echo $row['price'] ?>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <?php
     require '../marginals/footer2.php'
-        ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 
