@@ -5,6 +5,11 @@ $row = $result->fetch_assoc();
 $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
 $resultSubdivision_selectPurpose = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
 $resultAmenities = $con->query("SELECT * FROM amenities ORDER BY subdivision_name ASC") or die($mysqli->error);
+$resultPurpose = $con->query("SELECT * FROM amenity_purpose INNER JOIN amenities ON amenity_purpose.amenity_id = amenities.amenity_id ORDER BY subdivision_name ASC") or die($mysqli->error);
+$resultAmenities_selectAmenities = $con->query("SELECT * FROM amenities ORDER BY amenity_name ASC") or die($mysqli->error);
+if (isset($_GET['amenity_purpose_id'])) {
+    $resultAmenities_selectAmenities = $con->query("SELECT * FROM amenities WHERE subdivision_name ='$subdivision_name' ORDER BY amenity_name ASC") or die($mysqli->error);
+}
 ?>
 
 <?php
@@ -275,6 +280,14 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
         background-color: rgb(93, 151, 93);
     }
 
+    .btnSubmitReg:disabled {
+        background-color: rgb(40, 68, 40);
+    }
+
+    .btnSubmitReg[disabled]:hover {
+        background-color: rgb(40, 68, 40);
+    }
+
     .btnClearReg {
         background-color: lightcoral;
         border: 0;
@@ -291,6 +304,14 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
 
     .btnClearReg:hover {
         background-color: rgb(180, 83, 83);
+    }
+
+    .btnClearReg:disabled {
+        background-color: rgb(97, 45, 45);
+    }
+
+    .btnClearReg[disabled]:hover {
+        background-color: rgb(97, 45, 45);
     }
 
     .lblRegistration {
@@ -410,7 +431,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                             <tr>
                                 <td>Subdivision:</td>
                                 <td>
-                                    <select name="subdivision_name" id="">
+                                    <select name="subdivision_name" id="" required>
                                         <option value="">Select...</option>
                                         <?php while ($row = $resultSubdivision_selectAmenities->fetch_assoc()) : ?>
                                             <option value="<?php echo $row['subdivision_name'] ?>" <?php
@@ -472,7 +493,12 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                             </div>
                         </div>
                         <div class="btnArea">
-                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addAmenityModal">
+                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addAmenityModal" <?php
+                                                                                                                                if ($amenity_id ?? '') {
+                                                                                                                                    echo "disabled";
+                                                                                                                                } else {
+                                                                                                                                    echo "";
+                                                                                                                                } ?>>
                                 Add amenity
                             </button>
 
@@ -488,13 +514,17 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                             Do you really want to update this amenity?
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="amenityUpdate" type="submit" class="btn btn-primary">Save
-                                                changes</button>
+                                            <button name="amenityUpdate" type="submit" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateAmenityModal">
+                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateAmenityModal" <?php
+                                                                                                                                    if ($amenity_id ?? '') {
+                                                                                                                                        echo "";
+                                                                                                                                    } else {
+                                                                                                                                        echo "disabled";
+                                                                                                                                    } ?>>
                                 Update Amenity
                             </button>
                         </div>
@@ -526,28 +556,32 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                 </div>
             </div>
             <div class="secretaryPanel">
-
                 <!-- SETTINGS AMENITY -->
-                <label class="lblSettings" id="amenity">Amenity Purpose</label>
-                <div class="settingsAddAmenity" id="AddAmenity">
+                <label class="lblSettings" id="amenityPurpose">Amenity Purpose</label>
+                <div class="settingsAddAmenity" id="addPurpose">
                     <div class="addAmenityForm">
                         <form method="post" autocomplete="off">
-                            <input type="hidden" name="amenity_id_settings" value="<?php echo $amenity_id ?? ''; ?>">
+                            <input type="hidden" name="amenity_purpose_id" value="<?php echo $amenity_purpose_id ?? ''; ?>">
                             <table class="tblAmenityForm">
                                 <tr>
                                     <td>Subdivision:</td>
                                     <td>
                                         <select name="subdivision_name_purpose" id="subdivision_id">
-                                            <option value="0">Select...</option>
-                                            <?php while ($row = $resultSubdivision_selectPurpose->fetch_assoc()) : ?>
-                                                <option value="<?php echo $row['subdivision_id'] ?>" <?php
-                                                                                                        if (isset($_GET['amenity_purpose_id'])) {
-                                                                                                            if ($subdivision_name == $row['subdivision_name']) {
-                                                                                                                echo 'selected="selected"';
-                                                                                                            }
-                                                                                                        }
-                                                                                                        ?>><?php echo $row['subdivision_name'] ?></option>
-                                            <?php endwhile; ?>
+                                            <?php
+                                            if ($amenity_purpose_id ?? '') {
+                                                while ($row = $resultSubdivision_selectPurpose->fetch_assoc()) :
+                                                    echo '<option value="' . $row['subdivision_id'] . '"';;
+                                                    if (isset($_GET['amenity_purpose_id'])) {
+                                                        if ($subdivision_name == $row['subdivision_name']) {
+                                                            echo 'selected="selected"';
+                                                        }
+                                                    }
+                                                    echo 'disabled>' . $row['subdivision_name'] . '</option>';
+                                                endwhile;
+                                            } else {
+                                                echo '<option value="0">Select...</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </td>
                                 </tr>
@@ -557,7 +591,21 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                     </td>
                                     <td>
                                         <select name="amenity" id="amenity_id">
-                                            <option value="0">Select Subdivision First...</option>
+                                            <?php
+                                            if ($amenity_purpose_id ?? '') {
+                                                while ($row = $resultAmenities_selectAmenities->fetch_assoc()) :
+                                                    echo '<option value="' . $row['amenity_id'] . '"';
+                                                    if (isset($_GET['amenity_purpose_id'])) {
+                                                        if ($amenity_name_purpose == $row['amenity_name']) {
+                                                            echo 'selected="selected"';
+                                                        }
+                                                    }
+                                                    echo 'disabled>' . $row['amenity_name'] . '</option>';
+                                                endwhile;
+                                            } else {
+                                                echo "<option value='0'>Select Subdivision First...</option>";
+                                            }
+                                            ?>
                                         </select>
                                     </td>
                                 </tr>
@@ -599,12 +647,17 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                 </div>
                             </div>
                             <div class="btnArea">
-                                <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addPurposeModal">
+                                <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addPurposeModal" <?php
+                                                                                                                                    if ($amenity_purpose_id ?? '') {
+                                                                                                                                        echo "disabled";
+                                                                                                                                    } else {
+                                                                                                                                        echo "";
+                                                                                                                                    } ?>>
                                     Add Purpose
                                 </button>
 
                                 <!-- MODAL UPDATE AMENITY -->
-                                <div class="modal fade" id="updateAmenityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="updatePurposeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -620,7 +673,12 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateAmenityModal">
+                                <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updatePurposeModal" <?php
+                                                                                                                                        if ($amenity_purpose_id ?? '') {
+                                                                                                                                            echo "";
+                                                                                                                                        } else {
+                                                                                                                                            echo "disabled";
+                                                                                                                                        } ?>>
                                     Update Purpose
                                 </button>
                             </div>
@@ -638,17 +696,23 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                 <th>Day Rate</th>
                                 <th>Night Rate</th>
                             </thead>
-                            <?php while ($row = $resultAmenities->fetch_assoc()) : ?>
+                            <?php while ($row = $resultPurpose->fetch_assoc()) : ?>
                                 <tr>
                                     <td>
-                                        <a href="settingsAmenity.php?amenity_id=<?php echo $row['amenity_id']; ?>" class="btnEdit">Edit</a>
+                                        <a href="settingsAmenity.php?amenity_purpose_id=<?php echo $row['amenity_purpose_id']; ?>#amenityPurpose" class="btnEdit">Edit</a>
                                     </td>
                                     <td>
                                         <?php echo $row['subdivision_name'] ?>
                                     </td>
-                                    <td><?php echo $row['amenity_name'] ?></td>
                                     <td>
-                                        <?php echo $row['price'] ?>
+                                        <?php echo $row['amenity_name'] ?>
+                                    </td>
+                                    <td><?php echo $row['amenity_purpose'] ?></td>
+                                    <td>
+                                        <?php echo $row['day_rate'] ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row['night_rate'] ?>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>

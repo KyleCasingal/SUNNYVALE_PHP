@@ -34,7 +34,7 @@ if (isset($_POST['loginButtonGuest'])) {
   header("Location: ../modules/login.php");
 }
 //Redirect to archived posts page when in blog home page
-if(isset($_POST['archivedPosts'])) {
+if (isset($_POST['archivedPosts'])) {
   header("Location: archivedPosts.php");
 }
 // REGISTER A NEW USER
@@ -479,14 +479,44 @@ if (isset($_POST['amenityUpdate'])) {
 }
 
 //AMENITY PURPOSE ADD, EDIT
-if (isset($_POST['purposeAdd'])){
+if (isset($_POST['purposeAdd'])) {
   $amenity_id = $_POST['amenity'];
   $amenity_purpose = $_POST['amenity_purpose'];
   $dayRate = $_POST['dayRate'];
   $nightRate = $_POST['nightRate'];
-  
+
   $sql = "INSERT INTO amenity_purpose(amenity_id, amenity_purpose, day_rate, night_rate) VALUES ('$amenity_id', '$amenity_purpose', '$dayRate', '$nightRate')";
   mysqli_query($con, $sql);
+  header("Location: settingsAmenity.php");
+}
+
+//SELECTING A ROW TO EDIT PURPOSE
+if (isset($_GET['amenity_purpose_id'])) {
+  $amenity_purpose_id = $_GET['amenity_purpose_id'];
+  $result = $con->query("SELECT * FROM amenity_purpose INNER JOIN amenities ON amenity_purpose.amenity_id = amenities.amenity_id WHERE amenity_purpose_id = '$amenity_purpose_id'");
+  if ($result->num_rows) {
+    $row = $result->fetch_array();
+    $amenity_purpose_id = $row['amenity_purpose_id'];
+    $amenity_name_purpose = $row['amenity_name'];
+    $amenity_purpose = $row['amenity_purpose'];
+    $subdivision_name = $row['subdivision_name'];
+    $dayRate = $row['day_rate'];
+    $nightRate = $row['night_rate'];
+  }
+}
+
+// UPDATING A ROW AMENITY PURPOSE
+if (isset($_POST['purposeUpdate'])) {
+  $amenity_purpose_id = $_POST['amenity_purpose_id'];
+  $amenity_purpose = $_POST['amenity_purpose'];
+  $dayRate = $_POST['dayRate'];
+  $nightRate = $_POST['nightRate'];
+
+  $con->query("UPDATE amenity_purpose SET amenity_purpose = '$amenity_purpose', day_rate = '$dayRate', night_rate = '$nightRate' WHERE amenity_purpose_id = '$amenity_purpose_id'");
+  $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+  $row = $result->fetch_assoc();
+  $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an exisiting amenity' . ' ' . "$subdivision_name" . '-' . "$amenity_name" . "', NOW())";
+  mysqli_query($con, $sql1);
   header("Location: settingsAmenity.php");
 }
 
@@ -1230,13 +1260,13 @@ if (isset($_POST['editPassword'])) {
   $result = mysqli_query($con, $sql);
   $row = $result->fetch_assoc();
 
-  if($oldPassword != $row['password']){
+  if ($oldPassword != $row['password']) {
     echo "<div class='messageSuccess'>
         <label >
           Old password do not match!
         </label>
       </div>";
-  } else if($newPassword != $confirmPassword){
+  } else if ($newPassword != $confirmPassword) {
     echo "<div class='messageSuccess'>
         <label >
           New and Confirm password do not match!
