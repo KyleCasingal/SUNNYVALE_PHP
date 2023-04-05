@@ -107,13 +107,18 @@
     font-size: 1.5vw;
   }
 
-  .modal-officers {
+  .modal-body {
+    background-image: url(../../SUNNYVALE_PHP/media/content-images/sv2-logo.png);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 0;
   }
- 
- 
+
+
   td {
-    padding: 1.5vw;
+    font-size: 1vw;
+    padding: 0.5vw;
   }
 </style>
 
@@ -152,25 +157,51 @@
             </div>
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <table>
+                <table class="tbl-officers-list">
                   <tr>
-                    <td class="OfficersTitle">Sunnyvale 1 Officers</td>
+                    <td class="OfficersTitle" colspan="2">Sunnyvale 1 Officers</td>
                   </tr>
                   <tr>
                     <td>President:</td>
-                    <td>name here</td>
+                    <td>Basil Knowles</td>
                   </tr>
                   <tr>
                     <td>Vice President:</td>
-                    <td>name here</td>
+                    <td>Robin Rice</td>
                   </tr>
                   <tr>
                     <td>Secretary:</td>
-                    <td>name here</td>
+                    <td>Maxine Twitty</td>
                   </tr>
                   <tr>
                     <td>Treasurer:</td>
-                    <td>name here</td>
+                    <td>Alexis Stevenson</td>
+                  </tr>
+                  <tr>
+                  </tr>
+                </table>
+              </div>
+              <div class="carousel-item">
+
+                <table>
+                  <tr>
+                    <td class="OfficersTitle" colspan="2">Sunnyvale 2 Officers</td>
+                  </tr>
+                  <tr>
+                    <td>President:</td>
+                    <td>Wilmot Lane</td>
+                  </tr>
+                  <tr>
+                    <td>Vice President:</td>
+                    <td>Theo Cress</td>
+                  </tr>
+                  <tr>
+                    <td>Secretary:</td>
+                    <td>Jenson Newman</td>
+                  </tr>
+                  <tr>
+                    <td>Treasurer:</td>
+                    <td>Camilla Heath</td>
                   </tr>
                   <tr>
                   </tr>
@@ -179,23 +210,23 @@
               <div class="carousel-item">
                 <table>
                   <tr>
-                    <td class="OfficersTitle">Sunnyvale 2 Officers</td>
+                    <td class="OfficersTitle" colspan="2">Sunnyvale 3 Officers</td>
                   </tr>
                   <tr>
                     <td>President:</td>
-                    <td>name here</td>
+                    <td>Grant Armstrong</td>
                   </tr>
                   <tr>
                     <td>Vice President:</td>
-                    <td>name here</td>
+                    <td>Tammy Barber</td>
                   </tr>
                   <tr>
                     <td>Secretary:</td>
-                    <td>name here</td>
+                    <td>Howell Norris</td>
                   </tr>
                   <tr>
                     <td>Treasurer:</td>
-                    <td>name here</td>
+                    <td>Roberta Woolridge</td>
                   </tr>
                   <tr>
                   </tr>
@@ -204,48 +235,23 @@
               <div class="carousel-item">
                 <table>
                   <tr>
-                    <td class="OfficersTitle">Sunnyvale 3 Officers</td>
+                    <td class="OfficersTitle" colspan="2">Sunnyvale 4 Officers</td>
                   </tr>
                   <tr>
                     <td>President:</td>
-                    <td>name here</td>
+                    <td>Darcy Hardy</td>
                   </tr>
                   <tr>
                     <td>Vice President:</td>
-                    <td>name here</td>
+                    <td>Cecil Turner</td>
                   </tr>
                   <tr>
                     <td>Secretary:</td>
-                    <td>name here</td>
+                    <td>Teddy Annable</td>
                   </tr>
                   <tr>
                     <td>Treasurer:</td>
-                    <td>name here</td>
-                  </tr>
-                  <tr>
-                  </tr>
-                </table>
-              </div>
-              <div class="carousel-item">
-                <table>
-                  <tr>
-                    <td class="OfficersTitle">Sunnyvale 4 Officers</td>
-                  </tr>
-                  <tr>
-                    <td>President:</td>
-                    <td>name here</td>
-                  </tr>
-                  <tr>
-                    <td>Vice President:</td>
-                    <td>name here</td>
-                  </tr>
-                  <tr>
-                    <td>Secretary:</td>
-                    <td>name here</td>
-                  </tr>
-                  <tr>
-                    <td>Treasurer:</td>
-                    <td>name here</td>
+                    <td>Ralph Garraway</td>
                   </tr>
                   <tr>
                   </tr>
