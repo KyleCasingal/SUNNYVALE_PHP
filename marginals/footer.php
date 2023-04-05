@@ -103,7 +103,7 @@
 
   }
 
-  .aboutTitle {
+  .OfficersTitle {
     font-size: 1.5vw;
   }
 
@@ -127,18 +127,18 @@
 
     </div>
     <ul class="footerList">
-      <li class="footerListItem" data-bs-toggle="modal" data-bs-target="#aboutModal">ABOUT</li>
+      <li class="footerListItem" data-bs-toggle="modal" data-bs-target="#OfficersModal">OFFICERS</li>
       <li class="footerListItem" data-bs-toggle="modal" data-bs-target="#contactModal">CONTACT</li>
       <li class="footerListItem" data-bs-toggle="modal" data-bs-target="#privacyModal">PRIVACY</li>
       <li class="footerListItem" data-bs-toggle="modal" data-bs-target="#developersModal">DEVELOPERS</li>
     </ul>
   </div>
 
-  <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="OfficersModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">About</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Officers</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body modal-officers">
@@ -154,7 +154,7 @@
               <div class="carousel-item active">
                 <table>
                   <tr>
-                    <td class="aboutTitle">Sunnyvale 1 Officers</td>
+                    <td class="OfficersTitle">Sunnyvale 1 Officers</td>
                   </tr>
                   <tr>
                     <td>President:</td>
@@ -179,7 +179,7 @@
               <div class="carousel-item">
                 <table>
                   <tr>
-                    <td class="aboutTitle">Sunnyvale 2 Officers</td>
+                    <td class="OfficersTitle">Sunnyvale 2 Officers</td>
                   </tr>
                   <tr>
                     <td>President:</td>
@@ -204,7 +204,7 @@
               <div class="carousel-item">
                 <table>
                   <tr>
-                    <td class="aboutTitle">Sunnyvale 3 Officers</td>
+                    <td class="OfficersTitle">Sunnyvale 3 Officers</td>
                   </tr>
                   <tr>
                     <td>President:</td>
@@ -229,7 +229,7 @@
               <div class="carousel-item">
                 <table>
                   <tr>
-                    <td class="aboutTitle">Sunnyvale 4 Officers</td>
+                    <td class="OfficersTitle">Sunnyvale 4 Officers</td>
                   </tr>
                   <tr>
                     <td>President:</td>
@@ -273,11 +273,11 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">About</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Officers</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          About the Subdivision
+          Officers the Subdivision
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -290,11 +290,11 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">About</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Officers</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          About the Subdivision
+          Officers the Subdivision
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -307,7 +307,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">About</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Officers</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">

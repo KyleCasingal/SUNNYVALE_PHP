@@ -76,7 +76,7 @@ if (isset($_SESSION['user_id'])) {
     }
 
     .landingTitles {
-        font-size: 2em;
+        font-size: 1.5vw;
         color: rgb(50, 50, 50);
     }
 
@@ -197,7 +197,7 @@ if (isset($_SESSION['user_id'])) {
     }
 
     .nav-item {
-        font-size: 2em;
+        font-size: 1.5vw;
     }
 
     .tab-content {
