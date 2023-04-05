@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Apr 02, 2023 at 01:36 PM
+-- Generation Time: Apr 05, 2023 at 01:22 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -33,23 +33,24 @@ CREATE TABLE IF NOT EXISTS `amenities` (
   `amenity_name` varchar(255) NOT NULL,
   `subdivision_id` int(11) NOT NULL,
   `subdivision_name` varchar(50) NOT NULL,
-  `price` int(11) NOT NULL,
   `availability` varchar(50) NOT NULL,
   PRIMARY KEY (`amenity_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenities`
 --
 
-INSERT INTO `amenities` (`amenity_id`, `amenity_name`, `subdivision_id`, `subdivision_name`, `price`, `availability`) VALUES
-(1, 'Court', 1, 'Sunnyvale 1', 200, 'Available'),
-(4, 'Multi-purpose Hall', 1, 'Sunnyvale 1', 200, 'Available'),
-(5, 'Swimming Pool', 1, 'Sunnyvale 1', 200, 'Available'),
-(6, 'Clubhouse', 1, 'Sunnyvale 1', 400, 'Unavailable'),
-(10, 'Clubhouse', 3, 'Sunnyvale 3', 250, 'Available'),
-(14, 'Volleyball Court', 2, 'Sunnyvale 2', 21, 'Available'),
-(16, 'Bathhouse', 1, 'Sunnyvale 1', 300, 'Available');
+INSERT INTO `amenities` (`amenity_id`, `amenity_name`, `subdivision_id`, `subdivision_name`, `availability`) VALUES
+(1, 'Court', 1, 'Sunnyvale 1', 'Available'),
+(4, 'Multi-purpose Hall', 1, 'Sunnyvale 1', 'Available'),
+(5, 'Swimming Pool', 1, 'Sunnyvale 1', 'Available'),
+(6, 'Clubhouse', 1, 'Sunnyvale 1', 'Unavailable'),
+(10, 'Clubhouse', 3, 'Sunnyvale 3', 'Available'),
+(16, 'Bathhouse', 1, 'Sunnyvale 1', 'Available'),
+(25, '123', 1, 'Sunnyvale 1', 'Available'),
+(24, 'asd', 1, 'Sunnyvale 1', 'Available'),
+(23, 'test', 1, 'Sunnyvale 1', 'Available');
 
 -- --------------------------------------------------------
 
@@ -65,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `amenity_purpose` (
   `day_rate` int(10) NOT NULL,
   `night_rate` int(10) NOT NULL,
   PRIMARY KEY (`amenity_purpose_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenity_purpose`
@@ -73,7 +74,11 @@ CREATE TABLE IF NOT EXISTS `amenity_purpose` (
 
 INSERT INTO `amenity_purpose` (`amenity_purpose_id`, `amenity_id`, `amenity_purpose`, `day_rate`, `night_rate`) VALUES
 (1, 1, 'Basketball', 50, 150),
-(3, 1, 'Volleyball', 50, 150);
+(3, 1, 'Volleyball', 50, 150),
+(5, 5, 'Swimming', 50, 100),
+(8, 10, 'Party', 150, 300),
+(9, 1, 'Badminton', 50, 150),
+(10, 1, 'Chess', 80, 360);
 
 -- --------------------------------------------------------
 
@@ -158,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=470 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=508 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -619,7 +624,45 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (466, 'SV1_Admin', 'uploaded a new post', '2023-04-02 13:04:37'),
 (467, 'SV1_Admin', 'uploaded a new post', '2023-04-02 13:05:10'),
 (468, 'SV1_Admin', 'uploaded a new post', '2023-04-02 13:05:16'),
-(469, 'SV1_Admin', 'uploaded a new post', '2023-04-02 13:06:44');
+(469, 'SV1_Admin', 'uploaded a new post', '2023-04-02 13:06:44'),
+(470, 'SV1_Admin', 'logged out', '2023-04-02 13:36:57'),
+(471, 'SV1_Admin', 'logged in', '2023-04-04 11:57:08'),
+(472, 'SV1_Admin', 'logged out', '2023-04-04 12:21:10'),
+(473, 'SV1_Treasurer', 'logged in', '2023-04-04 12:21:13'),
+(474, 'SV1_Treasurer', 'logged out', '2023-04-04 12:22:43'),
+(475, 'SV1_Admin', 'logged in', '2023-04-04 12:22:52'),
+(476, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 1-Court', '2023-04-04 18:26:35'),
+(477, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test', '2023-04-04 18:28:20'),
+(478, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 1-Court', '2023-04-04 18:31:00'),
+(479, 'SV1_Admin', 'added a new amenity Sunnyvale 1-Test', '2023-04-05 10:17:59'),
+(480, 'SV1_Admin', 'added a new amenity Sunnyvale 1-Test', '2023-04-05 10:18:56'),
+(481, 'SV1_Admin', 'added a new amenity Sunnyvale 1-Test', '2023-04-05 10:19:24'),
+(482, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test', '2023-04-05 10:20:37'),
+(483, 'SV1_Admin', 'added a new amenity Sunnyvale 1-123', '2023-04-05 10:21:06'),
+(484, 'SV1_Admin', 'added a new amenity Sunnyvale 2-test', '2023-04-05 10:21:44'),
+(485, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test', '2023-04-05 10:22:09'),
+(486, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test', '2023-04-05 10:22:21'),
+(487, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test', '2023-04-05 10:25:51'),
+(488, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test', '2023-04-05 10:27:06'),
+(489, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test', '2023-04-05 10:27:47'),
+(490, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test', '2023-04-05 10:27:56'),
+(491, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test', '2023-04-05 10:28:59'),
+(492, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test', '2023-04-05 10:29:05'),
+(493, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test', '2023-04-05 10:32:14'),
+(494, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 1-Swimming Pool', '2023-04-05 10:33:35'),
+(495, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 1-Swimming Pool', '2023-04-05 10:33:41'),
+(496, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 1-Clubhouse', '2023-04-05 10:34:31'),
+(497, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 1-Clubhouse', '2023-04-05 10:34:40'),
+(498, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test1', '2023-04-05 10:34:55'),
+(499, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test2', '2023-04-05 10:35:48'),
+(500, 'SV1_Admin', 'added a new amenity Sunnyvale 2-test', '2023-04-05 10:41:26'),
+(501, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test', '2023-04-05 10:44:28'),
+(502, 'SV1_Admin', 'added a new amenity Sunnyvale 1-asd', '2023-04-05 10:44:37'),
+(503, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 1-Courts', '2023-04-05 10:45:51'),
+(504, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 1-Court', '2023-04-05 10:45:57'),
+(505, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test', '2023-04-05 11:16:56'),
+(506, 'SV1_Admin', 'added a new amenity Sunnyvale 1-asd', '2023-04-05 11:26:30'),
+(507, 'SV1_Admin', 'added a new amenity Sunnyvale 1-123', '2023-04-05 11:27:51');
 
 -- --------------------------------------------------------
 
@@ -940,7 +983,7 @@ INSERT INTO `post` (`post_id`, `user_id`, `full_name`, `title`, `content`, `publ
 (30, 1, 'Mon Carlo Delima', 'URS', 'University of Rizal System - Binangonan', '2023-03-16 22:24:20', NULL, 'URS.png', 'No', 'Archived'),
 (31, 1, 'Mon Carlo Delima', 'Nihonjin Desu', 'Japan numba 1', '2023-04-02 12:59:46', NULL, 'lockscreen.png', 'No', 'Active'),
 (32, 1, 'Mon Carlo Delima', 'Magical World', 'I love Biringan', '2023-04-02 13:00:31', NULL, 'sEt5ph.jpg', 'No', 'Active'),
-(33, 18, 'SV1_Admin', 'test', 'test', '2023-04-02 13:06:44', 1, '', 'Yes', 'Active');
+(33, 18, 'SV1_Admin', 'test', 'test', '2023-04-02 13:06:44', 1, '', 'Yes', 'Archived');
 
 -- --------------------------------------------------------
 
