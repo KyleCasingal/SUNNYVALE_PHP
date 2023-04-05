@@ -95,12 +95,20 @@
     color: black;
     cursor: pointer;
   }
-
-  .carousel-item {
-    padding-left: 10vw;
-    padding-right: 10vw;
-    padding-bottom: 5vw;
-
+  
+  .carousel-inner {
+    margin: 0;
+    padding: 2vw;
+    padding-bottom: 3vw;
+    padding-top: 3vw;
+  }
+  .carousel-item{
+    padding: 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 2vw;
+    
   }
 
   .OfficersTitle {
@@ -108,16 +116,20 @@
   }
 
   .modal-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 0;
     margin: 0;
+    /* border: 1px solid green; */
   }
 
 
   td {
+    text-align: center;
     font-size: 1vw;
     padding: 0.5vw;
+  }
+  table{
+    width: 100%;
+    height: 100%;
   }
 
   .footerListText {
@@ -126,6 +138,17 @@
     margin-top: 0.5vw;
     font-size: 1vw;
     font-weight: 300;
+  }
+
+  .modal-content {
+    background-color: rgb(255, 255, 255, 0.5);
+
+    backdrop-filter: blur(5px);
+  }
+
+  .modal-body {
+    background-image: url(C:\wamp64\www\SUNNYVALE_PHP\media\content-images\sv2-logo.png);
+
   }
 </style>
 
@@ -157,16 +180,16 @@
         <div class="modal-body modal-officers">
 
           <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="true">
-            <div class="carousel-indicators">
+            <!-- <div class="carousel-indicators">
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
 
-            </div>
+            </div> -->
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <table class="tbl-officers-list">
+                <table>
                   <tr>
                     <td class="OfficersTitle" colspan="2">Sunnyvale 1 Officers</td>
                   </tr>
@@ -305,11 +328,11 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Officers</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Privacy</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          Officers the Subdivision
+          Privacy
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -322,7 +345,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Officers</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Developers</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
