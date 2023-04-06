@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Apr 05, 2023 at 01:22 PM
+-- Generation Time: Apr 06, 2023 at 04:07 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `amenity_renting` (
   `payment_proof` varchar(255) DEFAULT NULL,
   `cart` varchar(10) NOT NULL,
   PRIMARY KEY (`amenity_renting_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenity_renting`
@@ -119,7 +119,9 @@ INSERT INTO `amenity_renting` (`amenity_renting_id`, `transaction_id`, `user_id`
 (17, 2, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '3', '2023-02-22 18:00:00', '2023-02-22 19:00:00', 150, 'Delima, Mon Carlo Z..png', 'Pending'),
 (18, 3, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-25 13:00:00', '2023-02-25 14:00:00', 50, '315887907_1137649846869408_655406644278059076_n.png', 'Pending'),
 (19, NULL, 48, 'SV1_Treasurer', 'Sunnyvale 1', 'Court', '3', '2023-03-12 02:00:00', '2023-03-12 15:00:00', 0, NULL, 'Approved'),
-(20, NULL, 48, 'SV1_Treasurer', 'Sunnyvale 1', 'Court', '3', NULL, NULL, NULL, NULL, 'Yes');
+(20, NULL, 48, 'SV1_Treasurer', 'Sunnyvale 1', 'Court', '3', NULL, NULL, NULL, NULL, 'Removed'),
+(21, 4, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '9', '2023-04-06 06:00:00', '2023-04-06 08:00:00', 100, NULL, 'Pending'),
+(22, 4, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '10', '2023-04-06 09:00:00', '2023-04-06 10:00:00', 80, NULL, 'Pending');
 
 -- --------------------------------------------------------
 
@@ -163,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=508 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=596 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -662,7 +664,95 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (504, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 1-Court', '2023-04-05 10:45:57'),
 (505, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test', '2023-04-05 11:16:56'),
 (506, 'SV1_Admin', 'added a new amenity Sunnyvale 1-asd', '2023-04-05 11:26:30'),
-(507, 'SV1_Admin', 'added a new amenity Sunnyvale 1-123', '2023-04-05 11:27:51');
+(507, 'SV1_Admin', 'added a new amenity Sunnyvale 1-123', '2023-04-05 11:27:51'),
+(508, 'SV1_Admin', 'logged out', '2023-04-06 09:58:53'),
+(509, 'Mon Carlo Delima', 'logged in', '2023-04-06 09:58:56'),
+(510, 'Mon Carlo Delima', 'logged out', '2023-04-06 10:00:36'),
+(511, 'Jeune Paolus Flores', 'logged in', '2023-04-06 10:00:44'),
+(512, 'Jeune Paolus Flores', 'logged out', '2023-04-06 10:01:02'),
+(513, 'SV1_Admin', 'logged in', '2023-04-06 10:01:20'),
+(514, 'SV1_Admin', 'logged out', '2023-04-06 10:01:27'),
+(515, 'SV1_Admin', 'logged in', '2023-04-06 10:01:30'),
+(516, 'SV1_Admin', 'logged out', '2023-04-06 10:03:33'),
+(517, 'SV1_Secretary', 'logged in', '2023-04-06 10:03:38'),
+(518, 'SV1_Secretary', 'logged out', '2023-04-06 10:04:45'),
+(519, 'SV1_Secretary', 'logged in', '2023-04-06 10:04:53'),
+(520, 'SV1_Secretary', 'logged out', '2023-04-06 10:06:55'),
+(521, 'SV1_Admin', 'logged in', '2023-04-06 10:06:59'),
+(522, 'SV1_Admin', 'logged out', '2023-04-06 10:08:27'),
+(523, 'SV1_Secretary', 'logged in', '2023-04-06 10:08:31'),
+(524, 'SV1_Secretary', 'logged out', '2023-04-06 10:09:34'),
+(525, 'SV1_Treasurer', 'logged in', '2023-04-06 10:09:36'),
+(526, 'SV1_Treasurer', 'logged out', '2023-04-06 10:10:32'),
+(527, 'SV1_Secretary', 'logged in', '2023-04-06 10:10:35'),
+(528, 'SV1_Secretary', 'logged out', '2023-04-06 10:10:41'),
+(529, 'SV1_Admin', 'logged in', '2023-04-06 10:10:45'),
+(530, 'SV1_Admin', 'logged out', '2023-04-06 10:11:18'),
+(531, 'SV1_Secretary', 'logged in', '2023-04-06 10:11:20'),
+(532, 'SV1_Secretary', 'logged out', '2023-04-06 10:12:09'),
+(533, 'SV1_Secretary', 'logged in', '2023-04-06 10:12:12'),
+(534, 'SV1_Secretary', 'logged out', '2023-04-06 10:22:12'),
+(535, 'SV1_Admin', 'logged in', '2023-04-06 10:22:15'),
+(536, 'SV1_Admin', 'logged out', '2023-04-06 10:22:34'),
+(537, 'SV1_Secretary', 'logged in', '2023-04-06 10:22:38'),
+(538, 'SV1_Secretary', 'logged out', '2023-04-06 10:24:07'),
+(539, 'SV1_Admin', 'logged in', '2023-04-06 10:24:11'),
+(540, 'SV1_Admin', 'logged out', '2023-04-06 10:27:39'),
+(541, 'SV1_Admin', 'logged in', '2023-04-06 10:27:41'),
+(542, 'SV1_Admin', 'logged out', '2023-04-06 10:31:33'),
+(543, 'SV1_Admin', 'logged in', '2023-04-06 10:31:39'),
+(544, 'SV1_Admin', 'logged out', '2023-04-06 10:31:54'),
+(545, 'SV1_Secretary', 'logged in', '2023-04-06 10:31:59'),
+(546, 'SV1_Secretary', 'logged out', '2023-04-06 10:32:01'),
+(547, 'Kyle Andrei Casingal', 'logged in', '2023-04-06 10:32:42'),
+(548, 'Kyle Andrei Casingal', 'logged out', '2023-04-06 10:33:06'),
+(549, 'SV1_Admin', 'logged in', '2023-04-06 10:33:20'),
+(550, 'SV1_Admin', 'logged out', '2023-04-06 10:33:52'),
+(551, 'SV1_Admin', 'logged in', '2023-04-06 10:33:56'),
+(552, 'SV1_Admin', 'logged out', '2023-04-06 10:45:07'),
+(553, 'SV1_Admin', 'logged in', '2023-04-06 10:46:25'),
+(554, 'SV1_Admin', 'logged out', '2023-04-06 10:51:03'),
+(555, 'SV1_Admin', 'logged in', '2023-04-06 10:51:08'),
+(556, 'SV1_Admin', 'logged out', '2023-04-06 10:51:10'),
+(557, 'Mon Carlo Delima', 'logged in', '2023-04-06 10:51:12'),
+(558, 'Mon Carlo Delima', 'logged out', '2023-04-06 10:52:45'),
+(559, 'Mon Carlo Delima', 'logged in', '2023-04-06 10:52:48'),
+(560, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 10:52:51'),
+(561, 'Mon Carlo Delima', 'logged out', '2023-04-06 10:53:03'),
+(562, 'SV1_Admin', 'logged in', '2023-04-06 10:53:06'),
+(563, 'SV1_Admin', 'logged out', '2023-04-06 10:53:18'),
+(564, 'SV1_Admin', 'logged in', '2023-04-06 10:53:21'),
+(565, 'SV1_Admin', 'logged out', '2023-04-06 10:53:22'),
+(566, 'Mon Carlo Delima', 'logged in', '2023-04-06 10:53:27'),
+(567, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 10:54:16'),
+(568, 'Mon Carlo Delima', 'logged out', '2023-04-06 11:00:35'),
+(569, 'Mon Carlo Delima', 'logged in', '2023-04-06 11:04:00'),
+(570, 'Mon Carlo Delima', 'logged in', '2023-04-06 14:00:15'),
+(571, 'Mon Carlo Delima', 'logged out', '2023-04-06 14:06:53'),
+(572, 'SV1_Treasurer', 'logged in', '2023-04-06 14:06:57'),
+(573, 'SV1_Treasurer', 'logged out', '2023-04-06 14:07:51'),
+(574, 'SV1_Treasurer', 'logged in', '2023-04-06 14:09:56'),
+(575, 'SV1_Treasurer', 'logged out', '2023-04-06 14:11:24'),
+(576, 'Mon Carlo Delima', 'logged in', '2023-04-06 14:11:28'),
+(577, 'Mon Carlo Delima', 'logged out', '2023-04-06 14:21:49'),
+(578, 'SV1_Admin', 'logged in', '2023-04-06 14:21:57'),
+(579, 'SV1_Admin', 'logged out', '2023-04-06 14:26:51'),
+(580, 'SV1_Admin', 'logged in', '2023-04-06 14:26:54'),
+(581, 'SV1_Admin', 'logged out', '2023-04-06 14:30:27'),
+(582, 'Mon Carlo Delima', 'logged in', '2023-04-06 14:30:30'),
+(583, 'Mon Carlo Delima', 'logged in', '2023-04-06 15:19:28'),
+(584, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 15:34:28'),
+(585, 'Mon Carlo Delima', 'logged out', '2023-04-06 16:03:03'),
+(586, 'Kyle Andrei Casingal', 'logged in', '2023-04-06 16:03:06'),
+(587, 'Kyle Andrei Casingal', 'logged out', '2023-04-06 16:03:14'),
+(588, 'SV1_Admin', 'logged in', '2023-04-06 16:03:17'),
+(589, 'SV1_Admin', 'logged out', '2023-04-06 16:03:26'),
+(590, 'Mon Carlo Delima', 'logged in', '2023-04-06 16:03:29'),
+(591, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 16:03:47'),
+(592, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 16:04:20'),
+(593, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 16:04:50'),
+(594, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 16:05:27'),
+(595, 'Mon Carlo Delima', 'logged out', '2023-04-06 16:06:44');
 
 -- --------------------------------------------------------
 
@@ -752,30 +842,38 @@ INSERT INTO `bill_consumer` (`billConsumer_id`, `billingPeriod_id`, `homeowner_i
 DROP TABLE IF EXISTS `concern`;
 CREATE TABLE IF NOT EXISTS `concern` (
   `concern_id` int(11) NOT NULL AUTO_INCREMENT,
+  `complainant_homeowner_id` int(11) NOT NULL,
   `full_name` varchar(50) NOT NULL,
+  `complainee_homeowner_id` int(11) DEFAULT NULL,
+  `complainee_full_name` varchar(100) DEFAULT NULL,
   `concern_subject` varchar(100) NOT NULL,
   `concern_description` varchar(255) NOT NULL,
   `status` varchar(50) NOT NULL,
   `datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`concern_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `concern`
 --
 
-INSERT INTO `concern` (`concern_id`, `full_name`, `concern_subject`, `concern_description`, `status`, `datetime`) VALUES
-(1, 'Kyle Casingal', 'Noise Complaint', 'Nagvivideoke pa rin yung kapitbahay namin kahit lagpas 10 na', 'Pending', '2022-11-10 22:13:45'),
-(2, 'Kyle Casingal', 'Basura', 'Kung saan-saan nagtatapon ng basura yung kapitbahay ko.', 'Pending', '2022-11-02 22:13:59'),
-(3, 'Mon Carlo Delima', 'Vandalism', 'Dinrawingan ng kapitbahay namin yung kalsada sa tapat ng bahay namin.', 'Pending', '2022-11-04 22:14:02'),
-(6, 'Mon Carlo Delima', 'Aso', 'Nagtatae sa harap ng bahay', 'Pending', '2022-11-22 22:14:03'),
-(7, 'Mon Carlo Delima', 'Kapitbahay', 'Malapit na magsaksakan', 'Pending', '2022-11-18 22:14:06'),
-(41, 'Mon Carlo Delima', 'Lasing', 'Nagwawala sa daan', 'Pending', '2022-11-20 22:14:08'),
-(45, 'Mon Carlo Delima', 'Batang maingay', 'Iyak nang iyak', 'Pending', '2022-11-27 22:14:09'),
-(44, 'Mon Carlo Delima', 'Pusa sa bubong', 'Nagnanakaw ng ulam', 'Pending', '2022-11-28 22:14:11'),
-(43, 'Mon Carlo Delima', 'Singer', 'Sintunado, maingay', 'Pending', '2022-11-12 22:14:13'),
-(42, 'Mon Carlo Delima', 'Noise complaint', 'nagddrums, hindi naman magaling', 'Pending', '2022-11-18 22:14:15'),
-(46, 'Kyle Andrei Casingal', 'Noise Complain', 'being too loud at 10 pm ', 'Pending', NULL);
+INSERT INTO `concern` (`concern_id`, `complainant_homeowner_id`, `full_name`, `complainee_homeowner_id`, `complainee_full_name`, `concern_subject`, `concern_description`, `status`, `datetime`) VALUES
+(1, 0, 'Kyle Casingal', NULL, NULL, 'Noise Complaint', 'Nagvivideoke pa rin yung kapitbahay namin kahit lagpas 10 na', 'Pending', '2022-11-10 22:13:45'),
+(2, 0, 'Kyle Casingal', NULL, NULL, 'Basura', 'Kung saan-saan nagtatapon ng basura yung kapitbahay ko.', 'Pending', '2022-11-02 22:13:59'),
+(3, 0, 'Mon Carlo Delima', NULL, NULL, 'Vandalism', 'Dinrawingan ng kapitbahay namin yung kalsada sa tapat ng bahay namin.', 'Pending', '2022-11-04 22:14:02'),
+(6, 0, 'Mon Carlo Delima', NULL, NULL, 'Aso', 'Nagtatae sa harap ng bahay', 'Pending', '2022-11-22 22:14:03'),
+(7, 0, 'Mon Carlo Delima', NULL, NULL, 'Kapitbahay', 'Malapit na magsaksakan', 'Pending', '2022-11-18 22:14:06'),
+(41, 0, 'Mon Carlo Delima', NULL, NULL, 'Lasing', 'Nagwawala sa daan', 'Pending', '2022-11-20 22:14:08'),
+(45, 0, 'Mon Carlo Delima', NULL, NULL, 'Batang maingay', 'Iyak nang iyak', 'Pending', '2022-11-27 22:14:09'),
+(44, 0, 'Mon Carlo Delima', NULL, NULL, 'Pusa sa bubong', 'Nagnanakaw ng ulam', 'Pending', '2022-11-28 22:14:11'),
+(43, 0, 'Mon Carlo Delima', NULL, NULL, 'Singer', 'Sintunado, maingay', 'Pending', '2022-11-12 22:14:13'),
+(42, 0, 'Mon Carlo Delima', NULL, NULL, 'Noise complaint', 'nagddrums, hindi naman magaling', 'Pending', '2022-11-18 22:14:15'),
+(46, 0, 'Kyle Andrei Casingal', NULL, NULL, 'Noise Complain', 'being too loud at 10 pm ', 'Pending', NULL),
+(47, 0, 'Mon Carlo Delima', NULL, NULL, 'te', 'te', 'Pending', NULL),
+(48, 0, 'Mon Carlo Delima', NULL, NULL, 'test', 'test', 'Pending', '2023-04-06 10:54:16'),
+(49, 1, 'Mon Carlo Delima', 39, 'Marco Ivan Sta. Maria', 'hahaha', 'hahaha', 'Pending', '2023-04-06 16:03:47'),
+(50, 1, 'Mon Carlo Delima', 16, 'janwel castillo', 'test', 'test', 'Pending', '2023-04-06 16:04:20'),
+(51, 1, 'Mon Carlo Delima', NULL, NULL, 'asong nagtatae', 'gwapong aso', 'Pending', '2023-04-06 16:04:50');
 
 -- --------------------------------------------------------
 

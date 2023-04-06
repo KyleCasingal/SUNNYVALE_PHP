@@ -691,11 +691,21 @@ if (isset($_POST['officerUpdate'])) {
 
 // SUBMITTING A CONCERN
 if (isset($_POST['concernSubmit'])) {
+  $concern_address = $_POST['concern_address'];
   $concern_subject = $_POST['concern_subject'];
   $concern_description = $_POST['concern_description'];
   $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $row = $result->fetch_assoc();
-  $sql = "INSERT INTO concern(full_name, concern_subject, concern_description, status) VALUES ('" . $row['full_name'] . "','$concern_subject', '$concern_description', 'Pending')";
+  $resultComplainee = $con->query("SELECT * FROM user WHERE user_homeowner_id = '$concern_address'");
+  $rowComplainee = $resultComplainee->fetch_assoc();
+  $complainee_fullName = $rowComplainee['full_name'] ?? '';
+
+  if ($concern_address == '0') {
+    $sql = "INSERT INTO concern(complainant_homeowner_id, full_name, complainee_homeowner_id, complainee_full_name, concern_subject, concern_description, status, datetime) VALUES ('" . $row['user_homeowner_id'] . "', '" . $row['full_name'] . "', NULL, NULL, '$concern_subject', '$concern_description', 'Pending', NOW())";
+  } else {
+    $sql = "INSERT INTO concern(complainant_homeowner_id, full_name, complainee_homeowner_id, complainee_full_name, concern_subject, concern_description, status, datetime) VALUES ('" . $row['user_homeowner_id'] . "', '" . $row['full_name'] . "', '$concern_address', '$complainee_fullName', '$concern_subject', '$concern_description', 'Pending', NOW())";
+  }
+
   mysqli_query($con, $sql);
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "' ,  'submitted a concern', NOW())";
   mysqli_query($con, $sql1);

@@ -4,6 +4,13 @@ if (empty($_SESSION)) {
   header("Location: ../index.php");
 }
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
+$result1 = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
+$row1 = $result1 ->fetch_assoc();
+$homeowner_id = $row1['user_homeowner_id'];
+$resultSubdivision = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
+$rowSubdivision = $resultSubdivision->fetch_assoc();
+$subdivision_name = $rowSubdivision['subdivision'];
+$resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivision ='$subdivision_name' AND homeowner_id != '$homeowner_id' ORDER BY first_name");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -324,8 +331,6 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
   .modal-footer {
     background-color: rgb(170, 192, 175, 0.3);
   }
-
-
 </style>
 <script>
   if (window.history.replaceState) {
@@ -394,6 +399,18 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modalConcernBody">
+            <div class="concernSubject">
+              <label>Concern Address: </label>
+              <select name="concern_address" id="" required>
+                <option value="">Select...</option>
+                <option value="0">Community</option>
+                <?php
+                while ($rowComplainee = $resultComplainee->fetch_assoc()) {
+                  echo '<option value="' . $rowComplainee['homeowner_id'] . '">' . $rowComplainee['first_name'] . ' ' .$rowComplainee['last_name'] . '</option>';
+                }
+                ?>
+              </select>
+            </div>
             <div class="concernSubject">
               <label>Subject:</label>
               <textarea name="concern_subject" id="" cols="30" rows="10" class="subjectText" required></textarea>
