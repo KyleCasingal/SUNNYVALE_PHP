@@ -3,12 +3,9 @@ require '../marginals/topbar.php';
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultComplaints = $con->query("SELECT * FROM concern WHERE full_name = '" . $row['full_name'] . "' ORDER BY datetime DESC");
-
-if (isset($_GET['concern_id'])) {
-    $concern_id = $_GET['concern_id'];
-    $resultConcern = $con->query("SELECT * FROM concern WHERE concern_id = '$concern_id' ");
-}
+$homeowner_id = $row['homeowner_id'];
+$resultComplaints = $con->query("SELECT * FROM concern WHERE complainant_homeowner_id = '" . $row['homeowner_id'] . "' OR complainee_homeowner_id = '" . $row['homeowner_id'] . "' AND status = 'Processing'  ORDER BY datetime DESC");
+$resultComplaints1 = $con->query("SELECT * FROM concern WHERE complainant_homeowner_id = '" . $row['homeowner_id'] . "' OR complainee_homeowner_id = '" . $row['homeowner_id'] . "' AND status = 'Processing' ORDER BY datetime DESC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -233,7 +230,8 @@ if (isset($_GET['concern_id'])) {
     .modalConcernBody {
         background-color: rgb(170, 192, 175, 0.3);
     }
-    .modal-footer{
+
+    .modal-footer {
         background-color: rgb(0, 0, 0, 0);
     }
 </style>
@@ -248,13 +246,21 @@ if (isset($_GET['concern_id'])) {
             <label class="inboxTitle">Messages</label>
             <div class="inboxContainer">
                 <table class="tblMessage">
-                    <?php while ($rowComplaints = $resultComplaints->fetch_assoc()) : ?>
+                    <?php while ($row = $resultComplaints->fetch_assoc()) : ?>
                         <tr class="trInbox">
-                            <td class="msgDesc use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus"><label class="subject"><?php echo $rowComplaints['concern_subject'] ?></label>
-                                <?php echo $rowComplaints['concern_description']; ?>
-                            </td>
-                            <td class="msgTime" data-bs-toggle="modal" data-bs-target="#complaintStatus"><?php echo $rowComplaints['datetime'] ?></td>
-                            <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus"> <?php echo $rowComplaints['status']; ?></td>
+                            <td class="subject" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
+                                                                                                        echo $row['concern_id']
+                                                                                                        ?>"><?php echo $row['concern_subject'] ?></label>
+                            <td class="msgDesc use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
+                                                                                                                    echo $row['concern_id']
+                                                                                                                    ?>"><?php echo $row['concern_description']; ?></td>
+                            <td class=" msgTime" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
+                                                                                                        echo $row['concern_id']
+                                                                                                        ?>"><?php $datetime = strtotime($row['datetime']);
+                                                                                                            echo $phptime = date("g:i A m/d/y", $datetime); ?></td>
+                            <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
+                                                                                                            echo $row['concern_id']
+                                                                                                            ?>"> <?php echo $row['status']; ?></td>
                         </tr>
 
                     <?php endwhile; ?>
@@ -265,59 +271,71 @@ if (isset($_GET['concern_id'])) {
     <?php
     require '../marginals/footer2.php'
     ?>
-    <div class="modal fade" id="complaintStatus" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">
-                        Complaint Report
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modalConcernBody">
-                    <table>
-                        <tr>
-                            <td>Subject:</td>
-                            <td id="concern_subject"></td>
-                        </tr>
-                        <tr>
-                            <td>Complaint Description:</td>
-                            <td id="concern_description"></td>
-                        </tr>
-                        <tr>
-                            <td>Status:</td>
-                            <td id="status"></td>
-                        </tr>
-                    </table>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Close
-                        </button>
-
-
+    <?php while ($row1 = $resultComplaints1->fetch_assoc()) : ?>
+        <div class="modal fade" id="complaintStatus<?php
+                                                    echo $row1['concern_id']
+                                                    ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">
+                            Complaint Report
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modalConcernBody">
+                        <table>
+                            <tr>
+                                <input type="hidden" name="concern_id" value="<?php echo $row1['concern_id'] ?>">
+                                <input type="hidden" value="<?php echo $row1['complainee_homeowner_id'] ?? '' ?>">
+                            </tr>
+                            <?php
+                            if ($row1['complainee_homeowner_id'] != $homeowner_id) {
+                                echo "<tr>
+                                <td>Complainant:</td>
+                                <td id=''>" . $row1['full_name'] . "</td>
+                            </tr>";
+                            } else {
+                                echo  "<tr>
+                                <td>You have received a complaint</td>
+                            </tr>";
+                            }
+                            ?>
+                            <?php
+                            if ($row1['complainee_homeowner_id'] != NULL) {
+                                echo "<tr>
+                                <td>Complainee:</td>
+                                <td id=''>" . $row1['complainee_full_name'] ?? '' . "</td>
+                            </tr>";
+                            } ?>
+                            <tr>
+                                <td>Subject:</td>
+                                <td id=""><?php echo $row1['concern_subject'] ?></td>
+                            </tr>
+                            <tr>
+                                <td>Complaint Description:</td>
+                                <td id=""><?php echo $row1['concern_description'] ?></td>
+                            </tr>
+                            <tr>
+                                <td>Date Submitted:</td>
+                                <td><?php $datetime = strtotime($row1['datetime_submitted']);
+                                    echo $phptime = date("g:i A m/d/y", $datetime); ?></td>
+                            </tr>
+                            <tr>
+                                <td>Status:</td>
+                                <td><?php echo $row1['status'] ?></td>
+                            </tr>
+                        </table>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    <?php endwhile; ?>
 </body>
-<script>
-    $(".use-address").click(function() {
-        var $row = $(this).closest("tr"); // Find the row
-        var $tds = $row.find("td");
-        $.each($tds, function(index) {
-            document.getElementById("concern_subject").innerHTML = ($(this).text());
-            return (index !== 0);
-        });
-        $.each($tds, function(index) {
-            document.getElementById("concern_description").innerHTML = ($(this).text());
-            return (index !== 1);
-        });
-        $.each($tds, function(index) {
-            document.getElementById("status").innerHTML = ($(this).text());
-            return (index !== 2);
-        });
 
-    });
-</script>
 </html>

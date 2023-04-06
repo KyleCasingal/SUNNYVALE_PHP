@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Apr 06, 2023 at 07:01 PM
+-- Generation Time: Apr 07, 2023 at 12:00 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=631 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=674 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -787,7 +787,50 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (627, 'SV1_Admin', 'logged out', '2023-04-06 18:59:11'),
 (628, 'SV1_Secretary', 'logged in', '2023-04-06 18:59:56'),
 (629, 'SV1_Secretary', 'logged out', '2023-04-06 19:01:01'),
-(630, 'SV1_Admin', 'logged in', '2023-04-06 19:01:04');
+(630, 'SV1_Admin', 'logged in', '2023-04-06 19:01:04'),
+(631, 'SV1_Admin', 'logged in', '2023-04-06 22:02:03'),
+(632, 'SV1_Admin', 'logged out', '2023-04-06 22:05:25'),
+(633, 'SV1_Admin', 'logged in', '2023-04-06 22:05:28'),
+(634, 'SV1_Admin', 'logged out', '2023-04-06 22:11:16'),
+(635, 'SV1_Admin', 'logged in', '2023-04-06 22:11:20'),
+(636, 'SV1_Admin', 'logged out', '2023-04-06 22:47:30'),
+(637, 'Mon Carlo Delima', 'logged in', '2023-04-06 22:47:33'),
+(638, 'Mon Carlo Delima', 'logged out', '2023-04-06 22:47:49'),
+(639, 'SV1_Admin', 'logged in', '2023-04-06 22:47:51'),
+(640, 'SV1_Admin', 'logged out', '2023-04-06 23:10:35'),
+(641, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:10:38'),
+(642, 'Mon Carlo Delima', 'logged out', '2023-04-06 23:11:41'),
+(643, 'SV1_Admin', 'logged in', '2023-04-06 23:11:44'),
+(644, 'SV1_Admin', 'logged out', '2023-04-06 23:16:33'),
+(645, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:16:37'),
+(646, 'Mon Carlo Delima', 'logged out', '2023-04-06 23:27:22'),
+(647, 'SV1_Admin', 'logged in', '2023-04-06 23:27:25'),
+(648, 'SV1_Admin', 'logged out', '2023-04-06 23:30:08'),
+(649, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:30:11'),
+(650, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 23:30:23'),
+(651, 'Mon Carlo Delima', 'logged out', '2023-04-06 23:30:41'),
+(652, 'SV1_Admin', 'logged in', '2023-04-06 23:30:46'),
+(653, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:33:18'),
+(654, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 23:33:30'),
+(655, 'SV1_Admin', 'logged out', '2023-04-06 23:37:32'),
+(656, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:37:36'),
+(657, 'Mon Carlo Delima', 'logged out', '2023-04-06 23:40:49'),
+(658, 'SV1_Admin', 'logged in', '2023-04-06 23:40:51'),
+(659, 'SV1_Admin', 'logged out', '2023-04-06 23:40:56'),
+(660, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:40:59'),
+(661, 'Mon Carlo Delima', 'logged out', '2023-04-06 23:42:33'),
+(662, 'Janwel Castillo', 'logged in', '2023-04-06 23:43:43'),
+(663, 'Janwel Castillo', 'submitted a concern', '2023-04-06 23:44:02'),
+(664, 'Janwel Castillo', 'logged out', '2023-04-06 23:44:11'),
+(665, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:44:15'),
+(666, 'Mon Carlo Delima', 'logged out', '2023-04-06 23:46:46'),
+(667, 'SV1_Admin', 'logged in', '2023-04-06 23:46:49'),
+(668, 'SV1_Admin', 'logged out', '2023-04-06 23:46:56'),
+(669, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:47:00'),
+(670, 'Mon Carlo Delima', 'logged out', '2023-04-06 23:58:48'),
+(671, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:58:52'),
+(672, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 23:59:18'),
+(673, 'Mon Carlo Delima', 'logged out', '2023-04-07 00:00:16');
 
 -- --------------------------------------------------------
 
@@ -885,30 +928,18 @@ CREATE TABLE IF NOT EXISTS `concern` (
   `concern_description` varchar(255) NOT NULL,
   `status` varchar(50) NOT NULL,
   `datetime` datetime DEFAULT NULL,
+  `datetime_submitted` datetime DEFAULT NULL,
   PRIMARY KEY (`concern_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `concern`
 --
 
-INSERT INTO `concern` (`concern_id`, `complainant_homeowner_id`, `full_name`, `complainee_homeowner_id`, `complainee_full_name`, `concern_subject`, `concern_description`, `status`, `datetime`) VALUES
-(1, 0, 'Kyle Casingal', NULL, NULL, 'Noise Complaint', 'Nagvivideoke pa rin yung kapitbahay namin kahit lagpas 10 na', 'Pending', '2022-11-10 22:13:45'),
-(2, 0, 'Kyle Casingal', NULL, NULL, 'Basura', 'Kung saan-saan nagtatapon ng basura yung kapitbahay ko.', 'Pending', '2022-11-02 22:13:59'),
-(3, 0, 'Mon Carlo Delima', NULL, NULL, 'Vandalism', 'Dinrawingan ng kapitbahay namin yung kalsada sa tapat ng bahay namin.', 'Pending', '2022-11-04 22:14:02'),
-(6, 0, 'Mon Carlo Delima', NULL, NULL, 'Aso', 'Nagtatae sa harap ng bahay', 'Pending', '2022-11-22 22:14:03'),
-(7, 0, 'Mon Carlo Delima', NULL, NULL, 'Kapitbahay', 'Malapit na magsaksakan', 'Pending', '2022-11-18 22:14:06'),
-(41, 0, 'Mon Carlo Delima', NULL, NULL, 'Lasing', 'Nagwawala sa daan', 'Pending', '2022-11-20 22:14:08'),
-(45, 0, 'Mon Carlo Delima', NULL, NULL, 'Batang maingay', 'Iyak nang iyak', 'Pending', '2022-11-27 22:14:09'),
-(44, 0, 'Mon Carlo Delima', NULL, NULL, 'Pusa sa bubong', 'Nagnanakaw ng ulam', 'Pending', '2022-11-28 22:14:11'),
-(43, 0, 'Mon Carlo Delima', NULL, NULL, 'Singer', 'Sintunado, maingay', 'Pending', '2022-11-12 22:14:13'),
-(42, 0, 'Mon Carlo Delima', NULL, NULL, 'Noise complaint', 'nagddrums, hindi naman magaling', 'Pending', '2022-11-18 22:14:15'),
-(46, 0, 'Kyle Andrei Casingal', NULL, NULL, 'Noise Complain', 'being too loud at 10 pm ', 'Pending', NULL),
-(47, 0, 'Mon Carlo Delima', NULL, NULL, 'te', 'te', 'Pending', NULL),
-(48, 0, 'Mon Carlo Delima', NULL, NULL, 'test', 'test', 'Pending', '2023-04-06 10:54:16'),
-(49, 1, 'Mon Carlo Delima', 39, 'Marco Ivan Sta. Maria', 'hahaha', 'hahaha', 'Pending', '2023-04-06 16:03:47'),
-(50, 1, 'Mon Carlo Delima', 16, 'janwel castillo', 'test', 'test', 'Pending', '2023-04-06 16:04:20'),
-(51, 1, 'Mon Carlo Delima', NULL, NULL, 'asong nagtatae', 'gwapong aso', 'Pending', '2023-04-06 16:04:50');
+INSERT INTO `concern` (`concern_id`, `complainant_homeowner_id`, `full_name`, `complainee_homeowner_id`, `complainee_full_name`, `concern_subject`, `concern_description`, `status`, `datetime`, `datetime_submitted`) VALUES
+(1, 1, 'Mon Carlo Delima', NULL, NULL, 'This is a Concern', 'I am very Concern', 'Processing', '2023-04-06 23:40:55', '2023-04-06 23:33:30'),
+(2, 16, 'Janwel Castillo', 1, 'Mon Carlo Delima', 'Ipapa tulfo kita', 'wahahahaha', 'Processing', '2023-04-06 23:46:54', '2023-04-06 23:44:02'),
+(3, 1, 'Mon Carlo Delima', 16, 'Janwel Castillo', 'Pwede bang mamaya na', 'Sorry camera', 'Pending', '2023-04-06 23:59:18', '2023-04-06 23:59:18');
 
 -- --------------------------------------------------------
 
@@ -949,7 +980,7 @@ INSERT INTO `homeowner_profile` (`homeowner_id`, `last_name`, `first_name`, `mid
 (18, '', 'SV1_Admin', NULL, NULL, '', '', '', '', NULL, '', '', NULL, '', 'N/A', 'default.png'),
 (8, 'BendaÃ±a', 'Krishtalene', 'Edejer', 'N/A', 'Female', 'Lot 1 Block 5', 'Sunnyvale 2', 'Pantok', 'N/A', 'N/A', 'tissabendana@gmail.com', '2002-10-19', '09123456789', 'N/A', '86705321_2748280675293170_833038108541845504_n.jpg'),
 (17, 'Escueta', 'Roiemar', 'Conchada', 'N/A', 'Male', 'Lot 4 Block 3', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'escuetaroiemar@gmail.com', '2022-11-28', '09123456789', 'N/A', 'default.png'),
-(16, 'castillo', 'janwel', NULL, 'N/A', 'Male', 'Lot 2 Block 3 ', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'janweljigycastillo20@gmail.com', '2022-11-25', '09123456789', 'N/A', '315887907_1137649846869408_655406644278059076_n.png'),
+(16, 'Castillo', 'Janwel', NULL, 'N/A', 'Male', 'Lot 2 Block 3 ', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'janweljigycastillo20@gmail.com', '2022-11-25', '09123456789', 'N/A', '315887907_1137649846869408_655406644278059076_n.png'),
 (30, 'Doe', 'John', 'Smith', 'N/A', 'Male', 'Lot 1 Block 8', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'johndoe@gmail.com', '2010-01-01', '09123456789', 'N/A', 'default.png'),
 (28, '', 'SV1_Secretary', NULL, NULL, '', '', '', '', NULL, NULL, '', '2022-11-29', '', '', 'default.png'),
 (31, 'Lowery', 'Amirah', 'Meyers', 'N/A', 'Female', 'Lot 1 Block 7', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'amirahlowery@gmail.com', '2009-01-15', '09123456789', 'N/A', 'default.png'),
@@ -1193,7 +1224,7 @@ INSERT INTO `user` (`user_id`, `user_homeowner_id`, `full_name`, `user_type`, `p
 (55, 2, 'Kyle Andrei Casingal', 'Homeowner', 'password', 'kylecasingal36@gmail.com', 'Activated', '248425', '2022-12-01 10:11:20'),
 (3, 3, 'Jeune Paolus Flores', 'Homeowner', 'thisfeelsgud', 'floresjeunepaolus@gmail.com', 'Activated', '943962', '2022-11-10 22:51:58'),
 (1, 1, 'Mon Carlo Delima', 'Homeowner', '12345', 'dmoncarlo6@gmail.com', 'Activated', '286140', '2022-11-24 13:48:07'),
-(27, 16, 'janwel castillo', 'Homeowner', 'dadada', 'janweljigycastillo20@gmail.com', 'Deactivated', '943962', '2022-11-15 20:43:59'),
+(27, 16, 'Janwel Castillo', 'Homeowner', 'dadada', 'janweljigycastillo20@gmail.com', 'Activated', '943962', '2022-11-15 20:43:59'),
 (4, 4, 'John Doe', 'Treasurer', '123', 'dmoncarlo@gmail.com', 'Deactivated', '105861', '2022-11-24 15:17:36'),
 (18, 18, 'SV1_Admin', 'Admin', 'password', 'SV1_Admin', 'Activated', NULL, NULL),
 (42, 17, 'Roiemar Escueta', 'Homeowner', '123', 'escuetaroiemar@gmail.com', 'Deactivated', '135447', '2022-11-28 23:28:23'),

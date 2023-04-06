@@ -713,9 +713,9 @@ if (isset($_POST['concernSubmit'])) {
   $complainee_fullName = $rowComplainee['full_name'] ?? '';
 
   if ($concern_address == '0') {
-    $sql = "INSERT INTO concern(complainant_homeowner_id, full_name, complainee_homeowner_id, complainee_full_name, concern_subject, concern_description, status, datetime) VALUES ('" . $row['user_homeowner_id'] . "', '" . $row['full_name'] . "', NULL, NULL, '$concern_subject', '$concern_description', 'Pending', NOW())";
+    $sql = "INSERT INTO concern(complainant_homeowner_id, full_name, complainee_homeowner_id, complainee_full_name, concern_subject, concern_description, status, datetime, datetime_submitted) VALUES ('" . $row['user_homeowner_id'] . "', '" . $row['full_name'] . "', NULL, NULL, '$concern_subject', '$concern_description', 'Pending', NOW(), NOW())";
   } else {
-    $sql = "INSERT INTO concern(complainant_homeowner_id, full_name, complainee_homeowner_id, complainee_full_name, concern_subject, concern_description, status, datetime) VALUES ('" . $row['user_homeowner_id'] . "', '" . $row['full_name'] . "', '$concern_address', '$complainee_fullName', '$concern_subject', '$concern_description', 'Pending', NOW())";
+    $sql = "INSERT INTO concern(complainant_homeowner_id, full_name, complainee_homeowner_id, complainee_full_name, concern_subject, concern_description, status, datetime, datetime_submitted) VALUES ('" . $row['user_homeowner_id'] . "', '" . $row['full_name'] . "', '$concern_address', '$complainee_fullName', '$concern_subject', '$concern_description', 'Pending', NOW(), NOW())";
   }
 
   mysqli_query($con, $sql);
@@ -732,6 +732,18 @@ if (isset($_POST['concernSubmit'])) {
 }
 if (isset($_POST['concernOk'])) {
   header("Location: blogHome.php");
+}
+
+// UPDATING A CONCERN TO PROCESSING
+if(isset($_POST['concernProcess'])){
+  $concern_id = $_POST['concern_id'];
+  $con->query("UPDATE concern SET status = 'Processing', datetime = NOW() WHERE concern_id = '$concern_id'");
+}
+
+// UPDATING A CONCERN TO RESOLVED
+if(isset($_POST['concernResolved'])){
+  $concern_id = $_POST['concern_id'];
+  $con->query("UPDATE concern SET status = 'Resolved', datetime = NOW() WHERE concern_id = '$concern_id'");
 }
 
 // EDITING PROFILE

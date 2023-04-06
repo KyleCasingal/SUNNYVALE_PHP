@@ -2,6 +2,7 @@
 require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'No' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
 $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
+$resultOfficer1 = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
 $resultUser = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
 $rowUser = $resultUser->fetch_assoc();
 ?>
@@ -474,7 +475,7 @@ $rowUser = $resultUser->fetch_assoc();
             <img class="avatarBlog" <?php
                                     $imageURL = '../media/displayPhotos/' . $row['display_picture'];
                                     ?> src="<?= $imageURL ?>" alt="" />
-                                    
+
             <div class="profileText">
               <p class="profileName"><?php echo $row['full_name']; ?></p>
               <p class="profileDate">
@@ -513,12 +514,16 @@ $rowUser = $resultUser->fetch_assoc();
           <table class="announcementTable">
             <?php while ($row = $resultOfficer->fetch_assoc()) : ?>
               <tr>
-                <td class="tblTitle use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus"> <?php echo $row['title']; ?> </td>
+                <td class="tblTitle use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
+                                                                                                        echo $row['post_id'];
+                                                                                                        ?>"> <?php echo $row['title']; ?> </td>
                 <td class="use-address" hidden><?php echo $row['content']; ?></td>
-                <td class="tblDate use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus"><?php
-                                                                                                          $datetime = strtotime($row['published_at']);
-                                                                                                          echo $phptime = date("g:i A m/d/y", $datetime);
-                                                                                                          ?></td>
+                <td class="tblDate use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
+                                                                                                        echo $row['post_id'];
+                                                                                                        ?>"><?php
+                                                                                                            $datetime = strtotime($row['published_at']);
+                                                                                                            echo $phptime = date("g:i A m/d/y", $datetime);
+                                                                                                            ?></td>
                 <td><?php
                     if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
 
@@ -541,59 +546,45 @@ $rowUser = $resultUser->fetch_assoc();
       </span>
     </div>
   </div>
-  <div class="modal fade" id="complaintStatus" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">
-            Announcement Details
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modalConcernBody">
-          <table>
-            <tr>
-              <td class="announcementText">Subject:</td>
-              <td class="announcementText" id="subject"></td>
-            </tr>
-            <tr>
-              <td class="announcementText">Details:</td>
-              <td class="announcementText" id="details"></td>
-            </tr>
-            <tr>
-              <td class="announcementText">Date Posted:</td>
-              <td class="announcementText" id="date"></td>
-            </tr>
-          </table>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              Close
-            </button>
+  <?php while ($row1 = $resultOfficer1->fetch_assoc()) : ?>
+    <div class="modal fade" id="complaintStatus<?php
+                                                echo $row1['post_id'];
+                                                ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">
+              Announcement Details
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modalConcernBody">
+            <table>
+              <tr>
+                <td class="announcementText">Subject:</td>
+                <td class="announcementText" id=""><?php echo $row1['title']; ?></td>
+              </tr>
+              <tr>
+                <td class="announcementText">Details:</td>
+                <td class="announcementText" id=""><?php echo $row1['content']; ?></td>
+              </tr>
+              <tr>
+                <td class="announcementText">Date Posted:</td>
+                <td class="announcementText" id=""><?php $datetime = strtotime($row1['published_at']);
+                                                    echo $phptime = date("g:i A m/d/y", $datetime); ?></td>
+              </tr>
+            </table>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  <?php endwhile; ?>
   <!-- <?php require '../marginals/footer2.php' ?> -->
 </body>
-<script>
-  $(".use-address").click(function() {
-    var $row = $(this).closest("tr"); // Find the row
-    var $tds = $row.find("td");
-    $.each($tds, function(index) {
-      document.getElementById("subject").innerHTML = ($(this).text());
-      return (index !== 0);
-    });
-    $.each($tds, function(index) {
-      document.getElementById("details").innerHTML = ($(this).text());
-      return (index !== 1);
-    });
-    $.each($tds, function(index) {
-      document.getElementById("date").innerHTML = ($(this).text());
-      return (index !== 2);
-    });
-
-  });
-</script>
 
 </html>
