@@ -137,8 +137,11 @@
                         <li id="Amenities" onclick="location.href='../modules/settingsAmenity.php'">Amenities</li>
                         <?php
                         if ($row['user_type'] == 'Admin') {
-                            echo '<li id="Subdivision" onclick="location.href="../modules/settingsSubdivision.php"">Subdivisions
-                            </li>';
+                            echo "<li id='Subdivision' onclick=";
+                            echo '"';
+                            echo "location.href='../modules/settingsSubdivision.php'";
+                            echo '"';
+                            echo ">Subdivisions</li>";
                         }
                         ?>
                         <li id="Monthly Dues" onclick="location.href='../modules/settingsMonthlydues.php'">Monthly Dues
@@ -148,8 +151,11 @@
                         </li>
                         <?php
                         if ($row['user_type'] == 'Admin') {
-                            echo '<li id="System Accounts" onclick="location.href="../modules/settingsSystemAcc.php"">System
-                            Accounts</li>';
+                            echo "<li id='System Accounts' onclick=";
+                            echo '"';
+                            echo "location.href='../modules/settingsSystemAcc.php'";
+                            echo '"';
+                            echo ">System Accounts</li>";
                         }
                         ?>
                         <li id="Subdivision Officers" onclick="location.href='../modules/settingsSubdivisionOfficer.php'">Subdivision Officers
@@ -170,15 +176,23 @@
                 </li>
                 <?php
                 if ($row['user_type'] == 'Admin') {
-                    echo '<li id="Backup">
-                    <button type="button" class="btnReports" data-bs-toggle="dropdown" aria-expanded="false">
-                        Backup & Restore <i class="fa-sharp fa-solid fa-chevron-right"></i>
+                    echo "<li id='Backup'>
+                    <button type='button' class='btnReports' data-bs-toggle='dropdown' aria-expanded='false'>
+                        Backup & Restore <i class='fa-sharp fa-solid fa-chevron-right'></i>
                     </button>
-                    <ul class="dropdown-menu">
-                        <li id="Collection Report" onclick="location.href="../BackupRestore/backup.php"" target="_blank">Backup</li>
-                        <li id="Home Owner List" onclick="location.href="../BackupRestore/restore.php"" target="_blank">Restore</li>
+                    <ul class='dropdown-menu'>
+                        <li id='Collection Report' onclick=";
+                    echo '"';
+                    echo "location.href='../BackupRestore/backup.php'";
+                    echo '"';
+                    echo " target='_blank'>Backup</li>
+                    <li id='Home Owner List' onclick=";
+                    echo '"';
+                    echo "location.href='../BackupRestore/restore.php'";
+                    echo '"';
+                    echo " target='_blank'>Restore</li>
                     </ul>
-                </li>';
+                </li>";
                 }
                 ?>
             </ul>
