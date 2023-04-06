@@ -403,7 +403,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
 
             <div class="secretaryPanel">
                 <div class="homeownerRegistration">
-                    <label class="lblRegistration">Registration</label>
+                    <label class="lblRegistration">Homeowner Registration</label>
                     <div class="regForm">
                         <table class="tblForm">
                             <input type="hidden" name="homeowner_id" value="<?php echo $homeowner_id ?? ''; ?>">
