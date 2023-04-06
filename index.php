@@ -3,6 +3,7 @@ require './process.php';
 if (isset($_SESSION['user_id'])) {
     header("Location: ./modules/blogHome.php");
 }
+$resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysqli->error);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +20,7 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <style>
     @import "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css";
-    
+
 
     * {
         margin: 0;
@@ -209,7 +210,7 @@ if (isset($_SESSION['user_id'])) {
         align-items: center;
     }
 
-    .tab-pane { 
+    .tab-pane {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -265,7 +266,7 @@ if (isset($_SESSION['user_id'])) {
             <div class="announcementFlex">
                 <?php while ($row = $resultOfficer->fetch_assoc()) : ?>
                     <div class="blogPost">
-                        
+
                         <div class="postContent">
                             <p class="blogTitle"><?php echo $row['title']; ?></p>
                             <p class="blogBody">
@@ -273,55 +274,27 @@ if (isset($_SESSION['user_id'])) {
                             </p>
                         </div>
                         <div class="profileText">
-                                <p class="profileDate">
-                                    <?php
-                                    $datetime = strtotime($row['published_at']);
-                                    echo $phptime = date("g:i A m/d/y", $datetime);
-                                    ?>
-                                </p>
-                            </div>
+                            <p class="profileDate">
+                                <?php
+                                $datetime = strtotime($row['published_at']);
+                                echo $phptime = date("g:i A m/d/y", $datetime);
+                                ?>
+                            </p>
+                        </div>
                     </div>
                 <?php endwhile; ?>
-
             </div>
-
         </div>
-
         <div class="landingIntroduction tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-            <label class="landingTitles">Mission</label>
-            <p class="landingText">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                mollis aliquet aliquet. Ut non porta lacus, in commodo ligula. Duis
-                dapibus ex a malesuada molestie. Vestibulum eu enim et orci laoreet
-                fringilla. Integer non sodales nibh. Nam sodales, orci id elementum
-                dictum, dolor diam malesuada metus, id ullamcorper dui diam id magna.
-                Curabitur sodales libero non purus pharetra, eu pharetra dolor
-                dapibus.
-            </p>
-
-            <label class="landingTitles">Vision</label>
-            <p class="landingText">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                mollis aliquet aliquet. Ut non porta lacus, in commodo ligula. Duis
-                dapibus ex a malesuada molestie. Vestibulum eu enim et orci laoreet
-                fringilla. Integer non sodales nibh. Nam sodales, orci id elementum
-                dictum, dolor diam malesuada metus, id ullamcorper dui diam id magna.
-                Curabitur sodales libero non purus pharetra, eu pharetra dolor
-                dapibus.
-            </p>
-
-            <label class="landingTitles">Goals</label>
-            <p class="landingText">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                mollis aliquet aliquet. Ut non porta lacus, in commodo ligula. Duis
-                dapibus ex a malesuada molestie. Vestibulum eu enim et orci laoreet
-                fringilla. Integer non sodales nibh. Nam sodales, orci id elementum
-                dictum, dolor diam malesuada metus, id ullamcorper dui diam id magna.
-                Curabitur sodales libero non purus pharetra, eu pharetra dolor
-                dapibus.
-            </p>
+            <?php while ($rowMissionVision = $resultMissionVision->fetch_assoc()) : ?>
+                <label class="landingTitles"><?php echo $rowMissionVision['type']; ?></label>
+                <p class="landingText">
+                    <?php
+                    echo $rowMissionVision['description'];
+                    ?>
+                </p>
+            <?php endwhile; ?>
         </div>
-
         <div class="mapAPI tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
             <label class="landingTitles">Sunnyvale Mapping and Location</label>
             <div class="mapouter">

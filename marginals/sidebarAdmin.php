@@ -120,10 +120,8 @@
                         Homeowner <i class="fa-sharp fa-solid fa-chevron-right"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li id="Amenities" onclick="location.href='../modules/homeownerlist.php'">Registered Homeowners
-                        </li>
-                        <li id="Subdivision" onclick="location.href='../modules/homeownerRegistration.php'">Homeowner
-                            Registration</li>
+                        <li id="Subdivision" onclick="location.href='../modules/homeownerRegistration.php'">Homeowner Registration</li>
+                        <li id="Amenities" onclick="location.href='../modules/homeownerlist.php'">Registered Homeowners</li>
                     </ul>
                 </li>
                 <li id="approval" onclick="location.href='../modules/accManagement.php'">Account Management</li>
@@ -137,6 +135,17 @@
                         <li id="Amenities" onclick="location.href='../modules/settingsAmenity.php'">Amenities</li>
                         <?php
                         if ($row['user_type'] == 'Admin') {
+                            echo "<li id='billing-period' onclick=";
+                            echo '"';
+                            echo "location.href='../modules/settingsBillingPeriod.php'";
+                            echo '"';
+                            echo ">Billing Period</li>";
+                        }
+                        ?>
+                        <li id="missionVision" onclick="location.href='../modules/settingsMissionVision.php'">Mission/Vision</li>
+                        <li id="MonthlyDues" onclick="location.href='../modules/settingsMonthlydues.php'">Monthly Dues</li>
+                        <?php
+                        if ($row['user_type'] == 'Admin') {
                             echo "<li id='Subdivision' onclick=";
                             echo '"';
                             echo "location.href='../modules/settingsSubdivision.php'";
@@ -144,11 +153,7 @@
                             echo ">Subdivisions</li>";
                         }
                         ?>
-                        <li id="Monthly Dues" onclick="location.href='../modules/settingsMonthlydues.php'">Monthly Dues
-                        </li>
-                        <li id="billing-period" onclick="location.href='../modules/settingsBillingPeriod.php'">Billing Period
-
-                        </li>
+                        <li id="Subdivision Officers" onclick="location.href='../modules/settingsSubdivisionOfficer.php'">Subdivision Officers</li>
                         <?php
                         if ($row['user_type'] == 'Admin') {
                             echo "<li id='System Accounts' onclick=";
@@ -158,8 +163,6 @@
                             echo ">System Accounts</li>";
                         }
                         ?>
-                        <li id="Subdivision Officers" onclick="location.href='../modules/settingsSubdivisionOfficer.php'">Subdivision Officers
-                        </li>
                     </ul>
                 </li>
 

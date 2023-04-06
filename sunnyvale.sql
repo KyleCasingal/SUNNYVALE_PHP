@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Apr 06, 2023 at 04:07 PM
+-- Generation Time: Apr 06, 2023 at 07:01 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=596 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=631 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -752,7 +752,42 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (592, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 16:04:20'),
 (593, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 16:04:50'),
 (594, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 16:05:27'),
-(595, 'Mon Carlo Delima', 'logged out', '2023-04-06 16:06:44');
+(595, 'Mon Carlo Delima', 'logged out', '2023-04-06 16:06:44'),
+(596, 'SV1_Admin', 'logged in', '2023-04-06 17:31:45'),
+(597, 'SV1_Admin', 'logged out', '2023-04-06 17:35:09'),
+(598, 'SV1_Treasurer', 'logged in', '2023-04-06 17:35:12'),
+(599, 'SV1_Treasurer', 'logged out', '2023-04-06 17:35:31'),
+(600, 'SV1_Secretary', 'logged in', '2023-04-06 17:35:35'),
+(601, 'SV1_Secretary', 'logged out', '2023-04-06 17:35:42'),
+(602, 'SV1_Admin', 'logged in', '2023-04-06 17:35:46'),
+(603, 'SV1_Admin', 'logged out', '2023-04-06 17:38:07'),
+(604, 'SV1_Secretary', 'logged in', '2023-04-06 17:38:12'),
+(605, 'SV1_Secretary', 'logged out', '2023-04-06 17:40:00'),
+(606, 'SV1_Admin', 'logged in', '2023-04-06 17:40:03'),
+(607, 'SV1_Admin', 'logged out', '2023-04-06 17:42:56'),
+(608, 'SV1_Secretary', 'logged in', '2023-04-06 17:42:59'),
+(609, 'SV1_Secretary', 'logged out', '2023-04-06 17:43:10'),
+(610, 'SV1_Admin', 'logged in', '2023-04-06 17:43:13'),
+(611, 'SV1_Admin', 'logged out', '2023-04-06 17:44:36'),
+(612, 'SV1_Secretary', 'logged in', '2023-04-06 17:44:39'),
+(613, 'SV1_Secretary', 'logged out', '2023-04-06 17:44:51'),
+(614, 'SV1_Treasurer', 'logged in', '2023-04-06 17:44:53'),
+(615, 'SV1_Treasurer', 'logged out', '2023-04-06 17:45:26'),
+(616, 'SV1_Secretary', 'logged in', '2023-04-06 17:45:30'),
+(617, 'SV1_Secretary', 'logged out', '2023-04-06 17:45:57'),
+(618, 'SV1_Secretary', 'logged in', '2023-04-06 17:46:01'),
+(619, 'SV1_Secretary', 'logged out', '2023-04-06 17:46:02'),
+(620, 'SV1_Admin', 'logged in', '2023-04-06 17:46:05'),
+(621, 'SV1_Admin', 'logged out', '2023-04-06 17:47:43'),
+(622, 'SV1_Admin', 'logged in', '2023-04-06 17:48:47'),
+(623, 'SV1_Admin', 'logged out', '2023-04-06 18:38:13'),
+(624, 'SV1_Admin', 'logged in', '2023-04-06 18:48:42'),
+(625, 'SV1_Admin', 'logged out', '2023-04-06 18:52:05'),
+(626, 'SV1_Admin', 'logged in', '2023-04-06 18:52:54'),
+(627, 'SV1_Admin', 'logged out', '2023-04-06 18:59:11'),
+(628, 'SV1_Secretary', 'logged in', '2023-04-06 18:59:56'),
+(629, 'SV1_Secretary', 'logged out', '2023-04-06 19:01:01'),
+(630, 'SV1_Admin', 'logged in', '2023-04-06 19:01:04');
 
 -- --------------------------------------------------------
 
@@ -926,6 +961,29 @@ INSERT INTO `homeowner_profile` (`homeowner_id`, `last_name`, `first_name`, `mid
 (37, '', 'SV2_Admin', NULL, NULL, '', '', '', '', NULL, NULL, '', '2022-11-29', '', '', 'default.png'),
 (39, 'Sta. Maria', 'Marco Ivan', 'Quierrez', 'N/A', 'Male', 'Lot 4 Block 3', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'marcoivanstamaria@gmail.com', '2001-06-13', '09123456789', 'N/A', '290509682_1413885909103188_6599438684369654480_n.jpg'),
 (40, 'Dalisay', 'Cardo', 'Dela Cruz', 'N/A', 'Male', 'Block 3 Lot 5', 'Sunnyvale 2', 'Palangoy', 'Palangoy', 'N/A', 'cardoDalisay@gmail.com', '1977-11-07', '09123456789', 'N/A', 'default.png');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mission_vision`
+--
+
+DROP TABLE IF EXISTS `mission_vision`;
+CREATE TABLE IF NOT EXISTS `mission_vision` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(100) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `mission_vision`
+--
+
+INSERT INTO `mission_vision` (`id`, `type`, `description`) VALUES
+(1, 'Mission', 'Natatangi ka, paraluman\r\nKislap mo\'y \'di maiwan, \'di iiwan\r\nMamahalin kita nang marahan\r\nSayo\'y paroroon sa kalawakan'),
+(2, 'Vision', 'Palad ay basang-basa\r\nAng dagitab ay damang-dama\r\nSa \'king kalamnang punong-puno\r\nNg pananabik at ng kaba'),
+(3, 'Goals', 'Naaalala ko pa no\'ng tayo pang dalawa\r\nSine lang ay okay ka na\r\nPero ngayon, kolehiyala ka na\r\nMas trip mong magtoma');
 
 -- --------------------------------------------------------
 
