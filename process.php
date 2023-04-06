@@ -190,7 +190,7 @@ if (isset($_POST['register'])) {
 if (isset($_POST['login'])) {
   $email_address = $_POST['email_address'];
   $password = $_POST['password'];
-  $sql = "SELECT * FROM user WHERE email_address = '$email_address' AND password = '$password' AND account_status = 'Activated' ";
+  $sql = "SELECT * FROM user WHERE BINARY email_address = '$email_address' AND BINARY password = '$password' AND account_status = 'Activated' ";
   $result = mysqli_query($con, $sql);
   $sql1 = "SELECT * FROM user WHERE email_address = '$email_address' AND password = '$password' AND (account_status = 'Pending' or account_status = 'Deactivated')";
   $result1 = mysqli_query($con, $sql1);
@@ -208,7 +208,6 @@ if (isset($_POST['login'])) {
     //     echo $date[] = $row1['published_at'];
     //   }
     // }
-
     $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','logged in', NOW())";
     mysqli_query($con, $sql1);
     header("Location: ../modules/blogHome.php");
