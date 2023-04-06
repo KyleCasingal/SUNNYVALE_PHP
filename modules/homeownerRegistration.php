@@ -398,15 +398,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
     <form method="post">
         <div class="secretary">
             <div class="sideBar">
-                <?php
-                if ($row['user_type'] == 'Admin') {
-                    require '../marginals/sidebarAdmin.php';
-                }
-
-                if ($row['user_type'] == 'Secretary') {
-                    require '../marginals/sidebarSecretaryPanel.php';
-                }
-                ?>
+                <?php require '../marginals/sidebarAdmin.php'; ?>
             </div>
 
             <div class="secretaryPanel">

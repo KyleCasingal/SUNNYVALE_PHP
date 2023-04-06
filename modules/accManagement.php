@@ -29,7 +29,6 @@ if (isset($_POST['activate'])) {
             $row = $resultSession->fetch_assoc();
             $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" .  'activated user' . ' ' . "$full_name" . "' , NOW())";
             mysqli_query($con, $sql1);
-            
         }
     } else {
         echo 'Please select an account to activate!';
@@ -399,15 +398,7 @@ if (isset($_POST['deactivate'])) {
 <body>
     <div class="secretary">
         <div class="sideBar">
-        <?php
-              if ($row['user_type'] == 'Admin' ){
-                require '../marginals/sidebarAdmin.php';
-              }
-              
-              if ($row['user_type'] == 'Secretary'){
-                require '../marginals/sidebarSecretaryPanel.php';
-              }
-              ?>
+            <?php require '../marginals/sidebarAdmin.php'; ?>
         </div>
         <div class="secretaryPanel">
             <form method="post">

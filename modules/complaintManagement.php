@@ -327,15 +327,7 @@ if (isset($_GET['concern_id'])) {
 <body>
     <div class="secretary">
         <div class="sideBar">
-            <?php
-            if ($row['user_type'] == 'Admin') {
-                require '../marginals/sidebarAdmin.php';
-            }
-
-            if ($row['user_type'] == 'Secretary') {
-                require '../marginals/sidebarSecretaryPanel.php';
-            }
-            ?>
+            <?php require '../marginals/sidebarAdmin.php'; ?>
         </div>
 
         <div class="secretaryPanel">
@@ -378,7 +370,8 @@ if (isset($_GET['concern_id'])) {
                     <table>
                         <tr>
                             <td hidden></td>
-                            <tdh hidden id="id"></td>
+                            <tdh hidden id="id">
+                                </td>
                         </tr>
                         <tr>
                             <td>Complainant:</td>
@@ -435,4 +428,5 @@ if (isset($_GET['concern_id'])) {
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
 </html>

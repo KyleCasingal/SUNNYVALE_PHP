@@ -1,5 +1,4 @@
 <?php
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,11 +7,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Document</title>
 </head>
 <style>
@@ -130,7 +126,7 @@
                             Registration</li>
                     </ul>
                 </li>
-                <li id="approval" onclick="location.href='../modules/accManagement.php'">Approval of Accounts</li>
+                <li id="approval" onclick="location.href='../modules/accManagement.php'">Account Management</li>
                 <li id="ticket" onclick="location.href='../modules/complaintManagement.php'">Complaint Tickets</li>
                 <li id="settings">
                     <button type="button" class="btnSettings" data-bs-toggle="dropdown" aria-expanded="false">
@@ -139,17 +135,24 @@
 
                     <ul class="dropdown-menu">
                         <li id="Amenities" onclick="location.href='../modules/settingsAmenity.php'">Amenities</li>
-                        <li id="Subdivision" onclick="location.href='../modules/settingsSubdivision.php'">Subdivisions
-                        </li>
+                        <?php
+                        if ($row['user_type'] == 'Admin') {
+                            echo '<li id="Subdivision" onclick="location.href="../modules/settingsSubdivision.php"">Subdivisions
+                            </li>';
+                        }
+                        ?>
                         <li id="Monthly Dues" onclick="location.href='../modules/settingsMonthlydues.php'">Monthly Dues
                         </li>
                         <li id="billing-period" onclick="location.href='../modules/settingsBillingPeriod.php'">Billing Period
 
                         </li>
-                        <li id="System Accounts" onclick="location.href='../modules/settingsSystemAcc.php'">System
-                            Accounts</li>
-                        <li id="Subdivision Officers"
-                            onclick="location.href='../modules/settingsSubdivisionOfficer.php'">Subdivision Officers
+                        <?php
+                        if ($row['user_type'] == 'Admin') {
+                            echo '<li id="System Accounts" onclick="location.href="../modules/settingsSystemAcc.php"">System
+                            Accounts</li>';
+                        }
+                        ?>
+                        <li id="Subdivision Officers" onclick="location.href='../modules/settingsSubdivisionOfficer.php'">Subdivision Officers
                         </li>
                     </ul>
                 </li>
@@ -159,31 +162,29 @@
                         Reports <i class="fa-sharp fa-solid fa-chevron-right"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li id="Collection Report" onclick="location.href='../reports/reportAmenities.php'"
-                            target="_blank">Collection Report</li>
-                        <li id="Home Owner List" onclick="location.href='../reports/reportHomeOwnerList.php'"
-                            target="_blank">Home Owner List</li>
+                        <li id="Collection Report" onclick="location.href='../reports/reportAmenities.php'" target="_blank">Collection Report</li>
+                        <li id="Home Owner List" onclick="location.href='../reports/reportHomeOwnerList.php'" target="_blank">Home Owner List</li>
                         <li id="Audit Trail" onclick="location.href='../reports/reportAuditTrail.php'" target="_blank">
                             Audit Trail</li>
                     </ul>
                 </li>
-                <li id="Backup">
+                <?php
+                if ($row['user_type'] == 'Admin') {
+                    echo '<li id="Backup">
                     <button type="button" class="btnReports" data-bs-toggle="dropdown" aria-expanded="false">
-                    Backup & Restore <i class="fa-sharp fa-solid fa-chevron-right"></i>
+                        Backup & Restore <i class="fa-sharp fa-solid fa-chevron-right"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li id="Collection Report" onclick="location.href='../BackupRestore/backup.php'"
-                            target="_blank">Backup</li>
-                        <li id="Home Owner List" onclick="location.href='../BackupRestore/restore.php'"
-                            target="_blank">Restore</li>
+                        <li id="Collection Report" onclick="location.href="../BackupRestore/backup.php"" target="_blank">Backup</li>
+                        <li id="Home Owner List" onclick="location.href="../BackupRestore/restore.php"" target="_blank">Restore</li>
                     </ul>
-                </li>
+                </li>';
+                }
+                ?>
             </ul>
         </form>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 
 </html>
