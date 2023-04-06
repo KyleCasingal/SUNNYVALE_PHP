@@ -261,6 +261,14 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
         background-color: rgb(93, 151, 93);
     }
 
+    .btnSubmitReg:disabled {
+        background-color: rgb(40, 68, 40);
+    }
+
+    .btnSubmitReg[disabled]:hover {
+        background-color: rgb(40, 68, 40);
+    }
+
     .btnClearReg {
         background-color: lightcoral;
         border: 0;
@@ -277,6 +285,14 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
 
     .btnClearReg:hover {
         background-color: rgb(180, 83, 83);
+    }
+
+    .btnClearReg:disabled {
+        background-color: rgb(97, 45, 45);
+    }
+
+    .btnClearReg[disabled]:hover {
+        background-color: rgb(97, 45, 45);
     }
 
     .lblRegistration {
@@ -360,7 +376,6 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
     .tbl tr:hover {
         background-color: rgb(211, 211, 211);
     }
-
 </style>
 
 
@@ -437,7 +452,12 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                             </div>
                         </div>
                         <div class="btnArea">
-                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addOfficer">
+                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addOfficer" <?php
+                                                                                                                            if ($officer_id ?? '') {
+                                                                                                                                echo "disabled";
+                                                                                                                            } else {
+                                                                                                                                echo "";
+                                                                                                                            } ?>>
                                 Add Officer
                             </button>
 
@@ -453,12 +473,17 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                             Do you really want to updated this existing officer?
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" name="officerUpdate" onclick="location.href = '#settingsOfficers'" type="submit" class="btn btn-primary">Save changes</button>
+                                            <button type="submit" name="officerUpdate" type="submit" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateOfficer">
+                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateOfficer" <?php
+                                                                                                                                if ($officer_id ?? '') {
+                                                                                                                                    echo "";
+                                                                                                                                } else {
+                                                                                                                                    echo "disabled";
+                                                                                                                                } ?>>
                                 Update Officer
                             </button>
                         </div>
@@ -477,7 +502,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                         <?php while ($row = $resultOfficer->fetch_assoc()) : ?>
                             <tr>
                                 <td>
-                                    <a href="settingsSubdivisionOfficer.php?officer_id=<?php echo $row['officer_id']; ?>#settingsOfficers" class="btnEdit">Edit</a>
+                                    <a href="settingsSubdivisionOfficer.php?officer_id=<?php echo $row['officer_id']; ?>" class="btnEdit">Edit</a>
                                 </td>
                                 <td><?php echo $row['subdivision_name'] ?></td>
                                 <td><?php echo $row['officer_name'] ?></td>

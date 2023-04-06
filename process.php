@@ -533,7 +533,7 @@ if (isset($_POST['subdivisionAdd'])) {
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'added a new subdivision' . ' ' . "$subdivision" . ' ' . "$barangay" . "', NOW())";
   mysqli_query($con, $sql1);
   mysqli_query($con, $sql);
-  header("Location: settings.php#settingsAddSubdivision");
+  header("Location: settingsSubdivision.php");
 }
 
 // SELECTING A ROW TO EDIT AMENITY
@@ -557,7 +557,7 @@ if (isset($_POST['subdivisionUpdate'])) {
   $row = $result->fetch_assoc();
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an existing subdivision' . ' ' . "$subdivision_name" . ' ' . "$barangay" . "', NOW())";
   mysqli_query($con, $sql1);
-  header("Location: settings.php#settingsAddSubdivision");
+  header("Location: settingsSubdivision.php");
 }
 
 // MONTHLY DUES ADD
@@ -571,7 +571,7 @@ if (isset($_POST['monthlyDuesAdd'])) {
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'added a new monthly due' . ' ' . "$subdivision" . '-' . "$rate" . '.00' . "', NOW())";
   mysqli_query($con, $sql1);
   mysqli_query($con, $sql);
-  header("Location: settings.php#settingsMonthlyDues");
+  header("Location: settingsMonthlydues.php");
 }
 
 // SELECTING A ROW TO EDIT MONTHLY DUES
@@ -595,7 +595,7 @@ if (isset($_POST['monthlyDuesUpdate'])) {
   $row = $result->fetch_assoc();
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an existing monthly due' . ' ' . "$subdivision_name" . '-' . "$rate" . '.00' . "', NOW())";
   mysqli_query($con, $sql1);
-  header("Location: settings.php#settingsMonthlyDues");
+  header("Location: settingsMonthlydues.php");
 }
 
 
@@ -618,7 +618,7 @@ if (isset($_POST['sysAccAdd'])) {
     $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'added a new system account' . ' ' . "$systemAccount" . '-' . "$userType" . "', NOW())";
     mysqli_query($con, $sql1);
     mysqli_query($con, $sql);
-    header("Location: settings.php#settingsSystemAccounts");
+    header("Location: settingsSystemAcc.php");
   }
 }
 
@@ -647,7 +647,7 @@ if (isset($_POST['sysAccUpdate'])) {
   $row = $result->fetch_assoc();
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an existing system account' . ' ' . "$full_name" . '-' . "$account_type" . "', NOW())";
   mysqli_query($con, $sql1);
-  header("Location: settings.php#settingsSystemAccounts");
+  header("Location: settingsSystemAcc.php");
 }
 
 // SUBDIVISION OFFICER ADD
@@ -661,7 +661,7 @@ if (isset($_POST['officerAdd'])) {
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'added a new subdivision officer' . ' ' . "$officer_name" . '-' . "$position_name" . "', NOW())";
   mysqli_query($con, $sql1);
   mysqli_query($con, $sql);
-  header("Location: settings.php#settingsOfficers");
+  header("Location: settingsSubdivisionOfficer.php");
 }
 
 // SELECTING A ROW TO EDIT OFFICERS
@@ -687,7 +687,7 @@ if (isset($_POST['officerUpdate'])) {
   $row = $result->fetch_assoc();
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an existing subdivision officer' . ' ' . "$officer_name" . '-' . "$position_name" . "', NOW())";
   mysqli_query($con, $sql1);
-  header("Location: settings.php#settingsOfficers");
+  header("Location: settingsSubdivisionOfficer.php");
 }
 
 // SUBMITTING A CONCERN

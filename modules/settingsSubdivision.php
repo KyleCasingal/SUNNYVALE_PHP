@@ -257,6 +257,14 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mys
         background-color: rgb(93, 151, 93);
     }
 
+    .btnSubmitReg:disabled {
+        background-color: rgb(40, 68, 40);
+    }
+
+    .btnSubmitReg[disabled]:hover {
+        background-color: rgb(40, 68, 40);
+    }
+
     .btnClearReg {
         background-color: lightcoral;
         border: 0;
@@ -273,6 +281,14 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mys
 
     .btnClearReg:hover {
         background-color: rgb(180, 83, 83);
+    }
+
+    .btnClearReg:disabled {
+        background-color: rgb(97, 45, 45);
+    }
+
+    .btnClearReg[disabled]:hover {
+        background-color: rgb(97, 45, 45);
     }
 
     .lblRegistration {
@@ -356,8 +372,6 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mys
     .tbl tr:hover {
         background-color: rgb(211, 211, 211);
     }
-
-
 </style>
 
 
@@ -401,13 +415,18 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mys
                                         Do you really want to add this new subdivision?
                                     </div>
                                     <div class="modal-footer">
-                                        <button name="subdivisionAdd" onclick="location.href = '#settingsAddSubdivision'" type="submit" class="btn btn-primary">Save changes</button>
+                                        <button name="subdivisionAdd" type="submit" class="btn btn-primary">Save changes</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="btnArea">
-                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addSubdivisionModal">
+                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addSubdivisionModal" <?php
+                                                                                                                                    if ($subdivision_id ?? '') {
+                                                                                                                                        echo "disabled";
+                                                                                                                                    } else {
+                                                                                                                                        echo "";
+                                                                                                                                    } ?>>
                                 Add Subdivision
                             </button>
 
@@ -423,12 +442,17 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mys
                                             Do you really want to update this subdivision?
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="subdivisionUpdate" onclick="location.href = '#settingsAddSubdivision'" type="submit" class="btn btn-primary">Save changes</button>
+                                            <button name="subdivisionUpdate" type="submit" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateSubdivisionModal">
+                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateSubdivisionModal" <?php
+                                                                                                                                        if ($subdivision_id ?? '') {
+                                                                                                                                            echo "";
+                                                                                                                                        } else {
+                                                                                                                                            echo "disabled";
+                                                                                                                                        } ?>>
                                 Update Subdivision
                             </button>
                         </div>
@@ -447,7 +471,7 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mys
                             <tr>
 
                                 <td>
-                                    <a href="settingsSubdivision.php?subdivision_id=<?php echo $row['subdivision_id']; ?>#settingsAddSubdivision" class="btnEdit">Edit</a>
+                                    <a href="settingsSubdivision.php?subdivision_id=<?php echo $row['subdivision_id']; ?>" class="btnEdit">Edit</a>
                                 </td>
                                 <td><?php echo $row['subdivision_name'] ?></td>
                                 <td><?php echo $row['barangay'] ?></td>

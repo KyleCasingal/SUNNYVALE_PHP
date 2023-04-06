@@ -14,9 +14,7 @@ $resultMonthly = $con->query("SELECT * FROM monthly_dues") or die($mysqli->error
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
     <title>SUNNYVALE</title>
 </head>
 <style>
@@ -254,8 +252,30 @@ $resultMonthly = $con->query("SELECT * FROM monthly_dues") or die($mysqli->error
         cursor: pointer;
     }
 
+    .btnSubmitReg {
+        background-color: darkseagreen;
+        border: 0;
+        padding: 0.5vw;
+        max-width: 50vw;
+        width: 10vw;
+        font-family: "Poppins", sans-sans-serif;
+        font-size: 1vw;
+        margin-top: 2vw;
+        color: white;
+        border-radius: 0.8vw;
+        cursor: pointer;
+    }
+
     .btnSubmitReg:hover {
         background-color: rgb(93, 151, 93);
+    }
+
+    .btnSubmitReg:disabled {
+        background-color: rgb(40, 68, 40);
+    }
+
+    .btnSubmitReg[disabled]:hover {
+        background-color: rgb(40, 68, 40);
     }
 
     .btnClearReg {
@@ -274,6 +294,14 @@ $resultMonthly = $con->query("SELECT * FROM monthly_dues") or die($mysqli->error
 
     .btnClearReg:hover {
         background-color: rgb(180, 83, 83);
+    }
+
+    .btnClearReg:disabled {
+        background-color: rgb(97, 45, 45);
+    }
+
+    .btnClearReg[disabled]:hover {
+        background-color: rgb(97, 45, 45);
     }
 
     .lblRegistration {
@@ -378,14 +406,14 @@ $resultMonthly = $con->query("SELECT * FROM monthly_dues") or die($mysqli->error
                                 <td>
                                     <select name="subdivision" id="" required>
                                         <option value="">Select...</option>
-                                        <?php while ($row = $resultSubdivision_selectMonthly->fetch_assoc()): ?>
+                                        <?php while ($row = $resultSubdivision_selectMonthly->fetch_assoc()) : ?>
                                             <option value="<?php echo $row['subdivision_name'] ?>" <?php
-                                               if (isset($_GET['monthly_dues_id'])) {
-                                                   if ($subdivision_name == $row['subdivision_name']) {
-                                                       echo 'selected="selected"';
-                                                   }
-                                               }
-                                               ?>><?php echo $row['subdivision_name'] ?></option>
+                                                                                                    if (isset($_GET['monthly_dues_id'])) {
+                                                                                                        if ($subdivision_name == $row['subdivision_name']) {
+                                                                                                            echo 'selected="selected"';
+                                                                                                        }
+                                                                                                    }
+                                                                                                    ?>><?php echo $row['subdivision_name'] ?></option>
                                         <?php endwhile; ?>
                                     </select>
                                 </td>
@@ -393,61 +421,61 @@ $resultMonthly = $con->query("SELECT * FROM monthly_dues") or die($mysqli->error
                             <tr>
                                 <td>Monthly Dues Amount:</td>
                                 <td>
-                                    <input name="rate" value="<?php echo $rate ?? '' ?>" type="text"
-                                        placeholder="monthly rate" required />
+                                    <input name="rate" value="<?php echo $rate ?? '' ?>" type="text" placeholder="monthly rate" required />
                                 </td>
                             </tr>
                         </table>
 
                         <!-- MODAL ADD MONTHLY DUES -->
-                        <div class="modal fade" id="addMonthlyDuesModal" tabindex="-1"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="addMonthlyDuesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         Do you really want to add this new monthly due?
                                     </div>
                                     <div class="modal-footer">
-                                        <button name="monthlyDuesAdd" onclick="location.href = '#settingsMonthlyDues'"
-                                            type="submit" class="btn btn-primary">Save changes</button>
+                                        <button name="monthlyDuesAdd" type="submit" class="btn btn-primary">Save changes</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="btnArea">
-                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal"
-                                data-bs-target="#addMonthlyDuesModal">
+                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addMonthlyDuesModal" <?php
+                                                                                                                                    if ($monthly_dues_id ?? '') {
+                                                                                                                                        echo "disabled";
+                                                                                                                                    } else {
+                                                                                                                                        echo "";
+                                                                                                                                    } ?>>
                                 Add amount
                             </button>
 
                             <!-- MODAL UPDATE MONTHLY DUES -->
-                            <div class="modal fade" id="updateMonthlyModal" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="updateMonthlyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             Do you really want to update this existing monthly due?
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="monthlyDuesUpdate"
-                                                onclick="location.href = '#settingsMonthlyDues'" type="submit"
-                                                class="btn btn-primary">Save changes</button>
+                                            <button name="monthlyDuesUpdate" type="submit" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btnClearReg" data-bs-toggle="modal"
-                                data-bs-target="#updateMonthlyModal">
+                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateMonthlyModal" <?php
+                                                                                                                                    if ($monthly_dues_id ?? '') {
+                                                                                                                                        echo "";
+                                                                                                                                    } else {
+                                                                                                                                        echo "disabled";
+                                                                                                                                    } ?>>
                                 Update Amount
                             </button>
                         </div>
@@ -463,11 +491,10 @@ $resultMonthly = $con->query("SELECT * FROM monthly_dues") or die($mysqli->error
                             <th>Amount</th>
                             <th>Updated at</th>
                         </thead>
-                        <?php while ($row = $resultMonthly->fetch_assoc()): ?>
+                        <?php while ($row = $resultMonthly->fetch_assoc()) : ?>
                             <tr>
                                 <td>
-                                    <a href="settingsMonthlydues.php?monthly_dues_id=<?php echo $row['monthly_dues_id']; ?>#settingsMonthlyDues"
-                                        class="btnEdit">Edit</a>
+                                    <a href="settingsMonthlydues.php?monthly_dues_id=<?php echo $row['monthly_dues_id']; ?>" class="btnEdit">Edit</a>
                                 </td>
                                 <td>
                                     <?php echo $row['subdivision_name'] ?>
@@ -485,10 +512,8 @@ $resultMonthly = $con->query("SELECT * FROM monthly_dues") or die($mysqli->error
     </div>
     <?php
     require '../marginals/footer2.php'
-        ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 

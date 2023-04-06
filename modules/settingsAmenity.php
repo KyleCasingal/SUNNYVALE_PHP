@@ -566,11 +566,11 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                 <tr>
                                     <td>Subdivision:</td>
                                     <td>
-                                        <select name="subdivision_name_purpose" id="subdivision_id">
+                                        <select name="subdivision_name_purpose" id="subdivision_id" required>
                                             <?php
                                             if ($amenity_purpose_id ?? '') {
                                                 while ($row = $resultSubdivision_selectPurpose->fetch_assoc()) :
-                                                    echo '<option value="' . $row['subdivision_id'] . '"';;
+                                                    echo '<option value="' . $row['subdivision_id'] . '"';
                                                     if (isset($_GET['amenity_purpose_id'])) {
                                                         if ($subdivision_name == $row['subdivision_name']) {
                                                             echo 'selected="selected"';
@@ -580,6 +580,9 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                                 endwhile;
                                             } else {
                                                 echo '<option value="0">Select...</option>';
+                                                while ($row = $resultSubdivision_selectPurpose->fetch_assoc()) :
+                                                    echo '<option value="' . $row['subdivision_id'] . '">' . $row['subdivision_name'] . '</option>';
+                                                endwhile;
                                             }
                                             ?>
                                         </select>
@@ -590,7 +593,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                         Amenity:
                                     </td>
                                     <td>
-                                        <select name="amenity" id="amenity_id">
+                                        <select name="amenity" id="amenity_id" required>
                                             <?php
                                             if ($amenity_purpose_id ?? '') {
                                                 while ($row = $resultAmenities_selectAmenities->fetch_assoc()) :
@@ -603,7 +606,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                                     echo 'disabled>' . $row['amenity_name'] . '</option>';
                                                 endwhile;
                                             } else {
-                                                echo "<option value='0'>Select Subdivision First...</option>";
+                                                echo "<option value=''>Select Subdivision First...</option>";
                                             }
                                             ?>
                                         </select>
