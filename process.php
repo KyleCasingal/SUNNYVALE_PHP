@@ -460,7 +460,7 @@ if (isset($_GET['amenity_id'])) {
     $subdivision_id = $row['subdivision_id'];
     $availability = $row['availability'];
   }
-} 
+}
 
 // UPDATING A ROW AMENITY
 if (isset($_POST['amenityUpdate'])) {
@@ -468,7 +468,7 @@ if (isset($_POST['amenityUpdate'])) {
   $amenity_name = $_POST['newAmenity'];
   $subdivision_id = $_POST['subdivision_id'];
   $availability = $_POST['availability'];
-  
+
   $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision WHERE subdivision_id = '$subdivision_id'") or die($mysqli->error);
   $row1 = $resultSubdivision_selectAmenities->fetch_assoc();
   $subdivision_name = $row1['subdivision_name'];
@@ -698,7 +698,7 @@ if (isset($_POST['officerUpdate'])) {
 // UPDATING MISSION VISION GOALS
 if (isset($_POST['missionVision'])) {
   $id = $_POST['missionVisionID'];
-  $description =mysqli_real_escape_string ($con, $_POST['description']);
+  $description = mysqli_real_escape_string($con, $_POST['description']);
   $con->query("UPDATE mission_vision SET description = '$description' WHERE id = '$id'");
   // $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   // $row = $result->fetch_assoc();
@@ -741,13 +741,13 @@ if (isset($_POST['concernOk'])) {
 }
 
 // UPDATING A CONCERN TO PROCESSING
-if(isset($_POST['concernProcess'])){
+if (isset($_POST['concernProcess'])) {
   $concern_id = $_POST['concern_id'];
   $con->query("UPDATE concern SET status = 'Processing', datetime = NOW() WHERE concern_id = '$concern_id'");
 }
 
 // UPDATING A CONCERN TO RESOLVED
-if(isset($_POST['concernResolved'])){
+if (isset($_POST['concernResolved'])) {
   $concern_id = $_POST['concern_id'];
   $con->query("UPDATE concern SET status = 'Resolved', datetime = NOW() WHERE concern_id = '$concern_id'");
 }
@@ -972,13 +972,23 @@ if (isset($_POST['checkout'])) {
   $fileName = '' . $_FILES['image']['name'];
   $targetFilePath = $targetDir . $fileName;
 
-  $resultID = $con->query("SELECT MAX(transaction_id) AS max FROM amenity_renting");
+  $resultID = $con->query("SELECT MAX(transaction_id) AS max FROM transaction");
   $rowID = $resultID->fetch_assoc();
   $max = $rowID['max'];
 
+  $resultUserID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+  $rowUserID = $resultUserID->fetch_assoc();
+
+  $resultSumTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting WHERE user_id = '" . $_SESSION['user_id'] . "'");
+  $rowSumTotal = $resultSumTotal->fetch_assoc();
+  $total_cost = $rowSumTotal['total_cost'];
+
   if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
-    $sql = "UPDATE amenity_renting SET cart = 'Pending', payment_proof = '$fileName', transaction_id = $max + 1 WHERE cart='Yes' AND user_id= '" . $_SESSION['user_id'] . "'";
+    $sql = "UPDATE amenity_renting SET cart = 'Pending', transaction_id = $max + 1 WHERE cart='Yes' AND user_id= '" . $_SESSION['user_id'] . "'";
     $result = mysqli_query($con, $sql);
+
+    $sql1 = "INSERT INTO transaction (user_id, renter_name, total_cost, payment_proof, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', '$fileName', 'Pending')";
+    $result1 = mysqli_query($con, $sql1);
   }
 }
 

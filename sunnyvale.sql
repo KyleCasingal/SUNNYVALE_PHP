@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Apr 07, 2023 at 11:13 AM
+-- Generation Time: Apr 07, 2023 at 11:21 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `amenities` (
   `subdivision_name` varchar(50) NOT NULL,
   `availability` varchar(50) NOT NULL,
   PRIMARY KEY (`amenity_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenities`
@@ -43,14 +43,13 @@ CREATE TABLE IF NOT EXISTS `amenities` (
 
 INSERT INTO `amenities` (`amenity_id`, `amenity_name`, `subdivision_id`, `subdivision_name`, `availability`) VALUES
 (1, 'Court', 1, 'Sunnyvale 1', 'Available'),
-(4, 'Multi-purpose Hall', 1, 'Sunnyvale 1', 'Available'),
+(4, 'Multi-purpose Hall', 2, 'Sunnyvale 2', 'Available'),
 (5, 'Swimming Pool', 1, 'Sunnyvale 1', 'Available'),
 (6, 'Clubhouse', 1, 'Sunnyvale 1', 'Unavailable'),
-(10, 'Clubhouse', 3, 'Sunnyvale 3', 'Available'),
+(10, 'Clubhouse', 3, 'Sunnyvale 3', 'Unavailable'),
 (16, 'Bathhouse', 1, 'Sunnyvale 1', 'Available'),
-(25, '123', 1, 'Sunnyvale 1', 'Available'),
-(24, 'asd', 1, 'Sunnyvale 1', 'Available'),
-(23, 'test', 1, 'Sunnyvale 1', 'Available');
+(31, 'Court', 4, 'Sunnyvale 4', 'Available'),
+(30, 'Court', 2, 'Sunnyvale 2', 'Available');
 
 -- --------------------------------------------------------
 
@@ -66,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `amenity_purpose` (
   `day_rate` int(10) NOT NULL,
   `night_rate` int(10) NOT NULL,
   PRIMARY KEY (`amenity_purpose_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenity_purpose`
@@ -78,7 +77,9 @@ INSERT INTO `amenity_purpose` (`amenity_purpose_id`, `amenity_id`, `amenity_purp
 (5, 5, 'Swimming', 50, 100),
 (8, 10, 'Party', 150, 300),
 (9, 1, 'Badminton', 50, 150),
-(10, 1, 'Chess', 80, 360);
+(10, 1, 'Chess', 80, 360),
+(11, 30, 'Chessboxing', 20, 30),
+(12, 30, 'Volleyball', 70, 480);
 
 -- --------------------------------------------------------
 
@@ -98,30 +99,28 @@ CREATE TABLE IF NOT EXISTS `amenity_renting` (
   `date_from` datetime DEFAULT NULL,
   `date_to` datetime DEFAULT NULL,
   `cost` int(11) DEFAULT NULL,
-  `payment_proof` varchar(255) DEFAULT NULL,
   `cart` varchar(10) NOT NULL,
   PRIMARY KEY (`amenity_renting_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenity_renting`
 --
 
-INSERT INTO `amenity_renting` (`amenity_renting_id`, `transaction_id`, `user_id`, `renter_name`, `subdivision_name`, `amenity_name`, `amenity_purpose`, `date_from`, `date_to`, `cost`, `payment_proof`, `cart`) VALUES
-(9, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-13 01:00:00', '2023-02-13 02:00:00', 50, NULL, 'Removed'),
-(8, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-12 18:00:00', '2023-02-12 21:00:00', 450, NULL, 'Removed'),
-(7, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-15 13:00:00', '2023-02-15 17:00:00', NULL, NULL, 'Removed'),
-(13, 1, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-14 09:00:00', '2023-02-14 21:00:00', 900, '328148270_726681382138928_1391919010667224674_n.png', 'Pending'),
-(12, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', NULL, NULL, NULL, NULL, 'Removed'),
-(14, 1, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '3', '2023-02-15 09:00:00', '2023-02-15 12:00:00', 150, '328148270_726681382138928_1391919010667224674_n.png', 'Pending'),
-(15, 1, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-16 18:00:00', '2023-02-16 21:00:00', 450, '328148270_726681382138928_1391919010667224674_n.png', 'Pending'),
-(16, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', NULL, NULL, NULL, NULL, 'Removed'),
-(17, 2, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '3', '2023-02-22 18:00:00', '2023-02-22 19:00:00', 150, 'Delima, Mon Carlo Z..png', 'Pending'),
-(18, 3, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-25 13:00:00', '2023-02-25 14:00:00', 50, '315887907_1137649846869408_655406644278059076_n.png', 'Pending'),
-(19, NULL, 48, 'SV1_Treasurer', 'Sunnyvale 1', 'Court', '3', '2023-03-12 02:00:00', '2023-03-12 15:00:00', 0, NULL, 'Approved'),
-(20, NULL, 48, 'SV1_Treasurer', 'Sunnyvale 1', 'Court', '3', NULL, NULL, NULL, NULL, 'Removed'),
-(21, 4, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '9', '2023-04-06 06:00:00', '2023-04-06 08:00:00', 100, NULL, 'Pending'),
-(22, 4, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '10', '2023-04-06 09:00:00', '2023-04-06 10:00:00', 80, NULL, 'Pending');
+INSERT INTO `amenity_renting` (`amenity_renting_id`, `transaction_id`, `user_id`, `renter_name`, `subdivision_name`, `amenity_name`, `amenity_purpose`, `date_from`, `date_to`, `cost`, `cart`) VALUES
+(9, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-13 01:00:00', '2023-02-13 02:00:00', 50, 'Removed'),
+(8, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-12 18:00:00', '2023-02-12 21:00:00', 450, 'Removed'),
+(7, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-15 13:00:00', '2023-02-15 17:00:00', NULL, 'Removed'),
+(13, 1, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-14 09:00:00', '2023-02-14 21:00:00', 900, 'Pending'),
+(12, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', NULL, NULL, NULL, 'Removed'),
+(14, 1, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '3', '2023-02-15 09:00:00', '2023-02-15 12:00:00', 150, 'Pending'),
+(15, 1, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-16 18:00:00', '2023-02-16 21:00:00', 450, 'Pending'),
+(16, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', NULL, NULL, NULL, 'Removed'),
+(19, NULL, 48, 'SV1_Treasurer', 'Sunnyvale 1', 'Court', '3', '2023-03-12 02:00:00', '2023-03-12 15:00:00', 0, 'Approved'),
+(20, NULL, 48, 'SV1_Treasurer', 'Sunnyvale 1', 'Court', '3', NULL, NULL, NULL, 'Removed'),
+(25, 3, 1, 'Mon Carlo Delima', 'Sunnyvale 3', 'Clubhouse', '8', '2023-04-15 01:00:00', '2023-04-15 02:00:00', 150, 'Pending'),
+(23, 2, 48, 'SV1_Treasurer', 'Sunnyvale 2', 'Court', '11', '2023-04-08 08:00:00', '2023-04-08 10:00:00', 40, 'Pending'),
+(24, 2, 48, 'SV1_Treasurer', 'Sunnyvale 2', 'Court', '12', '2023-04-08 10:00:00', '2023-04-08 12:00:00', 140, 'Pending');
 
 -- --------------------------------------------------------
 
@@ -165,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=720 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=787 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -876,7 +875,74 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (716, 'SV1_Admin', 'logged out', '2023-04-07 11:10:44'),
 (717, 'Mon Carlo Delima', 'logged in', '2023-04-07 11:10:47'),
 (718, 'Mon Carlo Delima', 'logged out', '2023-04-07 11:11:36'),
-(719, 'SV1_Admin', 'logged in', '2023-04-07 11:11:39');
+(719, 'SV1_Admin', 'logged in', '2023-04-07 11:11:39'),
+(720, 'SV1_Admin', 'logged in', '2023-04-07 13:54:39'),
+(721, 'SV1_Admin', 'logged out', '2023-04-07 13:58:16'),
+(722, 'SV1_Treasurer', 'logged in', '2023-04-07 13:58:18'),
+(723, 'SV1_Treasurer', 'logged out', '2023-04-07 13:58:45'),
+(724, 'SV1_Admin', 'logged in', '2023-04-07 13:58:54'),
+(725, 'SV1_Admin', 'added a new amenity Sunnyvale 2-test2', '2023-04-07 14:05:46'),
+(726, 'SV1_Admin', 'updated an exisiting amenity 2-Court', '2023-04-07 14:19:24'),
+(727, 'SV1_Admin', 'updated an exisiting amenity 2-Court', '2023-04-07 14:19:31'),
+(728, 'SV1_Admin', 'updated an exisiting amenity 2-Court', '2023-04-07 14:19:39'),
+(729, 'SV1_Admin', 'updated an exisiting amenity 2-Court', '2023-04-07 14:20:00'),
+(730, 'SV1_Admin', 'updated an exisiting amenity 2-Court', '2023-04-07 14:20:06'),
+(731, 'SV1_Admin', 'updated an exisiting amenity 1-Court', '2023-04-07 14:20:29'),
+(732, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 2-Court', '2023-04-07 14:27:12'),
+(733, 'SV1_Admin', 'updated an exisiting amenity -Court', '2023-04-07 14:33:06'),
+(734, 'SV1_Admin', 'updated an exisiting amenity -Court', '2023-04-07 14:33:28'),
+(735, 'SV1_Admin', 'updated an exisiting amenity -Multi-purpose Hall', '2023-04-07 14:34:02'),
+(736, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 1-Court', '2023-04-07 14:35:05'),
+(737, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 2-Multi-purpose Hall', '2023-04-07 14:35:08'),
+(738, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 2-Court', '2023-04-07 14:35:17'),
+(739, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 1-Court', '2023-04-07 14:35:58'),
+(740, 'SV1_Admin', 'added a new amenity -test4', '2023-04-07 14:36:19'),
+(741, 'SV1_Admin', 'added a new amenity -test4', '2023-04-07 14:36:56'),
+(742, 'SV1_Admin', 'added a new amenity -test4', '2023-04-07 14:37:16'),
+(743, 'SV1_Admin', 'added a new amenity Sunnyvale 4-test4', '2023-04-07 14:37:44'),
+(744, 'SV1_Admin', 'added a new amenity Sunnyvale 4-test123', '2023-04-07 14:38:18'),
+(745, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 4-test12345', '2023-04-07 14:38:42'),
+(746, 'SV1_Admin', 'added a new amenity Sunnyvale 3-test again', '2023-04-07 14:39:03'),
+(747, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 3-Clubhouse', '2023-04-07 14:39:36'),
+(748, 'SV1_Admin', 'added a new amenity Sunnyvale 2-Court', '2023-04-07 14:40:15'),
+(749, 'SV1_Admin', 'updated an exisiting amenity -', '2023-04-07 14:54:02'),
+(750, 'SV1_Admin', 'updated an exisiting amenity -', '2023-04-07 14:54:12'),
+(751, 'SV1_Admin', 'updated an existing monthly due Sunnyvale 2-280.00', '2023-04-07 15:00:31'),
+(752, 'SV1_Admin', 'logged out', '2023-04-07 15:05:14'),
+(753, 'Mon Carlo Delima', 'logged in', '2023-04-07 15:05:17'),
+(754, 'Mon Carlo Delima', 'logged out', '2023-04-07 15:05:36'),
+(755, 'SV1_Admin', 'logged in', '2023-04-07 15:05:38'),
+(756, 'SV1_Admin', 'logged out', '2023-04-07 15:07:08'),
+(757, 'Mon Carlo Delima', 'logged in', '2023-04-07 15:07:11'),
+(758, 'Mon Carlo Delima', 'logged out', '2023-04-07 15:07:35'),
+(759, 'SV1_Admin', 'logged in', '2023-04-07 15:07:38'),
+(760, 'SV1_Admin', 'added a new amenity Sunnyvale 4-Court', '2023-04-07 15:08:22'),
+(761, 'SV1_Admin', 'logged out', '2023-04-07 15:13:49'),
+(762, 'Mon Carlo Delima', 'logged in', '2023-04-07 15:13:54'),
+(763, 'Mon Carlo Delima', 'logged out', '2023-04-07 15:14:46'),
+(764, 'SV1_Admin', 'logged in', '2023-04-07 15:14:48'),
+(765, 'SV1_Treasurer', 'logged in', '2023-04-07 19:43:08'),
+(766, 'SV1_Treasurer', 'logged out', '2023-04-07 19:43:35'),
+(767, 'SV1_Secretary', 'logged in', '2023-04-07 19:43:38'),
+(768, 'SV1_Secretary', 'logged out', '2023-04-07 19:43:44'),
+(769, 'SV1_Treasurer', 'logged in', '2023-04-07 19:43:46'),
+(770, 'SV1_Treasurer', 'logged out', '2023-04-07 19:49:20'),
+(771, 'SV1_Admin', 'logged in', '2023-04-07 19:49:24'),
+(772, 'SV1_Admin', 'logged out', '2023-04-07 19:49:27'),
+(773, 'SV1_Treasurer', 'logged in', '2023-04-07 19:49:32'),
+(774, 'SV1_Admin', 'logged in', '2023-04-07 20:10:49'),
+(775, 'SV1_Treasurer', 'logged out', '2023-04-07 21:16:13'),
+(776, 'SV1_Treasurer', 'logged in', '2023-04-07 21:16:18'),
+(777, 'SV1_Treasurer', 'logged out', '2023-04-07 21:40:59'),
+(778, 'SV1_Treasurer', 'logged in', '2023-04-07 21:41:02'),
+(779, 'SV1_Treasurer', 'logged out', '2023-04-07 22:20:03'),
+(780, 'SV1_Admin', 'logged in', '2023-04-07 22:20:07'),
+(781, 'SV1_Admin', 'logged out', '2023-04-07 22:20:24'),
+(782, 'SV1_Treasurer', 'logged in', '2023-04-07 22:20:30'),
+(783, 'SV1_Treasurer', 'logged out', '2023-04-07 22:54:40'),
+(784, 'Mon Carlo Delima', 'logged in', '2023-04-07 22:54:42'),
+(785, 'Mon Carlo Delima', 'logged out', '2023-04-07 22:55:26'),
+(786, 'SV1_Treasurer', 'logged in', '2023-04-07 22:55:30');
 
 -- --------------------------------------------------------
 
@@ -983,9 +1049,9 @@ CREATE TABLE IF NOT EXISTS `concern` (
 --
 
 INSERT INTO `concern` (`concern_id`, `complainant_homeowner_id`, `full_name`, `complainee_homeowner_id`, `complainee_full_name`, `concern_subject`, `concern_description`, `status`, `datetime`, `datetime_submitted`) VALUES
-(1, 1, 'Mon Carlo Delima', NULL, NULL, 'This is a Concern', 'I am very Concern', 'Processing', '2023-04-06 23:40:55', '2023-04-06 23:33:30'),
-(2, 16, 'Janwel Castillo', 1, 'Mon Carlo Delima', 'Ipapa tulfo kita', 'wahahahaha', 'Processing', '2023-04-06 23:46:54', '2023-04-06 23:44:02'),
-(3, 1, 'Mon Carlo Delima', 16, 'Janwel Castillo', 'Pwede bang mamaya na', 'Sorry camera', 'Pending', '2023-04-06 23:59:18', '2023-04-06 23:59:18');
+(1, 1, 'Mon Carlo Delima', NULL, NULL, 'This is a Concern', 'I am very Concern', 'Resolved', '2023-04-07 15:07:44', '2023-04-06 23:33:30'),
+(2, 16, 'Janwel Castillo', 1, 'Mon Carlo Delima', 'Ipapa tulfo kita', 'wahahahaha', 'Resolved', '2023-04-07 15:07:47', '2023-04-06 23:44:02'),
+(3, 1, 'Mon Carlo Delima', 16, 'Janwel Castillo', 'Pwede bang mamaya na', 'Sorry camera', 'Pending', '2023-04-07 15:13:42', '2023-04-06 23:59:18');
 
 -- --------------------------------------------------------
 
@@ -1084,7 +1150,7 @@ CREATE TABLE IF NOT EXISTS `monthly_dues` (
 
 INSERT INTO `monthly_dues` (`monthly_dues_id`, `subdivision_id`, `subdivision_name`, `amount`, `updated_at`) VALUES
 (1, 1, 'Sunnyvale 1', 200, '2022-11-27'),
-(2, 2, 'Sunnyvale 2', 250, '2022-11-27'),
+(2, 2, 'Sunnyvale 2', 280, '2023-04-07'),
 (3, 3, 'Sunnyvale 3', 500, '2022-11-29'),
 (4, 4, 'Sunnyvale 4', 350, '2022-11-27');
 
@@ -1241,6 +1307,32 @@ INSERT INTO `subdivision` (`subdivision_id`, `subdivision_name`, `barangay`) VAL
 (2, 'Sunnyvale 2', 'Palangoy'),
 (3, 'Sunnyvale 3', 'Palangoy'),
 (4, 'Sunnyvale 4', 'Pantok');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transaction`
+--
+
+DROP TABLE IF EXISTS `transaction`;
+CREATE TABLE IF NOT EXISTS `transaction` (
+  `transaction_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `renter_name` varchar(255) NOT NULL,
+  `total_cost` int(11) DEFAULT NULL,
+  `payment_proof` varchar(255) DEFAULT NULL,
+  `status` varchar(10) NOT NULL,
+  PRIMARY KEY (`transaction_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `transaction`
+--
+
+INSERT INTO `transaction` (`transaction_id`, `user_id`, `renter_name`, `total_cost`, `payment_proof`, `status`) VALUES
+(1, 1, 'Mon Carlo Delima', 1500, '315887907_1137649846869408_655406644278059076_n.png', 'Pending'),
+(2, 48, 'SV1_Treasurer', 180, '315887907_1137649846869408_655406644278059076_n.png', 'Pending'),
+(3, 1, 'Mon Carlo Delima', 2150, '328148270_726681382138928_1391919010667224674_n.png', 'Pending');
 
 -- --------------------------------------------------------
 

@@ -222,6 +222,17 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     width: 100%;
     overflow-y: scroll;
   }
+
+  .lblSettings {
+    font-size: 2vw;
+    font-family: "Poppins", sans-serif;
+    margin-top: 1vw;
+    margin-left: 2vw;
+    margin-bottom: -2vw;
+    padding: 0;
+    color: rgb(89, 89, 89);
+    font-weight: 800;
+  }
 </style>
 <script type="text/javascript">
   if (window.history.replaceState) {
@@ -349,9 +360,10 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
 <body>
   <div class="treasurer">
     <?php require '../marginals/sidebarTreasurerPanel.php'; ?>
-    <div class="treasurerPanel">
-      <form method="post" enctype="multipart/form-data">
 
+    <div class="treasurerPanel">
+      <label class="lblSettings" id="amenity">Amenity Renting</label>
+      <form method="post" enctype="multipart/form-data">
         <div class='amenities'>
           <div class="amenitiesForm">
             <label>Name</label>

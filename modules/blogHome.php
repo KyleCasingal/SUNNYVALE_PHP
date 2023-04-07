@@ -470,12 +470,10 @@ $rowUser = $resultUser->fetch_assoc();
       </div>
       <?php while ($row = $result->fetch_assoc()) : ?>
         <div class="blogPost">
-
           <div class="blogProfile">
             <img class="avatarBlog" <?php
                                     $imageURL = '../media/displayPhotos/' . $row['display_picture'];
                                     ?> src="<?= $imageURL ?>" alt="" />
-
             <div class="profileText">
               <p class="profileName"><?php echo $row['full_name']; ?></p>
               <p class="profileDate">
@@ -484,14 +482,12 @@ $rowUser = $resultUser->fetch_assoc();
                 echo $phptime = date("g:i A m/d/y", $datetime);
                 ?>
               </p>
-
             </div>
             <?php
             if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
               echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='btn btn-danger'>ARCHIVE</a>";
             }
             ?>
-
           </div>
           <div class="postContent">
             <img class="postImg" <?php
@@ -506,7 +502,6 @@ $rowUser = $resultUser->fetch_assoc();
         </div>
       <?php endwhile; ?>
     </div>
-
     <div class="sideContent">
       <div class="sideText">
         <label class="sideTitle">Announcements</label>
