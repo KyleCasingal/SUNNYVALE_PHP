@@ -261,6 +261,14 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
         background-color: rgb(93, 151, 93);
     }
 
+    .btnSubmitReg:disabled {
+        background-color: rgb(40, 68, 40);
+    }
+
+    .btnSubmitReg[disabled]:hover {
+        background-color: rgb(40, 68, 40);
+    }
+
     .btnClearReg {
         background-color: lightcoral;
         border: 0;
@@ -277,6 +285,14 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
 
     .btnClearReg:hover {
         background-color: rgb(180, 83, 83);
+    }
+
+    .btnClearReg:disabled {
+        background-color: rgb(97, 45, 45);
+    }
+
+    .btnClearReg[disabled]:hover {
+        background-color: rgb(97, 45, 45);
     }
 
     .lblRegistration {
@@ -360,8 +376,6 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
     .tbl tr:hover {
         background-color: rgb(211, 211, 211);
     }
-
-
 </style>
 
 
@@ -455,13 +469,18 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                         Do you really want to add this new system account?
                                     </div>
                                     <div class="modal-footer">
-                                        <button name="sysAccAdd" onclick="location.href = '#settingsSystemAccounts'" type="submit" class="btn btn-primary">Save changes</button>
+                                        <button name="sysAccAdd" type="submit" class="btn btn-primary">Save changes</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="btnArea">
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#addSysAcc" class="btnSubmitReg">
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#addSysAcc" class="btnSubmitReg" <?php
+                                                                                                                            if ($account_id ?? '') {
+                                                                                                                                echo "disabled";
+                                                                                                                            } else {
+                                                                                                                                echo "";
+                                                                                                                            } ?>>
                                 Add Account
                             </button>
 
@@ -477,13 +496,37 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                             Do you really want to update this existing account?
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="sysAccUpdate" type="submit" onclick="location.href = '#settingsSystemAccounts'" class="btn btn-primary">Save changes</button>
+                                            <button name="sysAccUpdate" type="submit" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateSysAcc" class="btnSubmitReg">
+                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateSysAcc" class="btnSubmitReg" <?php
+                                                                                                                                                    if ($account_id ?? '') {
+                                                                                                                                                        echo "";
+                                                                                                                                                    } else {
+                                                                                                                                                        echo "disabled";
+                                                                                                                                                    } ?>>
                                 Update Account
+                            </button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            This will clear all fields!
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" onclick="location.href='settingsSystemAcc.php'">Clear</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" value="" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Clear
                             </button>
                         </div>
                     </form>
@@ -502,7 +545,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                         <?php while ($row = $resultSysAcc->fetch_assoc()) : ?>
                             <tr>
                                 <td>
-                                    <a href="settingsSystemAcc.php?user_id=<?php echo $row['user_id']; ?>#settingsSystemAccounts" class="btnEdit">Edit</a>
+                                    <a href="settingsSystemAcc.php?user_id=<?php echo $row['user_id']; ?>" class="btnEdit">Edit</a>
                                 </td>
                                 <td><?php echo $row['full_name'] ?></td>
                                 <td><?php echo $row['password'] ?></td>

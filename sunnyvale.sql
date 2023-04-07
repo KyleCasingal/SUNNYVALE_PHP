@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Apr 05, 2023 at 01:22 PM
+-- Generation Time: Apr 07, 2023 at 11:13 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `amenity_renting` (
   `payment_proof` varchar(255) DEFAULT NULL,
   `cart` varchar(10) NOT NULL,
   PRIMARY KEY (`amenity_renting_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenity_renting`
@@ -119,7 +119,9 @@ INSERT INTO `amenity_renting` (`amenity_renting_id`, `transaction_id`, `user_id`
 (17, 2, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '3', '2023-02-22 18:00:00', '2023-02-22 19:00:00', 150, 'Delima, Mon Carlo Z..png', 'Pending'),
 (18, 3, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-25 13:00:00', '2023-02-25 14:00:00', 50, '315887907_1137649846869408_655406644278059076_n.png', 'Pending'),
 (19, NULL, 48, 'SV1_Treasurer', 'Sunnyvale 1', 'Court', '3', '2023-03-12 02:00:00', '2023-03-12 15:00:00', 0, NULL, 'Approved'),
-(20, NULL, 48, 'SV1_Treasurer', 'Sunnyvale 1', 'Court', '3', NULL, NULL, NULL, NULL, 'Yes');
+(20, NULL, 48, 'SV1_Treasurer', 'Sunnyvale 1', 'Court', '3', NULL, NULL, NULL, NULL, 'Removed'),
+(21, 4, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '9', '2023-04-06 06:00:00', '2023-04-06 08:00:00', 100, NULL, 'Pending'),
+(22, 4, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '10', '2023-04-06 09:00:00', '2023-04-06 10:00:00', 80, NULL, 'Pending');
 
 -- --------------------------------------------------------
 
@@ -163,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=508 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=720 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -662,7 +664,219 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (504, 'SV1_Admin', 'updated an exisiting amenity Sunnyvale 1-Court', '2023-04-05 10:45:57'),
 (505, 'SV1_Admin', 'added a new amenity Sunnyvale 1-test', '2023-04-05 11:16:56'),
 (506, 'SV1_Admin', 'added a new amenity Sunnyvale 1-asd', '2023-04-05 11:26:30'),
-(507, 'SV1_Admin', 'added a new amenity Sunnyvale 1-123', '2023-04-05 11:27:51');
+(507, 'SV1_Admin', 'added a new amenity Sunnyvale 1-123', '2023-04-05 11:27:51'),
+(508, 'SV1_Admin', 'logged out', '2023-04-06 09:58:53'),
+(509, 'Mon Carlo Delima', 'logged in', '2023-04-06 09:58:56'),
+(510, 'Mon Carlo Delima', 'logged out', '2023-04-06 10:00:36'),
+(511, 'Jeune Paolus Flores', 'logged in', '2023-04-06 10:00:44'),
+(512, 'Jeune Paolus Flores', 'logged out', '2023-04-06 10:01:02'),
+(513, 'SV1_Admin', 'logged in', '2023-04-06 10:01:20'),
+(514, 'SV1_Admin', 'logged out', '2023-04-06 10:01:27'),
+(515, 'SV1_Admin', 'logged in', '2023-04-06 10:01:30'),
+(516, 'SV1_Admin', 'logged out', '2023-04-06 10:03:33'),
+(517, 'SV1_Secretary', 'logged in', '2023-04-06 10:03:38'),
+(518, 'SV1_Secretary', 'logged out', '2023-04-06 10:04:45'),
+(519, 'SV1_Secretary', 'logged in', '2023-04-06 10:04:53'),
+(520, 'SV1_Secretary', 'logged out', '2023-04-06 10:06:55'),
+(521, 'SV1_Admin', 'logged in', '2023-04-06 10:06:59'),
+(522, 'SV1_Admin', 'logged out', '2023-04-06 10:08:27'),
+(523, 'SV1_Secretary', 'logged in', '2023-04-06 10:08:31'),
+(524, 'SV1_Secretary', 'logged out', '2023-04-06 10:09:34'),
+(525, 'SV1_Treasurer', 'logged in', '2023-04-06 10:09:36'),
+(526, 'SV1_Treasurer', 'logged out', '2023-04-06 10:10:32'),
+(527, 'SV1_Secretary', 'logged in', '2023-04-06 10:10:35'),
+(528, 'SV1_Secretary', 'logged out', '2023-04-06 10:10:41'),
+(529, 'SV1_Admin', 'logged in', '2023-04-06 10:10:45'),
+(530, 'SV1_Admin', 'logged out', '2023-04-06 10:11:18'),
+(531, 'SV1_Secretary', 'logged in', '2023-04-06 10:11:20'),
+(532, 'SV1_Secretary', 'logged out', '2023-04-06 10:12:09'),
+(533, 'SV1_Secretary', 'logged in', '2023-04-06 10:12:12'),
+(534, 'SV1_Secretary', 'logged out', '2023-04-06 10:22:12'),
+(535, 'SV1_Admin', 'logged in', '2023-04-06 10:22:15'),
+(536, 'SV1_Admin', 'logged out', '2023-04-06 10:22:34'),
+(537, 'SV1_Secretary', 'logged in', '2023-04-06 10:22:38'),
+(538, 'SV1_Secretary', 'logged out', '2023-04-06 10:24:07'),
+(539, 'SV1_Admin', 'logged in', '2023-04-06 10:24:11'),
+(540, 'SV1_Admin', 'logged out', '2023-04-06 10:27:39'),
+(541, 'SV1_Admin', 'logged in', '2023-04-06 10:27:41'),
+(542, 'SV1_Admin', 'logged out', '2023-04-06 10:31:33'),
+(543, 'SV1_Admin', 'logged in', '2023-04-06 10:31:39'),
+(544, 'SV1_Admin', 'logged out', '2023-04-06 10:31:54'),
+(545, 'SV1_Secretary', 'logged in', '2023-04-06 10:31:59'),
+(546, 'SV1_Secretary', 'logged out', '2023-04-06 10:32:01'),
+(547, 'Kyle Andrei Casingal', 'logged in', '2023-04-06 10:32:42'),
+(548, 'Kyle Andrei Casingal', 'logged out', '2023-04-06 10:33:06'),
+(549, 'SV1_Admin', 'logged in', '2023-04-06 10:33:20'),
+(550, 'SV1_Admin', 'logged out', '2023-04-06 10:33:52'),
+(551, 'SV1_Admin', 'logged in', '2023-04-06 10:33:56'),
+(552, 'SV1_Admin', 'logged out', '2023-04-06 10:45:07'),
+(553, 'SV1_Admin', 'logged in', '2023-04-06 10:46:25'),
+(554, 'SV1_Admin', 'logged out', '2023-04-06 10:51:03'),
+(555, 'SV1_Admin', 'logged in', '2023-04-06 10:51:08'),
+(556, 'SV1_Admin', 'logged out', '2023-04-06 10:51:10'),
+(557, 'Mon Carlo Delima', 'logged in', '2023-04-06 10:51:12'),
+(558, 'Mon Carlo Delima', 'logged out', '2023-04-06 10:52:45'),
+(559, 'Mon Carlo Delima', 'logged in', '2023-04-06 10:52:48'),
+(560, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 10:52:51'),
+(561, 'Mon Carlo Delima', 'logged out', '2023-04-06 10:53:03'),
+(562, 'SV1_Admin', 'logged in', '2023-04-06 10:53:06'),
+(563, 'SV1_Admin', 'logged out', '2023-04-06 10:53:18'),
+(564, 'SV1_Admin', 'logged in', '2023-04-06 10:53:21'),
+(565, 'SV1_Admin', 'logged out', '2023-04-06 10:53:22'),
+(566, 'Mon Carlo Delima', 'logged in', '2023-04-06 10:53:27'),
+(567, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 10:54:16'),
+(568, 'Mon Carlo Delima', 'logged out', '2023-04-06 11:00:35'),
+(569, 'Mon Carlo Delima', 'logged in', '2023-04-06 11:04:00'),
+(570, 'Mon Carlo Delima', 'logged in', '2023-04-06 14:00:15'),
+(571, 'Mon Carlo Delima', 'logged out', '2023-04-06 14:06:53'),
+(572, 'SV1_Treasurer', 'logged in', '2023-04-06 14:06:57'),
+(573, 'SV1_Treasurer', 'logged out', '2023-04-06 14:07:51'),
+(574, 'SV1_Treasurer', 'logged in', '2023-04-06 14:09:56'),
+(575, 'SV1_Treasurer', 'logged out', '2023-04-06 14:11:24'),
+(576, 'Mon Carlo Delima', 'logged in', '2023-04-06 14:11:28'),
+(577, 'Mon Carlo Delima', 'logged out', '2023-04-06 14:21:49'),
+(578, 'SV1_Admin', 'logged in', '2023-04-06 14:21:57'),
+(579, 'SV1_Admin', 'logged out', '2023-04-06 14:26:51'),
+(580, 'SV1_Admin', 'logged in', '2023-04-06 14:26:54'),
+(581, 'SV1_Admin', 'logged out', '2023-04-06 14:30:27'),
+(582, 'Mon Carlo Delima', 'logged in', '2023-04-06 14:30:30'),
+(583, 'Mon Carlo Delima', 'logged in', '2023-04-06 15:19:28'),
+(584, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 15:34:28'),
+(585, 'Mon Carlo Delima', 'logged out', '2023-04-06 16:03:03'),
+(586, 'Kyle Andrei Casingal', 'logged in', '2023-04-06 16:03:06'),
+(587, 'Kyle Andrei Casingal', 'logged out', '2023-04-06 16:03:14'),
+(588, 'SV1_Admin', 'logged in', '2023-04-06 16:03:17'),
+(589, 'SV1_Admin', 'logged out', '2023-04-06 16:03:26'),
+(590, 'Mon Carlo Delima', 'logged in', '2023-04-06 16:03:29'),
+(591, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 16:03:47'),
+(592, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 16:04:20'),
+(593, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 16:04:50'),
+(594, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 16:05:27'),
+(595, 'Mon Carlo Delima', 'logged out', '2023-04-06 16:06:44'),
+(596, 'SV1_Admin', 'logged in', '2023-04-06 17:31:45'),
+(597, 'SV1_Admin', 'logged out', '2023-04-06 17:35:09'),
+(598, 'SV1_Treasurer', 'logged in', '2023-04-06 17:35:12'),
+(599, 'SV1_Treasurer', 'logged out', '2023-04-06 17:35:31'),
+(600, 'SV1_Secretary', 'logged in', '2023-04-06 17:35:35'),
+(601, 'SV1_Secretary', 'logged out', '2023-04-06 17:35:42'),
+(602, 'SV1_Admin', 'logged in', '2023-04-06 17:35:46'),
+(603, 'SV1_Admin', 'logged out', '2023-04-06 17:38:07'),
+(604, 'SV1_Secretary', 'logged in', '2023-04-06 17:38:12'),
+(605, 'SV1_Secretary', 'logged out', '2023-04-06 17:40:00'),
+(606, 'SV1_Admin', 'logged in', '2023-04-06 17:40:03'),
+(607, 'SV1_Admin', 'logged out', '2023-04-06 17:42:56'),
+(608, 'SV1_Secretary', 'logged in', '2023-04-06 17:42:59'),
+(609, 'SV1_Secretary', 'logged out', '2023-04-06 17:43:10'),
+(610, 'SV1_Admin', 'logged in', '2023-04-06 17:43:13'),
+(611, 'SV1_Admin', 'logged out', '2023-04-06 17:44:36'),
+(612, 'SV1_Secretary', 'logged in', '2023-04-06 17:44:39'),
+(613, 'SV1_Secretary', 'logged out', '2023-04-06 17:44:51'),
+(614, 'SV1_Treasurer', 'logged in', '2023-04-06 17:44:53'),
+(615, 'SV1_Treasurer', 'logged out', '2023-04-06 17:45:26'),
+(616, 'SV1_Secretary', 'logged in', '2023-04-06 17:45:30'),
+(617, 'SV1_Secretary', 'logged out', '2023-04-06 17:45:57'),
+(618, 'SV1_Secretary', 'logged in', '2023-04-06 17:46:01'),
+(619, 'SV1_Secretary', 'logged out', '2023-04-06 17:46:02'),
+(620, 'SV1_Admin', 'logged in', '2023-04-06 17:46:05'),
+(621, 'SV1_Admin', 'logged out', '2023-04-06 17:47:43'),
+(622, 'SV1_Admin', 'logged in', '2023-04-06 17:48:47'),
+(623, 'SV1_Admin', 'logged out', '2023-04-06 18:38:13'),
+(624, 'SV1_Admin', 'logged in', '2023-04-06 18:48:42'),
+(625, 'SV1_Admin', 'logged out', '2023-04-06 18:52:05'),
+(626, 'SV1_Admin', 'logged in', '2023-04-06 18:52:54'),
+(627, 'SV1_Admin', 'logged out', '2023-04-06 18:59:11'),
+(628, 'SV1_Secretary', 'logged in', '2023-04-06 18:59:56'),
+(629, 'SV1_Secretary', 'logged out', '2023-04-06 19:01:01'),
+(630, 'SV1_Admin', 'logged in', '2023-04-06 19:01:04'),
+(631, 'SV1_Admin', 'logged in', '2023-04-06 22:02:03'),
+(632, 'SV1_Admin', 'logged out', '2023-04-06 22:05:25'),
+(633, 'SV1_Admin', 'logged in', '2023-04-06 22:05:28'),
+(634, 'SV1_Admin', 'logged out', '2023-04-06 22:11:16'),
+(635, 'SV1_Admin', 'logged in', '2023-04-06 22:11:20'),
+(636, 'SV1_Admin', 'logged out', '2023-04-06 22:47:30'),
+(637, 'Mon Carlo Delima', 'logged in', '2023-04-06 22:47:33'),
+(638, 'Mon Carlo Delima', 'logged out', '2023-04-06 22:47:49'),
+(639, 'SV1_Admin', 'logged in', '2023-04-06 22:47:51'),
+(640, 'SV1_Admin', 'logged out', '2023-04-06 23:10:35'),
+(641, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:10:38'),
+(642, 'Mon Carlo Delima', 'logged out', '2023-04-06 23:11:41'),
+(643, 'SV1_Admin', 'logged in', '2023-04-06 23:11:44'),
+(644, 'SV1_Admin', 'logged out', '2023-04-06 23:16:33'),
+(645, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:16:37'),
+(646, 'Mon Carlo Delima', 'logged out', '2023-04-06 23:27:22'),
+(647, 'SV1_Admin', 'logged in', '2023-04-06 23:27:25'),
+(648, 'SV1_Admin', 'logged out', '2023-04-06 23:30:08'),
+(649, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:30:11'),
+(650, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 23:30:23'),
+(651, 'Mon Carlo Delima', 'logged out', '2023-04-06 23:30:41'),
+(652, 'SV1_Admin', 'logged in', '2023-04-06 23:30:46'),
+(653, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:33:18'),
+(654, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 23:33:30'),
+(655, 'SV1_Admin', 'logged out', '2023-04-06 23:37:32'),
+(656, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:37:36'),
+(657, 'Mon Carlo Delima', 'logged out', '2023-04-06 23:40:49'),
+(658, 'SV1_Admin', 'logged in', '2023-04-06 23:40:51'),
+(659, 'SV1_Admin', 'logged out', '2023-04-06 23:40:56'),
+(660, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:40:59'),
+(661, 'Mon Carlo Delima', 'logged out', '2023-04-06 23:42:33'),
+(662, 'Janwel Castillo', 'logged in', '2023-04-06 23:43:43'),
+(663, 'Janwel Castillo', 'submitted a concern', '2023-04-06 23:44:02'),
+(664, 'Janwel Castillo', 'logged out', '2023-04-06 23:44:11'),
+(665, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:44:15'),
+(666, 'Mon Carlo Delima', 'logged out', '2023-04-06 23:46:46'),
+(667, 'SV1_Admin', 'logged in', '2023-04-06 23:46:49'),
+(668, 'SV1_Admin', 'logged out', '2023-04-06 23:46:56'),
+(669, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:47:00'),
+(670, 'Mon Carlo Delima', 'logged out', '2023-04-06 23:58:48'),
+(671, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:58:52'),
+(672, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 23:59:18'),
+(673, 'Mon Carlo Delima', 'logged out', '2023-04-07 00:00:16'),
+(674, 'SV1_Admin', 'logged in', '2023-04-07 00:04:34'),
+(675, 'SV1_Admin', 'logged in', '2023-04-07 09:43:45'),
+(676, 'SV1_Admin', 'logged out', '2023-04-07 09:44:32'),
+(677, 'Mon Carlo Delima', 'logged in', '2023-04-07 09:44:34'),
+(678, 'Mon Carlo Delima', 'logged out', '2023-04-07 09:46:39'),
+(679, 'SV1_Admin', 'logged in', '2023-04-07 09:46:42'),
+(680, 'SV1_Admin', 'added a new system account Test-Admin', '2023-04-07 09:49:47'),
+(681, 'SV1_Admin', 'logged out', '2023-04-07 09:59:20'),
+(682, 'Mon Carlo Delima', 'logged in', '2023-04-07 09:59:23'),
+(683, 'Mon Carlo Delima', 'logged out', '2023-04-07 09:59:28'),
+(684, 'SV1_Admin', 'logged in', '2023-04-07 09:59:33'),
+(685, 'SV1_Admin', 'logged in', '2023-04-07 10:20:46'),
+(686, 'SV1_Admin', 'logged out', '2023-04-07 10:25:40'),
+(687, 'SV1_Admin', 'logged in', '2023-04-07 10:25:43'),
+(688, 'SV1_Admin', 'logged out', '2023-04-07 10:32:49'),
+(689, 'Mon Carlo Delima', 'logged in', '2023-04-07 10:32:52'),
+(690, 'Mon Carlo Delima', 'logged out', '2023-04-07 10:36:50'),
+(691, 'SV1_Admin', 'logged in', '2023-04-07 10:36:53'),
+(692, 'SV1_Admin', 'logged out', '2023-04-07 10:36:59'),
+(693, 'Mon Carlo Delima', 'logged in', '2023-04-07 10:37:02'),
+(694, 'Mon Carlo Delima', 'logged out', '2023-04-07 10:38:51'),
+(695, 'SV1_Admin', 'logged in', '2023-04-07 10:38:53'),
+(696, 'SV1_Admin', 'logged out', '2023-04-07 10:39:05'),
+(697, 'Mon Carlo Delima', 'logged in', '2023-04-07 10:39:08'),
+(698, 'Mon Carlo Delima', 'logged out', '2023-04-07 10:39:49'),
+(699, 'SV1_Admin', 'logged in', '2023-04-07 10:39:54'),
+(700, 'SV1_Admin', 'logged out', '2023-04-07 10:39:57'),
+(701, 'Mon Carlo Delima', 'logged in', '2023-04-07 10:40:01'),
+(702, ' Mon Carlo Delima', 'logged out', '2023-04-07 10:59:35'),
+(703, 'SV1_Admin', 'logged in', '2023-04-07 10:59:38'),
+(704, 'SV1_Admin', 'logged out', '2023-04-07 10:59:40'),
+(705, ' Mon Carlo Delima', 'logged in', '2023-04-07 10:59:43'),
+(706, ' Mon Carlo Delima', 'logged out', '2023-04-07 11:01:41'),
+(707, 'Jeune Paolus Flores', 'logged in', '2023-04-07 11:01:44'),
+(708, 'Jeune Paolus Flores', 'logged out', '2023-04-07 11:01:49'),
+(709, ' Mon Carlo Delima', 'logged in', '2023-04-07 11:01:52'),
+(710, ' Mon Carlo Delima', 'logged out', '2023-04-07 11:03:08'),
+(711, 'Jeune Paolus Flores', 'logged in', '2023-04-07 11:03:12'),
+(712, 'Jeune Paolus Flores', 'logged out', '2023-04-07 11:03:39'),
+(713, ' Mon Carlo Delima', 'logged in', '2023-04-07 11:03:42'),
+(714, 'Mon Carlo Delima', 'logged out', '2023-04-07 11:10:16'),
+(715, 'SV1_Admin', 'logged in', '2023-04-07 11:10:18'),
+(716, 'SV1_Admin', 'logged out', '2023-04-07 11:10:44'),
+(717, 'Mon Carlo Delima', 'logged in', '2023-04-07 11:10:47'),
+(718, 'Mon Carlo Delima', 'logged out', '2023-04-07 11:11:36'),
+(719, 'SV1_Admin', 'logged in', '2023-04-07 11:11:39');
 
 -- --------------------------------------------------------
 
@@ -752,30 +966,26 @@ INSERT INTO `bill_consumer` (`billConsumer_id`, `billingPeriod_id`, `homeowner_i
 DROP TABLE IF EXISTS `concern`;
 CREATE TABLE IF NOT EXISTS `concern` (
   `concern_id` int(11) NOT NULL AUTO_INCREMENT,
+  `complainant_homeowner_id` int(11) NOT NULL,
   `full_name` varchar(50) NOT NULL,
+  `complainee_homeowner_id` int(11) DEFAULT NULL,
+  `complainee_full_name` varchar(100) DEFAULT NULL,
   `concern_subject` varchar(100) NOT NULL,
   `concern_description` varchar(255) NOT NULL,
   `status` varchar(50) NOT NULL,
   `datetime` datetime DEFAULT NULL,
+  `datetime_submitted` datetime DEFAULT NULL,
   PRIMARY KEY (`concern_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `concern`
 --
 
-INSERT INTO `concern` (`concern_id`, `full_name`, `concern_subject`, `concern_description`, `status`, `datetime`) VALUES
-(1, 'Kyle Casingal', 'Noise Complaint', 'Nagvivideoke pa rin yung kapitbahay namin kahit lagpas 10 na', 'Pending', '2022-11-10 22:13:45'),
-(2, 'Kyle Casingal', 'Basura', 'Kung saan-saan nagtatapon ng basura yung kapitbahay ko.', 'Pending', '2022-11-02 22:13:59'),
-(3, 'Mon Carlo Delima', 'Vandalism', 'Dinrawingan ng kapitbahay namin yung kalsada sa tapat ng bahay namin.', 'Pending', '2022-11-04 22:14:02'),
-(6, 'Mon Carlo Delima', 'Aso', 'Nagtatae sa harap ng bahay', 'Pending', '2022-11-22 22:14:03'),
-(7, 'Mon Carlo Delima', 'Kapitbahay', 'Malapit na magsaksakan', 'Pending', '2022-11-18 22:14:06'),
-(41, 'Mon Carlo Delima', 'Lasing', 'Nagwawala sa daan', 'Pending', '2022-11-20 22:14:08'),
-(45, 'Mon Carlo Delima', 'Batang maingay', 'Iyak nang iyak', 'Pending', '2022-11-27 22:14:09'),
-(44, 'Mon Carlo Delima', 'Pusa sa bubong', 'Nagnanakaw ng ulam', 'Pending', '2022-11-28 22:14:11'),
-(43, 'Mon Carlo Delima', 'Singer', 'Sintunado, maingay', 'Pending', '2022-11-12 22:14:13'),
-(42, 'Mon Carlo Delima', 'Noise complaint', 'nagddrums, hindi naman magaling', 'Pending', '2022-11-18 22:14:15'),
-(46, 'Kyle Andrei Casingal', 'Noise Complain', 'being too loud at 10 pm ', 'Pending', NULL);
+INSERT INTO `concern` (`concern_id`, `complainant_homeowner_id`, `full_name`, `complainee_homeowner_id`, `complainee_full_name`, `concern_subject`, `concern_description`, `status`, `datetime`, `datetime_submitted`) VALUES
+(1, 1, 'Mon Carlo Delima', NULL, NULL, 'This is a Concern', 'I am very Concern', 'Processing', '2023-04-06 23:40:55', '2023-04-06 23:33:30'),
+(2, 16, 'Janwel Castillo', 1, 'Mon Carlo Delima', 'Ipapa tulfo kita', 'wahahahaha', 'Processing', '2023-04-06 23:46:54', '2023-04-06 23:44:02'),
+(3, 1, 'Mon Carlo Delima', 16, 'Janwel Castillo', 'Pwede bang mamaya na', 'Sorry camera', 'Pending', '2023-04-06 23:59:18', '2023-04-06 23:59:18');
 
 -- --------------------------------------------------------
 
@@ -802,32 +1012,55 @@ CREATE TABLE IF NOT EXISTS `homeowner_profile` (
   `employer` varchar(100) DEFAULT NULL,
   `display_picture` varchar(255) NOT NULL,
   PRIMARY KEY (`homeowner_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `homeowner_profile`
 --
 
 INSERT INTO `homeowner_profile` (`homeowner_id`, `last_name`, `first_name`, `middle_name`, `suffix`, `sex`, `street`, `subdivision`, `barangay`, `business_address`, `occupation`, `email_address`, `birthdate`, `mobile_number`, `employer`, `display_picture`) VALUES
-(1, 'Delima', 'Mon Carlo', 'Zonio', 'N/A', 'Male', 'Lot 1 Block 2', 'Sunnyvale 1', 'Pantok', 'N/A', 'N/A', 'dmoncarlo6@gmail.com', '2002-10-06', '09157189636', 'N/A', 'hdversion.png'),
+(1, 'Delima', 'Mon Carlo', 'Zonio', 'N/A', 'Male', 'Lot 1 Block 2', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'dmoncarlo6@gmail.com', '2002-10-06', '09157189636', 'N/A', 'hdversion.png'),
 (2, 'Casingal', 'Kyle Andrei', 'Morillo', 'N/A', 'Male', 'Lot 1 Block 1', 'Sunnyvale 3', 'Palangoy', 'N/A', 'N/A', 'kylecasingal36@gmail.com', '2001-09-02', '09123456789', 'N/A', '316495100_870517180796101_3304939871151226288_n.jpg'),
 (3, 'Flores', 'Jeune Paolus', 'Damaso', 'N/A', 'Male', 'Lot 1 Block 3', 'Sunnyvale 2', 'Pantok', 'N/A', 'N/A', 'floresjeunepaolus@gmail.com', '2002-06-16', '09123123123', 'Inya', '316156823_3360766927514073_2770550987709432568_n.jpg'),
 (4, 'Doe', 'John', 'N/A', 'Jr.', 'Male', 'Lot 2 Block 4', 'Sunnyvale 3', 'Palangoy', 'N/A', 'Programmer', 'dmoncarlo@gmail.com', '2002-10-06', '09157189636', 'Mark Zuckerberg', 'default.png'),
-(18, '', 'SV1_Admin', NULL, NULL, '', '', '', '', NULL, '', '', NULL, '', 'N/A', 'default.png'),
+(18, '', 'SV1_Admin', NULL, NULL, '', '', '', '', NULL, '', '', NULL, '', NULL, 'default.png'),
 (8, 'BendaÃ±a', 'Krishtalene', 'Edejer', 'N/A', 'Female', 'Lot 1 Block 5', 'Sunnyvale 2', 'Pantok', 'N/A', 'N/A', 'tissabendana@gmail.com', '2002-10-19', '09123456789', 'N/A', '86705321_2748280675293170_833038108541845504_n.jpg'),
 (17, 'Escueta', 'Roiemar', 'Conchada', 'N/A', 'Male', 'Lot 4 Block 3', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'escuetaroiemar@gmail.com', '2022-11-28', '09123456789', 'N/A', 'default.png'),
-(16, 'castillo', 'janwel', NULL, 'N/A', 'Male', 'Lot 2 Block 3 ', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'janweljigycastillo20@gmail.com', '2022-11-25', '09123456789', 'N/A', '315887907_1137649846869408_655406644278059076_n.png'),
+(16, 'Castillo', 'Janwel', NULL, 'N/A', 'Male', 'Lot 2 Block 3 ', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'janweljigycastillo20@gmail.com', '2022-11-25', '09123456789', 'N/A', '315887907_1137649846869408_655406644278059076_n.png'),
 (30, 'Doe', 'John', 'Smith', 'N/A', 'Male', 'Lot 1 Block 8', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'johndoe@gmail.com', '2010-01-01', '09123456789', 'N/A', 'default.png'),
-(28, '', 'SV1_Secretary', NULL, NULL, '', '', '', '', NULL, NULL, '', '2022-11-29', '', '', 'default.png'),
+(28, '', 'SV1_Secretary', NULL, NULL, '', '', '', '', NULL, NULL, '', '2022-11-29', '', NULL, 'default.png'),
 (31, 'Lowery', 'Amirah', 'Meyers', 'N/A', 'Female', 'Lot 1 Block 7', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'amirahlowery@gmail.com', '2009-01-15', '09123456789', 'N/A', 'default.png'),
 (32, 'Miller', 'Kian', 'Smith', 'N/A', 'Female', 'Lot 2 Block 10', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'Kian Miller', '1997-07-16', '09123456789', 'N/A', 'default.png'),
 (33, 'Shepherd', 'Leona', 'Villegas', 'N/A', 'Female', 'Lot 2 Block 4', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'leonashepherd@gmail.com', '2000-02-29', '09123456789', 'N/A', 'default.png'),
 (34, 'Warner', 'Sophie', 'Manning', 'N/A', 'Female', 'Lot 3 Block 7', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'sophiewarner@gmail.com', '1998-06-03', '09123456789', 'N/A', 'default.png'),
 (35, 'Hudson', 'Tristram', 'Ray', 'N/A', 'Male', 'Lot 4 Block 1', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'tristramhudson', '1982-07-29', '09123456789', 'N/A', 'default.png'),
-(36, '', 'SV1_Treasurer', NULL, NULL, '', '', '', '', NULL, NULL, '', '2022-11-29', '', '', 'default.png'),
-(37, '', 'SV2_Admin', NULL, NULL, '', '', '', '', NULL, NULL, '', '2022-11-29', '', '', 'default.png'),
+(36, '', 'SV1_Treasurer', NULL, NULL, '', '', '', '', NULL, NULL, '', '2022-11-29', '', NULL, 'default.png'),
+(37, '', 'SV2_Admin', NULL, NULL, '', '', '', '', NULL, NULL, '', '2022-11-29', '', NULL, 'default.png'),
 (39, 'Sta. Maria', 'Marco Ivan', 'Quierrez', 'N/A', 'Male', 'Lot 4 Block 3', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'marcoivanstamaria@gmail.com', '2001-06-13', '09123456789', 'N/A', '290509682_1413885909103188_6599438684369654480_n.jpg'),
 (40, 'Dalisay', 'Cardo', 'Dela Cruz', 'N/A', 'Male', 'Block 3 Lot 5', 'Sunnyvale 2', 'Palangoy', 'Palangoy', 'N/A', 'cardoDalisay@gmail.com', '1977-11-07', '09123456789', 'N/A', 'default.png');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mission_vision`
+--
+
+DROP TABLE IF EXISTS `mission_vision`;
+CREATE TABLE IF NOT EXISTS `mission_vision` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(100) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `mission_vision`
+--
+
+INSERT INTO `mission_vision` (`id`, `type`, `description`) VALUES
+(1, 'Mission', 'Natatangi ka, paraluman\r\nKislap mo\'y \'di maiwan, \'di iiwan\r\nMamahalin kita nang marahan\r\nSayo\'y paroroon sa kalawakan'),
+(2, 'Vision', 'Palad ay basang-basa\r\nAng dagitab ay damang-dama\r\nSa \'king kalamnang punong-puno\r\nNg pananabik at ng kaba'),
+(3, 'Goals', 'Naaalala ko pa no\'ng tayo pang dalawa\r\nSine lang ay okay ka na\r\nPero ngayon, kolehiyala ka na\r\nMas trip mong magtoma');
 
 -- --------------------------------------------------------
 
@@ -1027,7 +1260,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `verification_code` varchar(6) DEFAULT NULL,
   `email_verified_at` datetime DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
@@ -1037,8 +1270,8 @@ INSERT INTO `user` (`user_id`, `user_homeowner_id`, `full_name`, `user_type`, `p
 (55, 2, 'Kyle Andrei Casingal', 'Homeowner', 'password', 'kylecasingal36@gmail.com', 'Activated', '248425', '2022-12-01 10:11:20'),
 (3, 3, 'Jeune Paolus Flores', 'Homeowner', 'thisfeelsgud', 'floresjeunepaolus@gmail.com', 'Activated', '943962', '2022-11-10 22:51:58'),
 (1, 1, 'Mon Carlo Delima', 'Homeowner', '12345', 'dmoncarlo6@gmail.com', 'Activated', '286140', '2022-11-24 13:48:07'),
-(27, 16, 'janwel castillo', 'Homeowner', 'dadada', 'janweljigycastillo20@gmail.com', 'Deactivated', '943962', '2022-11-15 20:43:59'),
-(4, 4, 'John Doe', 'Treasurer', '123', 'dmoncarlo@gmail.com', 'Deactivated', '105861', '2022-11-24 15:17:36'),
+(27, 16, 'Janwel Castillo', 'Homeowner', 'dadada', 'janweljigycastillo20@gmail.com', 'Activated', '943962', '2022-11-15 20:43:59'),
+(4, 4, 'John Doe', 'Treasurer', '123', 'John Doe', 'Activated', '105861', '2022-11-24 15:17:36'),
 (18, 18, 'SV1_Admin', 'Admin', 'password', 'SV1_Admin', 'Activated', NULL, NULL),
 (42, 17, 'Roiemar Escueta', 'Homeowner', '123', 'escuetaroiemar@gmail.com', 'Deactivated', '135447', '2022-11-28 23:28:23'),
 (46, 28, 'SV1_Secretary', 'Secretary', '123', 'SV1_Secretary', 'Activated', NULL, NULL),

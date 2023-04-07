@@ -3,7 +3,7 @@ require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
 $resultSubdivision = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
+$resultSubdivision_table = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
 
 ?>
 
@@ -257,6 +257,14 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mys
         background-color: rgb(93, 151, 93);
     }
 
+    .btnSubmitReg:disabled {
+        background-color: rgb(40, 68, 40);
+    }
+
+    .btnSubmitReg[disabled]:hover {
+        background-color: rgb(40, 68, 40);
+    }
+
     .btnClearReg {
         background-color: lightcoral;
         border: 0;
@@ -273,6 +281,14 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mys
 
     .btnClearReg:hover {
         background-color: rgb(180, 83, 83);
+    }
+
+    .btnClearReg:disabled {
+        background-color: rgb(97, 45, 45);
+    }
+
+    .btnClearReg[disabled]:hover {
+        background-color: rgb(97, 45, 45);
     }
 
     .lblRegistration {
@@ -356,8 +372,6 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mys
     .tbl tr:hover {
         background-color: rgb(211, 211, 211);
     }
-
-
 </style>
 
 
@@ -372,7 +386,7 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mys
             <div class="settingsAddSubdivision" id="settingsAddSubdivision">
                 <div class="addAmenityForm">
                     <form method="post" autocomplete="off">
-                        <input type="hidden" name="subdivision_id" value="<?php echo $subdivision_id ?? ''; ?>">
+                        <input type="text" name="subdivision_id" value="<?php echo $subdivision_id ?? ''; ?>">
                         <table class="tblAmenityForm">
 
                             <tr>
@@ -401,13 +415,18 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mys
                                         Do you really want to add this new subdivision?
                                     </div>
                                     <div class="modal-footer">
-                                        <button name="subdivisionAdd" onclick="location.href = '#settingsAddSubdivision'" type="submit" class="btn btn-primary">Save changes</button>
+                                        <button name="subdivisionAdd" type="submit" class="btn btn-primary">Save changes</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="btnArea">
-                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addSubdivisionModal">
+                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addSubdivisionModal" <?php
+                                                                                                                                    if ($subdivision_id ?? '') {
+                                                                                                                                        echo "disabled";
+                                                                                                                                    } else {
+                                                                                                                                        echo "";
+                                                                                                                                    } ?>>
                                 Add Subdivision
                             </button>
 
@@ -423,13 +442,37 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mys
                                             Do you really want to update this subdivision?
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="subdivisionUpdate" onclick="location.href = '#settingsAddSubdivision'" type="submit" class="btn btn-primary">Save changes</button>
+                                            <button name="subdivisionUpdate" type="submit" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateSubdivisionModal">
+                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateSubdivisionModal" <?php
+                                                                                                                                        if ($subdivision_id ?? '') {
+                                                                                                                                            echo "";
+                                                                                                                                        } else {
+                                                                                                                                            echo "disabled";
+                                                                                                                                        } ?>>
                                 Update Subdivision
+                            </button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            This will clear all fields!
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" onclick="location.href='settingsSubdivision.php'">Clear</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" value="" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Clear
                             </button>
                         </div>
                     </form>
@@ -447,7 +490,7 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mys
                             <tr>
 
                                 <td>
-                                    <a href="settingsSubdivision.php?subdivision_id=<?php echo $row['subdivision_id']; ?>#settingsAddSubdivision" class="btnEdit">Edit</a>
+                                    <a href="settingsSubdivision.php?subdivision_id=<?php echo $row['subdivision_id']; ?>" class="btnEdit">Edit</a>
                                 </td>
                                 <td><?php echo $row['subdivision_name'] ?></td>
                                 <td><?php echo $row['barangay'] ?></td>

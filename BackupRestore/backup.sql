@@ -5,18 +5,19 @@ CREATE TABLE `amenities` (
   `amenity_name` varchar(255) NOT NULL,
   `subdivision_id` int(11) NOT NULL,
   `subdivision_name` varchar(50) NOT NULL,
-  `price` int(11) NOT NULL,
   `availability` varchar(50) NOT NULL,
   PRIMARY KEY (`amenity_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
-INSERT INTO amenities VALUES("1","Court","1","Sunnyvale 1","200","Available");
-INSERT INTO amenities VALUES("4","Multi-purpose Hall","1","Sunnyvale 1","200","Available");
-INSERT INTO amenities VALUES("5","Swimming Pool","1","Sunnyvale 1","200","Available");
-INSERT INTO amenities VALUES("6","Clubhouse","1","Sunnyvale 1","400","Unavailable");
-INSERT INTO amenities VALUES("10","Clubhouse","3","Sunnyvale 3","250","Available");
-INSERT INTO amenities VALUES("14","Volleyball Court","2","Sunnyvale 2","21","Available");
-INSERT INTO amenities VALUES("16","Bathhouse","1","Sunnyvale 1","300","Available");
+INSERT INTO amenities VALUES("1","Court","1","Sunnyvale 1","Available");
+INSERT INTO amenities VALUES("4","Multi-purpose Hall","1","Sunnyvale 1","Available");
+INSERT INTO amenities VALUES("5","Swimming Pool","1","Sunnyvale 1","Available");
+INSERT INTO amenities VALUES("6","Clubhouse","1","Sunnyvale 1","Unavailable");
+INSERT INTO amenities VALUES("10","Clubhouse","3","Sunnyvale 3","Available");
+INSERT INTO amenities VALUES("16","Bathhouse","1","Sunnyvale 1","Available");
+INSERT INTO amenities VALUES("25","123","1","Sunnyvale 1","Available");
+INSERT INTO amenities VALUES("24","asd","1","Sunnyvale 1","Available");
+INSERT INTO amenities VALUES("23","test","1","Sunnyvale 1","Available");
 
 
 
@@ -29,10 +30,14 @@ CREATE TABLE `amenity_purpose` (
   `day_rate` int(10) NOT NULL,
   `night_rate` int(10) NOT NULL,
   PRIMARY KEY (`amenity_purpose_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 INSERT INTO amenity_purpose VALUES("1","1","Basketball","50","150");
 INSERT INTO amenity_purpose VALUES("3","1","Volleyball","50","150");
+INSERT INTO amenity_purpose VALUES("5","5","Swimming","50","100");
+INSERT INTO amenity_purpose VALUES("8","10","Party","150","300");
+INSERT INTO amenity_purpose VALUES("9","1","Badminton","50","150");
+INSERT INTO amenity_purpose VALUES("10","1","Chess","80","360");
 
 
 
@@ -98,7 +103,7 @@ CREATE TABLE `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=472 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=552 DEFAULT CHARSET=utf8;
 
 INSERT INTO audit_trail VALUES("3","SV1_Admin","logged in","2022-11-29 12:32:22");
 INSERT INTO audit_trail VALUES("5","SV1_Admin","logged in","2022-11-29 12:36:16");
@@ -557,6 +562,86 @@ INSERT INTO audit_trail VALUES("468","SV1_Admin","uploaded a new post","2023-04-
 INSERT INTO audit_trail VALUES("469","SV1_Admin","uploaded a new post","2023-04-02 13:06:44");
 INSERT INTO audit_trail VALUES("470","SV1_Admin","logged out","2023-04-02 13:36:57");
 INSERT INTO audit_trail VALUES("471","SV1_Admin","logged in","2023-04-04 11:57:08");
+INSERT INTO audit_trail VALUES("472","SV1_Admin","logged out","2023-04-04 12:21:10");
+INSERT INTO audit_trail VALUES("473","SV1_Treasurer","logged in","2023-04-04 12:21:13");
+INSERT INTO audit_trail VALUES("474","SV1_Treasurer","logged out","2023-04-04 12:22:43");
+INSERT INTO audit_trail VALUES("475","SV1_Admin","logged in","2023-04-04 12:22:52");
+INSERT INTO audit_trail VALUES("476","SV1_Admin","updated an exisiting amenity Sunnyvale 1-Court","2023-04-04 18:26:35");
+INSERT INTO audit_trail VALUES("477","SV1_Admin","added a new amenity Sunnyvale 1-test","2023-04-04 18:28:20");
+INSERT INTO audit_trail VALUES("478","SV1_Admin","updated an exisiting amenity Sunnyvale 1-Court","2023-04-04 18:31:00");
+INSERT INTO audit_trail VALUES("479","SV1_Admin","added a new amenity Sunnyvale 1-Test","2023-04-05 10:17:59");
+INSERT INTO audit_trail VALUES("480","SV1_Admin","added a new amenity Sunnyvale 1-Test","2023-04-05 10:18:56");
+INSERT INTO audit_trail VALUES("481","SV1_Admin","added a new amenity Sunnyvale 1-Test","2023-04-05 10:19:24");
+INSERT INTO audit_trail VALUES("482","SV1_Admin","added a new amenity Sunnyvale 1-test","2023-04-05 10:20:37");
+INSERT INTO audit_trail VALUES("483","SV1_Admin","added a new amenity Sunnyvale 1-123","2023-04-05 10:21:06");
+INSERT INTO audit_trail VALUES("484","SV1_Admin","added a new amenity Sunnyvale 2-test","2023-04-05 10:21:44");
+INSERT INTO audit_trail VALUES("485","SV1_Admin","added a new amenity Sunnyvale 1-test","2023-04-05 10:22:09");
+INSERT INTO audit_trail VALUES("486","SV1_Admin","added a new amenity Sunnyvale 1-test","2023-04-05 10:22:21");
+INSERT INTO audit_trail VALUES("487","SV1_Admin","added a new amenity Sunnyvale 1-test","2023-04-05 10:25:51");
+INSERT INTO audit_trail VALUES("488","SV1_Admin","added a new amenity Sunnyvale 1-test","2023-04-05 10:27:06");
+INSERT INTO audit_trail VALUES("489","SV1_Admin","added a new amenity Sunnyvale 1-test","2023-04-05 10:27:47");
+INSERT INTO audit_trail VALUES("490","SV1_Admin","added a new amenity Sunnyvale 1-test","2023-04-05 10:27:56");
+INSERT INTO audit_trail VALUES("491","SV1_Admin","added a new amenity Sunnyvale 1-test","2023-04-05 10:28:59");
+INSERT INTO audit_trail VALUES("492","SV1_Admin","added a new amenity Sunnyvale 1-test","2023-04-05 10:29:05");
+INSERT INTO audit_trail VALUES("493","SV1_Admin","added a new amenity Sunnyvale 1-test","2023-04-05 10:32:14");
+INSERT INTO audit_trail VALUES("494","SV1_Admin","updated an exisiting amenity Sunnyvale 1-Swimming Pool","2023-04-05 10:33:35");
+INSERT INTO audit_trail VALUES("495","SV1_Admin","updated an exisiting amenity Sunnyvale 1-Swimming Pool","2023-04-05 10:33:41");
+INSERT INTO audit_trail VALUES("496","SV1_Admin","updated an exisiting amenity Sunnyvale 1-Clubhouse","2023-04-05 10:34:31");
+INSERT INTO audit_trail VALUES("497","SV1_Admin","updated an exisiting amenity Sunnyvale 1-Clubhouse","2023-04-05 10:34:40");
+INSERT INTO audit_trail VALUES("498","SV1_Admin","added a new amenity Sunnyvale 1-test1","2023-04-05 10:34:55");
+INSERT INTO audit_trail VALUES("499","SV1_Admin","added a new amenity Sunnyvale 1-test2","2023-04-05 10:35:48");
+INSERT INTO audit_trail VALUES("500","SV1_Admin","added a new amenity Sunnyvale 2-test","2023-04-05 10:41:26");
+INSERT INTO audit_trail VALUES("501","SV1_Admin","added a new amenity Sunnyvale 1-test","2023-04-05 10:44:28");
+INSERT INTO audit_trail VALUES("502","SV1_Admin","added a new amenity Sunnyvale 1-asd","2023-04-05 10:44:37");
+INSERT INTO audit_trail VALUES("503","SV1_Admin","updated an exisiting amenity Sunnyvale 1-Courts","2023-04-05 10:45:51");
+INSERT INTO audit_trail VALUES("504","SV1_Admin","updated an exisiting amenity Sunnyvale 1-Court","2023-04-05 10:45:57");
+INSERT INTO audit_trail VALUES("505","SV1_Admin","added a new amenity Sunnyvale 1-test","2023-04-05 11:16:56");
+INSERT INTO audit_trail VALUES("506","SV1_Admin","added a new amenity Sunnyvale 1-asd","2023-04-05 11:26:30");
+INSERT INTO audit_trail VALUES("507","SV1_Admin","added a new amenity Sunnyvale 1-123","2023-04-05 11:27:51");
+INSERT INTO audit_trail VALUES("508","SV1_Admin","logged out","2023-04-06 09:58:53");
+INSERT INTO audit_trail VALUES("509","Mon Carlo Delima","logged in","2023-04-06 09:58:56");
+INSERT INTO audit_trail VALUES("510","Mon Carlo Delima","logged out","2023-04-06 10:00:36");
+INSERT INTO audit_trail VALUES("511","Jeune Paolus Flores","logged in","2023-04-06 10:00:44");
+INSERT INTO audit_trail VALUES("512","Jeune Paolus Flores","logged out","2023-04-06 10:01:02");
+INSERT INTO audit_trail VALUES("513","SV1_Admin","logged in","2023-04-06 10:01:20");
+INSERT INTO audit_trail VALUES("514","SV1_Admin","logged out","2023-04-06 10:01:27");
+INSERT INTO audit_trail VALUES("515","SV1_Admin","logged in","2023-04-06 10:01:30");
+INSERT INTO audit_trail VALUES("516","SV1_Admin","logged out","2023-04-06 10:03:33");
+INSERT INTO audit_trail VALUES("517","SV1_Secretary","logged in","2023-04-06 10:03:38");
+INSERT INTO audit_trail VALUES("518","SV1_Secretary","logged out","2023-04-06 10:04:45");
+INSERT INTO audit_trail VALUES("519","SV1_Secretary","logged in","2023-04-06 10:04:53");
+INSERT INTO audit_trail VALUES("520","SV1_Secretary","logged out","2023-04-06 10:06:55");
+INSERT INTO audit_trail VALUES("521","SV1_Admin","logged in","2023-04-06 10:06:59");
+INSERT INTO audit_trail VALUES("522","SV1_Admin","logged out","2023-04-06 10:08:27");
+INSERT INTO audit_trail VALUES("523","SV1_Secretary","logged in","2023-04-06 10:08:31");
+INSERT INTO audit_trail VALUES("524","SV1_Secretary","logged out","2023-04-06 10:09:34");
+INSERT INTO audit_trail VALUES("525","SV1_Treasurer","logged in","2023-04-06 10:09:36");
+INSERT INTO audit_trail VALUES("526","SV1_Treasurer","logged out","2023-04-06 10:10:32");
+INSERT INTO audit_trail VALUES("527","SV1_Secretary","logged in","2023-04-06 10:10:35");
+INSERT INTO audit_trail VALUES("528","SV1_Secretary","logged out","2023-04-06 10:10:41");
+INSERT INTO audit_trail VALUES("529","SV1_Admin","logged in","2023-04-06 10:10:45");
+INSERT INTO audit_trail VALUES("530","SV1_Admin","logged out","2023-04-06 10:11:18");
+INSERT INTO audit_trail VALUES("531","SV1_Secretary","logged in","2023-04-06 10:11:20");
+INSERT INTO audit_trail VALUES("532","SV1_Secretary","logged out","2023-04-06 10:12:09");
+INSERT INTO audit_trail VALUES("533","SV1_Secretary","logged in","2023-04-06 10:12:12");
+INSERT INTO audit_trail VALUES("534","SV1_Secretary","logged out","2023-04-06 10:22:12");
+INSERT INTO audit_trail VALUES("535","SV1_Admin","logged in","2023-04-06 10:22:15");
+INSERT INTO audit_trail VALUES("536","SV1_Admin","logged out","2023-04-06 10:22:34");
+INSERT INTO audit_trail VALUES("537","SV1_Secretary","logged in","2023-04-06 10:22:38");
+INSERT INTO audit_trail VALUES("538","SV1_Secretary","logged out","2023-04-06 10:24:07");
+INSERT INTO audit_trail VALUES("539","SV1_Admin","logged in","2023-04-06 10:24:11");
+INSERT INTO audit_trail VALUES("540","SV1_Admin","logged out","2023-04-06 10:27:39");
+INSERT INTO audit_trail VALUES("541","SV1_Admin","logged in","2023-04-06 10:27:41");
+INSERT INTO audit_trail VALUES("542","SV1_Admin","logged out","2023-04-06 10:31:33");
+INSERT INTO audit_trail VALUES("543","SV1_Admin","logged in","2023-04-06 10:31:39");
+INSERT INTO audit_trail VALUES("544","SV1_Admin","logged out","2023-04-06 10:31:54");
+INSERT INTO audit_trail VALUES("545","SV1_Secretary","logged in","2023-04-06 10:31:59");
+INSERT INTO audit_trail VALUES("546","SV1_Secretary","logged out","2023-04-06 10:32:01");
+INSERT INTO audit_trail VALUES("547","Kyle Andrei Casingal","logged in","2023-04-06 10:32:42");
+INSERT INTO audit_trail VALUES("548","Kyle Andrei Casingal","logged out","2023-04-06 10:33:06");
+INSERT INTO audit_trail VALUES("549","SV1_Admin","logged in","2023-04-06 10:33:20");
+INSERT INTO audit_trail VALUES("550","SV1_Admin","logged out","2023-04-06 10:33:52");
+INSERT INTO audit_trail VALUES("551","SV1_Admin","logged in","2023-04-06 10:33:56");
 
 
 

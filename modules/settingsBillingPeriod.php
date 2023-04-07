@@ -429,7 +429,7 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
                                         </div>
                                         <form action="" method="post">
                                         <div class="modal-footer">
-                                            <button name="billingPeriodAdd" id="billingPeriodAdd" onclick="location.href='../modules/settingsBillingPeriod.php'" type="submit" class="btn btn-primary">Save changes</button>
+                                            <button name="billingPeriodAdd" id="billingPeriodAdd" type="submit" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </form>
                                     </div>

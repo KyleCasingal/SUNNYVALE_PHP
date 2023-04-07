@@ -398,20 +398,12 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
     <form method="post">
         <div class="secretary">
             <div class="sideBar">
-                <?php
-                if ($row['user_type'] == 'Admin') {
-                    require '../marginals/sidebarAdmin.php';
-                }
-
-                if ($row['user_type'] == 'Secretary') {
-                    require '../marginals/sidebarSecretaryPanel.php';
-                }
-                ?>
+                <?php require '../marginals/sidebarAdmin.php'; ?>
             </div>
 
             <div class="secretaryPanel">
                 <div class="homeownerRegistration">
-                    <label class="lblRegistration">Registration</label>
+                    <label class="lblRegistration">Homeowner Registration</label>
                     <div class="regForm">
                         <table class="tblForm">
                             <input type="hidden" name="homeowner_id" value="<?php echo $homeowner_id ?? ''; ?>">

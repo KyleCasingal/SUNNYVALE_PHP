@@ -1,12 +1,10 @@
 <?php
 require '../marginals/topbar.php';
-$res = $con->query("SELECT * FROM user WHERE account_status = 'Pending' AND email_verified_at IS NOT NULL ORDER  by user_id ASC") or die($mysqli->error);
+$res = $con->query("SELECT * FROM user WHERE account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER  by user_id ASC") or die($mysqli->error);
 //ACCOUNT MANAGEMENT SORT, ACTIVATE, DEACTIVATE
 $status_filter = $_POST['status_filter'] ?? '';
 if (isset($_POST['filterButton'])) {
-    if ($status_filter == 'Pending') {
-        $res = $con->query("SELECT * FROM user WHERE account_status = 'Pending' AND email_verified_at IS NOT NULL ORDER  by user_id ASC") or die($mysqli->error);
-    } elseif ($status_filter == 'Activated') {
+    if ($status_filter == 'Activated') {
         $res = $con->query("SELECT * FROM user WHERE account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
     } elseif ($status_filter == 'Deactivated') {
         $res = $con->query("SELECT * FROM user WHERE account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
@@ -29,14 +27,11 @@ if (isset($_POST['activate'])) {
             $row = $resultSession->fetch_assoc();
             $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" .  'activated user' . ' ' . "$full_name" . "' , NOW())";
             mysqli_query($con, $sql1);
-            
         }
     } else {
         echo 'Please select an account to activate!';
     }
-    if ($status_filter == 'Pending') {
-        $res = $con->query("SELECT * FROM user WHERE account_status = 'Pending' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
-    } else if ($status_filter == 'Activated') {
+    if ($status_filter == 'Activated') {
         $res = $con->query("SELECT * FROM user WHERE account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
     } else if ($status_filter == 'Deactivated') {
         $res = $con->query("SELECT * FROM user WHERE account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
@@ -63,9 +58,7 @@ if (isset($_POST['deactivate'])) {
     } else {
         echo 'Please select an account to deactivate!';
     }
-    if ($status_filter == 'Pending') {
-        $res = $con->query("SELECT * FROM user WHERE account_status = 'Pending' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
-    } else if ($status_filter == 'Activated') {
+    if ($status_filter == 'Activated') {
         $res = $con->query("SELECT * FROM user WHERE account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
     } else if ($status_filter == 'Deactivated') {
         $res = $con->query("SELECT * FROM user WHERE account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
@@ -399,15 +392,7 @@ if (isset($_POST['deactivate'])) {
 <body>
     <div class="secretary">
         <div class="sideBar">
-        <?php
-              if ($row['user_type'] == 'Admin' ){
-                require '../marginals/sidebarAdmin.php';
-              }
-              
-              if ($row['user_type'] == 'Secretary'){
-                require '../marginals/sidebarSecretaryPanel.php';
-              }
-              ?>
+            <?php require '../marginals/sidebarAdmin.php'; ?>
         </div>
         <div class="secretaryPanel">
             <form method="post">
@@ -415,7 +400,6 @@ if (isset($_POST['deactivate'])) {
                 <div class="userManagement">
                     <label class="lblFilter">Filter By: </label>
                     <select name="status_filter" id="status_filter" class="selectFilter">
-                        <option value="Pending" <?php if ($status_filter == "Pending") echo 'selected="selected"'; ?>>Pending</option>
                         <option value="Activated" <?php if ($status_filter == "Activated") echo 'selected="selected"'; ?>>Activated</option>
                         <option value="Deactivated" <?php if ($status_filter == "Deactivated") echo 'selected="selected"'; ?>>Deactivated</option>
                     </select>

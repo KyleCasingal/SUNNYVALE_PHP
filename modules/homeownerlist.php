@@ -15,12 +15,8 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#000000" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>SUNNYVALE</title>
 </head>
 <style>
@@ -378,15 +374,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
     <form method="post">
         <div class="secretary">
             <div class="sideBar">
-                <?php
-                if ($row['user_type'] == 'Admin') {
-                    require '../marginals/sidebarAdmin.php';
-                }
-
-                if ($row['user_type'] == 'Secretary') {
-                    require '../marginals/sidebarSecretaryPanel.php';
-                }
-                ?>
+                <?php require '../marginals/sidebarAdmin.php'; ?>
             </div>
 
             <div class="secretaryPanel">
@@ -407,7 +395,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                             <th>Employer</th>
                         </thead>
                         <?php
-                        while ($row = $result->fetch_assoc()):
+                        while ($row = $result->fetch_assoc()) :
                             $suffix = $row['suffix'];
                             if ($suffix == "N/A") {
                                 $suffix = NULL;
@@ -422,11 +410,10 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                             }
                             $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['barangay'];
 
-                            ?>
+                        ?>
                             <tr>
                                 <td>
-                                    <a href="homeownerRegistration.php?homeowner_id=<?php echo $row['homeowner_id']; ?>"
-                                        class="btnEdit">Edit</a>
+                                    <a href="homeownerRegistration.php?homeowner_id=<?php echo $row['homeowner_id']; ?>" class="btnEdit">Edit</a>
                                 </td>
                                 <td>
                                     <?php echo $row['homeowner_id']; ?>
@@ -472,10 +459,8 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
     </form>
     <?php
     require '../marginals/footer2.php'
-        ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
+    ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 
 </html>

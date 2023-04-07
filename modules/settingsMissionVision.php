@@ -2,8 +2,7 @@
 require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultSubdivision_selectMonthly = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultMonthly = $con->query("SELECT * FROM monthly_dues") or die($mysqli->error);
+$resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysqli->error);
 ?>
 
 <!DOCTYPE html>
@@ -395,138 +394,60 @@ $resultMonthly = $con->query("SELECT * FROM monthly_dues") or die($mysqli->error
         </div>
         <div class="secretaryPanel">
             <!-- SETTINGS MONTHLY DUES -->
-            <label class="lblSettings">Monthly Dues</label>
-            <div class="settingsMonthlyDues" id="settingsMonthlyDues">
-                <div class="addAmenityForm">
-                    <form method="post" autocomplete="off">
-                        <input type="hidden" name="monthly_dues_id" value="<?php echo $monthly_dues_id ?? ''; ?>">
-                        <table class="tblAmenityForm">
-                            <tr>
-                                <td>Subdivision:</td>
-                                <td>
-                                    <select name="subdivision" id="" required>
-                                        <option value="">Select...</option>
-                                        <?php while ($row = $resultSubdivision_selectMonthly->fetch_assoc()) : ?>
-                                            <option value="<?php echo $row['subdivision_name'] ?>" <?php
-                                                                                                    if (isset($_GET['monthly_dues_id'])) {
-                                                                                                        if ($subdivision_name == $row['subdivision_name']) {
-                                                                                                            echo 'selected="selected"';
-                                                                                                        }
-                                                                                                    }
-                                                                                                    ?>><?php echo $row['subdivision_name'] ?></option>
-                                        <?php endwhile; ?>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Monthly Dues Amount:</td>
-                                <td>
-                                    <input name="rate" value="<?php echo $rate ?? '' ?>" type="text" placeholder="monthly rate" required />
-                                </td>
-                            </tr>
-                        </table>
+            <?php while ($rowMissionVision = $resultMissionVision->fetch_assoc()) : ?>
+                <label class="lblSettings"><?php
+                                            echo $rowMissionVision['type'];
+                                            ?></label>
+                <div class="settingsMonthlyDues" id="settingsMonthlyDues">
+                    <div class="addAmenityForm">
+                        <form method="post" autocomplete="off">
+                            <input type="hidden" name="monthly_dues_id" value="<?php echo $monthly_dues_id ?? ''; ?>">
+                            <table class="tblAmenityForm">
+                                <tr>
+                                    <td>
+                                        <?php
+                                        echo $rowMissionVision['description'];
+                                        ?>
+                                    </td>
+                            </table>
 
-                        <!-- MODAL ADD MONTHLY DUES -->
-                        <div class="modal fade" id="addMonthlyDuesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Do you really want to add this new monthly due?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button name="monthlyDuesAdd" type="submit" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="btnArea">
-                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addMonthlyDuesModal" <?php
-                                                                                                                                    if ($monthly_dues_id ?? '') {
-                                                                                                                                        echo "disabled";
-                                                                                                                                    } else {
-                                                                                                                                        echo "";
-                                                                                                                                    } ?>>
-                                Add amount
-                            </button>
-
-                            <!-- MODAL UPDATE MONTHLY DUES -->
-                            <div class="modal fade" id="updateMonthlyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <!-- MODAL EDIT MISSION VISON GOALS -->
+                            <div class="modal fade" id="addMonthlyDuesModal<?php
+                                                                            echo $rowMissionVision['id'];
+                                                                            ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit <?php
+                                                                                                echo $rowMissionVision['type'];
+                                                                                                ?></h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            Do you really want to update this existing monthly due?
+                                            <input type="hidden" name="missionVisionID" value="<?php
+                                                                        echo $rowMissionVision['id'];
+                                                                        ?>">
+                                            <textarea type="text" name="description" id="" cols="30" rows="10"><?php
+                                                                                                    echo $rowMissionVision['description'];
+                                                                                                    ?></textarea>
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="monthlyDuesUpdate" type="submit" class="btn btn-primary">Save changes</button>
+                                            <button name="missionVision" type="submit" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateMonthlyModal" <?php
-                                                                                                                                    if ($monthly_dues_id ?? '') {
-                                                                                                                                        echo "";
-                                                                                                                                    } else {
-                                                                                                                                        echo "disabled";
-                                                                                                                                    } ?>>
-                                Update Amount
-                            </button>
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            This will clear all fields!
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" onclick="location.href='settingsMonthlydues.php'">Clear</button>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="btnArea">
+                                <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addMonthlyDuesModal<?php
+                                                                                                                                        echo $rowMissionVision['id'];
+                                                                                                                                        ?>">
+                                    Edit
+                                </button>
                             </div>
-                            <button type="button" value="" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                Clear
-                            </button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-
-                <!-- TABLE MONTHLY DUES -->
-                <div class="tblAmenityContainer">
-                    <table class="table tblAmenity">
-                        <thead>
-                            <th></th>
-                            <th>Subdivision</th>
-                            <th>Amount</th>
-                            <th>Updated at</th>
-                        </thead>
-                        <?php while ($row = $resultMonthly->fetch_assoc()) : ?>
-                            <tr>
-                                <td>
-                                    <a href="settingsMonthlydues.php?monthly_dues_id=<?php echo $row['monthly_dues_id']; ?>" class="btnEdit">Edit</a>
-                                </td>
-                                <td>
-                                    <?php echo $row['subdivision_name'] ?>
-                                </td>
-                                <td><?php echo $row['amount'] ?></td>
-                                <td>
-                                    <?php echo $row['updated_at'] ?>
-                                </td>
-                            </tr>
-                        <?php endwhile; ?>
-                    </table>
-                </div>
-            </div>
+            <?php endwhile; ?>
         </div>
     </div>
     <?php
