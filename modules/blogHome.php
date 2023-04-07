@@ -474,7 +474,7 @@ $rowUser = $resultUser->fetch_assoc();
             <img class="avatarBlog" <?php
                                     $imageURL = '../media/displayPhotos/' . $row['display_picture'];
                                     ?> src="<?= $imageURL ?>" alt="" />
-                                    
+
             <div class="profileText">
               <p class="profileName"><?php echo $row['full_name']; ?></p>
               <p class="profileDate">
