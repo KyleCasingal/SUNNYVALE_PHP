@@ -605,7 +605,7 @@ if (isset($_POST['sysAccAdd'])) {
   $userType = $_POST['user_type'];
 
 
-  $sql1 = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer, display_picture) VALUES ('', '$systemAccount', NULL, NULL,'' , '', '', '', NULL, NULL, '', NOW(), '', '', 'default.png')";
+  $sql1 = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer, display_picture) VALUES ('', '$systemAccount', NULL, NULL,'' , '', '', '', NULL, NULL, '', NOW(), '', NULL, 'default.png')";
   mysqli_query($con, $sql1);
   $result = $con->query("SELECT * FROM homeowner_profile WHERE first_name = '$systemAccount'");
   if ($result->num_rows) {
@@ -749,33 +749,19 @@ if(isset($_POST['concernResolved'])){
 // EDITING PROFILE
 
 if (isset($_POST['editProfile'])) {
-  $first_name = $_POST['first_name'];
-  $middle_name = $_POST['middle_name'];
-  $last_name = $_POST['last_name'];
-  $suffix = $_POST['suffix'];
-  $street = $_POST['street'];
-  $subdivision = $_POST['subdivision'];
   $business_address = $_POST['business_address'];
   $mobile_number = $_POST['mobile_number'];
   $occupation = $_POST['occupation'];
   $employer = $_POST['employer'];
-  $birthdate = strtotime($_POST['birthdate']);
-  $birthdate = date('Y-m-d', $birthdate);
-  $sex = $_POST['sex'];
-  $email_address = $_POST['email_address'];
-  $full_name = $first_name . " " . $last_name;
 
-  $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" . $subdivision . "'");
-  $rowSubdivision = $resultSubdivision->fetch_assoc();
+
 
   $resultID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $rowID = $resultID->fetch_assoc();
 
-  $sql = "UPDATE homeowner_profile SET first_name ='" . $first_name . "', middle_name ='" . $middle_name . "', last_name ='" . $last_name . "', suffix ='" . $suffix . "', street ='" . $street . "', subdivision ='" . $subdivision . "', barangay ='" . $rowSubdivision['barangay'] . "', business_address ='" . $business_address . "', occupation ='" . $occupation . "', email_address='" . $email_address . "', birthdate='" . $birthdate . "', mobile_number='" . $mobile_number . "', employer='" . $employer . "'   WHERE homeowner_id = '" . $rowID['user_homeowner_id'] . "'";
+  $sql = "UPDATE homeowner_profile SET business_address ='" . $business_address . "', occupation ='" . $occupation . "', mobile_number='" . $mobile_number . "', employer='" . $employer . "'   WHERE homeowner_id = '" . $rowID['user_homeowner_id'] . "'";
   $result = mysqli_query($con, $sql);
 
-  $sql1 = "UPDATE user SET full_name='" . $full_name . "', email_address='" . $email_address . "' WHERE user_id = '" . $_SESSION['user_id'] . "'";
-  $result1 = mysqli_query($con, $sql1);
   echo "<div class='messageSuccess'>
         <label >
           Changes saved!

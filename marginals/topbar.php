@@ -5,7 +5,7 @@ if (empty($_SESSION)) {
 }
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $result1 = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
-$row1 = $result1 ->fetch_assoc();
+$row1 = $result1->fetch_assoc();
 $homeowner_id = $row1['user_homeowner_id'];
 $resultSubdivision = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $rowSubdivision = $resultSubdivision->fetch_assoc();
@@ -362,8 +362,19 @@ $resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivisi
                                     ?> src="<?= $imageURL ?>" alt="" />
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="../modules/memberPanel.php">Member Profile</a>
-              <a class="dropdown-item" href="../modules/inboxPanel.php">Inbox</a>
+              <a class="dropdown-item" href="../modules/memberPanel.php">
+                <?php
+                if ($row['user_type'] == 'Homeowner') {
+                  echo 'Member Profile';
+                } else {
+                  echo 'Profile';
+                }
+                ?></a>
+              <?php
+              if ($row['user_type'] == 'Homeowner') {
+                echo '<a class="dropdown-item" href="../modules/inboxPanel.php">Inbox</a>';
+              }
+              ?>
               <?php
               if ($row['user_type'] == 'Homeowner') {
                 echo ' <a data-bs-toggle="modal" data-bs-target="#raiseConcern" class="dropdown-item" href="#raiseConcern">Submit a Complaint</a>';
@@ -406,7 +417,7 @@ $resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivisi
                 <option value="0">Community</option>
                 <?php
                 while ($rowComplainee = $resultComplainee->fetch_assoc()) {
-                  echo '<option value="' . $rowComplainee['homeowner_id'] . '">' . $rowComplainee['first_name'] . ' ' .$rowComplainee['last_name'] . '</option>';
+                  echo '<option value="' . $rowComplainee['homeowner_id'] . '">' . $rowComplainee['first_name'] . ' ' . $rowComplainee['last_name'] . '</option>';
                 }
                 ?>
               </select>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Apr 07, 2023 at 12:00 AM
+-- Generation Time: Apr 07, 2023 at 11:13 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=674 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=720 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -830,7 +830,53 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (670, 'Mon Carlo Delima', 'logged out', '2023-04-06 23:58:48'),
 (671, 'Mon Carlo Delima', 'logged in', '2023-04-06 23:58:52'),
 (672, 'Mon Carlo Delima', 'submitted a concern', '2023-04-06 23:59:18'),
-(673, 'Mon Carlo Delima', 'logged out', '2023-04-07 00:00:16');
+(673, 'Mon Carlo Delima', 'logged out', '2023-04-07 00:00:16'),
+(674, 'SV1_Admin', 'logged in', '2023-04-07 00:04:34'),
+(675, 'SV1_Admin', 'logged in', '2023-04-07 09:43:45'),
+(676, 'SV1_Admin', 'logged out', '2023-04-07 09:44:32'),
+(677, 'Mon Carlo Delima', 'logged in', '2023-04-07 09:44:34'),
+(678, 'Mon Carlo Delima', 'logged out', '2023-04-07 09:46:39'),
+(679, 'SV1_Admin', 'logged in', '2023-04-07 09:46:42'),
+(680, 'SV1_Admin', 'added a new system account Test-Admin', '2023-04-07 09:49:47'),
+(681, 'SV1_Admin', 'logged out', '2023-04-07 09:59:20'),
+(682, 'Mon Carlo Delima', 'logged in', '2023-04-07 09:59:23'),
+(683, 'Mon Carlo Delima', 'logged out', '2023-04-07 09:59:28'),
+(684, 'SV1_Admin', 'logged in', '2023-04-07 09:59:33'),
+(685, 'SV1_Admin', 'logged in', '2023-04-07 10:20:46'),
+(686, 'SV1_Admin', 'logged out', '2023-04-07 10:25:40'),
+(687, 'SV1_Admin', 'logged in', '2023-04-07 10:25:43'),
+(688, 'SV1_Admin', 'logged out', '2023-04-07 10:32:49'),
+(689, 'Mon Carlo Delima', 'logged in', '2023-04-07 10:32:52'),
+(690, 'Mon Carlo Delima', 'logged out', '2023-04-07 10:36:50'),
+(691, 'SV1_Admin', 'logged in', '2023-04-07 10:36:53'),
+(692, 'SV1_Admin', 'logged out', '2023-04-07 10:36:59'),
+(693, 'Mon Carlo Delima', 'logged in', '2023-04-07 10:37:02'),
+(694, 'Mon Carlo Delima', 'logged out', '2023-04-07 10:38:51'),
+(695, 'SV1_Admin', 'logged in', '2023-04-07 10:38:53'),
+(696, 'SV1_Admin', 'logged out', '2023-04-07 10:39:05'),
+(697, 'Mon Carlo Delima', 'logged in', '2023-04-07 10:39:08'),
+(698, 'Mon Carlo Delima', 'logged out', '2023-04-07 10:39:49'),
+(699, 'SV1_Admin', 'logged in', '2023-04-07 10:39:54'),
+(700, 'SV1_Admin', 'logged out', '2023-04-07 10:39:57'),
+(701, 'Mon Carlo Delima', 'logged in', '2023-04-07 10:40:01'),
+(702, ' Mon Carlo Delima', 'logged out', '2023-04-07 10:59:35'),
+(703, 'SV1_Admin', 'logged in', '2023-04-07 10:59:38'),
+(704, 'SV1_Admin', 'logged out', '2023-04-07 10:59:40'),
+(705, ' Mon Carlo Delima', 'logged in', '2023-04-07 10:59:43'),
+(706, ' Mon Carlo Delima', 'logged out', '2023-04-07 11:01:41'),
+(707, 'Jeune Paolus Flores', 'logged in', '2023-04-07 11:01:44'),
+(708, 'Jeune Paolus Flores', 'logged out', '2023-04-07 11:01:49'),
+(709, ' Mon Carlo Delima', 'logged in', '2023-04-07 11:01:52'),
+(710, ' Mon Carlo Delima', 'logged out', '2023-04-07 11:03:08'),
+(711, 'Jeune Paolus Flores', 'logged in', '2023-04-07 11:03:12'),
+(712, 'Jeune Paolus Flores', 'logged out', '2023-04-07 11:03:39'),
+(713, ' Mon Carlo Delima', 'logged in', '2023-04-07 11:03:42'),
+(714, 'Mon Carlo Delima', 'logged out', '2023-04-07 11:10:16'),
+(715, 'SV1_Admin', 'logged in', '2023-04-07 11:10:18'),
+(716, 'SV1_Admin', 'logged out', '2023-04-07 11:10:44'),
+(717, 'Mon Carlo Delima', 'logged in', '2023-04-07 11:10:47'),
+(718, 'Mon Carlo Delima', 'logged out', '2023-04-07 11:11:36'),
+(719, 'SV1_Admin', 'logged in', '2023-04-07 11:11:39');
 
 -- --------------------------------------------------------
 
@@ -966,30 +1012,30 @@ CREATE TABLE IF NOT EXISTS `homeowner_profile` (
   `employer` varchar(100) DEFAULT NULL,
   `display_picture` varchar(255) NOT NULL,
   PRIMARY KEY (`homeowner_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `homeowner_profile`
 --
 
 INSERT INTO `homeowner_profile` (`homeowner_id`, `last_name`, `first_name`, `middle_name`, `suffix`, `sex`, `street`, `subdivision`, `barangay`, `business_address`, `occupation`, `email_address`, `birthdate`, `mobile_number`, `employer`, `display_picture`) VALUES
-(1, 'Delima', 'Mon Carlo', 'Zonio', 'N/A', 'Male', 'Lot 1 Block 2', 'Sunnyvale 1', 'Pantok', 'N/A', 'N/A', 'dmoncarlo6@gmail.com', '2002-10-06', '09157189636', 'N/A', 'hdversion.png'),
+(1, 'Delima', 'Mon Carlo', 'Zonio', 'N/A', 'Male', 'Lot 1 Block 2', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'dmoncarlo6@gmail.com', '2002-10-06', '09157189636', 'N/A', 'hdversion.png'),
 (2, 'Casingal', 'Kyle Andrei', 'Morillo', 'N/A', 'Male', 'Lot 1 Block 1', 'Sunnyvale 3', 'Palangoy', 'N/A', 'N/A', 'kylecasingal36@gmail.com', '2001-09-02', '09123456789', 'N/A', '316495100_870517180796101_3304939871151226288_n.jpg'),
 (3, 'Flores', 'Jeune Paolus', 'Damaso', 'N/A', 'Male', 'Lot 1 Block 3', 'Sunnyvale 2', 'Pantok', 'N/A', 'N/A', 'floresjeunepaolus@gmail.com', '2002-06-16', '09123123123', 'Inya', '316156823_3360766927514073_2770550987709432568_n.jpg'),
 (4, 'Doe', 'John', 'N/A', 'Jr.', 'Male', 'Lot 2 Block 4', 'Sunnyvale 3', 'Palangoy', 'N/A', 'Programmer', 'dmoncarlo@gmail.com', '2002-10-06', '09157189636', 'Mark Zuckerberg', 'default.png'),
-(18, '', 'SV1_Admin', NULL, NULL, '', '', '', '', NULL, '', '', NULL, '', 'N/A', 'default.png'),
+(18, '', 'SV1_Admin', NULL, NULL, '', '', '', '', NULL, '', '', NULL, '', NULL, 'default.png'),
 (8, 'BendaÃ±a', 'Krishtalene', 'Edejer', 'N/A', 'Female', 'Lot 1 Block 5', 'Sunnyvale 2', 'Pantok', 'N/A', 'N/A', 'tissabendana@gmail.com', '2002-10-19', '09123456789', 'N/A', '86705321_2748280675293170_833038108541845504_n.jpg'),
 (17, 'Escueta', 'Roiemar', 'Conchada', 'N/A', 'Male', 'Lot 4 Block 3', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'escuetaroiemar@gmail.com', '2022-11-28', '09123456789', 'N/A', 'default.png'),
 (16, 'Castillo', 'Janwel', NULL, 'N/A', 'Male', 'Lot 2 Block 3 ', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'janweljigycastillo20@gmail.com', '2022-11-25', '09123456789', 'N/A', '315887907_1137649846869408_655406644278059076_n.png'),
 (30, 'Doe', 'John', 'Smith', 'N/A', 'Male', 'Lot 1 Block 8', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'johndoe@gmail.com', '2010-01-01', '09123456789', 'N/A', 'default.png'),
-(28, '', 'SV1_Secretary', NULL, NULL, '', '', '', '', NULL, NULL, '', '2022-11-29', '', '', 'default.png'),
+(28, '', 'SV1_Secretary', NULL, NULL, '', '', '', '', NULL, NULL, '', '2022-11-29', '', NULL, 'default.png'),
 (31, 'Lowery', 'Amirah', 'Meyers', 'N/A', 'Female', 'Lot 1 Block 7', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'amirahlowery@gmail.com', '2009-01-15', '09123456789', 'N/A', 'default.png'),
 (32, 'Miller', 'Kian', 'Smith', 'N/A', 'Female', 'Lot 2 Block 10', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'Kian Miller', '1997-07-16', '09123456789', 'N/A', 'default.png'),
 (33, 'Shepherd', 'Leona', 'Villegas', 'N/A', 'Female', 'Lot 2 Block 4', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'leonashepherd@gmail.com', '2000-02-29', '09123456789', 'N/A', 'default.png'),
 (34, 'Warner', 'Sophie', 'Manning', 'N/A', 'Female', 'Lot 3 Block 7', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'sophiewarner@gmail.com', '1998-06-03', '09123456789', 'N/A', 'default.png'),
 (35, 'Hudson', 'Tristram', 'Ray', 'N/A', 'Male', 'Lot 4 Block 1', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'tristramhudson', '1982-07-29', '09123456789', 'N/A', 'default.png'),
-(36, '', 'SV1_Treasurer', NULL, NULL, '', '', '', '', NULL, NULL, '', '2022-11-29', '', '', 'default.png'),
-(37, '', 'SV2_Admin', NULL, NULL, '', '', '', '', NULL, NULL, '', '2022-11-29', '', '', 'default.png'),
+(36, '', 'SV1_Treasurer', NULL, NULL, '', '', '', '', NULL, NULL, '', '2022-11-29', '', NULL, 'default.png'),
+(37, '', 'SV2_Admin', NULL, NULL, '', '', '', '', NULL, NULL, '', '2022-11-29', '', NULL, 'default.png'),
 (39, 'Sta. Maria', 'Marco Ivan', 'Quierrez', 'N/A', 'Male', 'Lot 4 Block 3', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'marcoivanstamaria@gmail.com', '2001-06-13', '09123456789', 'N/A', '290509682_1413885909103188_6599438684369654480_n.jpg'),
 (40, 'Dalisay', 'Cardo', 'Dela Cruz', 'N/A', 'Male', 'Block 3 Lot 5', 'Sunnyvale 2', 'Palangoy', 'Palangoy', 'N/A', 'cardoDalisay@gmail.com', '1977-11-07', '09123456789', 'N/A', 'default.png');
 
@@ -1214,7 +1260,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `verification_code` varchar(6) DEFAULT NULL,
   `email_verified_at` datetime DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
@@ -1225,7 +1271,7 @@ INSERT INTO `user` (`user_id`, `user_homeowner_id`, `full_name`, `user_type`, `p
 (3, 3, 'Jeune Paolus Flores', 'Homeowner', 'thisfeelsgud', 'floresjeunepaolus@gmail.com', 'Activated', '943962', '2022-11-10 22:51:58'),
 (1, 1, 'Mon Carlo Delima', 'Homeowner', '12345', 'dmoncarlo6@gmail.com', 'Activated', '286140', '2022-11-24 13:48:07'),
 (27, 16, 'Janwel Castillo', 'Homeowner', 'dadada', 'janweljigycastillo20@gmail.com', 'Activated', '943962', '2022-11-15 20:43:59'),
-(4, 4, 'John Doe', 'Treasurer', '123', 'dmoncarlo@gmail.com', 'Deactivated', '105861', '2022-11-24 15:17:36'),
+(4, 4, 'John Doe', 'Treasurer', '123', 'John Doe', 'Activated', '105861', '2022-11-24 15:17:36'),
 (18, 18, 'SV1_Admin', 'Admin', 'password', 'SV1_Admin', 'Activated', NULL, NULL),
 (42, 17, 'Roiemar Escueta', 'Homeowner', '123', 'escuetaroiemar@gmail.com', 'Deactivated', '135447', '2022-11-28 23:28:23'),
 (46, 28, 'SV1_Secretary', 'Secretary', '123', 'SV1_Secretary', 'Activated', NULL, NULL),

@@ -2,10 +2,10 @@
 require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
+$user_type = $row['user_type'];
 $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['barangay'];
 $resultSubd = $con->query("SELECT * FROM subdivision");
-$resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id = " . $user_id = $_SESSION['user_id'] . " AND full_name = homeowner_name");
-
+$resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id = " . $user_id = $_SESSION['user_id'] . " AND user_type = 'Homeowner' AND full_name = homeowner_name");
 ?>
 
 <!DOCTYPE html>
@@ -596,7 +596,13 @@ $resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id =
     </div>
     <div class="memberPanel">
       <div class="profileMem" id="profile">
-        <label class="lblProfile">Member Profile</label>
+        <label class='lblProfile'><?php
+                                  if ($user_type == 'Homeowner') {
+                                    echo "Member Profile";
+                                  } else {
+                                    echo "Profile";
+                                  }
+                                  ?></label>
         <div class="profileForm">
           <div class="profileImg">
             <img <?php
@@ -616,58 +622,70 @@ $resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id =
                                   }
                                   ?></td>
                 <td class="editBtn">
-                  <i class="fa-solid fa-pen fa-2x" data-bs-toggle="modal" data-bs-target="#editProfile"></i>
+                  <?php
+                  if ($user_type == 'Homeowner') {
+                    echo "<i class='fa-solid fa-pen fa-2x' data-bs-toggle='modal' data-bs-target='#editProfile'></i>";
+                  }
+                  ?>
+                </td>
+              </tr>
+              <?php
+              if ($user_type == 'Homeowner') {
+                $datetime = strtotime($row['birthdate']);
+                echo "<tr>
+                <td class='lbl'>Date of Birth:</td>
+                <td class='data'>
+                               " . $phptime = date('F/d/Y', $datetime) . "
                 </td>
               </tr>
               <tr>
-                <td class="lbl">Date of Birth:</td>
-                <td class="data"><?php
-                                  $datetime = strtotime($row['birthdate']);
-                                  echo $phptime = date("F/d/Y", $datetime);
-                                  ?>
+                <td class='lbl'>Sex:</td>
+                <td class='data'> " . $row['sex'] . "</td>
+              </tr>
+              <tr>
+                <td class='lbl'>Email:</td>
+                <td class='data'>" . $row['email_address'] . "</td>
+              </tr>
+              <tr>
+                <td class='lbl'>Mobile Number:</td>
+                <td class='data'>" . $row['mobile_number'] . "</td>
+              </tr>
+              <tr>
+                <td class='lbl'>Residence Address:</td>
+                <td class='data'>
+                  " . $residence_address . "</td>
+              </tr>
+              <tr>
+                <td class='lbl'>Business Address:</td>
+                <td class='data'>
+                " . $row['business_address'] . "
                 </td>
               </tr>
               <tr>
-                <td class="lbl">Gender:</td>
-                <td class="data"><?php echo $row['sex'] ?></td>
+                <td class='lbl'>Occupation:</td>
+                <td class='data'>" . $row['occupation'] . "</td>
               </tr>
               <tr>
-                <td class="lbl">Residence Address:</td>
-                <td class="data">
-                  <?php echo $residence_address ?></ </td>
-              </tr>
-              <tr>
-                <td class="lbl">Business Address:</td>
-                <td class="data">
-                  <?php echo $row['business_address'] ?>
-                </td>
-              </tr>
-              <tr>
-                <td class="lbl">Occupation:</td>
-                <td class="data"><?php echo $row['occupation'] ?></td>
-              </tr>
-              <tr>
-                <td class="lbl">Employer:</td>
-                <td class="data"><?php echo $row['employer'] ?></td>
-              </tr>
-              <tr>
-                <td class="lbl">Email:</td>
-                <td class="data"><?php echo $row['email_address'] ?></td>
-              </tr>
-              <tr>
-                <td class="lbl">Mobile Number:</td>
-                <td class="data"><?php echo $row['mobile_number'] ?></td>
-              </tr>
+                <td class='lbl'>Employer:</td>
+                <td class='data'>" . $row['employer'] . "</td>
+              </tr>";
+              }
+              ?>
             </tbody>
           </table>
           <div class="button-area">
-            <button class="change-password" type="button" data-bs-toggle="modal" data-bs-target="#editPassword">change password</button>
+            <?php
+            if ($user_type == 'Homeowner') {
+              echo "<button class='change-password' type='button' data-bs-toggle='modal' data-bs-target='#editPassword'>change password</button>";
+            }
+            ?>
           </div>
-
         </div>
-        <div class="table-responsive">
-          <label class="lblTable">Paid Monthly Dues</label>
-          <table class="tblPaidDues table-hover" cellspacing="0" width="100%">
+        <?php
+        if ($user_type == 'Homeowner') {
+          echo "<div class='table-responsive'>
+          <label class='lblTable'>Paid Monthly Dues</label>
+          <table class='tblPaidDues table-hover' cellspacing='0' width='100%'>
             <thead>
               <tr>
                 <th>Name</th>
@@ -679,26 +697,26 @@ $resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id =
                 <th>Status</th>
               </tr>
             </thead>
-            <tbody>
-              <?php while ($rowDues = $resultDues->fetch_assoc()) : ?>
-                <tr>
-                  <td><?php echo $rowDues['homeowner_name'] ?></td>
-                  <td><?php echo $rowDues['subdivision'] ?></td>
-                  <td><?php echo $rowDues['month'] ?></td>
-                  <td><?php echo $rowDues['year'] ?></td>
-                  <td><?php echo $rowDues['address'] ?></td>
-                  <td><?php echo $rowDues['paid_at'] ?></td>
-                  <td><?php echo $rowDues['status'] ?></td>
-                <?php endwhile; ?>
-                </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-
+            <tbody>";
+          while ($rowDues = $resultDues->fetch_assoc()) :
+            echo "<tr>
+              <td>" . $rowDues['homeowner_name'] . "</td>
+              <td>" . $rowDues['subdivision'] . "</td>
+              <td>" . $rowDues['month'] . "</td>
+              <td>" .  $rowDues['year'] . "</td>
+              <td>" . $rowDues['address'] . "</td>
+              <td>" . $rowDues['paid_at'] . "</td>
+              <td>" . $rowDues['status'] . "</td>";
+          endwhile;
+          echo "</tr>
+        </tbody>
+      </table>
     </div>
-  </div>
+  </div>";
+        }
+        ?>
+      </div>
+    </div>
   </div>
   <form method="post" enctype="multipart/form-data">
     <div class="modal fade" id="editProfile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -714,21 +732,60 @@ $resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id =
                 <tr>
                   <td>First Name:</td>
                   <td>
-                    <input type="text" name="first_name" id="" placeholder="first name" value="<?php echo $row['first_name']; ?>" required />
+                    <input disabled type="text" name="first_name" id="" placeholder="first name" value="<?php echo $row['first_name']; ?>" required />
                   </td>
-                  <td>Date of Birth:</td>
+                  <td>Email:</td>
                   <td>
-                    <input type="date" data-date-format="yyyy-mm-dd" name="birthdate" value="<?php echo $row['birthdate'] ?? ''; ?>" id="" required />
+                    <input disabled type="text" name="email_address" id="" placeholder="email" value="<?php echo $row['email_address'] ?? ''; ?>" required />
                   </td>
                 </tr>
                 <tr>
                   <td>Middle Name:</td>
                   <td>
-                    <input type="text" name="middle_name" id="" placeholder="middle name" value="<?php echo $row['middle_name'] ?? ''; ?>" required />
+                    <input disabled type="text" name="middle_name" id="" placeholder="middle name" value="<?php echo $row['middle_name'] ?? ''; ?>" required />
                   </td>
+                  <td>Mobile Number:</td>
+                  <td>
+                    <input type="text" name="mobile_number" id="" placeholder="mobile no." value="<?php echo $row['mobile_number'] ?? ''; ?>" required />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Last Name:</td>
+                  <td>
+                    <input disabled type="text" name="last_name" id="" placeholder="last name" value="<?php echo $row['last_name'] ?? ''; ?>" required />
+                  </td>
+                  <td>Occupation:</td>
+                  <td class="NA">
+                    <input type="text" name="occupation" id="" placeholder="occupation" value="<?php echo $row['occupation'] ?? ''; ?>" required />
+                    <p class="lblNA">*write N/A if not applicable*</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Suffix:</td>
+                  <td>
+                    <input disabled type="text" name="suffix" id="" placeholder="suffix" value="<?php echo $row['suffix'] ?? ''; ?>" required />
+                  </td>
+                  <td>Business Address:</td>
+                  <td class="NA">
+                    <input type="text" name="business_address" id="" placeholder="business address" value="<?php echo $row['business_address'] ?? ''; ?>" required />
+                    <p class="lblNA">*write N/A if not applicable*</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Date of Birth:</td>
+                  <td>
+                    <input disabled type="date" data-date-format="yyyy-mm-dd" name="birthdate" value="<?php echo $row['birthdate'] ?? ''; ?>" id="" required />
+                  </td>
+                  <td>Employer:</td>
+                  <td class="NAemployer">
+                    <input type="text" name="employer" id="" placeholder="employer" value="<?php echo $row['employer'] ?? ''; ?>" required />
+                    <p class="lblNA">*write N/A if not applicable*</p>
+                  </td>
+                </tr>
+                <tr>
                   <td>Sex:</td>
                   <td>
-                    <select name="sex" id="">
+                    <select disabled name="sex" id="">
                       <option value="" required>Select...</option>
                       <option value="Male" <?php
                                             if ($row['sex'] == "Male") {
@@ -744,32 +801,12 @@ $resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id =
                   </td>
                 </tr>
                 <tr>
-                  <td>Last Name:</td>
-                  <td>
-                    <input type="text" name="last_name" id="" placeholder="last name" value="<?php echo $row['last_name'] ?? ''; ?>" required />
-                  </td>
-                  <td>Email:</td>
-                  <td>
-                    <input type="text" name="email_address" id="" placeholder="email" value="<?php echo $row['email_address'] ?? ''; ?>" required />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Suffix:</td>
-                  <td>
-                    <input type="text" name="suffix" id="" placeholder="suffix" value="<?php echo $row['suffix'] ?? ''; ?>" required />
-                  </td>
-                  <td>Mobile Number:</td>
-                  <td>
-                    <input type="text" name="mobile_number" id="" placeholder="mobile no." value="<?php echo $row['mobile_number'] ?? ''; ?>" required />
-                  </td>
-                </tr>
-                <tr>
                   <td>Residence Address:</td>
                   <td>
-                    <input type="text" name="street" id="" placeholder="Lot and Block" value="<?php echo $row['street'] ?? ''; ?>" required />
+                    <input disabled type="text" name="street" id="" placeholder="Lot and Block" value="<?php echo $row['street'] ?? ''; ?>" required />
                   </td>
                   <td>
-                    <select name="subdivision" id="">
+                    <select disabled name="subdivision" id="">
                       <option value="">Select...</option>
                       <?php while ($rowSubd = $resultSubd->fetch_assoc()) : ?>
                         <option value="<?php echo $rowSubd['subdivision_name'] ?>" <?php
@@ -782,28 +819,10 @@ $resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id =
                   </td>
                 </tr>
                 <tr>
-                  <td>Business Address:</td>
-                  <td class="NA">
-                    <input type="text" name="business_address" id="" placeholder="business address" value="<?php echo $row['business_address'] ?? ''; ?>" required />
-                    <p class="lblNA">*write N/A if not applicable*</p>
-                  </td>
                 </tr>
                 <tr>
-
-                </tr>
-                <tr>
-                  <td>Occupation:</td>
-                  <td class="NA">
-                    <input type="text" name="occupation" id="" placeholder="occupation" value="<?php echo $row['occupation'] ?? ''; ?>" required />
-                    <p class="lblNA">*write N/A if not applicable*</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Employer:</td>
-                  <td class="NAemployer">
-                    <input type="text" name="employer" id="" placeholder="employer" value="<?php echo $row['employer'] ?? ''; ?>" required />
-                    <p class="lblNA">*write N/A if not applicable*</p>
-                  </td>
+                  <td></td>
+                  <td></td>
                   <td>
                     <button data-bs-toggle="modal" type="button" class="btnSubmitReg saveChanges">
                       Save
