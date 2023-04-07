@@ -4,8 +4,8 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
 $row = $result->fetch_assoc();
 $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
 $resultSubdivision_selectPurpose = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
-$resultAmenities = $con->query("SELECT * FROM amenities ORDER BY subdivision_name ASC") or die($mysqli->error);
-$resultPurpose = $con->query("SELECT * FROM amenity_purpose INNER JOIN amenities ON amenity_purpose.amenity_id = amenities.amenity_id ORDER BY subdivision_name ASC") or die($mysqli->error);
+$resultAmenities = $con->query("SELECT * FROM amenities ORDER BY subdivision_name ASC, amenity_name") or die($mysqli->error);
+$resultPurpose = $con->query("SELECT * FROM amenity_purpose INNER JOIN amenities ON amenity_purpose.amenity_id = amenities.amenity_id ORDER BY subdivision_name ASC, amenity_name") or die($mysqli->error);
 $resultAmenities_selectAmenities = $con->query("SELECT * FROM amenities ORDER BY amenity_name ASC") or die($mysqli->error);
 if (isset($_GET['amenity_purpose_id'])) {
     $resultAmenities_selectAmenities = $con->query("SELECT * FROM amenities WHERE subdivision_id ='$subdivision_id' ORDER BY amenity_name ASC") or die($mysqli->error);
