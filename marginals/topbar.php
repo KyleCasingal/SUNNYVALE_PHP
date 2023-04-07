@@ -9,8 +9,8 @@ $row1 = $result1->fetch_assoc();
 $homeowner_id = $row1['user_homeowner_id'];
 $resultSubdivision = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $rowSubdivision = $resultSubdivision->fetch_assoc();
-$subdivision_name = $rowSubdivision['subdivision'];
-$resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivision ='$subdivision_name' AND homeowner_id != '$homeowner_id' ORDER BY first_name");
+$subdivision_name1 = $rowSubdivision['subdivision'];
+$resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivision ='$subdivision_name1' AND homeowner_id != '$homeowner_id' ORDER BY first_name");
 ?>
 <!DOCTYPE html>
 <html lang="en">

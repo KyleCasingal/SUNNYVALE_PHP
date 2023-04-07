@@ -3,7 +3,7 @@ require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
 $resultSubdivision = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
+$resultSubdivision_table = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
 
 ?>
 
@@ -386,7 +386,7 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mys
             <div class="settingsAddSubdivision" id="settingsAddSubdivision">
                 <div class="addAmenityForm">
                     <form method="post" autocomplete="off">
-                        <input type="hidden" name="subdivision_id" value="<?php echo $subdivision_id ?? ''; ?>">
+                        <input type="text" name="subdivision_id" value="<?php echo $subdivision_id ?? ''; ?>">
                         <table class="tblAmenityForm">
 
                             <tr>

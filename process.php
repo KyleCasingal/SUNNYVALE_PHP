@@ -435,12 +435,11 @@ if (isset($_POST['compute'])) {
 if (isset($_POST['amenityAdd'])) {
   $newAmenity = $_POST['newAmenity'];
   $availability = $_POST['availability'];
-  $subdivision_name = $_POST['subdivision_name'];
+  $subdivision_id = $_POST['subdivision_id'];
 
-  $result1 = $con->query("SELECT * FROM subdivision WHERE subdivision_name= '$subdivision_name'");
+  $result1 = $con->query("SELECT * FROM subdivision WHERE subdivision_id= '$subdivision_id'");
   $row1 = $result1->fetch_assoc();
-  $subdivision_id = $row1['subdivision_id'];
-
+  $subdivision_name = $row1['subdivision_name'];
 
   $sql = "INSERT INTO amenities(amenity_name, subdivision_id, subdivision_name, availability) VALUES ('$newAmenity', '$subdivision_id', '$subdivision_name', '$availability')";
   mysqli_query($con, $sql);
@@ -448,6 +447,7 @@ if (isset($_POST['amenityAdd'])) {
   $row = $result->fetch_assoc();
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'added a new amenity' . ' ' . "$subdivision_name" . '-' . "$newAmenity" . "', NOW())";
   mysqli_query($con, $sql1);
+  header("Location: settingsAmenity.php");
 }
 
 //SELECTING A ROW TO EDIT AMENITY
@@ -457,19 +457,23 @@ if (isset($_GET['amenity_id'])) {
   if ($result->num_rows) {
     $row = $result->fetch_array();
     $amenity_name = $row['amenity_name'];
-    $subdivision_name = $row['subdivision_name'];
+    $subdivision_id = $row['subdivision_id'];
     $availability = $row['availability'];
   }
-}
+} 
 
 // UPDATING A ROW AMENITY
 if (isset($_POST['amenityUpdate'])) {
   $amenity_id = $_POST['amenity_id_settings'];
   $amenity_name = $_POST['newAmenity'];
-  $subdivision_name = $_POST['subdivision_name'];
+  $subdivision_id = $_POST['subdivision_id'];
   $availability = $_POST['availability'];
+  
+  $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision WHERE subdivision_id = '$subdivision_id'") or die($mysqli->error);
+  $row1 = $resultSubdivision_selectAmenities->fetch_assoc();
+  $subdivision_name = $row1['subdivision_name'];
 
-  $con->query("UPDATE amenities SET amenity_name = '$amenity_name', subdivision_name = '$subdivision_name', availability = '$availability' WHERE amenity_id = '$amenity_id'");
+  $con->query("UPDATE amenities SET amenity_name = '$amenity_name', subdivision_id = '$subdivision_id', subdivision_name = '$subdivision_name', availability = '$availability' WHERE amenity_id = '$amenity_id'");
   $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $row = $result->fetch_assoc();
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an exisiting amenity' . ' ' . "$subdivision_name" . '-' . "$amenity_name" . "', NOW())";
@@ -486,7 +490,7 @@ if (isset($_POST['purposeAdd'])) {
 
   $sql = "INSERT INTO amenity_purpose(amenity_id, amenity_purpose, day_rate, night_rate) VALUES ('$amenity_id', '$amenity_purpose', '$dayRate', '$nightRate')";
   mysqli_query($con, $sql);
-  header("Location: settingsAmenity.php");
+  header("Location: settingsAmenity.php#amenityPurpose");
 }
 
 //SELECTING A ROW TO EDIT PURPOSE
@@ -496,9 +500,10 @@ if (isset($_GET['amenity_purpose_id'])) {
   if ($result->num_rows) {
     $row = $result->fetch_array();
     $amenity_purpose_id = $row['amenity_purpose_id'];
+    $amenity_id = $row['amenity_id'];
     $amenity_name_purpose = $row['amenity_name'];
     $amenity_purpose = $row['amenity_purpose'];
-    $subdivision_name = $row['subdivision_name'];
+    $subdivision_id = $row['subdivision_id'];
     $dayRate = $row['day_rate'];
     $nightRate = $row['night_rate'];
   }
@@ -535,12 +540,13 @@ if (isset($_POST['subdivisionAdd'])) {
   header("Location: settingsSubdivision.php");
 }
 
-// SELECTING A ROW TO EDIT AMENITY
+// SELECTING A ROW TO EDIT SUBDIVISION
 if (isset($_GET['subdivision_id'])) {
   $subdivision_id = $_GET['subdivision_id'];
   $result = $con->query("SELECT * FROM subdivision WHERE subdivision_id = '$subdivision_id'");
   if ($result->num_rows) {
     $row = $result->fetch_array();
+    $subdivision_id = $row['subdivision_id'];
     $subdivision_name = $row['subdivision_name'];
     $barangay = $row['barangay'];
   }

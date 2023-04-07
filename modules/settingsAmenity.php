@@ -2,13 +2,13 @@
 require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
+$resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
 $resultSubdivision_selectPurpose = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
 $resultAmenities = $con->query("SELECT * FROM amenities ORDER BY subdivision_name ASC") or die($mysqli->error);
 $resultPurpose = $con->query("SELECT * FROM amenity_purpose INNER JOIN amenities ON amenity_purpose.amenity_id = amenities.amenity_id ORDER BY subdivision_name ASC") or die($mysqli->error);
 $resultAmenities_selectAmenities = $con->query("SELECT * FROM amenities ORDER BY amenity_name ASC") or die($mysqli->error);
 if (isset($_GET['amenity_purpose_id'])) {
-    $resultAmenities_selectAmenities = $con->query("SELECT * FROM amenities WHERE subdivision_name ='$subdivision_name' ORDER BY amenity_name ASC") or die($mysqli->error);
+    $resultAmenities_selectAmenities = $con->query("SELECT * FROM amenities WHERE subdivision_id ='$subdivision_id' ORDER BY amenity_name ASC") or die($mysqli->error);
 }
 ?>
 
@@ -431,12 +431,12 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                             <tr>
                                 <td>Subdivision:</td>
                                 <td>
-                                    <select name="subdivision_name" id="" required>
+                                    <select name="subdivision_id" id="" required>
                                         <option value="">Select...</option>
                                         <?php while ($row = $resultSubdivision_selectAmenities->fetch_assoc()) : ?>
-                                            <option value="<?php echo $row['subdivision_name'] ?>" <?php
+                                            <option value="<?php echo $row['subdivision_id'] ?>"<?php
                                                                                                     if (isset($_GET['amenity_id'])) {
-                                                                                                        if ($subdivision_name == $row['subdivision_name']) {
+                                                                                                        if ($subdivision_id == $row['subdivision_id']) {
                                                                                                             echo 'selected="selected"';
                                                                                                         }
                                                                                                     }
@@ -591,7 +591,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                                 while ($row = $resultSubdivision_selectPurpose->fetch_assoc()) :
                                                     echo '<option value="' . $row['subdivision_id'] . '"';
                                                     if (isset($_GET['amenity_purpose_id'])) {
-                                                        if ($subdivision_name == $row['subdivision_name']) {
+                                                        if ($subdivision_id == $row['subdivision_id']) {
                                                             echo 'selected="selected"';
                                                         }
                                                     }
@@ -618,7 +618,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                                 while ($row = $resultAmenities_selectAmenities->fetch_assoc()) :
                                                     echo '<option value="' . $row['amenity_id'] . '"';
                                                     if (isset($_GET['amenity_purpose_id'])) {
-                                                        if ($amenity_name_purpose == $row['amenity_name']) {
+                                                        if ($amenity_id == $row['amenity_id']) {
                                                             echo 'selected="selected"';
                                                         }
                                                     }
