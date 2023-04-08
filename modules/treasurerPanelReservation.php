@@ -465,7 +465,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
             <div class="modalConcernBody">
               <table class="availed-amenity-list">
                 <tr>
-                  <input type="hidden" name="concern_id" value="<?php echo $row1['transaction_id'] ?>">
+                  <input type="hidden" name="transaction_id" value="<?php echo $row1['transaction_id'] ?>">
                 </tr>
                 <tr>
                   <td style="font-weight: bold;">Renter Name: </td>
@@ -510,7 +510,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                   Close
                 </button>
-                <button type="submit" name="concernResolved" class="btn btn-success">
+                <button type="submit" name="approveReservation" class="btn btn-success">
                   Approve
                 </button>
               </div>

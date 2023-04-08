@@ -487,7 +487,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                         Do you really want to add this new amenity?
                                     </div>
                                     <div class="modal-footer">
-                                        <button name="amenityAdd" type="submit" class="btn btn-primary">Save changes</button>
+                                        <button name="amenityAdd" type="submit" class="btn btn-primary">Save Changes</button>
                                     </div>
                                 </div>
                             </div>
@@ -514,7 +514,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                             Do you really want to update this amenity?
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="amenityUpdate" type="submit" class="btn btn-primary">Save changes</button>
+                                            <button name="amenityUpdate" type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
                                     </div>
                                 </div>
@@ -663,7 +663,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                             Do you really want to add this new purpose?
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="purposeAdd" type="submit" class="btn btn-primary">Save changes</button>
+                                            <button name="purposeAdd" type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
                                     </div>
                                 </div>
@@ -690,7 +690,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                                 Do you really want to update this purpose?
                                             </div>
                                             <div class="modal-footer">
-                                                <button name="purposeUpdate" type="submit" class="btn btn-primary">Save changes</button>
+                                                <button name="purposeUpdate" type="submit" class="btn btn-primary">Save Changes</button>
                                             </div>
                                         </div>
                                     </div>

@@ -1317,3 +1317,11 @@ if (isset($_POST['editPassword'])) {
       </div>";
   }
 }
+
+// AMENITY RESERVATION APPROVAL
+if (isset($_POST['approveReservation'])) {
+  $transaction_id = $_POST['transaction_id'];
+
+  $sql = "UPDATE transaction, amenity_renting SET transaction.status = 'Approved', amenity_renting.cart = 'Approved' WHERE transaction.transaction_id= '$transaction_id' AND amenity_renting.transaction_id = '$transaction_id'";
+  $result = mysqli_query($con, $sql);
+}

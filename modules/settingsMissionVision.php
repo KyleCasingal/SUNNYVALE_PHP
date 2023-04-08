@@ -432,7 +432,7 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
                                                                                                     ?></textarea>
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="missionVision" type="submit" class="btn btn-primary">Save changes</button>
+                                            <button name="missionVision" type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
                                     </div>
                                 </div>

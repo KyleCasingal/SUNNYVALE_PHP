@@ -2,8 +2,7 @@
 require '../marginals/topbar.php';
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
+$resultYears = $con->query("SELECT * FROM years") or die($mysqli->error);
 ?>
 
 <!DOCTYPE html>
@@ -378,70 +377,36 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
                                     <input type="text" name="year" id="year">
                                 </td>
                             </tr>
-                            <!-- <tr>
-                                <td>Amenity:</td>
-                                <td>
-                                    <input name="newAmenity" value="<?php echo $amenity_name ?? ''; ?>" type="text" placeholder="new amenity" required />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Amenity Rate Per Hour:</td>
-                                <td>
-                                    <input name="rate" value="<?php echo $price ?? ''; ?>" type="text" placeholder="rate per hour" required />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Availability:</td>
-                                <td>
-                                    <select name="availability" id="" required>
-                                        <option value="">Select...</option>
-                                        <option value="Available" <?php
-                                                                    if (isset($_GET['amenity_id'])) {
-                                                                        if ($availability == "Available") {
-                                                                            echo 'selected="selected"';
-                                                                        }
-                                                                    }
-                                                                    ?>>Available</option>
-                                        <option value="Unavailable" <?php
-                                                                    if (isset($_GET['amenity_id'])) {
-                                                                        if ($availability == "Unavailable") {
-                                                                            echo 'selected="selected"';
-                                                                        }
-                                                                    }
-                                                                    ?>>Unavailable</option>
-                                    </select>
-                                </td>
-                            </tr> -->
                         </table>
 
                         <!--MODAL ADD BILLING PERIOD -->
                         <div class="modal fade" id="addAmenityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            
 
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Do you really want to add this new billing period?
-                                        </div>
-                                        <form action="" method="post">
+
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you really want to add this new billing period?
+                                    </div>
+                                    <form action="" method="post">
                                         <div class="modal-footer">
-                                            <button name="billingPeriodAdd" id="billingPeriodAdd" type="submit" class="btn btn-primary">Save changes</button>
+                                            <button name="billingPeriodAdd" id="billingPeriodAdd" type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
                                     </form>
-                                    </div>
                                 </div>
                             </div>
-                            <div class="btnArea">
-                                <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addAmenityModal">
-                                    Add billing period
-                                </button>
-                                
-                            
-                                <!-- MODAL UPDATE AMENITY -->
+                        </div>
+                        <div class="btnArea">
+                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addAmenityModal">
+                                Add billing period
+                            </button>
+
+
+                            <!-- MODAL UPDATE AMENITY -->
                             <div class="modal fade" id="updateAmenityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -453,8 +418,7 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
                                             Do you really want to update this amenity?
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="amenityUpdate" type="submit" class="btn btn-primary">Save
-                                                changes</button>
+                                            <button name="amenityUpdate" type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
                                     </div>
                                 </div>
@@ -469,24 +433,16 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
                     <table class="table tblAmenity">
                         <thead>
                             <th></th>
-                            <th>Subdivision</th>
-                            <th>Amenity</th>
-                            <th>Rate</th>
-                            <th>Availabiliity</th>
+                            <th>Year</th>
                         </thead>
-                        <?php while ($row = $resultAmenities->fetch_assoc()) : ?>
+                        <?php while ($rowYears = $resultYears->fetch_assoc()) : ?>
                             <tr>
                                 <td>
-                                    <a href="settingsAmenity.php?amenity_id=<?php echo $row['amenity_id']; ?>" class="btnEdit">Edit</a>
+                                    <a href="settingsBillingPeriod.php?yearID=<?php echo $rowYears['yearID']; ?>" class="btnEdit">Edit</a>
                                 </td>
                                 <td>
-                                    <?php echo $row['subdivision_name'] ?>
+                                    <?php echo $rowYears['year'] ?>
                                 </td>
-                                <td><?php echo $row['amenity_name'] ?></td>
-                                <td>
-                                    <?php echo $row['price'] ?>
-                                </td>
-                                <td><?php echo $row['availability'] ?></td>
                             </tr>
                         <?php endwhile; ?>
                     </table>
