@@ -424,6 +424,22 @@ $rowUser = $resultUser->fetch_assoc();
     border-radius: 0.5vw;
     border: 0 none;
   }
+
+  .archive-btn {
+    margin: 0.5vw;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    text-decoration: none;
+    border-radius: 0.5vw;
+    max-height: 2vw;
+    font-size: 0.8vw;
+    background-color: lightcoral;
+    padding: 0.5vw;
+  }
+
+  .archive-btn:hover {
+    color: white;
+  }
 </style>
 
 <body>
@@ -485,7 +501,7 @@ $rowUser = $resultUser->fetch_assoc();
             </div>
             <?php
             if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-              echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='btn btn-danger'>ARCHIVE</a>";
+              echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='archive-btn'>ARCHIVE</a>";
             }
             ?>
           </div>
@@ -522,7 +538,7 @@ $rowUser = $resultUser->fetch_assoc();
                 <td><?php
                     if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
 
-                      echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='btn btn-danger'>ARCHIVE</a>";
+                      echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='archive-btn'>ARCHIVE</a>";
                     }
                     ?></td>
               </tr>

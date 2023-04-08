@@ -43,7 +43,7 @@ $resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivisi
     padding: 0;
     width: 100%;
     height: 4.5vw;
-    background-color: rgba(131, 151, 145);
+    background-color: rgba(106, 153, 78);
     position: sticky;
     top: 0;
     display: flex;

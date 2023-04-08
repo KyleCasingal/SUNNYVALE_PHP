@@ -333,9 +333,9 @@ $resultComplaints1 = $con->query("SELECT * FROM concern WHERE status = 'Pending'
                     <table class="tblComplaints">
                         <?php while ($row = $resultComplaints->fetch_assoc()) : ?>
                             <tr class="trComplaints">
-                                <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
+                                <!-- <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
                                                                                                                 echo $row['concern_id']
-                                                                                                                ?>"><?php echo $row['concern_id'] ?></td>
+                                                                                                                ?>"><?php echo $row['concern_id'] ?></td> -->
                                 <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
                                                                                                                 echo $row['concern_id']
                                                                                                                 ?>"><?php echo $row['full_name']; ?></td>
