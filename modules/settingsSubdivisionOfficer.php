@@ -446,7 +446,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                         Do you really want to add this new officer?
                                     </div>
                                     <div class="modal-footer">
-                                        <button name="officerAdd" onclick="location.href = '#settingsOfficers'" type="submit" class="btn btn-primary">Save changes</button>
+                                        <button name="officerAdd" onclick="location.href = '#settingsOfficers'" type="submit" class="btn btn-primary">Save Changes</button>
                                     </div>
                                 </div>
                             </div>
@@ -473,7 +473,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                             Do you really want to updated this existing officer?
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" name="officerUpdate" type="submit" class="btn btn-primary">Save changes</button>
+                                            <button type="submit" name="officerUpdate" type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
                                     </div>
                                 </div>

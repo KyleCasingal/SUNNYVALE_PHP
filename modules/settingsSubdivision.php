@@ -415,7 +415,7 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision") or die($mysq
                                         Do you really want to add this new subdivision?
                                     </div>
                                     <div class="modal-footer">
-                                        <button name="subdivisionAdd" type="submit" class="btn btn-primary">Save changes</button>
+                                        <button name="subdivisionAdd" type="submit" class="btn btn-primary">Save Changes</button>
                                     </div>
                                 </div>
                             </div>
@@ -442,7 +442,7 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision") or die($mysq
                                             Do you really want to update this subdivision?
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="subdivisionUpdate" type="submit" class="btn btn-primary">Save changes</button>
+                                            <button name="subdivisionUpdate" type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
                                     </div>
                                 </div>

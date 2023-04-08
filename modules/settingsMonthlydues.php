@@ -438,7 +438,7 @@ $resultMonthly = $con->query("SELECT * FROM monthly_dues") or die($mysqli->error
                                         Do you really want to add this new monthly due?
                                     </div>
                                     <div class="modal-footer">
-                                        <button name="monthlyDuesAdd" type="submit" class="btn btn-primary">Save changes</button>
+                                        <button name="monthlyDuesAdd" type="submit" class="btn btn-primary">Save Changes</button>
                                     </div>
                                 </div>
                             </div>
@@ -465,7 +465,7 @@ $resultMonthly = $con->query("SELECT * FROM monthly_dues") or die($mysqli->error
                                             Do you really want to update this existing monthly due?
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="monthlyDuesUpdate" type="submit" class="btn btn-primary">Save changes</button>
+                                            <button name="monthlyDuesUpdate" type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
                                     </div>
                                 </div>

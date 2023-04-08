@@ -469,7 +469,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                         Do you really want to add this new system account?
                                     </div>
                                     <div class="modal-footer">
-                                        <button name="sysAccAdd" type="submit" class="btn btn-primary">Save changes</button>
+                                        <button name="sysAccAdd" type="submit" class="btn btn-primary">Save Changes</button>
                                     </div>
                                 </div>
                             </div>
@@ -496,7 +496,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                             Do you really want to update this existing account?
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="sysAccUpdate" type="submit" class="btn btn-primary">Save changes</button>
+                                            <button name="sysAccUpdate" type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
                                     </div>
                                 </div>
