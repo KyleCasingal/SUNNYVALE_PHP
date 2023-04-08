@@ -4,8 +4,9 @@ $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
 $homeowner_id = $row['homeowner_id'];
-$resultComplaints = $con->query("SELECT * FROM concern WHERE complainant_homeowner_id = '" . $row['homeowner_id'] . "' OR complainee_homeowner_id = '" . $row['homeowner_id'] . "' AND status = 'Processing'  ORDER BY datetime DESC");
-$resultComplaints1 = $con->query("SELECT * FROM concern WHERE complainant_homeowner_id = '" . $row['homeowner_id'] . "' OR complainee_homeowner_id = '" . $row['homeowner_id'] . "' AND status = 'Processing' ORDER BY datetime DESC");
+$resultComplaints = $con->query("SELECT * FROM concern WHERE complainant_homeowner_id = '$homeowner_id' OR complainee_homeowner_id = '$homeowner_id' AND status = 'Processing' ORDER BY datetime DESC");
+$resultComplaints1 = $con->query("SELECT * FROM concern WHERE complainant_homeowner_id = '$homeowner_id' OR complainee_homeowner_id = '$homeowner_id' AND status = 'Processing' ORDER BY datetime DESC");
+$resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id  WHERE homeowner_id = '$homeowner_id' AND status = 'UNPAID' ORDER BY billing_period.billingPeriod_id DESC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -246,8 +247,33 @@ $resultComplaints1 = $con->query("SELECT * FROM concern WHERE complainant_homeow
             <label class="inboxTitle">Messages</label>
             <div class="inboxContainer">
                 <table class="tblMessage">
+                    <?php while ($rowBillConsumer = $resultBillConsumer->fetch_assoc()) : ?>
+                        <tr class="trInbox">
+                            <td class="subject" data-bs-toggle="modal" data-bs-target="#billConsumer_id<?php
+                                                                                                        echo $rowBillConsumer['billConsumer_id']
+                                                                                                        ?>">Monthly Due</label>
+                            <td class="msgDesc" data-bs-toggle="modal" data-bs-target="#billConsumer_id<?php
+                                                                                                        echo $rowBillConsumer['billConsumer_id']
+                                                                                                        ?>"><?php
+                                                                                                            echo $rowBillConsumer['month']
+                                                                                                            ?></label>
+                            <td class="msgDesc" data-bs-toggle="modal" data-bs-target="#billConsumer_id<?php
+                                                                                                        echo $rowBillConsumer['billConsumer_id']
+                                                                                                        ?>"><?php
+                                                                                                            echo $rowBillConsumer['year']
+                                                                                                            ?></label>
+                            <td class="msgDesc" data-bs-toggle="modal" data-bs-target="#billConsumer_id<?php
+                                                                                                        echo $rowBillConsumer['billConsumer_id']
+                                                                                                        ?>"><?php
+                                                                                                            echo $rowBillConsumer['status']
+                                                                                                            ?></label>
+                        </tr>
+                    <?php endwhile; ?>
                     <?php while ($row = $resultComplaints->fetch_assoc()) : ?>
                         <tr class="trInbox">
+                            <td class="subject" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
+                                                                                                        echo $row['concern_id']
+                                                                                                        ?>">Complaint</label>
                             <td class="subject" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
                                                                                                         echo $row['concern_id']
                                                                                                         ?>"><?php echo $row['concern_subject'] ?></label>
@@ -262,7 +288,6 @@ $resultComplaints1 = $con->query("SELECT * FROM concern WHERE complainant_homeow
                                                                                                             echo $row['concern_id']
                                                                                                             ?>"> <?php echo $row['status']; ?></td>
                         </tr>
-
                     <?php endwhile; ?>
                 </table>
             </div>

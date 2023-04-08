@@ -6,6 +6,7 @@ $user_type = $row['user_type'];
 $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['barangay'];
 $resultSubd = $con->query("SELECT * FROM subdivision");
 $resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id = " . $user_id = $_SESSION['user_id'] . " AND user_type = 'Homeowner' AND full_name = homeowner_name");
+$resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id  WHERE homeowner_id = '$homeowner_id' AND status = 'PAID' ORDER BY billing_period.billingPeriod_id ASC");
 ?>
 
 <!DOCTYPE html>
