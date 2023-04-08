@@ -342,9 +342,10 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
     cursor: pointer;
   }
 
-  .trComplaints a {
-    text-decoration: none;
-    color: black;
+  .trComplaints td {
+    text-align: left;
+    padding: 1vw;
+    font-size: 1.2vw;
   }
 
   .trComplaints:hover a {
@@ -399,7 +400,20 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
 
   .modal-footer {
     background-color: rgba(170, 192, 175, 0);
+  }
 
+  .renter-name {
+    font-weight: bold;
+  }
+
+  .availed-amenity-list {
+    table-layout: fixed;
+    width: 100%;
+
+  }
+
+  .availed-amenity-list td {
+    padding: 1vw;
   }
 </style>
 <script type="text/javascript">
@@ -415,12 +429,15 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
           <table class="tblComplaints">
             <?php while ($row = $resultTransaction->fetch_assoc()) : ?>
               <tr class="trComplaints">
-                <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
-                                                                                              echo $row['transaction_id']
-                                                                                              ?>"><?php echo $row['transaction_id'] ?></td>
-                <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
+                <!-- <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
+                                                                                                    echo $row['transaction_id']
+                                                                                                    ?>"><?php echo $row['transaction_id'] ?></td> -->
+                <td class="renter-name" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
                                                                                               echo $row['transaction_id']
                                                                                               ?>"><?php echo $row['renter_name'] ?></td>
+                <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
+                                                                                              echo $row['transaction_id']
+                                                                                              ?>"><?php echo $row['total_cost'] ?></td>
                 <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
                                                                                               echo $row['transaction_id']
                                                                                               ?>"><?php echo $row['status'] ?></td>
@@ -446,21 +463,21 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modalConcernBody">
-              <table>
+              <table class="availed-amenity-list">
                 <tr>
                   <input type="hidden" name="transaction_id" value="<?php echo $row1['transaction_id'] ?>">
                 </tr>
                 <tr>
-                  <td>Renter Name: </td>
-                  <td id=""><?php echo $row1['renter_name'] ?></td>
+                  <td style="font-weight: bold;">Renter Name: </td>
+                  <td id="" colspan="5"><?php echo $row1['renter_name'] ?></td>
                 </tr>
                 <tr>
-                  <td id="">Subdivision</td>
-                  <td id="">Amenity</td>
-                  <td id="">Purpose</td>
-                  <td id="">From</td>
-                  <td id="">To</td>
-                  <td id="">Cost</td>
+                  <td id="" style="font-weight: bold;">Subdivision</td>
+                  <td id="" style="font-weight: bold;">Amenity</td>
+                  <td id="" style="font-weight: bold;">Purpose</td>
+                  <td id="" style="font-weight: bold;">From</td>
+                  <td id="" style="font-weight: bold;">To</td>
+                  <td id="" style="font-weight: bold;">Cost</td>
                 </tr>
                 <?php while ($row2 = $resultAmenityRenting2->fetch_assoc()) : ?>
                   <input type="hidden" name="concern_id" value="<?php echo $row2['amenity_renting_id'] ?>">
@@ -476,7 +493,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
                   </tr>
                 <?php endwhile; ?>
                 <tr>
-                  <td>Total Cost:</td>
+                  <td style="font-weight: bold;">Total Cost:</td>
                   <td><?php echo $row1['total_cost'] ?></td>
                 </tr>
                 <tr>
