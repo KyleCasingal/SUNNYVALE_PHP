@@ -223,6 +223,58 @@ $resultYears = $con->query("SELECT * FROM years") or die($mysqli->error);
         color: white;
     }
 
+    .btnSubmitReg {
+        background-color: darkseagreen;
+        border: 0;
+        padding: 0.5vw;
+        max-width: 50vw;
+        width: 10vw;
+        font-family: "Poppins", sans-sans-serif;
+        font-size: 1vw;
+        margin-top: 2vw;
+        color: white;
+        border-radius: 0.8vw;
+        cursor: pointer;
+    }
+
+    .btnSubmitReg:hover {
+        background-color: rgb(93, 151, 93);
+    }
+
+    .btnSubmitReg:disabled {
+        background-color: rgb(40, 68, 40);
+    }
+
+    .btnSubmitReg[disabled]:hover {
+        background-color: rgb(40, 68, 40);
+    }
+
+    .btnClearReg {
+        background-color: lightcoral;
+        border: 0;
+        padding: 0.5vw;
+        max-width: 50vw;
+        width: 10vw;
+        font-family: "Poppins", sans-sans-serif;
+        font-size: 1vw;
+        margin-top: 2vw;
+        color: white;
+        border-radius: 0.8vw;
+        cursor: pointer;
+    }
+
+    .btnClearReg:hover {
+        background-color: rgb(180, 83, 83);
+    }
+
+    .btnClearReg:disabled {
+        background-color: rgb(97, 45, 45);
+    }
+
+    .btnClearReg[disabled]:hover {
+        background-color: rgb(97, 45, 45);
+    }
+
     .secretaryPanel {
         flex: 8;
         width: 100%;
@@ -369,20 +421,17 @@ $resultYears = $con->query("SELECT * FROM years") or die($mysqli->error);
             <div class="settingsAddAmenity" id="AddAmenity">
                 <div class="addAmenityForm">
                     <form method="post" autocomplete="off">
-                        <input type="hidden" name="amenity_id" value="<?php echo $amenity_id ?? ''; ?>">
+                        <input type="hidden" name="year_id" value="<?php echo $year_id ?? ''; ?>">
                         <table class="tblAmenityForm">
                             <tr>
                                 <td>New billing year:</td>
                                 <td>
-                                    <input type="text" name="year" id="year">
+                                    <input type="text" name="year" id="year" value="<?php echo $year ?? ''; ?>">
                                 </td>
                             </tr>
                         </table>
-
                         <!--MODAL ADD BILLING PERIOD -->
                         <div class="modal fade" id="addAmenityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -392,22 +441,23 @@ $resultYears = $con->query("SELECT * FROM years") or die($mysqli->error);
                                     <div class="modal-body">
                                         Do you really want to add this new billing period?
                                     </div>
-                                    <form action="" method="post">
-                                        <div class="modal-footer">
-                                            <button name="billingPeriodAdd" id="billingPeriodAdd" type="submit" class="btn btn-primary">Save Changes</button>
-                                        </div>
-                                    </form>
+                                    <div class="modal-footer">
+                                        <button name="billingPeriodAdd" id="billingPeriodAdd" type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="btnArea">
-                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addAmenityModal">
-                                Add billing period
+                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addAmenityModal" <?php
+                                                                                                                                if ($year_id ?? '') {
+                                                                                                                                    echo "disabled";
+                                                                                                                                } else {
+                                                                                                                                    echo "";
+                                                                                                                                } ?>>
+                                Add Billing Period
                             </button>
-
-
                             <!-- MODAL UPDATE AMENITY -->
-                            <div class="modal fade" id="updateAmenityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="updateBillingPeriodModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -415,14 +465,41 @@ $resultYears = $con->query("SELECT * FROM years") or die($mysqli->error);
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            Do you really want to update this amenity?
+                                            Do you really want to update this billing period?
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="amenityUpdate" type="submit" class="btn btn-primary">Save Changes</button>
+                                            <button name="billingPeriodUpdate" id="billingPeriodUpdate" type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateBillingPeriodModal" <?php
+                                                                                                                                        if ($year_id ?? '') {
+                                                                                                                                            echo "";
+                                                                                                                                        } else {
+                                                                                                                                            echo "disabled";
+                                                                                                                                        } ?>>
+                                Update Billing Period
+                            </button>
+                            <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            This will clear all fields!
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" onclick="location.href='settingsBillingPeriod.php'">Clear</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" value="" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                                Clear
+                            </button>
 
                         </div>
                     </form>
@@ -438,7 +515,7 @@ $resultYears = $con->query("SELECT * FROM years") or die($mysqli->error);
                         <?php while ($rowYears = $resultYears->fetch_assoc()) : ?>
                             <tr>
                                 <td>
-                                    <a href="settingsBillingPeriod.php?yearID=<?php echo $rowYears['yearID']; ?>" class="btnEdit">Edit</a>
+                                    <a href="settingsBillingPeriod.php?year_id=<?php echo $rowYears['yearID']; ?>" class="btnEdit">Edit</a>
                                 </td>
                                 <td>
                                     <?php echo $rowYears['year'] ?>

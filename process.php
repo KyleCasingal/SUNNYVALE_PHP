@@ -524,7 +524,35 @@ if (isset($_POST['purposeUpdate'])) {
   header("Location: settingsAmenity.php");
 }
 
+// BILLING PERIOD ADD
+if (isset($_POST['billingPeriodAdd'])) {
+  $year = $_POST['year'];
 
+  $sql = "INSERT INTO years(year) VALUES ('$year')";
+  mysqli_query($con, $sql);
+  header("Location: settingsBillingPeriod.php");
+}
+
+// SELECTING A ROW TO EDIT BILLING PERIOD
+if (isset($_GET['year_id'])) {
+  $year_id = $_GET['year_id'] ?? '';
+  $result = $con->query("SELECT * FROM years WHERE yearID = '$year_id'");
+
+  if ($result->num_rows) {
+    $row = $result->fetch_array();
+    $yearID = $row['yearID'];
+    $year = $row['year'];
+  }
+}
+
+// UPDATING A ROW BILLING PERIOD
+if (isset($_POST['billingPeriodUpdate'])) {
+  $year_id = $_POST['year_id'];
+  $year = $_POST['year'];
+
+  $con->query("UPDATE years SET year = '$year' WHERE yearID = '$year_id'");
+  header("Location: settingsBillingPeriod.php");
+}
 
 // SUBDIVISION ADD
 if (isset($_POST['subdivisionAdd'])) {
