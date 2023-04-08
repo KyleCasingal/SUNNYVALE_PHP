@@ -192,7 +192,7 @@ if (isset($_POST['login'])) {
   $password = $_POST['password'];
   $sql = "SELECT * FROM user WHERE BINARY email_address = '$email_address' AND BINARY password = '$password' AND account_status = 'Activated' ";
   $result = mysqli_query($con, $sql);
-  $sql1 = "SELECT * FROM user WHERE email_address = '$email_address' AND password = '$password' AND (account_status = 'Pending' or account_status = 'Deactivated')";
+  $sql1 = "SELECT * FROM user WHERE BINARY email_address = '$email_address' AND password = '$password' AND (account_status = 'Pending' or account_status = 'Deactivated')";
   $result1 = mysqli_query($con, $sql1);
 
   if (mysqli_num_rows($result) == 1) {
@@ -671,11 +671,17 @@ if (isset($_GET['user_id'])) {
 // UPDATING A SYSTEM ACCOUNT
 if (isset($_POST['sysAccUpdate'])) {
   $account_id = $_POST['user_id'];
-  $full_name = $_POST['account_name'];
+  $account_name = $_POST['account_name'];
   $password = $_POST['password'];
   $account_type = $_POST['user_type'];
   $account_status = $_POST['account_status'];
-  $con->query("UPDATE user SET password = '$password', user_type = '$account_type', account_status = '$account_status' WHERE user_id = '$account_id'");
+  
+  $resultHomeownerID = $con->query("SELECT * FROM user WHERE user_id = '$account_id'");
+  $rowHomeownerID = $resultHomeownerID->fetch_assoc();
+  $homeowner_id = $rowHomeownerID['user_homeowner_id'];
+
+  $con->query("UPDATE homeowner_profile SET first_name = '$account_name' WHERE homeowner_id = '$homeowner_id'");
+  $con->query("UPDATE user SET full_name = '$account_name', password = '$password', user_type = '$account_type', account_status = '$account_status', email_address = '$account_name' WHERE user_id = '$account_id'");
   $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $row = $result->fetch_assoc();
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an existing system account' . ' ' . "$full_name" . '-' . "$account_type" . "', NOW())";
