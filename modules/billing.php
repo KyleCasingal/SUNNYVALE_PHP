@@ -1,9 +1,9 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Treasurer' AND $_SESSION['user_type'] != 'Admin') {
+if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
-  }
+}
 $rowZ = $result->fetch_assoc();
 $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
 $resultSubdivision = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
@@ -224,6 +224,37 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
     .Homeowner-table-data-row:hover {
         background-color: lightgray;
     }
+
+    .sideBar {
+        background-color: rgb(248, 245, 227);
+        flex: 2;
+        color: black;
+    }
+
+    .secretarySideBar {
+        display: inline;
+        justify-content: flex-end;
+        margin-top: 5px;
+        margin-bottom: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .secretarySideBar li {
+        color: rgb(89, 89, 89);
+        font-family: "Poppins", sans-serif;
+        text-align: center;
+        padding: 1.5vw;
+        padding-left: 0.5vw;
+        padding-right: 0.5vw;
+        font-size: max(1.5vw, min(10px));
+        cursor: pointer;
+        border-bottom: 1px solid lightgray;
+    }
+
+    .secretarySideBar li:hover {
+        background-color: rgb(236, 235, 226);
+    }
 </style>
 <script>
     $(document).ready(function() {
@@ -317,7 +348,9 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
 <body>
 
     <div class="treasurer">
-        <?php require '../marginals/sidebarAdmin.php'; ?>
+        <div class="sideBar">
+            <?php require '../marginals/sidebarAdmin.php'; ?>
+        </div>
         <div class="treasurerPanel">
             <div class="monthlyDues" id="monthlyDues">
                 <div class="treasurerForm">
