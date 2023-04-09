@@ -681,7 +681,7 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billin
           <div class="button-area">
             <?php
             if ($user_type == 'Homeowner') {
-              echo "<button class='change-password' type='button' data-bs-toggle='modal' data-bs-target='#editPassword'>change password</button>";
+              echo "<button class='change-password' type='button' data-bs-toggle='modal' data-bs-target='#editPassword'>Change password</button>";
             }
             ?>
           </div>

@@ -1157,7 +1157,8 @@ if (isset($_POST['billMonth'])) {
       $fullname = $first_name . " " . $last_name;
 
 
-      $sql = "INSERT INTO bill_consumer (billingPeriod_id, homeowner_id, fullname, amount, status) VALUES ('$x', '$homeowner_id_array[$i]', '$fullname', '$monthlyAmount', 'UNPAID')";
+      $sql = "INSERT INTO bill_consumer (billingPeriod_id, homeowner_id, fullname, amount, status) VALUES ('$x', '$homeowner_id_array[$i]', '$fullname', '$monthlyAmount', 'UNPAID')
+            WHERE NOT EXISTS (SELECT billingPeriod_id, homeowner_id  FROM bill_consumer WHERE billingPeriod_id = '$x' AND homeowner_id = '$homeowner_id_array[$i]')";
       $result = mysqli_query($con, $sql);
       $i++;
     }
@@ -1208,7 +1209,12 @@ if (isset($_POST['billAnnual'])) {
       $fullname = $first_name . " " . $last_name;
 
 
-      $sql = "INSERT INTO bill_consumer (billingPeriod_id, homeowner_id, fullname, amount, status) VALUES ('$x', '$homeowner_id_array[$i]', '$fullname', '$AnnualAmount', 'UNPAID')";
+      // $sql = "INSERT INTO bill_consumer (billingPeriod_id, homeowner_id, fullname, amount, status) VALUES ('$x', '$homeowner_id_array[$i]', '$fullname', '$AnnualAmount', 'UNPAID')";
+      $sql = "INSERT INTO bill_consumer (billingPeriod_id, homeowner_id, fullname, amount, status) SELECT * FROM(SELECT '$x', '$homeowner_id_array[$i]', '$fullname', '$AnnualAmount', 'UNPAID') AS temp
+      WHERE NOT EXISTS (SELECT billingPeriod_id, homeowner_id  FROM bill_consumer WHERE billingPeriod_id = '$x' AND homeowner_id = '$homeowner_id_array[$i]')";
+
+
+      
       $result = mysqli_query($con, $sql);
       $i++;
     }
