@@ -1,5 +1,9 @@
 <?php
 require '../marginals/topbar.php';
+if ($_SESSION['user_type'] != 'Admin' AND $_SESSION['user_type'] != 'Secretary') {
+    echo '<script>window.location.href = "../modules/blogHome.php";</script>';
+    exit;
+}
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
 $resultSubdivision = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);

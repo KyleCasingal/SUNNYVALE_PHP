@@ -1,5 +1,9 @@
 <?php
 require '../marginals/topbar.php';
+if ($_SESSION['user_type'] != 'Admin' OR $_SESSION['user_type'] != 'Secretary') {
+  echo '<script>window.location.href = "../modules/blogHome.php";</script>';
+  exit;
+}
 $result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'No' AND post_status = 'Archived' ORDER BY post_id DESC") or die($mysqli->error);
 $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Archived' ORDER BY post_id DESC") or die($mysqli->error);
 $resultUser = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);

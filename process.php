@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
 //Redirect to register page when in index page
 if (isset($_POST['registerButtonLanding'])) {
@@ -194,23 +195,17 @@ if (isset($_POST['login'])) {
   $result = mysqli_query($con, $sql);
   $sql1 = "SELECT * FROM user WHERE BINARY email_address = '$email_address' AND password = '$password' AND (account_status = 'Pending' or account_status = 'Deactivated')";
   $result1 = mysqli_query($con, $sql1);
-
+  
   if (mysqli_num_rows($result) == 1) {
+    
     $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
     $result = $con->query("SELECT * FROM user WHERE email_address = '$email_address'");
     $row = $result->fetch_assoc();
+    $user_type = $row['user_type'];
     $_SESSION['user_id'] = $row['user_id'];
-
-    // $result1 = $con->query("SELECT * FROM post WHERE published_at < now() - interval 1 week");
-    // $row1 = $result1->fetch_assoc();
-    // if (mysqli_num_rows($result1) >= 1) {
-    //   while ($row1 = $result1->fetch_assoc()) {
-    //     echo $date[] = $row1['published_at'];
-    //   }
-    // }
+    $_SESSION['user_type'] = $row['user_type'];
     $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','logged in', NOW())";
     mysqli_query($con, $sql1);
-    header("Location: ../modules/blogHome.php");
   } elseif (mysqli_num_rows($result1) == 1) {
     echo "<div class='messageFail'>
         <label >

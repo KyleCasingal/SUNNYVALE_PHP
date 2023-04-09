@@ -445,79 +445,90 @@ $rowUser = $resultUser->fetch_assoc();
 <body>
 
   <div class='blogHome'>
-    <div class="blogScroll">
-      <div class="blogHead">
-        <p class="headTxt">Recent Posts</p>
-        <form action="" method="POST">
-          <?php
-          if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-            echo "<button id='archivedPosts' name='archivedPosts' type='submit' class='archived-post-btn'>Archived Posts</button>
-          <button id='newPost' type='button' class='new-announcement-btn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>+ New Announcement</button>";
-          } else if ($rowUser['user_type'] == 'Homeowner') {
-            echo "<button id='newPost' type='button' class='newPostBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
-                    + New Post
-                  </button>";
-          }
-          ?>
-        </form>
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-              <div class="modal-header">
-                <?php
-                if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-                  echo "<h5 class='modal-title' id='staticBackdropLabel'>Add new announcement</h5>";
-                } else if ($rowUser['user_type'] == 'Homeowner') {
-                  echo "<h5 class='modal-title' id='staticBackdropLabel'>Add new post</h5>";
-                }
-                ?>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="mdl-body">
-                <form method="post" enctype="multipart/form-data">
-                  <?php
-                  require '../modules/blogWrite.php';
-                  ?>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <?php while ($row = $result->fetch_assoc()) : ?>
-        <div class="blogPost">
-          <div class="blogProfile">
-            <img class="avatarBlog" <?php
-                                    $imageURL = '../media/displayPhotos/' . $row['display_picture'];
-                                    ?> src="<?= $imageURL ?>" alt="" />
-            <div class="profileText">
-              <p class="profileName"><?php echo $row['full_name']; ?></p>
-              <p class="profileDate">
-                <?php
-                $datetime = strtotime($row['published_at']);
-                echo $phptime = date("g:i A m/d/y", $datetime);
-                ?>
-              </p>
-            </div>
+    <?php
+    if ($user_type != 'Guard') {
+    ?>
+      <div class="blogScroll">
+        <div class="blogHead">
+          <p class="headTxt">Recent Posts</p>
+          <form action="" method="POST">
             <?php
             if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-              echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='archive-btn'>ARCHIVE</a>";
+              echo "<button id='archivedPosts' name='archivedPosts' type='submit' class='archived-post-btn'>Archived Posts</button>
+          <button id='newPost' type='button' class='new-announcement-btn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>+ New Announcement</button>";
+            } else if ($rowUser['user_type'] == 'Homeowner') {
+              echo "<button id='newPost' type='button' class='newPostBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
+                    + New Post
+                  </button>";
             }
             ?>
-          </div>
-          <div class="postContent">
-            <img class="postImg" <?php
-                                  $imageURL = '../media/postsPhotos/' . $row['content_image'];
-                                  ?> src="<?= $imageURL ?>" alt="">
-            </img>
-            <p class="blogTitle"><?php echo $row['title']; ?></p>
-            <p class="blogBody">
-              <?php echo $row['content']; ?>
-            </p>
+          </form>
+          <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <?php
+                  if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
+                    echo "<h5 class='modal-title' id='staticBackdropLabel'>Add new announcement</h5>";
+                  } else if ($rowUser['user_type'] == 'Homeowner') {
+                    echo "<h5 class='modal-title' id='staticBackdropLabel'>Add new post</h5>";
+                  }
+                  ?>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="mdl-body">
+                  <form method="post" enctype="multipart/form-data">
+                    <?php
+                    require '../modules/blogWrite.php';
+                    ?>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      <?php endwhile; ?>
-    </div>
+        <?php while ($row = $result->fetch_assoc()) : ?>
+          <div class="blogPost">
+            <div class="blogProfile">
+              <img class="avatarBlog" <?php
+                                      $imageURL = '../media/displayPhotos/' . $row['display_picture'];
+                                      ?> src="<?= $imageURL ?>" alt="" />
+              <div class="profileText">
+                <p class="profileName"><?php echo $row['full_name']; ?></p>
+                <p class="profileDate">
+                  <?php
+                  $datetime = strtotime($row['published_at']);
+                  echo $phptime = date("g:i A m/d/y", $datetime);
+                  ?>
+                </p>
+              </div>
+              <?php
+              if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
+                echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='archive-btn'>ARCHIVE</a>";
+              }
+              ?>
+            </div>
+            <div class="postContent">
+              <img class="postImg" <?php
+                                    $imageURL = '../media/postsPhotos/' . $row['content_image'];
+                                    ?> src="<?= $imageURL ?>" alt="">
+              </img>
+              <p class="blogTitle"><?php echo $row['title']; ?></p>
+              <p class="blogBody">
+                <?php echo $row['content']; ?>
+              </p>
+            </div>
+          </div>
+        <?php endwhile; ?>
+      </div>
+    <?php
+    } else {
+    ?>
+
+    
+    <?php
+    }
+    ?>
     <div class="sideContent">
       <div class="sideText">
         <label class="sideTitle">Announcements</label>

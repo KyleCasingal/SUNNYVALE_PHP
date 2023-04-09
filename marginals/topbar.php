@@ -2,11 +2,13 @@
 include "../process.php";
 if (empty($_SESSION)) {
   header("Location: ../index.php");
+  exit;
 }
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $result1 = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row1 = $result1->fetch_assoc();
 $homeowner_id_profile = $row1['user_homeowner_id'];
+$user_type = $row1['user_type'];
 $resultSubdivision = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $rowSubdivision = $resultSubdivision->fetch_assoc();
 $subdivision_name1 = $rowSubdivision['subdivision'];
@@ -348,8 +350,14 @@ $resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivisi
       <div class="topCenter">
         <ul class="topList">
           <li data-bs-toggle="modal" data-bs-target="#confirmLogout" onclick="location.href='#confirmLogout'" class="topListItem1">HOME</li>
-          <li onclick="location.href='../modules/amenities.php'" class="topListItem1">AMENITIES</li>
-          <li onclick="location.href='../modules/blogHome.php'" class="topListItem1"> BLOG</li>
+          <?php
+          if ($user_type != 'Guard') {
+          ?>
+            <li onclick="location.href='../modules/amenities.php'" class="topListItem1">AMENITIES</li>
+            <li onclick="location.href='../modules/blogHome.php'" class="topListItem1"> BLOG</li>
+          <?php
+          }
+          ?>
         </ul>
       </div>
       <div class="topRight">

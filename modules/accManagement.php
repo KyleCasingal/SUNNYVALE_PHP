@@ -1,5 +1,9 @@
 <?php
 require '../marginals/topbar.php';
+if ($_SESSION['user_type'] != 'Admin' AND $_SESSION['user_type'] != 'Secretary') {
+    echo '<script>window.location.href = "../modules/blogHome.php";</script>';
+    exit;
+}
 $res = $con->query("SELECT * FROM user WHERE account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER  by user_id ASC") or die($mysqli->error);
 //ACCOUNT MANAGEMENT SORT, ACTIVATE, DEACTIVATE
 $status_filter = $_POST['status_filter'] ?? '';

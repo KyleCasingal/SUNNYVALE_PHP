@@ -1,6 +1,9 @@
 <?php
 require '../marginals/topbar.php';
-
+if ($_SESSION['user_type'] != 'Treasurer') {
+    echo '<script>window.location.href = "../modules/blogHome.php";</script>';
+    exit;
+}
 $row = $result->fetch_assoc();
 $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
 $resultSubdivision = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");

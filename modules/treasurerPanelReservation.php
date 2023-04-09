@@ -1,5 +1,9 @@
 <?php
 require '../marginals/topbar.php';
+if ($_SESSION['user_type'] != 'Treasurer') {
+  echo '<script>window.location.href = "../modules/blogHome.php";</script>';
+  exit;
+}
 $resultTransaction = $con->query("SELECT * FROM transaction");
 $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction WHERE amenity_renting.transaction_id = transaction.transaction_id");
 ?>

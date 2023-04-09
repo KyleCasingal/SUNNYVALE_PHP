@@ -1,5 +1,9 @@
 <?php
 require '../marginals/topbar.php';
+if ($_SESSION['user_type'] != 'Treasurer') {
+  echo '<script>window.location.href = "../modules/blogHome.php";</script>';
+  exit;
+}
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
 $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
 $resultSubd = $con->query("SELECT * FROM subdivision");
