@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Apr 09, 2023 at 02:24 PM
+-- Generation Time: Apr 09, 2023 at 04:16 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -144,11 +144,7 @@ INSERT INTO `annual_dues` (`annual_dues_id`, `subdivision_name`, `amount`, `upda
 (1, 'Sunnyvale 1', 200, '2022-11-27'),
 (2, 'Sunnyvale 2', 250, '2022-11-27'),
 (3, 'Sunnyvale 3', 500, '2022-11-29'),
-(4, 'Sunnyvale 4', 350, '2022-11-27'),
-(5, 'Sunnyvale 7', 500, '2022-11-27'),
-(6, 'Sunnyvale 5', 500, '2022-11-29'),
-(7, 'Sunnyvale 5', 300, '2022-11-29'),
-(11, 'Sunnyvale 10', 720, '2022-11-29');
+(4, 'Sunnyvale 4', 350, '2022-11-27');
 
 -- --------------------------------------------------------
 
@@ -163,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1026 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1092 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -1181,7 +1177,73 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (1022, 'Mon Carlo Delima', 'logged out', '2023-04-09 13:25:32'),
 (1023, 'SV1_Treasurer', 'logged in', '2023-04-09 13:25:38'),
 (1024, 'SV1_Treasurer', 'logged out', '2023-04-09 13:52:50'),
-(1025, 'SV1_Guard', 'logged in', '2023-04-09 13:52:53');
+(1025, 'SV1_Guard', 'logged in', '2023-04-09 13:52:53'),
+(1026, 'SV1_Guard', 'logged out', '2023-04-09 14:25:16'),
+(1027, 'SV1_Admin', 'logged in', '2023-04-09 14:25:20'),
+(1028, 'SV1_Admin', 'logged out', '2023-04-09 14:28:35'),
+(1029, 'SV1_Admin', 'logged in', '2023-04-09 14:28:44'),
+(1030, 'SV1_Admin', 'logged out', '2023-04-09 14:29:28'),
+(1031, 'SV1_Treasurer', 'logged in', '2023-04-09 14:29:33'),
+(1032, 'SV1_Treasurer', 'logged out', '2023-04-09 14:30:45'),
+(1033, 'SV1_Admin', 'logged in', '2023-04-09 14:30:48'),
+(1034, 'SV1_Admin', 'logged out', '2023-04-09 14:33:37'),
+(1035, 'SV1_Admin', 'logged in', '2023-04-09 14:33:39'),
+(1036, 'SV1_Admin', 'logged out', '2023-04-09 14:53:39'),
+(1037, 'SV1_Admin', 'logged in', '2023-04-09 14:53:42'),
+(1038, 'SV1_Admin', 'logged out', '2023-04-09 14:59:34'),
+(1039, 'SV1_Admin', 'logged in', '2023-04-09 14:59:37'),
+(1040, 'SV1_Admin', 'logged out', '2023-04-09 15:00:01'),
+(1041, 'SV1_Admin', 'logged in', '2023-04-09 15:00:03'),
+(1042, 'SV1_Admin', 'logged out', '2023-04-09 15:07:21'),
+(1043, 'SV1_Treasurer', 'logged in', '2023-04-09 15:07:24'),
+(1044, 'SV1_Treasurer', 'logged out', '2023-04-09 15:14:00'),
+(1045, 'SV1_Secretary', 'logged in', '2023-04-09 15:14:02'),
+(1046, 'SV1_Secretary', 'logged out', '2023-04-09 15:19:15'),
+(1047, 'SV1_Admin', 'logged in', '2023-04-09 15:19:18'),
+(1048, 'SV1_Admin', 'logged out', '2023-04-09 15:20:13'),
+(1049, 'SV1_Admin', 'logged in', '2023-04-09 15:20:15'),
+(1050, 'SV1_Admin', 'logged out', '2023-04-09 15:20:29'),
+(1051, 'SV1_Treasurer', 'logged in', '2023-04-09 15:20:32'),
+(1052, 'SV1_Treasurer', 'logged out', '2023-04-09 15:28:08'),
+(1053, 'SV1_Admin', 'logged in', '2023-04-09 15:28:11'),
+(1054, 'SV1_Admin', 'logged out', '2023-04-09 15:29:54'),
+(1055, 'SV1_Secretary', 'logged in', '2023-04-09 15:30:03'),
+(1056, 'SV1_Secretary', 'logged out', '2023-04-09 15:30:11'),
+(1057, 'SV1_Admin', 'logged in', '2023-04-09 15:31:02'),
+(1058, 'SV1_Admin', 'logged out', '2023-04-09 15:42:56'),
+(1059, 'Mon Carlo Delima', 'logged in', '2023-04-09 15:43:00'),
+(1060, 'Mon Carlo Delima', 'logged out', '2023-04-09 15:46:19'),
+(1061, 'SV1_Treasurer', 'logged in', '2023-04-09 15:46:22'),
+(1062, 'SV1_Treasurer', 'logged out', '2023-04-09 15:46:54'),
+(1063, 'Mon Carlo Delima', 'logged in', '2023-04-09 15:46:56'),
+(1064, 'Mon Carlo Delima', 'logged out', '2023-04-09 15:50:32'),
+(1065, 'SV1_Treasurer', 'logged in', '2023-04-09 15:50:35'),
+(1066, 'SV1_Treasurer', 'logged out', '2023-04-09 15:52:30'),
+(1067, 'Mon Carlo Delima', 'logged in', '2023-04-09 15:52:33'),
+(1068, 'Mon Carlo Delima', 'logged out', '2023-04-09 15:52:47'),
+(1069, 'SV1_Admin', 'logged in', '2023-04-09 15:52:49'),
+(1070, 'SV1_Admin', 'logged out', '2023-04-09 15:54:10'),
+(1071, 'SV1_Secretary', 'logged in', '2023-04-09 15:54:13'),
+(1072, 'SV1_Secretary', 'logged out', '2023-04-09 15:54:30'),
+(1073, 'SV1_Secretary', 'logged in', '2023-04-09 15:54:36'),
+(1074, 'SV1_Secretary', 'logged out', '2023-04-09 15:55:39'),
+(1075, 'Mon Carlo Delima', 'logged in', '2023-04-09 15:56:01'),
+(1076, 'Mon Carlo Delima', 'logged out', '2023-04-09 16:02:20'),
+(1077, 'SV1_Admin', 'logged in', '2023-04-09 16:02:23'),
+(1078, 'SV1_Admin', 'logged out', '2023-04-09 16:02:40'),
+(1079, 'SV1_Treasurer', 'logged in', '2023-04-09 16:02:45'),
+(1080, 'SV1_Treasurer', 'logged out', '2023-04-09 16:04:04'),
+(1081, 'SV1_Admin', 'logged in', '2023-04-09 16:04:07'),
+(1082, 'SV1_Admin', 'logged out', '2023-04-09 16:11:14'),
+(1083, 'Mon Carlo Delima', 'logged in', '2023-04-09 16:11:17'),
+(1084, 'Mon Carlo Delima', 'logged out', '2023-04-09 16:12:33'),
+(1085, 'SV1_Admin', 'logged in', '2023-04-09 16:12:35'),
+(1086, 'SV1_Admin', 'logged out', '2023-04-09 16:13:59'),
+(1087, 'SV1_Treasurer', 'logged in', '2023-04-09 16:14:02'),
+(1088, 'SV1_Treasurer', 'logged out', '2023-04-09 16:15:02'),
+(1089, 'SV1_Admin', 'logged in', '2023-04-09 16:15:22'),
+(1090, 'SV1_Admin', 'logged out', '2023-04-09 16:15:43'),
+(1091, 'SV1_Admin', 'logged in', '2023-04-09 16:15:54');
 
 -- --------------------------------------------------------
 
@@ -1288,6 +1350,7 @@ CREATE TABLE IF NOT EXISTS `bill_consumer` (
   `homeowner_id` int(11) NOT NULL,
   `fullname` varchar(250) NOT NULL,
   `amount` varchar(45) NOT NULL,
+  `datetime_paid` datetime DEFAULT NULL,
   `status` varchar(45) NOT NULL,
   PRIMARY KEY (`billConsumer_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
@@ -1296,19 +1359,19 @@ CREATE TABLE IF NOT EXISTS `bill_consumer` (
 -- Dumping data for table `bill_consumer`
 --
 
-INSERT INTO `bill_consumer` (`billConsumer_id`, `billingPeriod_id`, `homeowner_id`, `fullname`, `amount`, `status`) VALUES
-(1, 1, 1, 'Mon Carlo Delima', '200', 'PAID'),
-(2, 2, 1, 'Mon Carlo Delima', '200', 'PAID'),
-(3, 3, 1, 'Mon Carlo Delima', '200', 'PAID'),
-(4, 1, 2, 'Kyle Andrei Casingal', '500', 'PAID'),
-(5, 2, 2, 'Kyle Andrei Casingal', '500', 'PAID'),
-(6, 3, 2, 'Kyle Andrei Casingal', '500', 'PAID'),
-(7, 4, 2, 'Kyle Andrei Casingal', '500', 'PAID'),
-(8, 5, 2, 'Kyle Andrei Casingal', '500', 'PAID'),
-(9, 6, 2, 'Kyle Andrei Casingal', '500', 'PAID'),
-(10, 7, 2, 'Kyle Andrei Casingal', '500', 'PAID'),
-(11, 8, 2, 'Kyle Andrei Casingal', '500', 'PAID'),
-(12, 9, 2, 'Kyle Andrei Casingal', '500', 'PAID');
+INSERT INTO `bill_consumer` (`billConsumer_id`, `billingPeriod_id`, `homeowner_id`, `fullname`, `amount`, `datetime_paid`, `status`) VALUES
+(1, 1, 1, 'Mon Carlo Delima', '200', '2023-04-09 15:46:47', 'PAID'),
+(2, 2, 1, 'Mon Carlo Delima', '200', NULL, 'UNPAID'),
+(3, 3, 1, 'Mon Carlo Delima', '200', NULL, 'UNPAID'),
+(4, 1, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID'),
+(5, 2, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID'),
+(6, 3, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID'),
+(7, 4, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID'),
+(8, 5, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID'),
+(9, 6, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID'),
+(10, 7, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID'),
+(11, 8, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID'),
+(12, 9, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID');
 
 -- --------------------------------------------------------
 
@@ -1445,32 +1508,6 @@ INSERT INTO `monthly_dues` (`monthly_dues_id`, `subdivision_id`, `subdivision_na
 (2, 2, 'Sunnyvale 2', 280, '2023-04-07'),
 (3, 3, 'Sunnyvale 3', 500, '2022-11-29'),
 (4, 4, 'Sunnyvale 4', 350, '2022-11-27');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `monthly_dues_bill`
---
-
-DROP TABLE IF EXISTS `monthly_dues_bill`;
-CREATE TABLE IF NOT EXISTS `monthly_dues_bill` (
-  `monthlyDues_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `homeowner_name` varchar(255) NOT NULL,
-  `subdivision` varchar(45) NOT NULL,
-  `month` varchar(45) NOT NULL,
-  `year` varchar(45) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `paid_at` varchar(255) DEFAULT NULL,
-  `status` varchar(255) NOT NULL,
-  PRIMARY KEY (`monthlyDues_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `monthly_dues_bill`
---
-
-INSERT INTO `monthly_dues_bill` (`monthlyDues_ID`, `homeowner_name`, `subdivision`, `month`, `year`, `address`, `paid_at`, `status`) VALUES
-(1, 'Mon Carlo Delima', 'Sunnyvale 1', 'December', '2022', 'Block 1 Lot 2', '2022-12-01 02:36:53', 'Paid');
 
 -- --------------------------------------------------------
 
