@@ -353,15 +353,31 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   }
 
   .fab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     bottom: -1rem;
     right: -1rem;
-    width: 4rem;
-    /* height: 4rem; */
+    width: 4vw;
+    height: 4vw;
     border-radius: 50%;
     transition: all 0.3s ease;
     z-index: 1;
-    border: 1px solid #0c50a7;
+    background-color: rgb(248, 186, 55);
+    box-shadow: 5px 10px 8px #888888;
+  }
+
+  .calendar {
+    background-color: rgb(170, 192, 175, 0);
+  }
+
+  .fc-clear {
+    background-color: rgb(170, 192, 175, 0.3);
+  }
+
+  .fc-toolbar {
+    background-color: rgb(170, 192, 175, 0.3);
   }
 </style>
 <script type="text/javascript">
@@ -520,7 +536,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     <div class="fab-wrapper">
       <label class="fab" for="showcalendarmodal">
         <center>
-          <i style="font-size:24px" class="fa fa-calendar" id="showcalendarmodal"></i>
+          <i style="font-size:2vw" class="fa fa-calendar" id="showcalendarmodal"></i>
         </center>
       </label>
     </div>
