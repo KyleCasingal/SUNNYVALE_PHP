@@ -353,31 +353,15 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   }
 
   .fab {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: absolute;
     bottom: -1rem;
     right: -1rem;
-    width: 4vw;
-    height: 4vw;
+    width: 4rem;
+    /* height: 4rem; */
     border-radius: 50%;
     transition: all 0.3s ease;
     z-index: 1;
-    background-color: rgb(248, 186, 55);
-    box-shadow: 5px 10px 8px #888888;
-  }
-
-  .calendar {
-    background-color: rgb(170, 192, 175, 0);
-  }
-
-  .fc-clear {
-    background-color: rgb(170, 192, 175, 0.3);
-  }
-
-  .fc-toolbar {
-    background-color: rgb(170, 192, 175, 0.3);
+    border: 1px solid #0c50a7;
   }
 </style>
 <script type="text/javascript">
@@ -536,7 +520,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     <div class="fab-wrapper">
       <label class="fab" for="showcalendarmodal">
         <center>
-          <i style="font-size:2vw" class="fa fa-calendar" id="showcalendarmodal"></i>
+          <i style="font-size:24px" class="fa fa-calendar" id="showcalendarmodal"></i>
         </center>
       </label>
     </div>
@@ -813,33 +797,29 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
         var result = response.data;
         $.each(result, function(i, item) {
           events.push({
-            event_id: result[i].transaction_id,
-            title: result[i].renter_name,
-            start: result[i].date_from,
-            end: result[i].date_to,
+            event_id: result[i].id,
+            title: result[i].title,
+            start: result[i].start,
+            end: result[i].end,
             // color: result[i].color,
             // url: result[i].url
           });
         })
+
         var calendar = $('#calendar').fullCalendar({
           defaultView: 'month',
           timeZone: 'local',
-          editable: true,
+          // editable: true,
           header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month,agendaWeek,agendaDay'
+            right: 'month,agendaWeek,agendaDay,listWeek'
           },
           selectable: true,
           selectHelper: true,
-          // select: function(start, end) {
-          // 		alert(start);
-          // 		alert(end);
-          // 		$('#date_from').val(moment(start).format('YYYY-MM-DD'));
-          // 		$('#date_to').val(moment(end).format('YYYY-MM-DD'));
-          // 		$('#event_entry_modal').modal('show');
-          // 	},
           events: events,
+
+
           eventRender: function(event, element, view) {
             element.bind('click', function() {
 
