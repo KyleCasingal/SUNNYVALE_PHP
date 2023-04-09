@@ -256,39 +256,6 @@ if (isset($_POST['submitPost'])) {
   mysqli_query($con, $sql1);
 }
 
-// REGISTRATION OF HOMEOWNERS
-if (isset($_POST['homeowner_submit'])) {
-  $first_name = $_POST['first_name'];
-  $middle_name = $_POST['middle_name'];
-  $last_name = $_POST['last_name'];
-  $suffix = $_POST['suffix'];
-  $street = $_POST['street'];
-  $subdivision = $_POST['subdivision'];
-  $bussiness_address = $_POST['business_address'];
-  $mobile_number = $_POST['mobile_number'];
-  $occupation = $_POST['occupation'];
-  $employer = $_POST['employer'];
-  $birthdate = strtotime($_POST['birthdate']);
-  $birthdate = date('Y-m-d', $birthdate);
-  $sex = $_POST['sex'];
-  $email_address = $_POST['email_address'];
-  $vehicle_registration = $_POST['vehicle_registration'];
-
-  $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '$subdivision'");
-  $rowSubdivision = $resultSubdivision->fetch_assoc();
-  $barangay = $rowSubdivision['barangay'];
-
-  $sql = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer, vehicle_registration, display_picture) VALUES ('$last_name','$first_name','$middle_name','$suffix','$sex', '$street', '$subdivision', '$barangay', '$bussiness_address','$occupation','$email_address','$birthdate','$mobile_number','$employer', '$vehicle_registration', 'default.png')";
-  $result = mysqli_query($con, $sql);
-
-  $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
-  $row = $resultSession->fetch_assoc();
-  $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" . 'added homeowner' . ' ' . "$first_name" . ' ' . "$last_name" . "' , NOW())";
-  mysqli_query($con, $sql1);
-  header("Location: homeownerRegistration.php");
-}
-
-
 if (isset($_POST['importSubmit'])) {
 
   $csvMimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain');
@@ -335,6 +302,51 @@ if (isset($_POST['importSubmit'])) {
     }
   }
 }
+
+// REGISTRATION OF HOMEOWNERS
+if (isset($_POST['homeowner_submit'])) {
+  $first_name = $_POST['first_name'];
+  $middle_name = $_POST['middle_name'];
+  $last_name = $_POST['last_name'];
+  $suffix = $_POST['suffix'];
+  $subdivision = $_POST['subdivision'];
+  $block_id = $_POST['block'];
+  $lot_id = $_POST['lot'];
+  $bussiness_address = $_POST['business_address'];
+  $mobile_number = $_POST['mobile_number'];
+  $occupation = $_POST['occupation'];
+  $employer = $_POST['employer'];
+  $birthdate = strtotime($_POST['birthdate']);
+  $birthdate = date('Y-m-d', $birthdate);
+  $sex = $_POST['sex'];
+  $email_address = $_POST['email_address'];
+  $vehicle_registration = $_POST['vehicle_registration'];
+
+  $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_id = '$subdivision'");
+  $rowSubdivision = $resultSubdivision->fetch_assoc();
+  $barangay = $rowSubdivision['barangay'];
+  $subdivision_name = $rowSubdivision['subdivision_name'];
+
+  $resultBlock = $con->query("SELECT * FROM block WHERE block_id = '$block_id'");
+  $rowBlock = $resultBlock->fetch_assoc();
+  $block = $rowBlock['block'];
+
+  $resultLot = $con->query("SELECT * FROM lot WHERE lot_id = '$lot_id'");
+  $rowLot = $resultLot->fetch_assoc();
+  $lot = $rowLot['lot'];
+
+  $street = "Lot " . $lot . " Block " . $block;
+
+  $sql = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer, vehicle_registration, display_picture) VALUES ('$last_name','$first_name','$middle_name','$suffix','$sex', '$street', '$subdivision_name', '$barangay', '$bussiness_address','$occupation','$email_address','$birthdate','$mobile_number','$employer', '$vehicle_registration', 'default.png')";
+  $result = mysqli_query($con, $sql);
+
+  $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+  $row = $resultSession->fetch_assoc();
+  $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" . 'added homeowner' . ' ' . "$first_name" . ' ' . "$last_name" . "' , NOW())";
+  mysqli_query($con, $sql1);
+  header("Location: homeownerRegistration.php");
+}
+
 // SELECTING A REGISTERED HOMEOWNER TO EDIT
 $update = false;
 if (isset($_GET['homeowner_id'])) {
@@ -348,7 +360,10 @@ if (isset($_GET['homeowner_id'])) {
     $last_name = $row['last_name'];
     $suffix = $row['suffix'];
     $street = $row['street'];
-    $subdivision = $row['subdivision'];
+    $subdivision_name = $row['subdivision'];
+    $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '$subdivision_name'");
+    $rowSubdivision = $resultSubdivision->fetch_assoc();
+    $subdivision = $rowSubdivision['subdivision_id'];
     $business_address = $row['business_address'];
     $occupation = $row['occupation'];
     $employer = $row['employer'];
@@ -367,8 +382,9 @@ if (isset($_POST['homeowner_update'])) {
   $middle_name = $_POST['middle_name'];
   $last_name = $_POST['last_name'];
   $suffix = $_POST['suffix'];
-  $street = $_POST['street'];
   $subdivision = $_POST['subdivision'];
+  $block_id = $_POST['block'];
+  $lot_id = $_POST['lot'];
   $business_address = $_POST['business_address'];
   $mobile_number = $_POST['mobile_number'];
   $occupation = $_POST['occupation'];
@@ -380,11 +396,20 @@ if (isset($_POST['homeowner_update'])) {
   $email_address = $_POST['email_address'];
   $full_name = $first_name . ' ' . $last_name;
 
-  $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '$subdivision'");
+  $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_id = '$subdivision'");
   $rowSubdivision = $resultSubdivision->fetch_assoc();
   $barangay = $rowSubdivision['barangay'];
 
-  $sql = "UPDATE homeowner_profile SET first_name =  '$first_name', middle_name = '$middle_name', last_name = '$last_name', suffix = '$suffix', sex = '$sex', street = '$street', subdivision = '$subdivision', barangay = '$barangay', business_address = '$business_address', occupation = '$occupation', email_address = '$email_address', birthdate = '$birthdate', mobile_number = '$mobile_number', employer = '$employer', vehicle_registration = '$vehicle_registration' WHERE homeowner_id = '$homeowner_id'";
+  $resultBlock = $con->query("SELECT * FROM block WHERE block_id = '$block_id'");
+  $rowBlock = $resultBlock->fetch_assoc();
+  $block = $rowBlock['block'];
+
+  $resultLot = $con->query("SELECT * FROM lot WHERE lot_id = '$lot_id'");
+  $rowLot = $resultLot->fetch_assoc();
+  $lot = $rowLot['lot'];
+
+  $street = "Lot " . $lot . " Block " . $block;
+  $sql = "UPDATE homeowner_profile SET first_name =  '$first_name', middle_name = '$middle_name', last_name = '$last_name', suffix = '$suffix', sex = '$sex', street = '$street', subdivision = '$subdivision_name', barangay = '$barangay', business_address = '$business_address', occupation = '$occupation', email_address = '$email_address', birthdate = '$birthdate', mobile_number = '$mobile_number', employer = '$employer', vehicle_registration = '$vehicle_registration' WHERE homeowner_id = '$homeowner_id'";
   $result = mysqli_query($con, $sql);
   $sql2 = "UPDATE user SET full_name = '$full_name', email_address = '$email_address' WHERE user_homeowner_id = '$homeowner_id'";
   $result2 = mysqli_query($con, $sql2);
@@ -594,6 +619,100 @@ if (isset($_POST['subdivisionUpdate'])) {
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an existing subdivision' . ' ' . "$subdivision_name" . ' ' . "$barangay" . "', NOW())";
   mysqli_query($con, $sql1);
   header("Location: settingsSubdivision.php");
+}
+
+// BLOCK ADD
+if (isset($_POST['blockAdd'])) {
+  $subdivision_id = $_POST['subdivision_id_block'];
+  $block = $_POST['block'];
+
+  $sql = "INSERT INTO block (subdivision_id, block) VALUES ('$subdivision_id', '$block')";
+  mysqli_query($con, $sql);
+  header("Location: settingsSubdivision.php#subdivisionBlock");
+}
+
+// SELECTING A ROW TO EDIT BLOCK
+if (isset($_GET['block_id'])) {
+  $block_id = $_GET['block_id'];
+  $result = $con->query("SELECT * FROM block WHERE block_id = '$block_id'");
+
+  if ($result->num_rows) {
+    $row = $result->fetch_array();
+    $subdivision_id_block = $row['subdivision_id'];
+    $block = $row['block'];
+  }
+}
+
+// UPDATING A ROW BLOCK
+if (isset($_POST['blockUpdate'])) {
+  $block_id = $_POST['block_id'];
+  $subdivision_id = $_POST['subdivision_id_block'];
+  $block = $_POST['block'];
+  $con->query("UPDATE block SET subdivision_id = '$subdivision_id', block = '$block' WHERE block_id = '$block_id'");
+  header("Location: settingsSubdivision.php#subdivisionBlock");
+}
+
+// CASCADING DROP DOWN FOR BLOCK
+if (isset($_POST['subdivision_id_lot'])) {
+  $subdivision_id = $_POST['subdivision_id_lot'];
+
+  $result = $con->query("SELECT * FROM block WHERE subdivision_id= '$subdivision_id' ORDER BY block ASC");
+
+  if (mysqli_num_rows($result) > 0) {
+    echo '<option value="0">Select Block...</option>';
+    while ($row = $result->fetch_assoc()) {
+      echo '<option value="' . $row['block_id'] . '">' . $row['block'] . '</option>';
+    }
+  } else {
+    echo '<option value="0">No Block Found</option>';
+  }
+}
+
+// CASCADING DROP DOWN FOR LOT
+if (isset($_POST['block_id'])) {
+  $block_id = $_POST['block_id'];
+
+  $result = $con->query("SELECT * FROM lot WHERE block_id = '$block_id' ORDER BY lot ASC");
+
+  if (mysqli_num_rows($result) > 0) {
+    echo '<option value="0">Select Lot...</option>';
+    while ($row = $result->fetch_assoc()) {
+      echo '<option value="' . $row['lot_id'] . '">' . $row['lot'] . '</option>';
+    }
+  } else {
+    echo '<option value="0">No Lot Found</option>';
+  }
+}
+
+// LOT ADD
+if (isset($_POST['lotAdd'])) {
+  $block_id = $_POST['block_id'];
+  $lot = $_POST['lot'];
+
+  $sql = "INSERT INTO lot (block_id, lot) VALUES ('$block_id', '$lot')";
+  mysqli_query($con, $sql);
+  header("Location: settingsSubdivision.php#subdivisionLot");
+}
+
+// SELECTING A ROW TO EDIT LOT
+if (isset($_GET['lot_id'])) {
+  $lot_id = $_GET['lot_id'];
+  $result = $con->query("SELECT * FROM lot INNER JOIN block ON lot.block_id = block.block_id INNER JOIN subdivision ON block.subdivision_id = subdivision.subdivision_id WHERE lot_id = '$lot_id'");
+
+  if ($result->num_rows) {
+    $row = $result->fetch_array();
+    $subdivision_id_lot = $row['subdivision_id'];
+    $block_id = $row['block_id'];
+    $lot = $row['lot'];
+  }
+}
+
+// UPDATING A ROW LOT
+if (isset($_POST['lotUpdate'])) {
+  $lot_id = $_POST['lot_id'];
+  $lot = $_POST['lot'];
+  $con->query("UPDATE lot SET lot = '$lot' WHERE lot_id = '$lot_id'");
+  header("Location: settingsSubdivision.php#subdivisionLot");
 }
 
 // MONTHLY DUES ADD

@@ -1,6 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Admin' AND $_SESSION['user_type'] != 'Secretary') {
+if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
 }
@@ -20,6 +20,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
     <meta name="theme-color" content="#000000" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>SUNNYVALE</title>
 </head>
@@ -396,6 +397,37 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
             $("#employer_id").removeAttr("required");
         });
     });
+
+    $(document).ready(function() {
+        $("#subdivision_id_lot").on('click', function() {
+            var subdivision_id_lot = $(this).val();
+            if (subdivision_id_lot) {
+                $.ajax({
+                    type: 'POST',
+                    url: '../process.php/',
+                    data: 'subdivision_id_lot=' + subdivision_id_lot,
+                    success: function(html) {
+                        $("#block_id").html(html);
+                    }
+                });
+            }
+        });
+    });
+    $(document).ready(function() {
+        $("#block_id").on('click', function() {
+            var block_id = $(this).val();
+            if (block_id) {
+                $.ajax({
+                    type: 'POST',
+                    url: '../process.php/',
+                    data: 'block_id=' + block_id,
+                    success: function(html) {
+                        $("#lot_id").html(html);
+                    }
+                });
+            }
+        });
+    });
 </script>
 
 <body>
@@ -472,20 +504,28 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                             <tr>
                                 <td>Residence Address:</td>
                                 <td>
-                                    <input type="text" name="street" id="street_id" placeholder="Lot and Block" value="<?php echo $street ?? ''; ?>" required />
-                                </td>
-                                <td>
-                                    <select name="subdivision" id="subd_id" required>
-                                        <option value="">Select...</option>
+                                    <select name="subdivision" id="subdivision_id_lot" required>
+                                        <option >Select Subdivision...</option>
                                         <?php while ($row = $resultSubd->fetch_assoc()) : ?>
-                                            <option value="<?php echo $row['subdivision_name'] ?>" <?php
+                                            <option value="<?php echo $row['subdivision_id'] ?>" <?php
                                                                                                     if (isset($_GET['homeowner_id'])) {
-                                                                                                        if ($subdivision == $row['subdivision_name']) {
+                                                                                                        if ($subdivision_name == $row['subdivision_name']) {
                                                                                                             echo 'selected="selected"';
                                                                                                         }
                                                                                                     }
                                                                                                     ?>><?php echo $row['subdivision_name'] ?></option>
                                         <?php endwhile; ?>
+                                    </select>
+                                </td>
+                                <td>Block:</td>
+                                <td>
+                                    <select name="block" id="block_id" required>
+                                        <option value="">Select Subdivision First...</option>
+                                    </select>
+                                </td>
+                                <td>Lot:</td>
+                                <td> <select name="lot" id="lot_id" required>
+                                        <option value="">Select Block First...</option>
                                     </select>
                                 </td>
                             </tr>

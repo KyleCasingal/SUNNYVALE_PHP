@@ -6,9 +6,13 @@ if ($_SESSION['user_type'] != 'Admin') {
 }
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultSubdivision = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
+$resultSubdivision_selectBlock = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
+$resultSubdivision_selectLot = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
+$resultSubdivision = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
 $resultSubdivision_table = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
-
+$resultBlock = $con->query("SELECT * FROM block INNER JOIN subdivision ON block.subdivision_id = subdivision.subdivision_id ORDER BY subdivision.subdivision_name") or die($mysqli->error);
+$resultLot = $con->query("SELECT * FROM lot INNER JOIN block ON lot.block_id = block.block_id INNER JOIN subdivision ON block.subdivision_id = subdivision.subdivision_id ORDER BY block.block") or die($mysqli->error);
+$resultLot_selectBlock = $con->query("SELECT * FROM lot INNER JOIN block ON lot.block_id = block.block_id INNER JOIN subdivision ON block.subdivision_id = subdivision.subdivision_id ORDER BY block.block") or die($mysqli->error);
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +24,8 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision") or die($mysq
     <meta name="theme-color" content="#000000" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>SUNNYVALE</title>
 </head>
 <style>
@@ -377,7 +383,23 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision") or die($mysq
         background-color: rgb(211, 211, 211);
     }
 </style>
-
+<script>
+    $(document).ready(function() {
+        $("#subdivision_id_lot").on('click', function() {
+            var subdivision_id_lot = $(this).val();
+            if (subdivision_id_lot) {
+                $.ajax({
+                    type: 'POST',
+                    url: '../process.php/',
+                    data: 'subdivision_id_lot=' + subdivision_id_lot,
+                    success: function(html) {
+                        $("#block_id").html(html);
+                    }
+                });
+            }
+        });
+    });
+</script>
 
 <body>
     <div class="secretary">
@@ -390,9 +412,8 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision") or die($mysq
             <div class="settingsAddSubdivision" id="settingsAddSubdivision">
                 <div class="addAmenityForm">
                     <form method="post" autocomplete="off">
-                        <input type="text" name="subdivision_id" value="<?php echo $subdivision_id ?? ''; ?>">
+                        <input type="hidden" name="subdivision_id" value="<?php echo $subdivision_id ?? ''; ?>">
                         <table class="tblAmenityForm">
-
                             <tr>
                                 <td>Subdivision:</td>
                                 <td>
@@ -498,6 +519,291 @@ $resultSubdivision_table = $con->query("SELECT * FROM subdivision") or die($mysq
                                 </td>
                                 <td><?php echo $row['subdivision_name'] ?></td>
                                 <td><?php echo $row['barangay'] ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </table>
+                </div>
+            </div>
+            <label class="lblSettings" id="subdivisionBlock">Block</label>
+            <div class="settingsAddSubdivision" id="">
+                <div class="addAmenityForm">
+                    <form method="post" autocomplete="off">
+                        <input type="hidden" name="block_id" value="<?php echo $block_id ?? ''; ?>">
+                        <table class="tblAmenityForm">
+                            <tr>
+                                <td>Subdivision:</td>
+                                <td>
+                                    <select name="subdivision_id_block" id="" required>
+                                        <option value="">Select...</option>
+                                        <?php while ($row = $resultSubdivision_selectBlock->fetch_assoc()) : ?>
+                                            <option value="<?php echo $row['subdivision_id'] ?>" <?php
+                                                                                                    if (isset($_GET['block_id'])) {
+                                                                                                        if ($subdivision_id_block == $row['subdivision_id']) {
+                                                                                                            echo 'selected="selected"';
+                                                                                                        }
+                                                                                                    }
+                                                                                                    ?>><?php echo $row['subdivision_name'] ?></option>
+                                        <?php endwhile; ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Block:</td>
+                                <td>
+                                    <input name="block" value="<?php echo $block ?? ''; ?>" type="text" placeholder="block" required />
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- MODAL ADD BLOCK -->
+                        <div class="modal fade" id="addBlockModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you really want to add this new block?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button name="blockAdd" type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btnArea">
+                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addBlockModal" <?php
+                                                                                                                                if ($block_id ?? '') {
+                                                                                                                                    echo "disabled";
+                                                                                                                                } else {
+                                                                                                                                    echo "";
+                                                                                                                                } ?>>
+                                Add Block
+                            </button>
+
+                            <!-- MODAL UPDATE BLOCK -->
+                            <div class="modal fade" id="updateBlockModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Do you really want to update this block?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button name="blockUpdate" type="submit" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateBlockModal" <?php
+                                                                                                                                if ($block_id ?? '') {
+                                                                                                                                    echo "";
+                                                                                                                                } else {
+                                                                                                                                    echo "disabled";
+                                                                                                                                } ?>>
+                                Update Block
+                            </button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            This will clear all fields!
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" onclick="location.href='settingsSubdivision.php'">Clear</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" value="" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Clear
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- SETTINGS SUBIDIVISION TABLE -->
+                <div class="tblAmenityContainer">
+                    <table class="table tblAmenity">
+                        <thead>
+                            <th></th>
+                            <th>Subdivision</th>
+                            <th>Block</th>
+                        </thead>
+                        <?php while ($row = $resultBlock->fetch_assoc()) : ?>
+                            <tr>
+                                <td>
+                                    <a href="settingsSubdivision.php?block_id=<?php echo $row['block_id']; ?>#subdivisionBlock" class="btnEdit">Edit</a>
+                                </td>
+                                <td><?php echo $row['subdivision_name'] ?></td>
+                                <td><?php echo $row['block'] ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </table>
+                </div>
+            </div>
+            <label class="lblSettings" id="subdivisionLot">Lot</label>
+            <div class="settingsAddSubdivision" id="settingsAddSubdivision">
+                <div class="addAmenityForm">
+                    <form method="post" autocomplete="off">
+                        <input type="hidden" name="lot_id" value="<?php echo $lot_id ?? ''; ?>">
+                        <table class="tblAmenityForm">
+                            <tr>
+                                <td>Subdivision:</td>
+                                <td>
+                                    <select name="subdivision_id" id="subdivision_id_lot" required>
+                                        <?php
+                                        if ($lot_id ?? '') {
+                                            while ($row = $resultSubdivision_selectLot->fetch_assoc()) :
+                                                echo '<option value="' . $row['subdivision_id'] . '"';
+                                                if (isset($_GET['lot_id'])) {
+                                                    if ($subdivision_id_lot == $row['subdivision_id']) {
+                                                        echo 'selected="selected"';
+                                                    }
+                                                }
+                                                echo 'disabled>' . $row['subdivision_name'] . '</option>';
+                                            endwhile;
+                                        } else {
+                                            echo '<option value="">Select...</option>';
+                                            while ($row = $resultSubdivision_selectLot->fetch_assoc()) :
+                                                echo '<option value="' . $row['subdivision_id'] . '">' . $row['subdivision_name'] . '</option>';
+                                            endwhile;
+                                        }
+                                        ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Block:</td>
+                                <td>
+                                    <select name="block_id" id="block_id" required>
+                                        <?php
+                                        if ($lot_id ?? '') {
+                                            while ($row = $resultLot_selectBlock->fetch_assoc()) :
+                                                echo '<option value="' . $row['block_id'] . '"';
+                                                if (isset($_GET['lot_id'])) {
+                                                    if ($block_id == $row['block_id']) {
+                                                        echo 'selected="selected"';
+                                                    }
+                                                }
+                                                echo 'disabled>' . $row['block'] . '</option>';
+                                            endwhile;
+                                        } else {
+                                            echo "<option value=''>Select Subdivision First...</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Lot:</td>
+                                <td>
+                                    <input name="lot" value="<?php echo $lot ?? ''; ?>" type="text" placeholder="lot" required />
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- MODAL ADD LOT -->
+                        <div class="modal fade" id="addLotModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you really want to add this new lot?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button name="lotAdd" type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btnArea">
+                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addLotModal" <?php
+                                                                                                                            if ($lot_id ?? '') {
+                                                                                                                                echo "disabled";
+                                                                                                                            } else {
+                                                                                                                                echo "";
+                                                                                                                            } ?>>
+                                Add Lot
+                            </button>
+
+                            <!-- MODAL UPDATE SUBDIVISION -->
+                            <div class="modal fade" id="updateLotModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Do you really want to update this lot?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button name="lotUpdate" type="submit" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateLotModal" <?php
+                                                                                                                                if ($lot_id ?? '') {
+                                                                                                                                    echo "";
+                                                                                                                                } else {
+                                                                                                                                    echo "disabled";
+                                                                                                                                } ?>>
+                                Update Lot
+                            </button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Warning!</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            This will clear all fields!
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" onclick="location.href='settingsSubdivision.php'">Clear</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" value="" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Clear
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- SETTINGS SUBIDIVISION TABLE -->
+                <div class="tblAmenityContainer">
+                    <table class="table tblAmenity">
+                        <thead>
+                            <th></th>
+                            <th>Subdivision</th>
+                            <th>Block</th>
+                            <th>Lot</th>
+                        </thead>
+                        <?php while ($row = $resultLot->fetch_assoc()) : ?>
+                            <tr>
+                                <td>
+                                    <a href="settingsSubdivision.php?lot_id=<?php echo $row['subdivision_id']; ?>#subdivisionLot" class="btnEdit">Edit</a>
+                                </td>
+                                <td><?php echo $row['subdivision_name'] ?></td>
+                                <td><?php echo $row['block'] ?></td>
+                                <td><?php echo $row['lot'] ?></td>
+                                <td></td>
                             </tr>
                         <?php endwhile; ?>
                     </table>
