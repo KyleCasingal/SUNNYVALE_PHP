@@ -195,9 +195,9 @@ if (isset($_POST['login'])) {
   $result = mysqli_query($con, $sql);
   $sql1 = "SELECT * FROM user WHERE BINARY email_address = '$email_address' AND password = '$password' AND (account_status = 'Pending' or account_status = 'Deactivated')";
   $result1 = mysqli_query($con, $sql1);
-  
+
   if (mysqli_num_rows($result) == 1) {
-    
+
     $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
     $result = $con->query("SELECT * FROM user WHERE email_address = '$email_address'");
     $row = $result->fetch_assoc();
@@ -1361,5 +1361,18 @@ if (isset($_POST['approveReservation'])) {
   $transaction_id = $_POST['transaction_id'];
 
   $sql = "UPDATE transaction, amenity_renting SET transaction.status = 'Approved', amenity_renting.cart = 'Approved' WHERE transaction.transaction_id= '$transaction_id' AND amenity_renting.transaction_id = '$transaction_id'";
+  $result = mysqli_query($con, $sql);
+}
+
+// VEHICLE MONITORING
+if (isset($_POST['incoming'])) {
+  $vehicle_registration = $_POST['vehicle_registration'];
+  $sql = "INSERT INTO vehicle_monitoring (vehicle_registration, datetime, status) VALUES ('$vehicle_registration', NOW(), 'INCOMING')";
+  $result = mysqli_query($con, $sql);
+}
+
+if (isset($_POST['outgoing'])) {
+  $vehicle_registration = $_POST['vehicle_registration'];
+  $sql = "INSERT INTO vehicle_monitoring (vehicle_registration, datetime, status) VALUES ('$vehicle_registration', NOW(), 'OUTGOING')";
   $result = mysqli_query($con, $sql);
 }

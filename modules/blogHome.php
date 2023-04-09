@@ -5,6 +5,7 @@ $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_n
 $resultOfficer1 = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
 $resultUser = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
 $rowUser = $resultUser->fetch_assoc();
+$resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime ASC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -524,8 +525,39 @@ $rowUser = $resultUser->fetch_assoc();
     <?php
     } else {
     ?>
-
-    
+      <div class="blogScroll">
+        <form action="" method="POST">
+          <div class="blogHead">
+            <p class="headTxt">Vehicle Monitoring</p>
+          </div>
+          <div class="blogPost">
+            <div class="blogProfile">
+              <div class="profileText">
+                <input name="vehicle_registration" type="text">
+                <button name="incoming" type="submit">Incoming</button>
+                <button name="outgoing" type="submit">Outgoing</button>
+              </div>
+            </div>
+            <div class="postContent">
+            </div>
+            <table>
+              <th>Date</th>
+              <th>Vehicle Registration</th>
+              <th>Status</th>
+              <?php while ($row = $resultVehicle->fetch_assoc()) : ?>
+                <tr>
+                  <td><?php
+                      $datetime = strtotime($row['datetime']);
+                      echo $phptime = date("g:i A m/d/y", $datetime);
+                      ?></td>
+                  <td><?php echo $row['vehicle_registration'] ?></td>
+                  <td><?php echo $row['status'] ?></td>
+                </tr>
+              <?php endwhile; ?>
+            </table>
+          </div>
+        </form>
+      </div>
     <?php
     }
     ?>
