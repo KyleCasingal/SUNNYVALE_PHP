@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Apr 09, 2023 at 12:50 PM
+-- Generation Time: Apr 09, 2023 at 02:24 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1020 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1026 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -1175,7 +1175,13 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (1016, 'SV1_Admin', 'logged out', '2023-04-09 12:23:21'),
 (1017, 'SV1_Guard', 'logged in', '2023-04-09 12:23:23'),
 (1018, 'SV1_Guard', 'logged out', '2023-04-09 12:24:21'),
-(1019, 'SV1_Guard', 'logged in', '2023-04-09 12:24:25');
+(1019, 'SV1_Guard', 'logged in', '2023-04-09 12:24:25'),
+(1020, 'SV1_Guard', 'logged out', '2023-04-09 13:14:16'),
+(1021, 'Mon Carlo Delima', 'logged in', '2023-04-09 13:23:57'),
+(1022, 'Mon Carlo Delima', 'logged out', '2023-04-09 13:25:32'),
+(1023, 'SV1_Treasurer', 'logged in', '2023-04-09 13:25:38'),
+(1024, 'SV1_Treasurer', 'logged out', '2023-04-09 13:52:50'),
+(1025, 'SV1_Guard', 'logged in', '2023-04-09 13:52:53');
 
 -- --------------------------------------------------------
 
@@ -1669,20 +1675,21 @@ DROP TABLE IF EXISTS `vehicle_monitoring`;
 CREATE TABLE IF NOT EXISTS `vehicle_monitoring` (
   `vehicle_monitoring_id` int(11) NOT NULL AUTO_INCREMENT,
   `vehicle_registration` varchar(10) NOT NULL,
+  `vehicle_type` varchar(50) NOT NULL,
+  `vehicle_color` varchar(50) NOT NULL,
   `datetime` datetime NOT NULL,
   `status` varchar(20) NOT NULL,
   PRIMARY KEY (`vehicle_monitoring_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `vehicle_monitoring`
 --
 
-INSERT INTO `vehicle_monitoring` (`vehicle_monitoring_id`, `vehicle_registration`, `datetime`, `status`) VALUES
-(1, 'LTO 1234', '2023-04-09 12:44:26', 'INCOMING'),
-(2, 'LTO 1234', '2023-04-09 12:48:18', 'OUTGOING'),
-(3, 'ABC 12345', '2023-04-09 12:50:13', 'INCOMING'),
-(4, 'ABC 1234', '2023-04-09 12:50:20', 'OUTGOING');
+INSERT INTO `vehicle_monitoring` (`vehicle_monitoring_id`, `vehicle_registration`, `vehicle_type`, `vehicle_color`, `datetime`, `status`) VALUES
+(10, 'XYZ 9876', 'Sedan', 'White', '2023-04-09 14:23:51', 'INCOMING'),
+(11, 'XYZ 9876', 'Truck', 'Red', '2023-04-09 14:24:00', 'INCOMING'),
+(9, 'LTO 1234', 'Van', 'Blue', '2023-04-09 14:23:42', 'INCOMING');
 
 -- --------------------------------------------------------
 

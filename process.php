@@ -1367,12 +1367,22 @@ if (isset($_POST['approveReservation'])) {
 // VEHICLE MONITORING
 if (isset($_POST['incoming'])) {
   $vehicle_registration = $_POST['vehicle_registration'];
-  $sql = "INSERT INTO vehicle_monitoring (vehicle_registration, datetime, status) VALUES ('$vehicle_registration', NOW(), 'INCOMING')";
+  $vehicle_type = $_POST['vehicle_type'];
+  $vehicle_color = $_POST['vehicle_color'];
+  $sql = "INSERT INTO vehicle_monitoring (vehicle_registration, vehicle_type, vehicle_color, datetime, status) VALUES ('$vehicle_registration', '$vehicle_type', '$vehicle_color', NOW(), 'INCOMING')";
   $result = mysqli_query($con, $sql);
 }
 
 if (isset($_POST['outgoing'])) {
   $vehicle_registration = $_POST['vehicle_registration'];
   $sql = "INSERT INTO vehicle_monitoring (vehicle_registration, datetime, status) VALUES ('$vehicle_registration', NOW(), 'OUTGOING')";
+  $result = mysqli_query($con, $sql);
+}
+
+// REMOVE VEHICLE
+if (isset($_POST['removeVehicle'])) {
+  $vehicle_monitoring_id = $_POST['vehicle_monitoring_id'];
+
+  $sql = "DELETE FROM vehicle_monitoring WHERE vehicle_monitoring_id = '$vehicle_monitoring_id' ";
   $result = mysqli_query($con, $sql);
 }

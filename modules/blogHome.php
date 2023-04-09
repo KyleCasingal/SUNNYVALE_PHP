@@ -5,7 +5,7 @@ $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_n
 $resultOfficer1 = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
 $resultUser = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
 $rowUser = $resultUser->fetch_assoc();
-$resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime ASC");
+$resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime DESC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -441,6 +441,55 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
   .archive-btn:hover {
     color: white;
   }
+
+  .tbl-vehicle-reg td {
+    padding: 0.5vw;
+  }
+
+  .lbl-vehicle-reg {
+    font-size: 1vw;
+    font-weight: bold;
+  }
+
+  .vehicle-reg-input {
+    font-family: 'Poppins', sans-serif;
+    border-radius: 0.5vw;
+    border: none;
+  }
+
+  .vehicle-reg-select {
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    border-radius: 0.5vw;
+  }
+
+  .vehicle-reg-btn-group {
+    display: flex;
+    gap: 2vw;
+  }
+
+  .btn-vehicle-reg {
+    border: none;
+    border-radius: 0.5vw;
+    background-color: lightcoral;
+    padding: 0.5vw;
+    color: white;
+    margin: 0;
+  }
+
+  .tbl-vehicle-reg-list {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .tbl-vehicle-reg-list td {
+    padding: 0.2vw;
+  }
+
+  .vehicle-reg-container {
+    display: flex;
+    padding: 0.5vw;
+  }
 </style>
 
 <body>
@@ -533,112 +582,189 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
           <div class="blogPost">
             <div class="blogProfile">
               <div class="profileText">
-                <input name="vehicle_registration" type="text">
-                <button name="incoming" type="submit">Incoming</button>
-                <button name="outgoing" type="submit">Outgoing</button>
+                <table class="tbl-vehicle-reg">
+                  <tr>
+                    <td><label class="lbl-vehicle-reg">Vehicle Registration Number</label></td>
+                    <td><label class="lbl-vehicle-reg">Vehicle Type</label></td>
+                    <td><label class="lbl-vehicle-reg">Vehicle Color</label></td>
+                  </tr>
+                  <tr>
+                    <td> <input class="vehicle-reg-input" name="vehicle_registration" type="text" required></td>
+                    <td> <select class="vehicle-reg-select" name="vehicle_type" id="vehicle_type" required>
+                        <option value="">Select vehicle type</option>
+                        <option value="Motorcycle">Motorcycle</option>
+                        <option value="Tricycle">Tricycle</option>
+                        <option value="Sedan">Sedan</option>
+                        <option value="Van">Van</option>
+                        <option value="SUV">SUV</option>
+                        <option value="Truck">Truck</option>
+                      </select></td>
+                    <td> <input class="vehicle-reg-input" name="vehicle_color" type="text" required></td>
+                  </tr>
+                </table>
+                <div class="vehicle-reg-btn-group">
+                  <button class="btn-vehicle-reg" type="button" data-bs-toggle="modal" data-bs-target="#incomingModal">Incoming</button>
+                  <button class="btn-vehicle-reg" type="button" data-bs-toggle="modal" data-bs-target="#outgoingModal">Outgoing</button>
+                </div>
               </div>
             </div>
-            <div class="postContent">
+            <div class="modal fade" id="incomingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Do you really want to set this vehicle as incoming?
+                  </div>
+                  <div class="modal-footer">
+                    <button name="incoming" type="submit" class="btn btn-primary">Save Changes</button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <table>
-              <th>Date</th>
-              <th>Vehicle Registration</th>
-              <th>Status</th>
-              <?php while ($row = $resultVehicle->fetch_assoc()) : ?>
+            <div class="modal fade" id="outgoingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Do you really want to set this vehicle as outgoing?
+                  </div>
+                  <div class="modal-footer">
+                    <button name="outgoing" type="submit" class="btn btn-primary">Save Changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </form>
+        <div class="vehicle-reg-container">
+          <table class="tbl-vehicle-reg-list">
+            <th>Date</th>
+            <th>Vehicle Registration</th>
+            <th>Vehicle Type</th>
+            <th>Vehicle Color</th>
+            <th>Status</th>
+            <?php while ($row = $resultVehicle->fetch_assoc()) : ?>
+              <form action="" method="POST">
                 <tr>
+                  <input type="hidden" name="vehicle_monitoring_id" value="<?php echo $row['vehicle_monitoring_id'] ?>">
                   <td><?php
                       $datetime = strtotime($row['datetime']);
                       echo $phptime = date("g:i A m/d/y", $datetime);
                       ?></td>
                   <td><?php echo $row['vehicle_registration'] ?></td>
+                  <td><?php echo $row['vehicle_type'] ?></td>
+                  <td><?php echo $row['vehicle_color'] ?></td>
                   <td><?php echo $row['status'] ?></td>
+                  <td><button class="archive-btn" type="button" data-bs-toggle="modal" data-bs-target="#removeModal<?php echo $row['vehicle_monitoring_id'] ?>">Remove</button></td>
                 </tr>
-              <?php endwhile; ?>
-            </table>
-          </div>
-        </form>
-      </div>
-    <?php
-    }
-    ?>
-    <div class="sideContent">
-      <div class="sideText">
-        <label class="sideTitle">Announcements</label>
-        <div class="announcementScroll">
-          <table class="announcementTable">
-            <?php while ($row = $resultOfficer->fetch_assoc()) : ?>
-              <tr>
-                <td class="tblTitle use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
-                                                                                                        echo $row['post_id'];
-                                                                                                        ?>"> <?php echo $row['title']; ?> </td>
-                <td class="use-address" hidden><?php echo $row['content']; ?></td>
-                <td class="tblDate use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
-                                                                                                        echo $row['post_id'];
-                                                                                                        ?>"><?php
-                                                                                                            $datetime = strtotime($row['published_at']);
-                                                                                                            echo $phptime = date("g:i A m/d/y", $datetime);
-                                                                                                            ?></td>
-                <td><?php
-                    if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-
-                      echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='archive-btn'>ARCHIVE</a>";
-                    }
-                    ?></td>
-              </tr>
+                <div class="modal fade" id="removeModal<?php echo $row['vehicle_monitoring_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Do you really want to remove this?
+                      </div>
+                      <div class="modal-footer">
+                        <button name="removeVehicle" type="submit" class="btn btn-danger">Remove</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
             <?php endwhile; ?>
           </table>
         </div>
       </div>
-      <span class="footerList">
-        <div class="linkList">
-          <a class="footerLink" href="">About</a>
-          <a class="footerLink" href="">Contact</a>
-          <a class="footerLink" href="">Privacy</a>
-          <a class="footerLink" href="">Developers</a>
-        </div>
-        <label class="footerCopyright">© Sunnyvale Subdivisions, 2023</label>
-      </span>
+  </div>
+<?php
+    }
+?>
+<div class="sideContent">
+  <div class="sideText">
+    <label class="sideTitle">Announcements</label>
+    <div class="announcementScroll">
+      <table class="announcementTable">
+        <?php while ($row = $resultOfficer->fetch_assoc()) : ?>
+          <tr>
+            <td class="tblTitle use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
+                                                                                                    echo $row['post_id'];
+                                                                                                    ?>"> <?php echo $row['title']; ?> </td>
+            <td class="use-address" hidden><?php echo $row['content']; ?></td>
+            <td class="tblDate use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
+                                                                                                    echo $row['post_id'];
+                                                                                                    ?>"><?php
+                                                                                                        $datetime = strtotime($row['published_at']);
+                                                                                                        echo $phptime = date("g:i A m/d/y", $datetime);
+                                                                                                        ?></td>
+            <td><?php
+                if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
+
+                  echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='archive-btn'>ARCHIVE</a>";
+                }
+                ?></td>
+          </tr>
+        <?php endwhile; ?>
+      </table>
     </div>
   </div>
-  <?php while ($row1 = $resultOfficer1->fetch_assoc()) : ?>
-    <div class="modal fade" id="complaintStatus<?php
-                                                echo $row1['post_id'];
-                                                ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">
-              Announcement Details
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modalConcernBody">
-            <table>
-              <tr>
-                <td class="announcementText">Subject:</td>
-                <td class="announcementText" id=""><?php echo $row1['title']; ?></td>
-              </tr>
-              <tr>
-                <td class="announcementText">Details:</td>
-                <td class="announcementText" id=""><?php echo $row1['content']; ?></td>
-              </tr>
-              <tr>
-                <td class="announcementText">Date Posted:</td>
-                <td class="announcementText" id=""><?php $datetime = strtotime($row1['published_at']);
-                                                    echo $phptime = date("g:i A m/d/y", $datetime); ?></td>
-              </tr>
-            </table>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                Close
-              </button>
-            </div>
+  <span class="footerList">
+    <div class="linkList">
+      <a class="footerLink" href="">About</a>
+      <a class="footerLink" href="">Contact</a>
+      <a class="footerLink" href="">Privacy</a>
+      <a class="footerLink" href="">Developers</a>
+    </div>
+    <label class="footerCopyright">© Sunnyvale Subdivisions, 2023</label>
+  </span>
+</div>
+</div>
+<?php while ($row1 = $resultOfficer1->fetch_assoc()) : ?>
+  <div class="modal fade" id="complaintStatus<?php
+                                              echo $row1['post_id'];
+                                              ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">
+            Announcement Details
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modalConcernBody">
+          <table>
+            <tr>
+              <td class="announcementText">Subject:</td>
+              <td class="announcementText" id=""><?php echo $row1['title']; ?></td>
+            </tr>
+            <tr>
+              <td class="announcementText">Details:</td>
+              <td class="announcementText" id=""><?php echo $row1['content']; ?></td>
+            </tr>
+            <tr>
+              <td class="announcementText">Date Posted:</td>
+              <td class="announcementText" id=""><?php $datetime = strtotime($row1['published_at']);
+                                                  echo $phptime = date("g:i A m/d/y", $datetime); ?></td>
+            </tr>
+          </table>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
           </div>
         </div>
       </div>
     </div>
-  <?php endwhile; ?>
-  <!-- <?php require '../marginals/footer2.php' ?> -->
+  </div>
+<?php endwhile; ?>
+<!-- <?php require '../marginals/footer2.php' ?> -->
 </body>
 
 </html>
