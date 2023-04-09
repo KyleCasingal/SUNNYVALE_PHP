@@ -693,25 +693,19 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billin
           <table class='tblPaidDues table-hover' cellspacing='0' width='100%'>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Subdivision</th>
                 <th>Month</th>
                 <th>Year</th>
-                <th>Address</th>
-                <th>Paid at</th>
-                <th>Status</th>
+                <th>Date Paid</th>
               </tr>
             </thead>
             <tbody>";
-          while ($rowDues = $resultDues->fetch_assoc()) :
+          while ($rowBillConsumer = $resultBillConsumer->fetch_assoc()) :
+            $datetime = strtotime($rowBillConsumer['datetime_paid']);
+            $phptime = date("g:i A m/d/y", $datetime);
             echo "<tr>
-              <td>" . $rowDues['homeowner_name'] . "</td>
-              <td>" . $rowDues['subdivision'] . "</td>
-              <td>" . $rowDues['month'] . "</td>
-              <td>" .  $rowDues['year'] . "</td>
-              <td>" . $rowDues['address'] . "</td>
-              <td>" . $rowDues['paid_at'] . "</td>
-              <td>" . $rowDues['status'] . "</td>";
+              <td>" . $rowBillConsumer['month'] . "</td>
+              <td>" .  $rowBillConsumer['year'] . "</td>
+              <td>" . $phptime . "</td>";
           endwhile;
           echo "</tr>
         </tbody>

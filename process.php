@@ -1308,7 +1308,7 @@ if (isset($_POST['payDues'])) {
   if (isset($_POST['checkbox'])) {
     foreach ($_POST['checkbox'] as $billConsumer_id) {
 
-      $sql = "UPDATE bill_consumer SET status='PAID' WHERE billConsumer_id = '$billConsumer_id'";
+      $sql = "UPDATE bill_consumer SET status='PAID', datetime_paid = NOW() WHERE billConsumer_id = '$billConsumer_id'";
       $result = mysqli_query($con, $sql);
     }
   }

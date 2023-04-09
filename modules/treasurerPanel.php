@@ -1,6 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Treasurer' AND $_SESSION['user_type'] != 'Admin') {
+if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin') {
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
@@ -9,9 +9,7 @@ $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
 $resultSubd = $con->query("SELECT * FROM subdivision");
 $resultSubdivision3 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
 $resultBilling = $con->query(
-"SELECT bill_consumer.billConsumer_id, billing_period.month, bill_consumer.fullname, bill_consumer.amount, bill_consumer.status 
-FROM bill_consumer 
-INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id WHERE status = 'UNPAID';"
+  "SELECT bill_consumer.billConsumer_id, billing_period.month, bill_consumer.fullname, bill_consumer.amount, bill_consumer.status FROM bill_consumer INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id WHERE status = 'UNPAID';"
 );
 
 ?>
@@ -184,12 +182,12 @@ INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.bil
 
   .thead-bills-table {
     background-color: rgb(170, 192, 175);
-    
+
   }
-  </style>
+</style>
 
 <body>
-  
+
   <div class="treasurer">
     <?php require '../marginals/sidebarAdmin.php'; ?>
     <div class="treasurerPanel">
@@ -198,9 +196,9 @@ INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.bil
           <div class="filter-area">
             <form action="" method="post">
 
-            <label>Search:</label>
-            <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names..">
-            <!-- <label for="">filter by Subdivision:</label>
+              <label>Search:</label>
+              <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names..">
+              <!-- <label for="">filter by Subdivision:</label>
             <select name="homeowner" id="homeowner" onclick="myFunction1()">
               <option value="">Select...</option>
               <?php
@@ -231,7 +229,7 @@ INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.bil
               <?php endwhile; ?>
             </table>
           </div>
-            <button type="submit" class="btnSubmitPost" name="payDues" id="payDues">Submit Payment</button>
+          <button type="submit" class="btnSubmitPost" name="payDues" id="payDues">Submit Payment</button>
           </form>
         </div>
 
