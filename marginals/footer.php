@@ -95,20 +95,21 @@
     color: black;
     cursor: pointer;
   }
-  
+
   .carousel-inner {
     margin: 0;
     padding: 2vw;
-    padding-bottom: 3vw;
-    padding-top: 3vw;
+    padding-top: 0;
+    padding-bottom: 0;
   }
-  .carousel-item{
+
+  .carousel-item {
     padding: 2vw;
     display: flex;
     justify-content: center;
     align-items: center;
     padding-left: 2vw;
-    
+
   }
 
   .OfficersTitle {
@@ -123,13 +124,16 @@
 
 
   td {
-    text-align: center;
     font-size: 1vw;
-    padding: 0.5vw;
+    padding: 1vw;
+    text-align: center;
+    vertical-align: middle;
   }
-  table{
+
+  table {
     width: 100%;
     height: 100%;
+    table-layout: fixed;
   }
 
   .footerListText {
@@ -141,14 +145,29 @@
   }
 
   .modal-content {
+    margin: 0;
+    padding: 0;
     background-color: rgb(255, 255, 255, 0.5);
-
     backdrop-filter: blur(5px);
   }
 
-  .modal-body {
-    background-image: url(C:\wamp64\www\SUNNYVALE_PHP\media\content-images\sv2-logo.png);
+  .card-subtext {
+    margin: 0;
+    font-size: 0.8vw;
 
+  }
+
+  .card-text {
+
+    margin: 0;
+  }
+
+  .carousel-control-prev {
+    width: 10%;
+  }
+
+  .carousel-control-next {
+    width: 10%;
   }
 </style>
 
@@ -171,7 +190,7 @@
   </div>
 
   <div class="modal fade" id="OfficersModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Officers</h1>
@@ -191,25 +210,65 @@
               <div class="carousel-item active">
                 <table>
                   <tr>
-                    <td class="OfficersTitle" colspan="2">Sunnyvale 1 Officers</td>
+                    <td class="OfficersTitle" colspan="3">Sunnyvale 1 Officers</td>
                   </tr>
                   <tr>
-                    <td>President:</td>
-                    <td>Basil Knowles</td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf4.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Noelle Maxwell</p>
+                          <p class="card-subtext">President</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf5.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Harriet Fennimore</p>
+                          <p class="card-subtext">Vice President</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf6.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Aileen Sims</p>
+                          <p class="card-subtext">Secretary</p>
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                   <tr>
-                    <td>Vice President:</td>
-                    <td>Robin Rice</td>
-                  </tr>
-                  <tr>
-                    <td>Secretary:</td>
-                    <td>Maxine Twitty</td>
-                  </tr>
-                  <tr>
-                    <td>Treasurer:</td>
-                    <td>Alexis Stevenson</td>
-                  </tr>
-                  <tr>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf1.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Damon Reese</p>
+                          <p class="card-subtext">Treasurer</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf2.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Frederick Roffe</p>
+                          <p class="card-subtext">Auditor</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf3.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Phoebe Jackson</p>
+                          <p class="card-subtext">P.I.O</p>
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                 </table>
               </div>
@@ -217,75 +276,194 @@
 
                 <table>
                   <tr>
-                    <td class="OfficersTitle" colspan="2">Sunnyvale 2 Officers</td>
+                    <td class="OfficersTitle" colspan="3">Sunnyvale 2 Officers</td>
                   </tr>
                   <tr>
-                    <td>President:</td>
-                    <td>Wilmot Lane</td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf4.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Noelle Maxwell</p>
+                          <p class="card-subtext">President</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf5.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Harriet Fennimore</p>
+                          <p class="card-subtext">Vice President</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf6.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Aileen Sims</p>
+                          <p class="card-subtext">Secretary</p>
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                   <tr>
-                    <td>Vice President:</td>
-                    <td>Theo Cress</td>
-                  </tr>
-                  <tr>
-                    <td>Secretary:</td>
-                    <td>Jenson Newman</td>
-                  </tr>
-                  <tr>
-                    <td>Treasurer:</td>
-                    <td>Camilla Heath</td>
-                  </tr>
-                  <tr>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf1.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Damon Reese</p>
+                          <p class="card-subtext">Treasurer</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf2.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Frederick Roffe</p>
+                          <p class="card-subtext">Auditor</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf3.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Phoebe Jackson</p>
+                          <p class="card-subtext">P.I.O</p>
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                 </table>
               </div>
               <div class="carousel-item">
                 <table>
                   <tr>
-                    <td class="OfficersTitle" colspan="2">Sunnyvale 3 Officers</td>
+                    <td class="OfficersTitle" colspan="3">Sunnyvale 3 Officers</td>
+                  <tr>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf4.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Noelle Maxwell</p>
+                          <p class="card-subtext">President</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf5.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Harriet Fennimore</p>
+                          <p class="card-subtext">Vice President</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf6.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Aileen Sims</p>
+                          <p class="card-subtext">Secretary</p>
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                   <tr>
-                    <td>President:</td>
-                    <td>Grant Armstrong</td>
-                  </tr>
-                  <tr>
-                    <td>Vice President:</td>
-                    <td>Tammy Barber</td>
-                  </tr>
-                  <tr>
-                    <td>Secretary:</td>
-                    <td>Howell Norris</td>
-                  </tr>
-                  <tr>
-                    <td>Treasurer:</td>
-                    <td>Roberta Woolridge</td>
-                  </tr>
-                  <tr>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf1.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Damon Reese</p>
+                          <p class="card-subtext">Treasurer</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf2.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Frederick Roffe</p>
+                          <p class="card-subtext">Auditor</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf3.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Phoebe Jackson</p>
+                          <p class="card-subtext">P.I.O</p>
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                 </table>
               </div>
               <div class="carousel-item">
                 <table>
                   <tr>
-                    <td class="OfficersTitle" colspan="2">Sunnyvale 4 Officers</td>
+                    <td class="OfficersTitle" colspan="3">Sunnyvale 4 Officers</td>
                   </tr>
                   <tr>
-                    <td>President:</td>
-                    <td>Darcy Hardy</td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf4.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Noelle Maxwell</p>
+                          <p class="card-subtext">President</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf5.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Harriet Fennimore</p>
+                          <p class="card-subtext">Vice President</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf6.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Aileen Sims</p>
+                          <p class="card-subtext">Secretary</p>
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                   <tr>
-                    <td>Vice President:</td>
-                    <td>Cecil Turner</td>
-                  </tr>
-                  <tr>
-                    <td>Secretary:</td>
-                    <td>Teddy Annable</td>
-                  </tr>
-                  <tr>
-                    <td>Treasurer:</td>
-                    <td>Ralph Garraway</td>
-                  </tr>
-                  <tr>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf1.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Damon Reese</p>
+                          <p class="card-subtext">Treasurer</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf2.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Frederick Roffe</p>
+                          <p class="card-subtext">Auditor</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="card" style="width: 18rem;">
+                        <img src="./media/content-images/pf3.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Phoebe Jackson</p>
+                          <p class="card-subtext">P.I.O</p>
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                 </table>
               </div>

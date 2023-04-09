@@ -64,9 +64,9 @@
     .secretarySideBar li {
         color: rgb(89, 89, 89);
         font-family: "Poppins", sans-serif;
-        text-align: center;
+        text-align: left;
         margin: 0;
-        padding-left: 0.5vw;
+        padding-left: 2vw;
         padding-right: 0.5vw;
         font-size: max(1.5vw, min(10px));
         cursor: pointer;
@@ -78,9 +78,14 @@
     }
 
     .btnSettings {
+        padding-right: 1.5vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 0;
         color: rgb(89, 89, 89);
         font-family: "Poppins", sans-serif;
-        text-align: center;
+        text-align: left;
         font-size: max(1.5vw, min(10px));
         background-color: rgb(0, 0, 0, 0);
         border: none;
@@ -90,9 +95,14 @@
     }
 
     .btnReports {
+        padding-right: 1.5vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 0;
         color: rgb(89, 89, 89);
         font-family: "Poppins", sans-serif;
-        text-align: center;
+        text-align: left;
         font-size: max(1.5vw, min(10px));
         background-color: rgb(0, 0, 0, 0);
         border: none;
