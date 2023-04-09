@@ -1,6 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Treasurer' AND $_SESSION['user_type'] != 'Admin') {
+if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin') {
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
@@ -9,7 +9,7 @@ $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
 $resultSubd = $con->query("SELECT * FROM subdivision");
 $resultSubdivision3 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
 $resultBilling = $con->query(
-"SELECT bill_consumer.billConsumer_id, billing_period.month, bill_consumer.fullname, bill_consumer.amount, bill_consumer.status 
+  "SELECT bill_consumer.billConsumer_id, billing_period.month, bill_consumer.fullname, bill_consumer.amount, bill_consumer.status 
 FROM bill_consumer 
 INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id WHERE status = 'UNPAID';"
 );
@@ -184,19 +184,52 @@ INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.bil
 
   .thead-bills-table {
     background-color: rgb(170, 192, 175);
-    
+
   }
-  </style>
+
+  .sideBar {
+    background-color: rgb(248, 245, 227);
+    flex: 2;
+    color: black;
+  }
+
+  .secretarySideBar {
+    display: inline;
+    justify-content: flex-end;
+    margin-top: 5px;
+    margin-bottom: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .secretarySideBar li {
+    color: rgb(89, 89, 89);
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    padding: 1.5vw;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    font-size: max(1.5vw, min(10px));
+    cursor: pointer;
+    border-bottom: 1px solid lightgray;
+  }
+
+  .secretarySideBar li:hover {
+    background-color: rgb(236, 235, 226);
+  }
+</style>
 
 <body>
-  
+
   <div class="treasurer">
+    <div class="sideBar">
     <?php require '../marginals/sidebarAdmin.php'; ?>
-    <div class="treasurerPanel">
-      <div class="monthlyDues" id="monthlyDues">
-        <div class="treasurerForm">
-          <div class="filter-area">
-            <form action="" method="post">
+  </div>
+  <div class="treasurerPanel">
+    <div class="monthlyDues" id="monthlyDues">
+      <div class="treasurerForm">
+        <div class="filter-area">
+          <form action="" method="post">
 
             <label>Search:</label>
             <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names..">
@@ -210,34 +243,34 @@ INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.bil
               ?>
               <?php endwhile; ?>
             </select> -->
-          </div>
-          <div class="table-area">
-            <table class="Homeowner-table" id="Homeowner_table">
-              <thead class="thead-bills-table">
-                <th> <input type="checkbox" name="" id=""> </th>
-                <th>Month</th>
-                <th>Full name</th>
-                <th>Amount</th>
-                <th>Status</th>
-              </thead>
-              <?php while ($row = $resultBilling->fetch_assoc()) : ?>
-                <tr class="Homeowner-table-data-row" id="Homeowner_table_data_row">
-                  <td> <input type="checkbox" value=<?php echo $row['billConsumer_id']; ?> name="checkbox[]" id="checkbox"> </td>
-                  <td><?php echo $row['month'] ?></td>
-                  <td><?php echo $row['fullname'] ?></td>
-                  <td><?php echo $row['amount'] ?></td>
-                  <td><?php echo $row['status'] ?></td>
-                </tr>
-              <?php endwhile; ?>
-            </table>
-          </div>
-            <button type="submit" class="btnSubmitPost" name="payDues" id="payDues">Submit Payment</button>
-          </form>
         </div>
-
+        <div class="table-area">
+          <table class="Homeowner-table" id="Homeowner_table">
+            <thead class="thead-bills-table">
+              <th> <input type="checkbox" name="" id=""> </th>
+              <th>Month</th>
+              <th>Full name</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </thead>
+            <?php while ($row = $resultBilling->fetch_assoc()) : ?>
+              <tr class="Homeowner-table-data-row" id="Homeowner_table_data_row">
+                <td> <input type="checkbox" value=<?php echo $row['billConsumer_id']; ?> name="checkbox[]" id="checkbox"> </td>
+                <td><?php echo $row['month'] ?></td>
+                <td><?php echo $row['fullname'] ?></td>
+                <td><?php echo $row['amount'] ?></td>
+                <td><?php echo $row['status'] ?></td>
+              </tr>
+            <?php endwhile; ?>
+          </table>
+        </div>
+        <button type="submit" class="btnSubmitPost" name="payDues" id="payDues">Submit Payment</button>
+        </form>
       </div>
 
     </div>
+
+  </div>
   </div>
   <?php
   require '../marginals/footer2.php'
