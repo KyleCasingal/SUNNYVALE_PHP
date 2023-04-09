@@ -524,7 +524,11 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
       $("#amenity_id").removeAttr("required");
       $("#purpose_id").removeAttr("required");
       $('#calendarmodal').modal('show');
-
+    });
+  });
+  $(document).ready(function() {
+    $("#modalclose").click(function() {
+      $('#calendarmodal').modal('hide');
     });
   });
 </script>
@@ -554,7 +558,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
       <div class="modal-dialog" role="document">
         <div class="modal-content ">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" id="modalclose" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -606,7 +610,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
         <button class="btnSubmit" name="addToCart" id="add">Add</button>
 
         <br>
-        <!-- <button class="calendarshow" name="" id="calendarshow">Show Calendar</button> -->
       </div>
       <div class='amenitiesForm'>
         <label>Availed Services</label>
