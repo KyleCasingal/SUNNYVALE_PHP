@@ -390,13 +390,13 @@ $resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivisi
               ?>
               <?php
               if ($row['user_type'] == 'Admin') {
-                echo '<a class="dropdown-item" href="../modules/homeownerRegistration.php">Admin Panel</a>';
+                echo '<a class="dropdown-item" href="../modules/accManagement.php">Admin Panel</a>';
               }
               if ($row['user_type'] == 'Treasurer') {
                 echo '<a class="dropdown-item" href="../modules/treasurerPanel.php">Treasurer Panel</a>';
               }
               if ($row['user_type'] == 'Secretary') {
-                echo '<a class="dropdown-item" href="../modules/homeownerRegistration.php">Secretary Panel</a>';
+                echo '<a class="dropdown-item" href="../modules/accManagement.php">Secretary Panel</a>';
               }
               ?>
               <div class="dropdown-divider"></div>

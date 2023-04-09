@@ -115,89 +115,103 @@
     <div class="secretarySideBar">
         <form method="post">
             <ul class="secretarySideBar">
-                <li id="settings">
-                    <button type="button" class="btnSettings" data-bs-toggle="dropdown" aria-expanded="false">
-                        Homeowner <i class="fa-sharp fa-solid fa-chevron-right"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li id="Subdivision" onclick="location.href='../modules/homeownerRegistration.php'">Homeowner Registration</li>
-                        <li id="Amenities" onclick="location.href='../modules/homeownerlist.php'">Registered Homeowners</li>
-                    </ul>
-                </li>
-                <li id="approval" onclick="location.href='../modules/accManagement.php'">Account Management</li>
-                <li id="ticket" onclick="location.href='../modules/complaintManagement.php'">Complaint Tickets</li>
-                <li id="settings">
-                    <button type="button" class="btnSettings" data-bs-toggle="dropdown" aria-expanded="false">
-                        Settings <i class="fa-sharp fa-solid fa-chevron-right"></i>
-                    </button>
-
-                    <ul class="dropdown-menu">
-                        <li id="Amenities" onclick="location.href='../modules/settingsAmenity.php'">Amenities</li>
-                        <?php
-                        if ($row['user_type'] == 'Admin') {
-                            echo "<li id='billing-period' onclick=";
-                            echo '"';
-                            echo "location.href='../modules/settingsBillingPeriod.php'";
-                            echo '"';
-                            echo ">Billing Period</li>";
-                        }
-                        ?>
-                        <li id="missionVision" onclick="location.href='../modules/settingsMissionVision.php'">Mission/Vision</li>
-                        <li id="MonthlyDues" onclick="location.href='../modules/settingsMonthlydues.php'">Monthly Dues</li>
-                        <?php
-                        if ($row['user_type'] == 'Admin') {
-                            echo "<li id='Subdivision' onclick=";
-                            echo '"';
-                            echo "location.href='../modules/settingsSubdivision.php'";
-                            echo '"';
-                            echo ">Subdivisions</li>";
-                        }
-                        ?>
-                        <li id="Subdivision Officers" onclick="location.href='../modules/settingsSubdivisionOfficer.php'">Subdivision Officers</li>
-                        <?php
-                        if ($row['user_type'] == 'Admin') {
-                            echo "<li id='System Accounts' onclick=";
-                            echo '"';
-                            echo "location.href='../modules/settingsSystemAcc.php'";
-                            echo '"';
-                            echo ">System Accounts</li>";
-                        }
-                        ?>
-                    </ul>
-                </li>
-
-                <li id="reports">
-                    <button type="button" class="btnReports" data-bs-toggle="dropdown" aria-expanded="false">
-                        Reports <i class="fa-sharp fa-solid fa-chevron-right"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li id="Collection Report" onclick="location.href='../reports/reportAmenities.php'" target="_blank">Collection Report</li>
-                        <li id="Home Owner List" onclick="location.href='../reports/reportHomeOwnerList.php'" target="_blank">Home Owner List</li>
-                        <li id="Audit Trail" onclick="location.href='../reports/reportAuditTrail.php'" target="_blank">
-                            Audit Trail</li>
-                    </ul>
-                </li>
-                <?php
-                if ($row['user_type'] == 'Admin') {
-                    echo "<li id='Backup'>
-                    <button type='button' class='btnReports' data-bs-toggle='dropdown' aria-expanded='false'>
-                        Backup & Restore <i class='fa-sharp fa-solid fa-chevron-right'></i>
-                    </button>
-                    <ul class='dropdown-menu'>
-                        <li id='Collection Report' onclick=";
-                    echo '"';
-                    echo "location.href='../BackupRestore/backup.php'";
-                    echo '"';
-                    echo " target='_blank'>Backup</li>
-                    <li id='Home Owner List' onclick=";
-                    echo '"';
-                    echo "location.href='../BackupRestore/restore.php'";
-                    echo '"';
-                    echo " target='_blank'>Restore</li>
-                    </ul>
-                </li>";
-                }
-                ?>
+                <?php if ($row['user_type'] != 'Treasurer') { ?>
+                    <li id="approval" onclick="location.href='../modules/accManagement.php'">Account Management</li>
+                <?php } ?>
+                <?php if ($row['user_type'] != 'Secretary') { ?>
+                    <li id="facility">
+                        <button type="button" class="btnSettings" data-bs-toggle="dropdown" aria-expanded="false">
+                            Amenity <i class="fa-sharp fa-solid fa-chevron-right"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li id="Amenities" onclick="location.href='../modules/treasurerPanelFacility.php'">Amenity Renting</li>
+                            <li id="Amenities" onclick="location.href='../modules/treasurerPanelReservation.php'">Reservation List</li>
+                        </ul>
+                    </li>
+                    </li>
+                <?php } ?>
+                <?php if ($row['user_type'] != 'Secretary' && $row['user_type'] != 'Treasurer') { ?>
+                    <li id='Backup'>
+                        <button type='button' class='btnReports' data-bs-toggle='dropdown' aria-expanded='false'>
+                            Backup & Restore <i class='fa-sharp fa-solid fa-chevron-right'></i>
+                        </button>
+                        <ul class='dropdown-menu'>
+                            <li id='Collection Report' onclick="location.href='../BackupRestore/backup.php'" target='_blank'>Backup</li>
+                            <li id='Home Owner List' onclick="location.href='../BackupRestore/restore.php'" target='_blank'>Restore</li>
+                        </ul>
+                    </li>
+                <?php } ?>
+                <?php if ($row['user_type'] != 'Secretary') { ?>
+                    <li id="billing" onclick="location.href='../modules/billing.php'">Billing</li>
+                <?php } ?>
+                <?php if ($row['user_type'] != 'Treasurer') { ?>
+                    <li id="ticket" onclick="location.href='../modules/complaintManagement.php'">Complaint Tickets</li>
+                <?php } ?>
+                <?php if ($row['user_type'] != 'Treasurer') { ?>
+                    <li id="settings">
+                        <button type="button" class="btnSettings" data-bs-toggle="dropdown" aria-expanded="false">
+                            Homeowner <i class="fa-sharp fa-solid fa-chevron-right"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li id="Subdivision" onclick="location.href='../modules/homeownerRegistration.php'">Homeowner Registration</li>
+                            <li id="Amenities" onclick="location.href='../modules/homeownerlist.php'">Registered Homeowners</li>
+                        </ul>
+                    </li>
+                <?php } ?>
+                <?php if ($row['user_type'] != 'Secretary') { ?>
+                    <li id="dues" onclick="location.href='../modules/treasurerPanel.php'">Monthly Dues</li>
+                <?php } ?>
+                <?php if ($row['user_type'] != 'Treasurer') { ?>
+                    <li id="reports">
+                        <button type="button" class="btnReports" data-bs-toggle="dropdown" aria-expanded="false">
+                            Reports <i class="fa-sharp fa-solid fa-chevron-right"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li id="Collection Report" onclick="location.href='../reports/reportAmenities.php'" target="_blank">Collection Report</li>
+                            <li id="Home Owner List" onclick="location.href='../reports/reportHomeOwnerList.php'" target="_blank">Home Owner List</li>
+                            <li id="Audit Trail" onclick="location.href='../reports/reportAuditTrail.php'" target="_blank">
+                                Audit Trail</li>
+                        </ul>
+                    </li>
+                    <li id="settings">
+                        <button type="button" class="btnSettings" data-bs-toggle="dropdown" aria-expanded="false">
+                            Settings <i class="fa-sharp fa-solid fa-chevron-right"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li id="Amenities" onclick="location.href='../modules/settingsAmenity.php'">Amenities</li>
+                            <?php
+                            if ($row['user_type'] == 'Admin') {
+                                echo "<li id='billing-period' onclick=";
+                                echo '"';
+                                echo "location.href='../modules/settingsBillingPeriod.php'";
+                                echo '"';
+                                echo ">Billing Period</li>";
+                            }
+                            ?>
+                            <li id="missionVision" onclick="location.href='../modules/settingsMissionVision.php'">Mission/Vision</li>
+                            <li id="MonthlyDues" onclick="location.href='../modules/settingsMonthlydues.php'">Monthly Dues</li>
+                            <?php
+                            if ($row['user_type'] == 'Admin') {
+                                echo "<li id='Subdivision' onclick=";
+                                echo '"';
+                                echo "location.href='../modules/settingsSubdivision.php'";
+                                echo '"';
+                                echo ">Subdivisions</li>";
+                            }
+                            ?>
+                            <li id="Subdivision Officers" onclick="location.href='../modules/settingsSubdivisionOfficer.php'">Subdivision Officers</li>
+                            <?php
+                            if ($row['user_type'] == 'Admin') {
+                                echo "<li id='System Accounts' onclick=";
+                                echo '"';
+                                echo "location.href='../modules/settingsSystemAcc.php'";
+                                echo '"';
+                                echo ">System Accounts</li>";
+                            }
+                            ?>
+                        </ul>
+                    </li>
+                <?php } ?>
             </ul>
         </form>
     </div>

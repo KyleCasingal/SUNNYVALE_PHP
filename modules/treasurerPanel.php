@@ -1,6 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Treasurer') {
+if ($_SESSION['user_type'] != 'Treasurer' AND $_SESSION['user_type'] != 'Admin') {
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
@@ -191,7 +191,7 @@ INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.bil
 <body>
   
   <div class="treasurer">
-    <?php require '../marginals/sidebarTreasurerPanel.php'; ?>
+    <?php require '../marginals/sidebarAdmin.php'; ?>
     <div class="treasurerPanel">
       <div class="monthlyDues" id="monthlyDues">
         <div class="treasurerForm">
