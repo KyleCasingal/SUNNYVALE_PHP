@@ -393,6 +393,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                             <th>Business Address</th>
                             <th>Occupation</th>
                             <th>Employer</th>
+                            <th>Vehicle Registration</th>
                         </thead>
                         <?php
                         while ($row = $result->fetch_assoc()) :
@@ -447,6 +448,9 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                                 </td>
                                 <td>
                                     <?php echo $row['employer']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $row['vehicle_registration']; ?>
                                 </td>
                             </tr>
                         <?php endwhile; ?>

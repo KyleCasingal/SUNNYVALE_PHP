@@ -669,7 +669,11 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billin
               <tr>
                 <td class='lbl'>Employer:</td>
                 <td class='data'>" . $row['employer'] . "</td>
-              </tr>";
+              </tr>
+              <tr>
+              <td class='lbl'>Vehicle Registration:</td>
+              <td class='data'>" . $row['vehicle_registration'] . "</td>
+            </tr>";
               }
               ?>
             </tbody>
@@ -799,6 +803,11 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billin
                                               }
                                               ?>>Female</option>
                     </select>
+                  </td>
+                  <td>Vehicle Registration:</td>
+                  <td class="NAemployer">
+                    <input type="text" name="vehicle_registration" id="" placeholder="employer" value="<?php echo $row['vehicle_registration'] ?? ''; ?>" required />
+                    <p class="lblNA">*write N/A if not applicable*</p>
                   </td>
                 </tr>
                 <tr>

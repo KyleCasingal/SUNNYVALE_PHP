@@ -269,7 +269,6 @@ if (isset($_POST['homeowner_submit'])) {
   $suffix = $_POST['suffix'];
   $street = $_POST['street'];
   $subdivision = $_POST['subdivision'];
-  $barangay = $_POST['barangay'];
   $bussiness_address = $_POST['business_address'];
   $mobile_number = $_POST['mobile_number'];
   $occupation = $_POST['occupation'];
@@ -278,8 +277,13 @@ if (isset($_POST['homeowner_submit'])) {
   $birthdate = date('Y-m-d', $birthdate);
   $sex = $_POST['sex'];
   $email_address = $_POST['email_address'];
+  $vehicle_registration = $_POST['vehicle_registration'];
 
-  $sql = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer, display_picture) VALUES ('$last_name','$first_name','$middle_name','$suffix','$sex', '$street', '$subdivision', '$barangay', '$bussiness_address','$occupation','$email_address','$birthdate','$mobile_number','$employer','default.png')";
+  $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '$subdivision'");
+  $rowSubdivision = $resultSubdivision->fetch_assoc();
+  $barangay = $rowSubdivision['barangay'];
+
+  $sql = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer, vehicle_registration, display_picture) VALUES ('$last_name','$first_name','$middle_name','$suffix','$sex', '$street', '$subdivision', '$barangay', '$bussiness_address','$occupation','$email_address','$birthdate','$mobile_number','$employer', '$vehicle_registration', 'default.png')";
   $result = mysqli_query($con, $sql);
 
   $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
@@ -350,7 +354,6 @@ if (isset($_GET['homeowner_id'])) {
     $suffix = $row['suffix'];
     $street = $row['street'];
     $subdivision = $row['subdivision'];
-    $barangay = $row['barangay'];
     $business_address = $row['business_address'];
     $occupation = $row['occupation'];
     $employer = $row['employer'];
@@ -358,6 +361,7 @@ if (isset($_GET['homeowner_id'])) {
     $sex = $row['sex'];
     $email_address = $row['email_address'];
     $mobile_number = $row['mobile_number'];
+    $vehicle_registration = $row['vehicle_registration'];
   }
 }
 
@@ -370,21 +374,25 @@ if (isset($_POST['homeowner_update'])) {
   $suffix = $_POST['suffix'];
   $street = $_POST['street'];
   $subdivision = $_POST['subdivision'];
-  $barangay = $_POST['barangay'];
-  $bussiness_address = $_POST['business_address'];
+  $business_address = $_POST['business_address'];
   $mobile_number = $_POST['mobile_number'];
   $occupation = $_POST['occupation'];
   $employer = $_POST['employer'];
+  $vehicle_registration = $_POST['vehicle_registration'];
   $birthdate = strtotime($_POST['birthdate']);
   $birthdate = date('Y-m-d', $birthdate);
   $sex = $_POST['sex'];
   $email_address = $_POST['email_address'];
   $full_name = $first_name . ' ' . $last_name;
 
-  $sql = "UPDATE homeowner_profile SET first_name =  '$first_name', middle_name = '$middle_name', last_name = '$last_name', suffix = '$suffix', sex = '$sex', street = '$street', subdivision = '$subdivision', barangay = '$barangay', business_address = '$barangay', occupation = '$occupation', email_address = '$email_address', birthdate = '$birthdate', mobile_number = '$mobile_number', employer = '$employer' WHERE homeowner_id = '$homeowner_id' ";
+  $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '$subdivision'");
+  $rowSubdivision = $resultSubdivision->fetch_assoc();
+  $barangay = $rowSubdivision['barangay'];
+
+  $sql = "UPDATE homeowner_profile SET first_name =  '$first_name', middle_name = '$middle_name', last_name = '$last_name', suffix = '$suffix', sex = '$sex', street = '$street', subdivision = '$subdivision', barangay = '$barangay', business_address = '$business_address', occupation = '$occupation', email_address = '$email_address', birthdate = '$birthdate', mobile_number = '$mobile_number', employer = '$employer', vehicle_registration = '$vehicle_registration' WHERE homeowner_id = '$homeowner_id'";
   $result = mysqli_query($con, $sql);
   $sql2 = "UPDATE user SET full_name = '$full_name', email_address = '$email_address' WHERE user_homeowner_id = '$homeowner_id'";
-  $result = mysqli_query($con, $sql2);
+  $result2 = mysqli_query($con, $sql2);
   $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $row = $resultSession->fetch_assoc();
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" . 'updated homeowner' . ' ' . "$first_name" . ' ' . "$last_name" . "' , NOW())";
@@ -639,7 +647,7 @@ if (isset($_POST['sysAccAdd'])) {
   $userType = $_POST['user_type'];
 
 
-  $sql1 = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer, display_picture) VALUES ('', '$systemAccount', NULL, NULL,'' , '', '', '', NULL, NULL, '', NOW(), '', NULL, 'default.png')";
+  $sql1 = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer, display_picture) VALUES ('', '$systemAccount', NULL, NULL,'' , '', '', '', NULL, NULL, '', NULL, NULL, NULL, 'default.png')";
   mysqli_query($con, $sql1);
   $result = $con->query("SELECT * FROM homeowner_profile WHERE first_name = '$systemAccount'");
   if ($result->num_rows) {
@@ -675,7 +683,7 @@ if (isset($_POST['sysAccUpdate'])) {
   $password = $_POST['password'];
   $account_type = $_POST['user_type'];
   $account_status = $_POST['account_status'];
-  
+
   $resultHomeownerID = $con->query("SELECT * FROM user WHERE user_id = '$account_id'");
   $rowHomeownerID = $resultHomeownerID->fetch_assoc();
   $homeowner_id = $rowHomeownerID['user_homeowner_id'];
@@ -793,13 +801,14 @@ if (isset($_POST['editProfile'])) {
   $mobile_number = $_POST['mobile_number'];
   $occupation = $_POST['occupation'];
   $employer = $_POST['employer'];
+  $vehicle_registration = $_POST['vehicle_registration'];
 
 
 
   $resultID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $rowID = $resultID->fetch_assoc();
 
-  $sql = "UPDATE homeowner_profile SET business_address ='" . $business_address . "', occupation ='" . $occupation . "', mobile_number='" . $mobile_number . "', employer='" . $employer . "'   WHERE homeowner_id = '" . $rowID['user_homeowner_id'] . "'";
+  $sql = "UPDATE homeowner_profile SET business_address ='" . $business_address . "', occupation ='" . $occupation . "', mobile_number='" . $mobile_number . "', employer='" . $employer . "', vehicle_registration = '" . $vehicle_registration . "'   WHERE homeowner_id = '" . $rowID['user_homeowner_id'] . "'";
   $result = mysqli_query($con, $sql);
 
   echo "<div class='messageSuccess'>

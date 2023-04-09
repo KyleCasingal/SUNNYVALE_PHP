@@ -421,6 +421,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                                 <td>Middle Name:</td>
                                 <td>
                                     <input type="text" name="middle_name" id="middle_id" placeholder="middle name" value="<?php echo $middle_name ?? ''; ?>" required />
+                                    <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
                                 <td>Sex:</td>
                                 <td>
@@ -457,6 +458,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                                 <td>Suffix:</td>
                                 <td>
                                     <input type="text" name="suffix" id="suffix_id" placeholder="suffix" value="<?php echo $suffix ?? ''; ?>" required />
+                                    <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
                                 <td>Mobile Number:</td>
                                 <td>
@@ -482,25 +484,6 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                                         <?php endwhile; ?>
                                     </select>
                                 </td>
-                                <!-- <td>
-                                    <select name="barangay" id="">
-                                        <option value="">Select...</option>
-                                        <option value="Palangoy" <?php
-                                                                    if (isset($_GET['homeowner_id'])) {
-                                                                        if ($barangay == "Palangoy") {
-                                                                            echo 'selected="selected"';
-                                                                        }
-                                                                    }
-                                                                    ?>>Palangoy</option>
-                                        <option value="Pantok" <?php
-                                                                if (isset($_GET['homeowner_id'])) {
-                                                                    if ($barangay == "Pantok") {
-                                                                        echo 'selected="selected"';
-                                                                    }
-                                                                }
-                                                                ?>>Pantok</option>
-                                    </select>
-                                </td> -->
                             </tr>
                             <tr>
                                 <td>Business Address:</td>
@@ -521,8 +504,15 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                             </tr>
                             <tr>
                                 <td>Employer:</td>
-                                <td class="NAemployer">
+                                <td class="NA">
                                     <input type="text" name="employer" id="employer_id" placeholder="employer" value="<?php echo $employer ?? ''; ?>" required />
+                                    <p class="lblNA">*write N/A if not applicable*</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Vehicle Registration:</td>
+                                <td class="NA">
+                                    <input type="text" name="vehicle_registration" id="employer_id" placeholder="vehicle registration" value="<?php echo $vehicle_registration ?? ''; ?>" required />
                                     <p class="lblNA">*write N/A if not applicable*</p>
                                 </td>
                             </tr>
