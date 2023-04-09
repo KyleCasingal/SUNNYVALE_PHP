@@ -180,13 +180,14 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
     }
 
     .tblHomeowners {
+        table-layout: fixed;
         margin-bottom: 2vw;
         overflow-x: auto;
         overflow-y: auto;
         text-align: center;
         margin: 2vw;
         margin-right: 2vw;
-        max-width: 100%;
+        max-width: 60%;
     }
 
     .tblHomeowners thead,
@@ -387,17 +388,11 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                     <table class="tblHomeowners">
                         <thead>
                             <th></th>
-                            <th>Homeowner ID</th>
                             <th>Full Name</th>
                             <th>Date of Birth</th>
                             <th>Sex</th>
                             <th>Residence Address</th>
                             <th>Email</th>
-                            <th>Mobile Number</th>
-                            <th>Business Address</th>
-                            <th>Occupation</th>
-                            <th>Employer</th>
-                            <th>Vehicle Registration</th>
                         </thead>
                         <?php
                         while ($row = $result->fetch_assoc()) :
@@ -421,9 +416,6 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                                     <a href="homeownerRegistration.php?homeowner_id=<?php echo $row['homeowner_id']; ?>" class="btnEdit">Edit</a>
                                 </td>
                                 <td>
-                                    <?php echo $row['homeowner_id']; ?>
-                                </td>
-                                <td>
                                     <?php echo $row['first_name'] . $middle_name . " " . $row['last_name'] . $suffix; ?>
                                 </td>
                                 <td>
@@ -440,21 +432,6 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                                 </td>
                                 <td>
                                     <?php echo $row['email_address']; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row['mobile_number']; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row['business_address']; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row['occupation']; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row['employer']; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row['vehicle_registration']; ?>
                                 </td>
                             </tr>
                         <?php endwhile; ?>
