@@ -1,6 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Treasurer') {
+if ($_SESSION['user_type'] != 'Treasurer' AND $_SESSION['user_type'] != 'Admin') {
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
@@ -425,7 +425,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
 
 <body>
   <div class="treasurer">
-    <?php require '../marginals/sidebarTreasurerPanel.php'; ?>
+    <?php require '../marginals/sidebarAdmin.php'; ?>
     <div class="treasurerPanel">
       <label class="lblSettings" id="amenity">Reservation List</label>
       <div class="complaintManagement">

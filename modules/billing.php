@@ -1,10 +1,10 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Treasurer') {
+if ($_SESSION['user_type'] != 'Treasurer' AND $_SESSION['user_type'] != 'Admin') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
-}
-$row = $result->fetch_assoc();
+  }
+$rowZ = $result->fetch_assoc();
 $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
 $resultSubdivision = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
 $resultSubdivision1 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
@@ -317,7 +317,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
 <body>
 
     <div class="treasurer">
-        <?php require '../marginals/sidebarTreasurerPanel.php'; ?>
+        <?php require '../marginals/sidebarAdmin.php'; ?>
         <div class="treasurerPanel">
             <div class="monthlyDues" id="monthlyDues">
                 <div class="treasurerForm">
@@ -572,11 +572,11 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
                                 <th>Subdivision</th>
                                 <th>Email</th>
                             </thead>
-                            <?php while ($row = $resultHomeowners->fetch_assoc()) : ?>
+                            <?php while ($rowZ = $resultHomeowners->fetch_assoc()) : ?>
                                 <tr class="Homeowner-table-data-row" id="Homeowner_table_data_row">
-                                    <td><?php echo $row['fullname'] ?></td>
-                                    <td><?php echo $row['subdivision'] ?></td>
-                                    <td><?php echo $row['email_address'] ?></td>
+                                    <td><?php echo $rowZ['fullname'] ?></td>
+                                    <td><?php echo $rowZ['subdivision'] ?></td>
+                                    <td><?php echo $rowZ['email_address'] ?></td>
                                 </tr>
                             <?php endwhile; ?>
                         </table>

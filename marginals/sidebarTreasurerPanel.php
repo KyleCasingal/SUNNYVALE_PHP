@@ -66,7 +66,6 @@
                         <li id="Amenities" onclick="location.href='../modules/treasurerPanelReservation.php'">Reservation List</li>
                     </ul>
                 </li>
-
                 <li id="billing" onclick="location.href='../modules/billing.php'">Billing</li>
             </ul>
         </form>
