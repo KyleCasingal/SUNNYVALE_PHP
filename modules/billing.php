@@ -14,14 +14,14 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
 $resultHomeowners1 = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ");
 
 //homeowner
-$resultYearToday = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
+$resultYearToday = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "'  ORDER BY billingPeriod_id ASC");
 $resultYearToday1 = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
 //monthly
 $resultYearToday2 = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
 $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
 //annual
-$resultYearToday4 = $con->query("SELECT * FROM billing_period WHERE year=  '2024'  ORDER BY billingPeriod_id ASC LIMIT 1");
-$resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024'  ORDER BY billingPeriod_id DESC LIMIT 1");
+$resultYearToday4 = $con->query("SELECT * FROM billing_period WHERE year=  '" . date('Y') . "'  ORDER BY billingPeriod_id ASC LIMIT 1");
+$resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . date('Y') . "'  ORDER BY billingPeriod_id DESC LIMIT 1");
 
 
 ?>
@@ -557,10 +557,10 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
                                                         <?php endwhile; ?>
 
                                                 </td>
-                                                <td><input type="text" name="yearNow" <?php
-                                                                                        $dateYear = date('Y');
-                                                                                        echo "value = '2024'";
-                                                                                        ?> id="yearNow" readonly></td>
+                                                <td><input type="text" name="yearNow" value="<?php
+                                                                                                $dateYear = date('Y');
+                                                                                                echo $dateYear;
+                                                                                                ?>" id="yearNow" readonly></td>
                                             </tr>
                                             <tr>
                                                 <td>
@@ -583,39 +583,6 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
                         </div>
                     </div>
                 </div>
-                <div class="treasurerForm">
-                    <div class="filter-area">
-                        <label>Search:</label>
-                        <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names..">
-                        <label for="">filter by Subdivision:</label>
-                        <select name="homeowner" id="homeowner" onclick="myFunction1()">
-                            <option value="">Select...</option>
-                            <?php
-                            while ($rowSubdivision3 = $resultSubdivision3->fetch_assoc()) : {
-                                    echo '<option value="' . $rowSubdivision3['monthly_dues_id'] . '">' . $rowSubdivision3['subdivision_name'] . '</option>';
-                                }
-                            ?>
-                            <?php endwhile; ?>
-                        </select>
-                    </div>
-                    <div class="table-area">
-                        <table class="Homeowner-table" id="Homeowner_table">
-                            <thead>
-                                <th>Full name</th>
-                                <th>Subdivision</th>
-                                <th>Email</th>
-                            </thead>
-                            <?php while ($rowZ = $resultHomeowners->fetch_assoc()) : ?>
-                                <tr class="Homeowner-table-data-row" id="Homeowner_table_data_row">
-                                    <td><?php echo $rowZ['fullname'] ?></td>
-                                    <td><?php echo $rowZ['subdivision'] ?></td>
-                                    <td><?php echo $rowZ['email_address'] ?></td>
-                                </tr>
-                            <?php endwhile; ?>
-                        </table>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
@@ -669,4 +636,5 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
     };
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
 </html>

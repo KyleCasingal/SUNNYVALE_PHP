@@ -351,9 +351,16 @@ $resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivisi
         <ul class="topList">
           <li data-bs-toggle="modal" data-bs-target="#confirmLogout" onclick="location.href='#confirmLogout'" class="topListItem1">HOME</li>
           <?php
-          if ($user_type != 'Guard') {
+          if ($user_type == 'Homeowner') {
           ?>
             <li onclick="location.href='../modules/amenities.php'" class="topListItem1">AMENITIES</li>
+            
+          <?php
+          }
+          ?>
+          <?php
+          if ($user_type != 'Guard') {
+          ?>
             <li onclick="location.href='../modules/blogHome.php'" class="topListItem1"> BLOG</li>
           <?php
           }

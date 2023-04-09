@@ -1,6 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] == 'Guard') {
+if ($_SESSION['user_type'] != 'Homeowner') {
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
@@ -39,8 +39,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
   <!-- bootstrap css and js -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>SUNNYVALE</title>
 </head>
@@ -525,7 +524,11 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
       $("#amenity_id").removeAttr("required");
       $("#purpose_id").removeAttr("required");
       $('#calendarmodal').modal('show');
-
+    });
+  });
+  $(document).ready(function() {
+    $("#modalclose").click(function() {
+      $('#calendarmodal').modal('hide');
     });
   });
 </script>
@@ -555,7 +558,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
       <div class="modal-dialog" role="document">
         <div class="modal-content ">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" id="modalclose" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -607,7 +610,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
         <button class="btnSubmit" name="addToCart" id="add">Add</button>
 
         <br>
-        <!-- <button class="calendarshow" name="" id="calendarshow">Show Calendar</button> -->
       </div>
       <div class='amenitiesForm'>
         <label>Availed Services</label>
