@@ -14,14 +14,14 @@ $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS f
 $resultHomeowners1 = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ");
 
 //homeowner
-$resultYearToday = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
+$resultYearToday = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "'  ORDER BY billingPeriod_id ASC");
 $resultYearToday1 = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
 //monthly
 $resultYearToday2 = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
 $resultYearToday3 = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "' ORDER BY billingPeriod_id ASC");
 //annual
-$resultYearToday4 = $con->query("SELECT * FROM billing_period WHERE year=  '2024'  ORDER BY billingPeriod_id ASC LIMIT 1");
-$resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024'  ORDER BY billingPeriod_id DESC LIMIT 1");
+$resultYearToday4 = $con->query("SELECT * FROM billing_period WHERE year=  '" . date('Y') . "'  ORDER BY billingPeriod_id ASC LIMIT 1");
+$resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . date('Y') . "'  ORDER BY billingPeriod_id DESC LIMIT 1");
 
 
 ?>
@@ -557,10 +557,10 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '2024
                                                         <?php endwhile; ?>
 
                                                 </td>
-                                                <td><input type="text" name="yearNow" <?php
+                                                <td><input type="text" name="yearNow" value="<?php
                                                                                         $dateYear = date('Y');
-                                                                                        echo "value = '2024'";
-                                                                                        ?> id="yearNow" readonly></td>
+                                                                                        echo $dateYear;
+                                                                                        ?>"id="yearNow" readonly></td>
                                             </tr>
                                             <tr>
                                                 <td>

@@ -1040,7 +1040,7 @@ if (isset($_POST['billingPeriodAdd'])) {
   $year = $_POST['year'];
   while ($i < count($months)) {
 
-    $sql = "INSERT INTO billing_period (month, year) VALUE ('$months[$i]', '2024')";
+    $sql = "INSERT INTO billing_period (month, year) VALUE ('$months[$i]', '$year')";
     $result = mysqli_query($con, $sql);
     $i++;
   }
@@ -1060,7 +1060,6 @@ if (isset($_POST['monthly_dues_id'])) {
   if (mysqli_num_rows($result) > 0) {
     echo '<script type="text/javascript"> 
   document.getElementById("subdivisionMonthlyAmount").setAttribute("value",' . $monthlyfinal . ');
-  
 </script>';
   } else {
     echo '<script type="text/javascript"> 
@@ -1077,12 +1076,11 @@ if (isset($_POST['subdivision_id_homeowner'])) {
   $result2 = $con->query("SELECT *, CONCAT(first_name, ' ', last_name)  AS fullname FROM homeowner_profile WHERE subdivision='" . $row['subdivision_name'] . "' ");
 
   if (mysqli_num_rows($result) > 0) {
-    echo '<script type="text/javascript"> 
+    echo '<script type="text/javascript">
   document.getElementById("homeowner-amount").setAttribute("value",' . $row['amount']  . ');
-  
 </script>';
   } else {
-    echo '<script type="text/javascript"> 
+    echo '<script type="text/javascript">
   document.getElementById("homeowner-amount").setAttribute("value","");
 </script>';
   }
