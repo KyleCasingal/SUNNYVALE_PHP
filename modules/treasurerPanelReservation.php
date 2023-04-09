@@ -1,6 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Treasurer' AND $_SESSION['user_type'] != 'Admin') {
+if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin') {
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
@@ -419,13 +419,43 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
   .availed-amenity-list td {
     padding: 1vw;
   }
+
+  .sideBar {
+    background-color: rgb(248, 245, 227);
+    flex: 2;
+    color: black;
+  }
+
+  .secretarySideBar {
+    display: inline;
+    justify-content: flex-end;
+    margin-top: 5px;
+    margin-bottom: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .secretarySideBar li {
+    color: rgb(89, 89, 89);
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    padding: 1.5vw;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    font-size: max(1.5vw, min(10px));
+    cursor: pointer;
+    border-bottom: 1px solid lightgray;
+  }
 </style>
 <script type="text/javascript">
 </script>
 
 <body>
   <div class="treasurer">
-    <?php require '../marginals/sidebarAdmin.php'; ?>
+    <div class="sideBar">
+      <?php require '../marginals/sidebarAdmin.php'; ?>
+    </div>
+
     <div class="treasurerPanel">
       <label class="lblSettings" id="amenity">Reservation List</label>
       <div class="complaintManagement">
