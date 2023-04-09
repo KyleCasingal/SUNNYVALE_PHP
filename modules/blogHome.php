@@ -441,6 +441,55 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
   .archive-btn:hover {
     color: white;
   }
+
+  .tbl-vehicle-reg td {
+    padding: 0.5vw;
+  }
+
+  .lbl-vehicle-reg {
+    font-size: 1vw;
+    font-weight: bold;
+  }
+
+  .vehicle-reg-input {
+    font-family: 'Poppins', sans-serif;
+    border-radius: 0.5vw;
+    border: none;
+  }
+
+  .vehicle-reg-select {
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    border-radius: 0.5vw;
+  }
+
+  .vehicle-reg-btn-group {
+    display: flex;
+    gap: 2vw;
+  }
+
+  .btn-vehicle-reg {
+    border: none;
+    border-radius: 0.5vw;
+    background-color: lightcoral;
+    padding: 0.5vw;
+    color: white;
+    margin: 0;
+  }
+
+  .tbl-vehicle-reg-list {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .tbl-vehicle-reg-list td {
+    padding: 0.2vw;
+  }
+
+  .vehicle-reg-container {
+    display: flex;
+    padding: 0.5vw;
+  }
 </style>
 
 <body>
@@ -533,28 +582,51 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
           <div class="blogPost">
             <div class="blogProfile">
               <div class="profileText">
-                <input name="vehicle_registration" type="text">
-                <button name="incoming" type="submit">Incoming</button>
-                <button name="outgoing" type="submit">Outgoing</button>
+                <table class="tbl-vehicle-reg">
+                  <tr>
+                    <td><label class="lbl-vehicle-reg">Vehicle Registration Number</label></td>
+                    <td><label class="lbl-vehicle-reg">Vehicle Type</label></td>
+                    <td><label class="lbl-vehicle-reg">Vehicle Color</label></td>
+                  </tr>
+                  <tr>
+                    <td> <input class="vehicle-reg-input" name="vehicle_registration" type="text"></td>
+                    <td> <select class="vehicle-reg-select" name="vehicle_type" id="vehicle_type">
+                        <option value="">Select vehicle type</option>
+                        <option value="Motorcycle">Motorcycle</option>
+                        <option value="Tricycle">Tricycle</option>
+                        <option value="Sedan">Sedan</option>
+                        <option value="Van">Van</option>
+                        <option value="SUV">SUV</option>
+                        <option value="Truck">Truck</option>
+                      </select></td>
+                    <td> <input class="vehicle-reg-input" name="vehicle_color" type="text"></td>
+                  </tr>
+                </table>
+                <div class="vehicle-reg-btn-group">
+                  <button class="btn-vehicle-reg" name="incoming" type="submit">Incoming</button>
+                  <button class="btn-vehicle-reg" name="outgoing" type="submit">Outgoing</button>
+                </div>
               </div>
+
             </div>
-            <div class="postContent">
+            <div class="vehicle-reg-container">
+              <table class="tbl-vehicle-reg-list">
+                <th>Date</th>
+                <th>Vehicle Registration</th>
+                <th>Status</th>
+                <?php while ($row = $resultVehicle->fetch_assoc()) : ?>
+                  <tr>
+                    <td><?php
+                        $datetime = strtotime($row['datetime']);
+                        echo $phptime = date("g:i A m/d/y", $datetime);
+                        ?></td>
+                    <td><?php echo $row['vehicle_registration'] ?></td>
+                    <td><?php echo $row['status'] ?></td>
+                  </tr>
+                <?php endwhile; ?>
+              </table>
             </div>
-            <table>
-              <th>Date</th>
-              <th>Vehicle Registration</th>
-              <th>Status</th>
-              <?php while ($row = $resultVehicle->fetch_assoc()) : ?>
-                <tr>
-                  <td><?php
-                      $datetime = strtotime($row['datetime']);
-                      echo $phptime = date("g:i A m/d/y", $datetime);
-                      ?></td>
-                  <td><?php echo $row['vehicle_registration'] ?></td>
-                  <td><?php echo $row['status'] ?></td>
-                </tr>
-              <?php endwhile; ?>
-            </table>
+
           </div>
         </form>
       </div>
