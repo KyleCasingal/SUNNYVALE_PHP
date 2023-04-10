@@ -10,7 +10,8 @@ $row = $result->fetch_assoc();
 $homeowner_id = $row['homeowner_id'];
 $resultComplaints = $con->query("SELECT * FROM concern WHERE complainant_homeowner_id = '$homeowner_id' OR complainee_homeowner_id = '$homeowner_id' AND status = 'Processing' ORDER BY datetime DESC");
 $resultComplaints1 = $con->query("SELECT * FROM concern WHERE complainant_homeowner_id = '$homeowner_id' OR complainee_homeowner_id = '$homeowner_id' AND status = 'Processing' ORDER BY datetime DESC");
-$resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id  WHERE homeowner_id = '$homeowner_id' AND status = 'UNPAID' ORDER BY billing_period.billingPeriod_id DESC");
+$resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id  WHERE homeowner_id = '$homeowner_id' AND status = 'UNPAID' || status = 'PENDING' ORDER BY billing_period.billingPeriod_id DESC");
+$resultBillConsumer1 = $con->query("SELECT * FROM bill_consumer INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id  WHERE homeowner_id = '$homeowner_id' AND status = 'UNPAID' || status = 'PENDING' ORDER BY billing_period.billingPeriod_id DESC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -253,24 +254,24 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billin
                 <table class="tblMessage">
                     <?php while ($rowBillConsumer = $resultBillConsumer->fetch_assoc()) : ?>
                         <tr class="trInbox">
-                            <td class="subject" data-bs-toggle="modal" data-bs-target="#billConsumer_id<?php
-                                                                                                        echo $rowBillConsumer['billConsumer_id']
-                                                                                                        ?>">Monthly Due</label>
-                            <td class="msgDesc" data-bs-toggle="modal" data-bs-target="#billConsumer_id<?php
-                                                                                                        echo $rowBillConsumer['billConsumer_id']
-                                                                                                        ?>"><?php
-                                                                                                            echo $rowBillConsumer['month']
-                                                                                                            ?></label>
-                            <td class="msgDesc" data-bs-toggle="modal" data-bs-target="#billConsumer_id<?php
-                                                                                                        echo $rowBillConsumer['billConsumer_id']
-                                                                                                        ?>"><?php
-                                                                                                            echo $rowBillConsumer['year']
-                                                                                                            ?></label>
-                            <td class="msgDesc" data-bs-toggle="modal" data-bs-target="#billConsumer_id<?php
-                                                                                                        echo $rowBillConsumer['billConsumer_id']
-                                                                                                        ?>"><?php
-                                                                                                            echo $rowBillConsumer['status']
-                                                                                                            ?></label>
+                            <td class="subject" data-bs-toggle="modal" data-bs-target="#billConsumer<?php
+                                                                                                    echo $rowBillConsumer['billConsumer_id']
+                                                                                                    ?>">Monthly Due</label>
+                            <td class="msgDesc" data-bs-toggle="modal" data-bs-target="#billConsumer<?php
+                                                                                                    echo $rowBillConsumer['billConsumer_id']
+                                                                                                    ?>"><?php
+                                                                                                        echo $rowBillConsumer['month']
+                                                                                                        ?></label>
+                            <td class="msgDesc" data-bs-toggle="modal" data-bs-target="#billConsumer<?php
+                                                                                                    echo $rowBillConsumer['billConsumer_id']
+                                                                                                    ?>"><?php
+                                                                                                        echo $rowBillConsumer['year']
+                                                                                                        ?></label>
+                            <td class="msgDesc" data-bs-toggle="modal" data-bs-target="#billConsumer<?php
+                                                                                                    echo $rowBillConsumer['billConsumer_id']
+                                                                                                    ?>"><?php
+                                                                                                        echo $rowBillConsumer['status']
+                                                                                                        ?></label>
                         </tr>
                     <?php endwhile; ?>
                     <?php while ($row = $resultComplaints->fetch_assoc()) : ?>
@@ -300,6 +301,50 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billin
     <?php
     require '../marginals/footer2.php'
     ?>
+    <?php while ($row1 = $resultBillConsumer1->fetch_assoc()) : ?>
+        <div class="modal fade" id="billConsumer<?php
+                                                echo $row1['billConsumer_id']
+                                                ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">
+                            Monthly Due
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modalConcernBody">
+                        <table>
+                            <tr>
+                                <input type="hidden" name="concern_id" value="<?php echo $row1['billConsumer_id'] ?>">
+                            </tr>
+                            <tr>
+                                <td>Month:</td>
+                                <td id=""><?php echo $row1['month'] ?></td>
+                            </tr>
+                            <tr>
+                                <td>Year:</td>
+                                <td id=""><?php echo $row1['year'] ?></td>
+                            </tr>
+                            <tr>
+                                <td>Amount:</td>
+                                <td id=""><?php echo $row1['amount'] ?></td>
+                            </tr>
+                            <tr>
+                                <td>Status:</td>
+                                <td id=""><?php echo $row1['status'] ?></td>
+                            </tr>
+                        </table>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endwhile; ?>
     <?php while ($row1 = $resultComplaints1->fetch_assoc()) : ?>
         <div class="modal fade" id="complaintStatus<?php
                                                     echo $row1['concern_id']

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Apr 10, 2023 at 01:53 AM
+-- Generation Time: Apr 10, 2023 at 12:24 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -160,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1193 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1236 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -1345,7 +1345,50 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (1189, 'SV1_Admin', 'updated homeowner Mon Carlo Delima', '2023-04-10 01:40:45'),
 (1190, 'SV1_Admin', 'updated homeowner Mon Carlo Delima', '2023-04-10 01:41:53'),
 (1191, 'SV1_Admin', 'updated homeowner Mon Carlo Delima', '2023-04-10 01:43:22'),
-(1192, 'SV1_Admin', 'updated homeowner Mon Carlo Delima', '2023-04-10 01:51:18');
+(1192, 'SV1_Admin', 'updated homeowner Mon Carlo Delima', '2023-04-10 01:51:18'),
+(1193, 'SV1_Admin', 'logged in', '2023-04-10 07:37:42'),
+(1194, 'SV1_Admin', 'updated homeowner Kyle Andrei Casingal', '2023-04-10 09:45:13'),
+(1195, 'SV1_Admin', 'updated homeowner Kyle Andrei Casingal', '2023-04-10 09:45:32'),
+(1196, 'SV1_Admin', 'logged out', '2023-04-10 09:47:34'),
+(1197, 'Mon Carlo Delima', 'logged in', '2023-04-10 09:47:38'),
+(1198, 'Mon Carlo Delima', 'logged out', '2023-04-10 09:47:44'),
+(1199, 'Mon Carlo Delima', 'logged in', '2023-04-10 09:47:48'),
+(1200, 'Mon Carlo Delima', 'logged out', '2023-04-10 09:51:37'),
+(1201, 'Mon Carlo Delima', 'logged in', '2023-04-10 09:52:28'),
+(1202, 'Mon Carlo Delima', 'logged out', '2023-04-10 10:01:57'),
+(1203, 'Mon Carlo Delima', 'logged in', '2023-04-10 10:02:00'),
+(1204, 'Mon Carlo Delima', 'logged out', '2023-04-10 10:02:02'),
+(1205, 'SV1_Treasurer', 'logged in', '2023-04-10 10:02:04'),
+(1206, 'SV1_Treasurer', 'logged out', '2023-04-10 10:03:24'),
+(1207, 'SV1_Guard', 'logged in', '2023-04-10 10:03:27'),
+(1208, 'SV1_Guard', 'logged out', '2023-04-10 10:03:30'),
+(1209, 'Mon Carlo Delima', 'logged in', '2023-04-10 10:03:34'),
+(1210, 'Mon Carlo Delima', 'logged out', '2023-04-10 10:23:46'),
+(1211, 'SV1_Admin', 'logged in', '2023-04-10 10:23:49'),
+(1212, 'SV1_Admin', 'logged out', '2023-04-10 10:27:35'),
+(1213, 'SV1_Admin', 'logged in', '2023-04-10 10:27:38'),
+(1214, 'SV1_Admin', 'logged out', '2023-04-10 10:29:21'),
+(1215, 'SV1_Secretary', 'logged in', '2023-04-10 10:29:23'),
+(1216, 'SV1_Secretary', 'logged out', '2023-04-10 10:29:58'),
+(1217, 'SV1_Treasurer', 'logged in', '2023-04-10 10:30:02'),
+(1218, 'SV1_Treasurer', 'logged out', '2023-04-10 10:44:21'),
+(1219, 'Mon Carlo Delima', 'logged in', '2023-04-10 10:44:25'),
+(1220, 'Mon Carlo Delima', 'logged out', '2023-04-10 11:01:51'),
+(1221, 'Mon Carlo Delima', 'logged in', '2023-04-10 11:01:55'),
+(1222, 'Mon Carlo Delima', 'logged out', '2023-04-10 11:10:52'),
+(1223, 'SV1_Treasurer', 'logged in', '2023-04-10 11:10:55'),
+(1224, 'Mon Carlo Delima', 'logged in', '2023-04-10 11:19:13'),
+(1225, 'SV1_Treasurer', 'logged out', '2023-04-10 11:38:59'),
+(1226, 'Mon Carlo Delima', 'logged in', '2023-04-10 11:39:02'),
+(1227, 'Mon Carlo Delima', 'logged out', '2023-04-10 11:41:10'),
+(1228, 'Mon Carlo Delima', 'logged in', '2023-04-10 11:41:13'),
+(1229, 'Mon Carlo Delima', 'logged out', '2023-04-10 11:41:20'),
+(1230, 'SV1_Treasurer', 'logged in', '2023-04-10 11:41:25'),
+(1231, 'SV1_Treasurer', 'logged out', '2023-04-10 11:49:50'),
+(1232, 'Kyle Andrei Casingal', 'logged in', '2023-04-10 11:49:54'),
+(1233, 'Kyle Andrei Casingal', 'logged out', '2023-04-10 12:09:50'),
+(1234, 'SV1_Treasurer', 'logged in', '2023-04-10 12:09:53'),
+(1235, 'SV1_Treasurer', 'logged out', '2023-04-10 12:24:20');
 
 -- --------------------------------------------------------
 
@@ -1450,30 +1493,43 @@ CREATE TABLE IF NOT EXISTS `bill_consumer` (
   `billConsumer_id` int(11) NOT NULL AUTO_INCREMENT,
   `billingPeriod_id` int(11) NOT NULL,
   `homeowner_id` int(11) NOT NULL,
+  `transaction_id` int(11) DEFAULT NULL,
   `fullname` varchar(250) NOT NULL,
   `amount` varchar(45) NOT NULL,
   `datetime_paid` datetime DEFAULT NULL,
   `status` varchar(45) NOT NULL,
   PRIMARY KEY (`billConsumer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `bill_consumer`
 --
 
-INSERT INTO `bill_consumer` (`billConsumer_id`, `billingPeriod_id`, `homeowner_id`, `fullname`, `amount`, `datetime_paid`, `status`) VALUES
-(1, 1, 1, 'Mon Carlo Delima', '200', '2023-04-09 15:46:47', 'PAID'),
-(2, 2, 1, 'Mon Carlo Delima', '200', NULL, 'UNPAID'),
-(3, 3, 1, 'Mon Carlo Delima', '200', NULL, 'UNPAID'),
-(4, 1, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID'),
-(5, 2, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID'),
-(6, 3, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID'),
-(7, 4, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID'),
-(8, 5, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID'),
-(9, 6, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID'),
-(10, 7, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID'),
-(11, 8, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID'),
-(12, 9, 2, 'Kyle Andrei Casingal', '500', NULL, 'UNPAID');
+INSERT INTO `bill_consumer` (`billConsumer_id`, `billingPeriod_id`, `homeowner_id`, `transaction_id`, `fullname`, `amount`, `datetime_paid`, `status`) VALUES
+(1, 1, 1, 4, 'Mon Carlo Delima', '200', NULL, 'PAID'),
+(2, 2, 1, 4, 'Mon Carlo Delima', '200', NULL, 'PAID'),
+(3, 3, 1, 4, 'Mon Carlo Delima', '200', NULL, 'PAID'),
+(4, 1, 2, NULL, 'Kyle Andrei Casingal', '500', '2023-04-10 11:45:59', 'PAID'),
+(5, 2, 2, NULL, 'Kyle Andrei Casingal', '500', '2023-04-10 11:45:59', 'PAID'),
+(6, 3, 2, NULL, 'Kyle Andrei Casingal', '500', '2023-04-10 11:45:59', 'PAID'),
+(7, 4, 2, 5, 'Kyle Andrei Casingal', '500', '2023-04-10 12:08:59', 'PAID'),
+(8, 5, 2, 5, 'Kyle Andrei Casingal', '500', '2023-04-10 12:08:59', 'PAID'),
+(9, 6, 2, 5, 'Kyle Andrei Casingal', '500', '2023-04-10 12:08:59', 'PAID'),
+(10, 7, 2, 6, 'Kyle Andrei Casingal', '500', '2023-04-10 12:09:13', 'PAID'),
+(11, 8, 2, 6, 'Kyle Andrei Casingal', '500', '2023-04-10 12:09:13', 'PAID'),
+(12, 9, 2, 6, 'Kyle Andrei Casingal', '500', '2023-04-10 12:09:13', 'PAID'),
+(13, 1, 16, 9, 'Janwel Castillo', '200', '2023-04-10 12:10:51', 'PAID'),
+(14, 2, 16, 9, 'Janwel Castillo', '200', '2023-04-10 12:10:51', 'PAID'),
+(15, 3, 16, 9, 'Janwel Castillo', '200', '2023-04-10 12:10:51', 'PAID'),
+(16, 4, 16, 9, 'Janwel Castillo', '200', '2023-04-10 12:10:51', 'PAID'),
+(17, 5, 16, 10, 'Janwel Castillo', '200', '2023-04-10 12:12:03', 'PAID'),
+(18, 6, 16, 10, 'Janwel Castillo', '200', '2023-04-10 12:12:03', 'PAID'),
+(19, 7, 16, 10, 'Janwel Castillo', '200', '2023-04-10 12:12:03', 'PAID'),
+(20, 8, 16, 10, 'Janwel Castillo', '200', '2023-04-10 12:12:03', 'PAID'),
+(21, 9, 16, 10, 'Janwel Castillo', '200', '2023-04-10 12:12:03', 'PAID'),
+(22, 10, 16, NULL, 'Janwel Castillo', '200', NULL, 'UNPAID'),
+(23, 11, 16, NULL, 'Janwel Castillo', '200', NULL, 'UNPAID'),
+(24, 12, 16, NULL, 'Janwel Castillo', '200', NULL, 'UNPAID');
 
 -- --------------------------------------------------------
 
@@ -1487,7 +1543,7 @@ CREATE TABLE IF NOT EXISTS `block` (
   `subdivision_id` int(11) NOT NULL,
   `block` varchar(10) NOT NULL,
   PRIMARY KEY (`block_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `block`
@@ -1498,7 +1554,10 @@ INSERT INTO `block` (`block_id`, `subdivision_id`, `block`) VALUES
 (2, 1, '2'),
 (3, 3, '3'),
 (4, 1, '3'),
-(5, 3, '1');
+(5, 3, '1'),
+(6, 2, '3'),
+(8, 4, '1'),
+(9, 2, '1');
 
 -- --------------------------------------------------------
 
@@ -1564,7 +1623,7 @@ CREATE TABLE IF NOT EXISTS `homeowner_profile` (
 --
 
 INSERT INTO `homeowner_profile` (`homeowner_id`, `last_name`, `first_name`, `middle_name`, `suffix`, `sex`, `street`, `subdivision`, `barangay`, `business_address`, `occupation`, `email_address`, `birthdate`, `mobile_number`, `employer`, `vehicle_registration`, `display_picture`) VALUES
-(1, 'Delima', 'Mon Carlo', 'Zonio', 'N/A', 'Male', 'Lot 2 Block 1', 'Sunnyvale 1', 'Pantok', 'N/A', 'N/A', 'dmoncarlo6@gmail.com', '2002-10-06', '09157189636', 'N/A', 'LTO 5678', 'hdversion.png'),
+(1, 'Delima', 'Mon Carlo', 'Zonio', 'N/A', 'Male', 'Lot 2 Block 2', 'Sunnyvale 1', 'Pantok', 'N/A', 'N/A', 'dmoncarlo6@gmail.com', '2002-10-06', '09157189636', 'N/A', 'LTO 5678', 'hdversion.png'),
 (2, 'Casingal', 'Kyle Andrei', 'Morillo', 'N/A', 'Male', 'Lot 1 Block 1', 'Sunnyvale 3', 'Palangoy', 'N/A', 'N/A', 'kylecasingal36@gmail.com', '2001-09-02', '09123456789', 'N/A', 'N/A', '316495100_870517180796101_3304939871151226288_n.jpg'),
 (3, 'Flores', 'Jeune Paolus', 'Damaso', 'N/A', 'Male', 'Lot 1 Block 3', 'Sunnyvale 2', 'Pantok', 'N/A', 'N/A', 'floresjeunepaolus@gmail.com', '2002-06-16', '09123123123', 'Inya', 'N/A', '316156823_3360766927514073_2770550987709432568_n.jpg'),
 (4, 'Doe', 'John', 'N/A', 'Jr.', 'Male', 'Lot 2 Block 4', 'Sunnyvale 3', 'Palangoy', 'N/A', 'Programmer', 'dmoncarlo@gmail.com', '2002-10-06', '09157189636', 'Mark Zuckerberg', 'N/A', 'default.png'),
@@ -1599,14 +1658,18 @@ CREATE TABLE IF NOT EXISTS `lot` (
   `block_id` int(11) NOT NULL,
   `lot` varchar(10) NOT NULL,
   PRIMARY KEY (`lot_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `lot`
 --
 
 INSERT INTO `lot` (`lot_id`, `block_id`, `lot`) VALUES
-(1, 1, '2');
+(1, 1, '2'),
+(2, 3, '1'),
+(3, 7, '2'),
+(4, 2, '2'),
+(5, 5, '1');
 
 -- --------------------------------------------------------
 
@@ -1795,21 +1858,27 @@ DROP TABLE IF EXISTS `transaction`;
 CREATE TABLE IF NOT EXISTS `transaction` (
   `transaction_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `renter_name` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `total_cost` int(11) DEFAULT NULL,
   `payment_proof` varchar(255) DEFAULT NULL,
+  `transaction_type` varchar(50) NOT NULL,
   `status` varchar(10) NOT NULL,
   PRIMARY KEY (`transaction_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `transaction`
 --
 
-INSERT INTO `transaction` (`transaction_id`, `user_id`, `renter_name`, `total_cost`, `payment_proof`, `status`) VALUES
-(1, 1, 'Mon Carlo Delima', 1500, '315887907_1137649846869408_655406644278059076_n.png', 'Approved'),
-(2, 48, 'SV1_Treasurer', 180, '315887907_1137649846869408_655406644278059076_n.png', 'Approved'),
-(3, 1, 'Mon Carlo Delima', 2150, '328148270_726681382138928_1391919010667224674_n.png', 'Approved');
+INSERT INTO `transaction` (`transaction_id`, `user_id`, `name`, `total_cost`, `payment_proof`, `transaction_type`, `status`) VALUES
+(1, 1, 'Mon Carlo Delima', 1500, '315887907_1137649846869408_655406644278059076_n.png', 'Amenity Renting', 'Approved'),
+(2, 48, 'SV1_Treasurer', 180, '315887907_1137649846869408_655406644278059076_n.png', 'Amenity Renting', 'Approved'),
+(3, 1, 'Mon Carlo Delima', 2150, '328148270_726681382138928_1391919010667224674_n.png', 'Amenity Renting', 'Approved'),
+(4, 1, 'Mon Carlo Delima', 600, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid'),
+(5, 55, 'Kyle Andrei Casingal', 1500, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid'),
+(6, 55, 'Kyle Andrei Casingal', 1500, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid'),
+(9, 48, 'SV1_Treasurer', 800, NULL, 'Monthly Dues', 'Paid'),
+(10, 48, 'SV1_Treasurer', 1000, NULL, 'Monthly Dues', 'Paid');
 
 -- --------------------------------------------------------
 

@@ -169,7 +169,13 @@
                     </li>
                 <?php } ?>
                 <?php if ($row['user_type'] != 'Secretary') { ?>
-                    <li id="dues" onclick="location.href='../modules/treasurerPanel.php'">Monthly Dues</li>
+                    <button type="button" class="btnSettings" data-bs-toggle="dropdown" aria-expanded="false">
+                        Monthly Dues <i class="fa-sharp fa-solid fa-chevron-right"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li id="dues" onclick="location.href='../modules/treasurerPanel.php'">Monthly Dues</li>
+                        <li id="Amenities" onclick="location.href='../modules/monthlyDuesTransaction.php'">Monthly Dues Transaction</li>
+                    </ul>
                 <?php } ?>
                 <?php if ($row['user_type'] != 'Treasurer') { ?>
                     <li id="reports">

@@ -4,7 +4,7 @@ if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin')
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
-$resultTransaction = $con->query("SELECT * FROM transaction");
+$resultTransaction = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Amenity Renting'");
 $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction WHERE amenity_renting.transaction_id = transaction.transaction_id");
 ?>
 <!DOCTYPE html>
@@ -468,7 +468,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
                                                                                                     ?>"><?php echo $row['transaction_id'] ?></td> -->
                 <td class="renter-name" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
                                                                                               echo $row['transaction_id']
-                                                                                              ?>"><?php echo $row['renter_name'] ?></td>
+                                                                                              ?>"><?php echo $row['name'] ?></td>
                 <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
                                                                                               echo $row['transaction_id']
                                                                                               ?>"><?php echo $row['total_cost'] ?></td>
@@ -503,7 +503,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
                 </tr>
                 <tr>
                   <td style="font-weight: bold;">Renter Name: </td>
-                  <td id="" colspan="5"><?php echo $row1['renter_name'] ?></td>
+                  <td id="" colspan="5"><?php echo $row1['name'] ?></td>
                 </tr>
                 <tr>
                   <td id="" style="font-weight: bold;">Subdivision</td>

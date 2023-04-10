@@ -1153,7 +1153,7 @@ if (isset($_POST['checkout'])) {
     $sql = "UPDATE amenity_renting SET cart = 'Pending', transaction_id = $max + 1 WHERE cart='Yes' AND user_id= '" . $_SESSION['user_id'] . "'";
     $result = mysqli_query($con, $sql);
 
-    $sql1 = "INSERT INTO transaction (user_id, renter_name, total_cost, payment_proof, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', '$fileName', 'Pending')";
+    $sql1 = "INSERT INTO transaction (user_id, name, total_cost, payment_proof, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', '$fileName', 'Pending')";
     $result1 = mysqli_query($con, $sql1);
   }
 }
@@ -1434,18 +1434,6 @@ if (isset($_POST['test'])) {
 }
 
 
-//UPDATING MONTHLY DUES BILL UNPAD TO PAID
-
-if (isset($_POST['payDues'])) {
-  if (isset($_POST['checkbox'])) {
-    foreach ($_POST['checkbox'] as $billConsumer_id) {
-
-      $sql = "UPDATE bill_consumer SET status='PAID', datetime_paid = NOW() WHERE billConsumer_id = '$billConsumer_id'";
-      $result = mysqli_query($con, $sql);
-    }
-  }
-}
-
 // ADMIN MANUAL ARCHIVE POST BUTTON
 if (isset($_GET['post_archive'])) {
   $post_id = $_GET['post_archive'];
@@ -1517,4 +1505,75 @@ if (isset($_POST['removeVehicle'])) {
 
   $sql = "DELETE FROM vehicle_monitoring WHERE vehicle_monitoring_id = '$vehicle_monitoring_id' ";
   $result = mysqli_query($con, $sql);
+}
+
+// MONTHLY DUES PAYMENT CHECKOUT
+
+if (isset($_POST['checkoutMonthlyDues'])) {
+  $targetDir = '../media/paymentProof/';
+  $fileName = '' . $_FILES['image']['name'];
+  $targetFilePath = $targetDir . $fileName;
+
+  $resultID = $con->query("SELECT MAX(transaction_id) AS max FROM transaction");
+  $rowID = $resultID->fetch_assoc();
+  $max = $rowID['max'];
+
+  $resultUserID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+  $rowUserID = $resultUserID->fetch_assoc();
+  $homeowner_id = $rowUserID['user_homeowner_id'];
+
+  $total_cost = 0;
+  if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
+    if (isset($_POST['checkbox'])) {
+      foreach ($_POST['checkbox'] as $billConsumer_id) {
+
+        $sql = "UPDATE bill_consumer SET status='PENDING', transaction_id = $max + 1, datetime_paid = NOW() WHERE billConsumer_id = '$billConsumer_id'";
+        $result = mysqli_query($con, $sql);
+
+        $resultSumTotal = $con->query("SELECT amount FROM bill_consumer WHERE billConsumer_id = '$billConsumer_id'");
+        $rowSumTotal = $resultSumTotal->fetch_assoc();
+
+        $total_cost += $rowSumTotal['amount'];
+      }
+    }
+
+    $sql1 = "INSERT INTO transaction (user_id, name, total_cost, payment_proof, transaction_type, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', '$fileName', 'Monthly Dues', 'Pending')";
+    $result1 = mysqli_query($con, $sql1);
+  }
+}
+
+// MONTHLY DUES PAYMENT APPROVAL
+
+if (isset($_POST['approveMonthlyDuesPayment'])) {
+  $transaction_id = $_POST['transaction_id'];
+
+  $sql = "UPDATE transaction, bill_consumer SET transaction.status = 'Paid', bill_consumer.status = 'PAID' WHERE transaction.transaction_id= '$transaction_id' AND bill_consumer.transaction_id = '$transaction_id'";
+  $result = mysqli_query($con, $sql);
+}
+
+//TREASURER MONTHLY DUES PAID
+if (isset($_POST['payDues'])) {
+  $resultID = $con->query("SELECT MAX(transaction_id) AS max FROM transaction");
+  $rowID = $resultID->fetch_assoc();
+  $max = $rowID['max'];
+
+  $resultUserID = $con->query("SELECT * FROM homeowner WHERE user_id = '" . $_SESSION['user_id'] . "'");
+  $rowUserID = $resultUserID->fetch_assoc();
+  $homeowner_id = $rowUserID['user_homeowner_id'];
+
+  $total_cost = 0;
+  if (isset($_POST['checkbox'])) {
+    foreach ($_POST['checkbox'] as $billConsumer_id) {
+
+      $sql = "UPDATE bill_consumer SET status='PAID', datetime_paid = NOW(), transaction_id = $max + 1 WHERE billConsumer_id = '$billConsumer_id'";
+      $result = mysqli_query($con, $sql);
+
+      $resultSumTotal = $con->query("SELECT amount FROM bill_consumer WHERE billConsumer_id = '$billConsumer_id'");
+      $rowSumTotal = $resultSumTotal->fetch_assoc();
+      $total_cost += $rowSumTotal['amount'];
+    }
+    
+    $sql1 = "INSERT INTO transaction (user_id, name, total_cost, payment_proof, transaction_type, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', NULL, 'Monthly Dues', 'Paid')";
+    $result1 = mysqli_query($con, $sql1);
+  }
 }

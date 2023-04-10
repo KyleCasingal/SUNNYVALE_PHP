@@ -184,7 +184,7 @@ $resultBilling = $con->query(
     background-color: rgb(170, 192, 175);
 
   }
-  
+
 
   .sideBar {
     background-color: rgb(248, 245, 227);

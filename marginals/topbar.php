@@ -8,6 +8,7 @@ $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " 
 $result1 = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row1 = $result1->fetch_assoc();
 $homeowner_id_profile = $row1['user_homeowner_id'];
+$fullname_monthlyDues = $row1['full_name'];
 $user_type = $row1['user_type'];
 $resultSubdivision = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $rowSubdivision = $resultSubdivision->fetch_assoc();

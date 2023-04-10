@@ -82,6 +82,7 @@
                 <?php
                 if ($row['user_type'] == 'Homeowner') {
                     echo "<li id='inbox' onclick=" . '"' . "location.href='../modules/inboxPanel.php'" . '"' . ">Inbox</li>";
+                    echo "<li id='inbox' onclick=" . '"' . "location.href='../modules/monthlyDuesHomeowner.php'" . '"' . ">Monthly Dues</li>";
                 }
                 ?>
             </ul>

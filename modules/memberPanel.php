@@ -695,6 +695,7 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billin
               <tr>
                 <th>Month</th>
                 <th>Year</th>
+                <th>Amount</th>
                 <th>Date Paid</th>
               </tr>
             </thead>
@@ -705,6 +706,7 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billin
             echo "<tr>
               <td>" . $rowBillConsumer['month'] . "</td>
               <td>" .  $rowBillConsumer['year'] . "</td>
+              <td>" .  $rowBillConsumer['amount'] . "</td>
               <td>" . $phptime . "</td>";
           endwhile;
           echo "</tr>
