@@ -1145,7 +1145,7 @@ if (isset($_POST['checkout'])) {
   $resultUserID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $rowUserID = $resultUserID->fetch_assoc();
 
-  $resultSumTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting WHERE user_id = '" . $_SESSION['user_id'] . "'");
+  $resultSumTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting WHERE user_id = '" . $_SESSION['user_id'] . "' AND cart='Yes'");
   $rowSumTotal = $resultSumTotal->fetch_assoc();
   $total_cost = $rowSumTotal['total_cost'];
 
@@ -1153,7 +1153,7 @@ if (isset($_POST['checkout'])) {
     $sql = "UPDATE amenity_renting SET cart = 'Pending', transaction_id = $max + 1 WHERE cart='Yes' AND user_id= '" . $_SESSION['user_id'] . "'";
     $result = mysqli_query($con, $sql);
 
-    $sql1 = "INSERT INTO transaction (user_id, name, total_cost, payment_proof, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', '$fileName', 'Pending')";
+    $sql1 = "INSERT INTO transaction (user_id, name, total_cost, payment_proof, transaction_type, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', '$fileName', 'Amenity Renting', 'Pending')";
     $result1 = mysqli_query($con, $sql1);
   }
 }

@@ -7,11 +7,14 @@ if ($_SESSION['user_type'] != 'Homeowner') {
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
+$user_idAmenityRenting = $row['user_id'];
 $homeowner_id = $row['homeowner_id'];
 $resultComplaints = $con->query("SELECT * FROM concern WHERE complainant_homeowner_id = '$homeowner_id' OR complainee_homeowner_id = '$homeowner_id' AND status = 'Processing' ORDER BY datetime DESC");
 $resultComplaints1 = $con->query("SELECT * FROM concern WHERE complainant_homeowner_id = '$homeowner_id' OR complainee_homeowner_id = '$homeowner_id' AND status = 'Processing' ORDER BY datetime DESC");
 $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id  WHERE homeowner_id = '$homeowner_id' AND status = 'UNPAID' || status = 'PENDING' ORDER BY billing_period.billingPeriod_id DESC");
 $resultBillConsumer1 = $con->query("SELECT * FROM bill_consumer INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id  WHERE homeowner_id = '$homeowner_id' AND status = 'UNPAID' || status = 'PENDING' ORDER BY billing_period.billingPeriod_id DESC");
+$resultTransaction = $con->query("SELECT * FROM transaction WHERE user_id = '$user_idAmenityRenting' AND (status = 'Pending' OR status = 'Approved') AND transaction_type = 'Amenity Renting'");
+$resultTransactionAmenity = $con->query("SELECT * FROM amenity_renting WHERE user_id = '$user_idAmenityRenting' AND (cart = 'Pending' OR cart = 'Approved')");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -252,6 +255,23 @@ $resultBillConsumer1 = $con->query("SELECT * FROM bill_consumer INNER JOIN billi
             <label class="inboxTitle">Messages</label>
             <div class="inboxContainer">
                 <table class="tblMessage">
+                    <?php while ($rowTransaction = $resultTransaction->fetch_assoc()) : ?>
+                        <tr class="trInbox">
+                            <td class="subject" data-bs-toggle="modal" data-bs-target="#transactionAmenity<?php
+                                                                                                            echo $rowTransaction['transaction_id']
+                                                                                                            ?>">Transaction</label>
+                            <td class="subject" data-bs-toggle="modal" data-bs-target="#transactionAmenity<?php
+                                                                                                            echo $rowTransaction['transaction_id']
+                                                                                                            ?>"><?php
+                                                                                                                echo $rowTransaction['transaction_type']
+                                                                                                                ?></label>
+                            <td class="msgDesc" data-bs-toggle="modal" data-bs-target="#transactionAmenity<?php
+                                                                                                            echo $rowTransaction['transaction_id']
+                                                                                                            ?>"><?php
+                                                                                                                echo $rowTransaction['status']
+                                                                                                                ?></label>
+                        </tr>
+                    <?php endwhile; ?>
                     <?php while ($rowBillConsumer = $resultBillConsumer->fetch_assoc()) : ?>
                         <tr class="trInbox">
                             <td class="subject" data-bs-toggle="modal" data-bs-target="#billConsumer<?php
@@ -301,6 +321,64 @@ $resultBillConsumer1 = $con->query("SELECT * FROM bill_consumer INNER JOIN billi
     <?php
     require '../marginals/footer2.php'
     ?>
+    <?php while ($row1 = $resultTransactionAmenity->fetch_assoc()) : ?>
+        <div class="modal fade" id="transactionAmenity<?php
+                                                        echo $row1['transaction_id']
+                                                        ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <?php $resultAmenityRenting2 = $con->query("SELECT * FROM amenity_renting, amenity_purpose WHERE amenity_renting.transaction_id = " . $row1['transaction_id'] . " AND amenity_renting.amenity_purpose = amenity_purpose.amenity_purpose_id"); ?>
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">
+                            Amenity Renting
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modalConcernBody">
+                        <table>
+                            <tr>
+                                <input type="hidden" name="transaction_id" value="<?php echo $row1['transaction_id'] ?>">
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">Renter Name: </td>
+                                <td id="" colspan="5"><?php echo $row1['renter_name'] ?></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">Status: </td>
+                                <td id="" colspan="5"><?php echo $row1['cart'] ?></td>
+                            </tr>
+                            <tr>
+                                <td id="" style="font-weight: bold;">Subdivision</td>
+                                <td id="" style="font-weight: bold;">Amenity</td>
+                                <td id="" style="font-weight: bold;">Purpose</td>
+                                <td id="" style="font-weight: bold;">From</td>
+                                <td id="" style="font-weight: bold;">To</td>
+                                <td id="" style="font-weight: bold;">Cost</td>
+                            </tr>
+                            <?php while ($row2 = $resultAmenityRenting2->fetch_assoc()) : ?>
+                                <input type="hidden" name="concern_id" value="<?php echo $row2['amenity_renting_id'] ?>">
+                                <tr>
+                                    <td id=""><?php echo $row2['subdivision_name'] ?></td>
+                                    <td id=""><?php echo $row2['amenity_name'] ?></td>
+                                    <td id=""><?php echo $row2['amenity_purpose'] ?></td>
+                                    <td id=""><?php $datetime = strtotime($row2['date_from']);
+                                                echo $phptime = date("m/d/y g:i A", $datetime); ?></td>
+                                    <td id=""><?php $datetime = strtotime($row2['date_to']);
+                                                echo $phptime = date("m/d/y g:i A ", $datetime); ?></td>
+                                    <td id=""><?php echo $row2['cost'] ?></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </table>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endwhile; ?>
     <?php while ($row1 = $resultBillConsumer1->fetch_assoc()) : ?>
         <div class="modal fade" id="billConsumer<?php
                                                 echo $row1['billConsumer_id']
