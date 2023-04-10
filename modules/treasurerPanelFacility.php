@@ -505,8 +505,13 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
       $("#date1").removeAttr("required");
       $("#from1").removeAttr("required");
       $("#from2").removeAttr("required");
+      $("#from3").removeAttr("required");
       $("#to1").removeAttr("required");
       $("#to2").removeAttr("required");
+      $("#to3").removeAttr("required");
+      $("#subdivision_id").removeAttr("required");
+      $("#amenity_id").removeAttr("required");
+      $("#purpose_id").removeAttr("required");
       $("#image").removeAttr("required");
     });
   });
