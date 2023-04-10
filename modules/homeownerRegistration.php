@@ -8,6 +8,11 @@ $res = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $
 $row = $res->fetch_assoc();
 $result = $con->query("SELECT * FROM homeowner_profile WHERE email_address != '' ORDER BY homeowner_id ASC ") or die($mysqli->error);
 $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC") or die($mysqli->error);
+$resultLot_selectBlock = $con->query("SELECT * FROM lot INNER JOIN block ON lot.block_id = block.block_id INNER JOIN subdivision ON block.subdivision_id = subdivision.subdivision_id ORDER BY block.block") or die($mysqli->error);
+if (isset($_GET['homeowner_id'])) {
+    $resultUpdateBlock = $con->query("SELECT * FROM block WHERE subdivision_id ='$subdivision_id' ORDER BY block ASC") or die($mysqli->error);
+    $resultUpdateLot = $con->query("SELECT * FROM lot WHERE block_id ='$block_id' ORDER BY lot ASC") or die($mysqli->error);
+}
 ?>
 
 <!DOCTYPE html>
@@ -505,11 +510,11 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                                 <td>Residence Address:</td>
                                 <td>
                                     <select name="subdivision" id="subdivision_id_lot" required>
-                                        <option >Select Subdivision...</option>
+                                        <option>Select Subdivision...</option>
                                         <?php while ($row = $resultSubd->fetch_assoc()) : ?>
                                             <option value="<?php echo $row['subdivision_id'] ?>" <?php
                                                                                                     if (isset($_GET['homeowner_id'])) {
-                                                                                                        if ($subdivision_name == $row['subdivision_name']) {
+                                                                                                        if ($subdivision_id == $row['subdivision_id']) {
                                                                                                             echo 'selected="selected"';
                                                                                                         }
                                                                                                     }
@@ -520,12 +525,40 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                                 <td>Block:</td>
                                 <td>
                                     <select name="block" id="block_id" required>
-                                        <option value="">Select Subdivision First...</option>
+                                        <?php
+                                        if ($homeowner_id ?? '') {
+                                            while ($row = $resultUpdateBlock->fetch_assoc()) :
+                                                echo '<option value="' . $row['block_id'] . '"';
+                                                if (isset($_GET['homeowner_id'])) {
+                                                    if ($block_id == $row['block_id']) {
+                                                        echo 'selected="selected"';
+                                                    }
+                                                }
+                                                echo '>' . $row['block'] . '</option>';
+                                            endwhile;
+                                        } else {
+                                            echo "<option>Select Subdivision First...</option>";
+                                        }
+                                        ?>
                                     </select>
                                 </td>
                                 <td>Lot:</td>
                                 <td> <select name="lot" id="lot_id" required>
-                                        <option value="">Select Block First...</option>
+                                        <?php
+                                        if ($homeowner_id ?? '') {
+                                            while ($row = $resultUpdateLot->fetch_assoc()) :
+                                                echo '<option value="' . $row['lot_id'] . '"';
+                                                if (isset($_GET['homeowner_id'])) {
+                                                    if ($lot_id == $row['lot_id']) {
+                                                        echo 'selected="selected"';
+                                                    }
+                                                }
+                                                echo '>' . $row['lot'] . '</option>';
+                                            endwhile;
+                                        } else {
+                                            echo "<option>Select Block First...</option>";
+                                        }
+                                        ?>
                                     </select>
                                 </td>
                             </tr>

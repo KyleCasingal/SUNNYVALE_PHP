@@ -6,13 +6,16 @@ if ($_SESSION['user_type'] != 'Admin') {
 }
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultSubdivision_selectBlock = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
+$resultSubdivision_selectBlock = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
 $resultSubdivision_selectLot = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
 $resultSubdivision = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
 $resultSubdivision_table = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
 $resultBlock = $con->query("SELECT * FROM block INNER JOIN subdivision ON block.subdivision_id = subdivision.subdivision_id ORDER BY subdivision.subdivision_name") or die($mysqli->error);
-$resultLot = $con->query("SELECT * FROM lot INNER JOIN block ON lot.block_id = block.block_id INNER JOIN subdivision ON block.subdivision_id = subdivision.subdivision_id ORDER BY block.block") or die($mysqli->error);
+$resultLot = $con->query("SELECT * FROM lot INNER JOIN block ON lot.block_id = block.block_id INNER JOIN subdivision ON block.subdivision_id = subdivision.subdivision_id ORDER BY subdivision.subdivision_name") or die($mysqli->error);
 $resultLot_selectBlock = $con->query("SELECT * FROM lot INNER JOIN block ON lot.block_id = block.block_id INNER JOIN subdivision ON block.subdivision_id = subdivision.subdivision_id ORDER BY block.block") or die($mysqli->error);
+if (isset($_GET['lot_id'])) {
+    $resultUpdateBlock = $con->query("SELECT * FROM block WHERE subdivision_id ='$subdivision_id_lot' ORDER BY block ASC") or die($mysqli->error);
+}
 ?>
 
 <!DOCTYPE html>
@@ -687,7 +690,7 @@ $resultLot_selectBlock = $con->query("SELECT * FROM lot INNER JOIN block ON lot.
                                     <select name="block_id" id="block_id" required>
                                         <?php
                                         if ($lot_id ?? '') {
-                                            while ($row = $resultLot_selectBlock->fetch_assoc()) :
+                                            while ($row = $resultUpdateBlock->fetch_assoc()) :
                                                 echo '<option value="' . $row['block_id'] . '"';
                                                 if (isset($_GET['lot_id'])) {
                                                     if ($block_id == $row['block_id']) {
@@ -798,7 +801,7 @@ $resultLot_selectBlock = $con->query("SELECT * FROM lot INNER JOIN block ON lot.
                         <?php while ($row = $resultLot->fetch_assoc()) : ?>
                             <tr>
                                 <td>
-                                    <a href="settingsSubdivision.php?lot_id=<?php echo $row['subdivision_id']; ?>#subdivisionLot" class="btnEdit">Edit</a>
+                                    <a href="settingsSubdivision.php?lot_id=<?php echo $row['lot_id']; ?>#subdivisionLot" class="btnEdit">Edit</a>
                                 </td>
                                 <td><?php echo $row['subdivision_name'] ?></td>
                                 <td><?php echo $row['block'] ?></td>

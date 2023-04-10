@@ -360,10 +360,19 @@ if (isset($_GET['homeowner_id'])) {
     $last_name = $row['last_name'];
     $suffix = $row['suffix'];
     $street = $row['street'];
+    $lot = substr($street, 4, 1);
+    $block = substr($street, 12, 1);
+
+    $resultLot = $con->query("SELECT * FROM lot INNER JOIN block ON lot.block_id = block.block_id WHERE block.block = '$block' AND lot.lot = '$lot'") or die($mysqli->error);
+    $rowLot = $resultLot->fetch_assoc();
+    $lot_id = $rowLot['lot_id'];
+    $block_id = $rowLot['block_id'];
+
     $subdivision_name = $row['subdivision'];
     $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '$subdivision_name'");
     $rowSubdivision = $resultSubdivision->fetch_assoc();
-    $subdivision = $rowSubdivision['subdivision_id'];
+    $subdivision_id = $rowSubdivision['subdivision_id'];
+
     $business_address = $row['business_address'];
     $occupation = $row['occupation'];
     $employer = $row['employer'];
@@ -1333,7 +1342,7 @@ if (isset($_POST['billAnnual'])) {
       WHERE NOT EXISTS (SELECT billingPeriod_id, homeowner_id  FROM bill_consumer WHERE billingPeriod_id = '$x' AND homeowner_id = '$homeowner_id_array[$i]')";
 
 
-      
+
       $result = mysqli_query($con, $sql);
       $i++;
     }
