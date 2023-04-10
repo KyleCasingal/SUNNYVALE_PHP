@@ -8,6 +8,7 @@
   <meta name="theme-color" content="#000000" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <title>SUNNYVALE</title>
 </head>
@@ -189,6 +190,39 @@
   .privacy-policy p {
     text-align: justify;
     text-justify: inter-word;
+  }
+
+  .dev-img {
+    max-width: 10vw;
+    max-height: 10vw;
+  }
+
+  .card {
+    background-color: rgb(255, 255, 255, 0);
+    backdrop-filter: blur(5px);
+  }
+
+  .tbl-devs {
+    width: 100%;
+    /* table-layout: fixed; */
+  }
+
+  .tbl-devs td {
+    padding: 2vw
+  }
+
+  .tbl-dev-info tr td:last-child {
+    width: 1%;
+    height: 1%;
+    white-space: nowrap;
+    padding: 0;
+    margin: 0;
+  }
+
+  .fa-brands {
+    cursor: pointer;
+    color: black;
+    font-size: 2.5vw;
   }
 </style>
 
@@ -604,14 +638,83 @@
   </div>
 
   <div class="modal fade" id="developersModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Developers</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          devs
+          <table class="tbl-devs">
+            <td>
+              <div class="card card-dev" style="width: 18rem;">
+                <img src="./media/content-images/mon.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <p class="card-title">Mon Carlo Delima</p>
+                  <p class="card-subtext">Back end developer</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="card card-dev" style="width: 18rem;">
+                <img src="./media/content-images/pao.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <p class="card-title">Jeune Paolus Flores</p>
+                  <p class="card-subtext">Back end developer</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="card card-dev" style="width: 18rem;">
+                <img src="./media/content-images/kyle.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <p class="card-title">Kyle Andrei Casingal</p>
+                  <p class="card-subtext">Front end developer</p>
+                </div>
+              </div>
+            </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="card card-dev" style="width: 18rem;">
+                  <img src="./media/content-images/krish.png" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <p class="card-title">Krishtalene Bendaña</p>
+                    <p class="card-subtext">Designer</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <table class="tbl-dev-info">
+                  <tr>
+                    <td colspan="3">Email: SoLunaIT@gmail.com</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3">Telephone: +63-280-555-6872</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3">Website: www.SoLunaIT.io</td>
+                  </tr>
+                  <tr>
+                    <td><i class="fa-brands fa-facebook-f"></i></td>
+                    <td><i class="fa-brands fa-twitter"></i></td>
+                    <td><i class="fa-brands fa-github-alt"></i></td>
+                  </tr>
+
+
+                </table>
+              </td>
+              <td>
+                <div class="card card-dev" style="width: 18rem;">
+                  <img src="./media/content-images/marco.png" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <p class="card-title">Marco Ivan Sta. Maria</p>
+                    <p class="card-subtext">Database Engineer</p>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
