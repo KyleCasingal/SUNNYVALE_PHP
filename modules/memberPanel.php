@@ -107,6 +107,7 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billin
   }
 
   .editBtn {
+    border: 1px solid red;
     width: vw;
     cursor: pointer;
     text-align: right;
@@ -580,7 +581,11 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billin
   }
 
   .change-password {
-    width: 100px;
+    color: white;
+    border: none;
+    border-radius: 2vw;
+    background-color: lightcoral;
+    width: 12vw;
     height: 50px;
   }
 
@@ -673,18 +678,19 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billin
               <tr>
               <td class='lbl'>Vehicle Registration:</td>
               <td class='data'>" . $row['vehicle_registration'] . "</td>
+              <td class='editBtn'><button class='change-password' type='button' data-bs-toggle='modal' data-bs-target='#editPassword'>Change password <i class='fa-solid fa-lock'></i></button></td>
             </tr>";
               }
               ?>
             </tbody>
           </table>
-          <div class="button-area">
+          <!-- <div class="button-area">
             <?php
             if ($user_type == 'Homeowner') {
-              echo "<button class='change-password' type='button' data-bs-toggle='modal' data-bs-target='#editPassword'>Change password</button>";
+              echo "<button class='change-password' type='button' data-bs-toggle='modal' data-bs-target='#editPassword'>Change password <i class='fa-solid fa-lock'></i></button>";
             }
             ?>
-          </div>
+          </div> -->
         </div>
         <?php
         if ($user_type == 'Homeowner') {
@@ -904,7 +910,7 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billin
   </form>
   <form action="" method="post">
     <div class="modal fade" id="editPassword" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog modal-xl">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel">Change Password</h5>
@@ -924,6 +930,9 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billin
                 <tr>
                   <td>Confirm Password:</td>
                   <td><input type="text" name="confirmPassword"></td>
+
+                </tr>
+                <tr>
                   <td>
                     <button data-bs-toggle="modal" type="button" class="btnSubmitReg savePassword">
                       Save

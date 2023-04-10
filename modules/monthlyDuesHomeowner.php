@@ -167,7 +167,13 @@ $resultBilling = $con->query(
   }
 
   .Homeowner-table {
+    border: none !important;
     width: 100%;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .Homeowner-table th{
+    border: none !important;
     font-family: 'Poppins', sans-serif;
   }
 
@@ -211,6 +217,25 @@ $resultBilling = $con->query(
     font-size: max(1.5vw, min(10px));
     cursor: pointer;
     border-bottom: 1px solid lightgray;
+  }
+
+  .upload {
+    text-align: center;
+    background-color: rgb(248, 186, 55);
+    border: 0;
+    padding: 0.5vw;
+    max-width: 50vw;
+    width: 15vw;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.5vw;
+    color: white;
+    border-radius: 0.8vw;
+    cursor: pointer;
+    margin-bottom: 1vw;
+  }
+
+  .upload:hover {
+    background-color: rgb(253, 200, 86);
   }
 </style>
 
