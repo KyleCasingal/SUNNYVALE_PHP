@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Apr 10, 2023 at 12:24 PM
+-- Generation Time: Apr 10, 2023 at 05:02 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `amenity_renting` (
   `cost` int(11) DEFAULT NULL,
   `cart` varchar(10) NOT NULL,
   PRIMARY KEY (`amenity_renting_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenity_renting`
@@ -117,6 +117,7 @@ INSERT INTO `amenity_renting` (`amenity_renting_id`, `transaction_id`, `user_id`
 (14, 1, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '3', '2023-02-15 09:00:00', '2023-02-15 12:00:00', 150, 'Approved'),
 (15, 1, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-16 18:00:00', '2023-02-16 21:00:00', 450, 'Approved'),
 (16, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', NULL, NULL, NULL, 'Removed'),
+(26, 11, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Swimming Pool', '5', '2023-04-10 08:00:00', '2023-04-10 09:00:00', 50, 'Pending'),
 (20, NULL, 48, 'SV1_Treasurer', 'Sunnyvale 1', 'Court', '3', NULL, NULL, NULL, 'Removed'),
 (25, 3, 1, 'Mon Carlo Delima', 'Sunnyvale 3', 'Clubhouse', '8', '2023-04-15 01:00:00', '2023-04-15 02:00:00', 150, 'Approved'),
 (23, 2, 48, 'SV1_Treasurer', 'Sunnyvale 2', 'Court', '11', '2023-04-08 08:00:00', '2023-04-08 10:00:00', 40, 'Approved'),
@@ -160,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1236 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1252 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -1388,7 +1389,23 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (1232, 'Kyle Andrei Casingal', 'logged in', '2023-04-10 11:49:54'),
 (1233, 'Kyle Andrei Casingal', 'logged out', '2023-04-10 12:09:50'),
 (1234, 'SV1_Treasurer', 'logged in', '2023-04-10 12:09:53'),
-(1235, 'SV1_Treasurer', 'logged out', '2023-04-10 12:24:20');
+(1235, 'SV1_Treasurer', 'logged out', '2023-04-10 12:24:20'),
+(1236, 'Mon Carlo Delima', 'logged in', '2023-04-10 12:25:25'),
+(1237, 'Mon Carlo Delima', 'logged out', '2023-04-10 12:25:26'),
+(1238, 'Mon Carlo Delima', 'logged in', '2023-04-10 12:25:35'),
+(1239, 'Mon Carlo Delima', 'logged in', '2023-04-10 14:20:32'),
+(1240, 'Mon Carlo Delima', 'logged out', '2023-04-10 14:21:33'),
+(1241, 'SV1_Treasurer', 'logged in', '2023-04-10 14:21:38'),
+(1242, 'SV1_Treasurer', 'logged out', '2023-04-10 14:26:28'),
+(1243, 'Mon Carlo Delima', 'logged in', '2023-04-10 14:26:34'),
+(1244, 'Mon Carlo Delima', 'logged out', '2023-04-10 14:27:41'),
+(1245, 'SV1_Admin', 'logged in', '2023-04-10 14:27:44'),
+(1246, 'SV1_Admin', 'logged out', '2023-04-10 14:32:16'),
+(1247, 'Mon Carlo Delima', 'logged in', '2023-04-10 14:32:19'),
+(1248, 'Mon Carlo Delima', 'logged out', '2023-04-10 15:18:00'),
+(1249, 'Mon Carlo Delima', 'logged in', '2023-04-10 15:18:04'),
+(1250, 'Mon Carlo Delima', 'logged out', '2023-04-10 15:39:22'),
+(1251, 'Mon Carlo Delima', 'logged in', '2023-04-10 15:56:53');
 
 -- --------------------------------------------------------
 
@@ -1506,9 +1523,9 @@ CREATE TABLE IF NOT EXISTS `bill_consumer` (
 --
 
 INSERT INTO `bill_consumer` (`billConsumer_id`, `billingPeriod_id`, `homeowner_id`, `transaction_id`, `fullname`, `amount`, `datetime_paid`, `status`) VALUES
-(1, 1, 1, 4, 'Mon Carlo Delima', '200', NULL, 'PAID'),
-(2, 2, 1, 4, 'Mon Carlo Delima', '200', NULL, 'PAID'),
-(3, 3, 1, 4, 'Mon Carlo Delima', '200', NULL, 'PAID'),
+(1, 1, 1, 4, 'Mon Carlo Delima', '200', NULL, 'PENDING'),
+(2, 2, 1, 4, 'Mon Carlo Delima', '200', NULL, 'PENDING'),
+(3, 3, 1, 4, 'Mon Carlo Delima', '200', NULL, 'PENDING'),
 (4, 1, 2, NULL, 'Kyle Andrei Casingal', '500', '2023-04-10 11:45:59', 'PAID'),
 (5, 2, 2, NULL, 'Kyle Andrei Casingal', '500', '2023-04-10 11:45:59', 'PAID'),
 (6, 3, 2, NULL, 'Kyle Andrei Casingal', '500', '2023-04-10 11:45:59', 'PAID'),
@@ -1863,22 +1880,24 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `payment_proof` varchar(255) DEFAULT NULL,
   `transaction_type` varchar(50) NOT NULL,
   `status` varchar(10) NOT NULL,
+  `datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`transaction_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `transaction`
 --
 
-INSERT INTO `transaction` (`transaction_id`, `user_id`, `name`, `total_cost`, `payment_proof`, `transaction_type`, `status`) VALUES
-(1, 1, 'Mon Carlo Delima', 1500, '315887907_1137649846869408_655406644278059076_n.png', 'Amenity Renting', 'Approved'),
-(2, 48, 'SV1_Treasurer', 180, '315887907_1137649846869408_655406644278059076_n.png', 'Amenity Renting', 'Approved'),
-(3, 1, 'Mon Carlo Delima', 2150, '328148270_726681382138928_1391919010667224674_n.png', 'Amenity Renting', 'Approved'),
-(4, 1, 'Mon Carlo Delima', 600, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid'),
-(5, 55, 'Kyle Andrei Casingal', 1500, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid'),
-(6, 55, 'Kyle Andrei Casingal', 1500, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid'),
-(9, 48, 'SV1_Treasurer', 800, NULL, 'Monthly Dues', 'Paid'),
-(10, 48, 'SV1_Treasurer', 1000, NULL, 'Monthly Dues', 'Paid');
+INSERT INTO `transaction` (`transaction_id`, `user_id`, `name`, `total_cost`, `payment_proof`, `transaction_type`, `status`, `datetime`) VALUES
+(1, 1, 'Mon Carlo Delima', 1500, '315887907_1137649846869408_655406644278059076_n.png', 'Amenity Renting', 'Approved', NULL),
+(2, 48, 'SV1_Treasurer', 180, '315887907_1137649846869408_655406644278059076_n.png', 'Amenity Renting', 'Approved', NULL),
+(3, 1, 'Mon Carlo Delima', 2150, '328148270_726681382138928_1391919010667224674_n.png', 'Amenity Renting', 'Approved', NULL),
+(4, 1, 'Mon Carlo Delima', 600, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Pending', NULL),
+(5, 55, 'Kyle Andrei Casingal', 1500, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid', NULL),
+(6, 55, 'Kyle Andrei Casingal', 1500, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid', NULL),
+(9, 48, 'SV1_Treasurer', 800, NULL, 'Monthly Dues', 'Paid', NULL),
+(10, 48, 'SV1_Treasurer', 1000, NULL, 'Monthly Dues', 'Paid', NULL),
+(11, 1, 'Mon Carlo Delima', 50, '328148270_726681382138928_1391919010667224674_n.png', 'Amenity Renting', 'Pending', NULL);
 
 -- --------------------------------------------------------
 
