@@ -1480,7 +1480,7 @@ if (isset($_POST['editPassword'])) {
 if (isset($_POST['approveReservation'])) {
   $transaction_id = $_POST['transaction_id'];
 
-  $sql = "UPDATE transaction, amenity_renting SET transaction.status = 'Approved', amenity_renting.cart = 'Approved' WHERE transaction.transaction_id= '$transaction_id' AND amenity_renting.transaction_id = '$transaction_id'";
+  $sql = "UPDATE transaction, amenity_renting SET transaction.status = 'Approved', amenity_renting.cart = 'Approved', transaction.datetime = NOW() WHERE transaction.transaction_id= '$transaction_id' AND amenity_renting.transaction_id = '$transaction_id'";
   $result = mysqli_query($con, $sql);
 }
 
@@ -1547,7 +1547,7 @@ if (isset($_POST['checkoutMonthlyDues'])) {
 if (isset($_POST['approveMonthlyDuesPayment'])) {
   $transaction_id = $_POST['transaction_id'];
 
-  $sql = "UPDATE transaction, bill_consumer SET transaction.status = 'Paid', bill_consumer.status = 'PAID' WHERE transaction.transaction_id= '$transaction_id' AND bill_consumer.transaction_id = '$transaction_id'";
+  $sql = "UPDATE transaction, bill_consumer SET transaction.status = 'Paid', bill_consumer.status = 'PAID', transaction.datetime = NOW() WHERE transaction.transaction_id= '$transaction_id' AND bill_consumer.transaction_id = '$transaction_id'";
   $result = mysqli_query($con, $sql);
 }
 
@@ -1573,7 +1573,7 @@ if (isset($_POST['payDues'])) {
       $total_cost += $rowSumTotal['amount'];
     }
     
-    $sql1 = "INSERT INTO transaction (user_id, name, total_cost, payment_proof, transaction_type, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', NULL, 'Monthly Dues', 'Paid')";
+    $sql1 = "INSERT INTO transaction (user_id, name, total_cost, payment_proof, transaction_type, status, datetime) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', NULL, 'Monthly Dues', 'Paid', NOW())";
     $result1 = mysqli_query($con, $sql1);
   }
 }
