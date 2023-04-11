@@ -260,11 +260,14 @@ $resultTransactionAmenity = $con->query("SELECT * FROM amenity_renting WHERE use
                             <td class="subject" data-bs-toggle="modal" data-bs-target="#transactionAmenity<?php
                                                                                                             echo $rowTransaction['transaction_id']
                                                                                                             ?>">Transaction</label>
+
                             <td class="subject" data-bs-toggle="modal" data-bs-target="#transactionAmenity<?php
                                                                                                             echo $rowTransaction['transaction_id']
                                                                                                             ?>"><?php
                                                                                                                 echo $rowTransaction['transaction_type']
                                                                                                                 ?></label>
+                            <td></td>
+                            <td></td>
                             <td class="msgDesc" data-bs-toggle="modal" data-bs-target="#transactionAmenity<?php
                                                                                                             echo $rowTransaction['transaction_id']
                                                                                                             ?>"><?php
@@ -287,6 +290,7 @@ $resultTransactionAmenity = $con->query("SELECT * FROM amenity_renting WHERE use
                                                                                                     ?>"><?php
                                                                                                         echo $rowBillConsumer['year']
                                                                                                         ?></label>
+                            <td></td>
                             <td class="msgDesc" data-bs-toggle="modal" data-bs-target="#billConsumer<?php
                                                                                                     echo $rowBillConsumer['billConsumer_id']
                                                                                                     ?>"><?php
@@ -296,19 +300,29 @@ $resultTransactionAmenity = $con->query("SELECT * FROM amenity_renting WHERE use
                     <?php endwhile; ?>
                     <?php while ($row = $resultComplaints->fetch_assoc()) : ?>
                         <tr class="trInbox">
-                            <td class="subject" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
-                                                                                                        echo $row['concern_id']
-                                                                                                        ?>">Complaint</label>
-                            <td class="subject" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
-                                                                                                        echo $row['concern_id']
-                                                                                                        ?>"><?php echo $row['concern_subject'] ?></label>
-                            <td class="msgDesc use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
-                                                                                                                    echo $row['concern_id']
-                                                                                                                    ?>"><?php echo $row['concern_description']; ?></td>
+                            <?php if ($row['complainee_homeowner_id'] != $homeowner_id) { ?>
+                                <td class="subject" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
+                                                                                                            echo $row['concern_id']
+                                                                                                            ?>">Complaint</label>
+                                <td class="subject" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
+                                                                                                            echo $row['concern_id']
+                                                                                                            ?>"><?php echo $row['concern_subject'] ?></label>
+                                <td class="msgDesc use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
+                                                                                                                        echo $row['concern_id']
+                                                                                                                        ?>"><?php echo $row['concern_description']; ?></td>
+
+                            <?php } else { ?>
+                                <td class="subject" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
+                                                                                                            echo $row['concern_id']
+                                                                                                            ?>">You have received a complaint</label>
+                                <td></td>
+                                <td></td>
+                            <?php } ?>
+
                             <td class=" msgTime" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
                                                                                                         echo $row['concern_id']
                                                                                                         ?>"><?php $datetime = strtotime($row['datetime']);
-                                                                                                            echo $phptime = date("g:i A m/d/y", $datetime); ?></td>
+                                                                                                                echo $phptime = date("g:i A m/d/y", $datetime); ?></td>
                             <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
                                                                                                             echo $row['concern_id']
                                                                                                             ?>"> <?php echo $row['status']; ?></td>
@@ -460,14 +474,16 @@ $resultTransactionAmenity = $con->query("SELECT * FROM amenity_renting WHERE use
                                 <td id=''>" . $row1['complainee_full_name'] ?? '' . "</td>
                             </tr>";
                             } ?>
-                            <tr>
-                                <td>Subject:</td>
-                                <td id=""><?php echo $row1['concern_subject'] ?></td>
-                            </tr>
-                            <tr>
-                                <td>Complaint Description:</td>
-                                <td id=""><?php echo $row1['concern_description'] ?></td>
-                            </tr>
+                            <?php if ($row1['complainee_homeowner_id'] != $homeowner_id) { ?>
+                                <tr>
+                                    <td>Subject:</td>
+                                    <td id=""><?php echo $row1['concern_subject'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Complaint Description:</td>
+                                    <td id=""><?php echo $row1['concern_description'] ?></td>
+                                </tr>
+                            <?php } ?>
                             <tr>
                                 <td>Date Submitted:</td>
                                 <td><?php $datetime = strtotime($row1['datetime_submitted']);

@@ -665,7 +665,7 @@ if (isset($_POST['blockUpdate'])) {
 if (isset($_POST['subdivision_id_lot'])) {
   $subdivision_id = $_POST['subdivision_id_lot'];
 
-  $result = $con->query("SELECT * FROM block WHERE subdivision_id= '$subdivision_id' ORDER BY block ASC");
+  $result = $con->query("SELECT * FROM block WHERE subdivision_id= '$subdivision_id' ORDER BY block + 0 ASC");
 
   if (mysqli_num_rows($result) > 0) {
     echo '<option value="0">Select Block...</option>';
@@ -718,9 +718,10 @@ if (isset($_GET['lot_id'])) {
 
 // UPDATING A ROW LOT
 if (isset($_POST['lotUpdate'])) {
+  $block_id = $_POST['block_id'];
   $lot_id = $_POST['lot_id'];
   $lot = $_POST['lot'];
-  $con->query("UPDATE lot SET lot = '$lot' WHERE lot_id = '$lot_id'");
+  $con->query("UPDATE lot SET lot = '$lot', block_id = '$block_id' WHERE lot_id = '$lot_id'");
   header("Location: settingsSubdivision.php#subdivisionLot");
 }
 

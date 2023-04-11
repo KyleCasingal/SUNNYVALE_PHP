@@ -10,11 +10,11 @@ $resultSubdivision_selectBlock = $con->query("SELECT * FROM subdivision") or die
 $resultSubdivision_selectLot = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
 $resultSubdivision = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
 $resultSubdivision_table = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
-$resultBlock = $con->query("SELECT * FROM block INNER JOIN subdivision ON block.subdivision_id = subdivision.subdivision_id ORDER BY subdivision.subdivision_name") or die($mysqli->error);
-$resultLot = $con->query("SELECT * FROM lot INNER JOIN block ON lot.block_id = block.block_id INNER JOIN subdivision ON block.subdivision_id = subdivision.subdivision_id ORDER BY subdivision.subdivision_name") or die($mysqli->error);
-$resultLot_selectBlock = $con->query("SELECT * FROM lot INNER JOIN block ON lot.block_id = block.block_id INNER JOIN subdivision ON block.subdivision_id = subdivision.subdivision_id ORDER BY block.block") or die($mysqli->error);
+$resultBlock = $con->query("SELECT * FROM block INNER JOIN subdivision ON block.subdivision_id = subdivision.subdivision_id ORDER BY subdivision.subdivision_id + 0, block.block + 0 ASC") or die($mysqli->error);
+$resultLot = $con->query("SELECT * FROM lot INNER JOIN block ON lot.block_id = block.block_id INNER JOIN subdivision ON block.subdivision_id = subdivision.subdivision_id ORDER BY subdivision.subdivision_id + 0, block.block + 0, lot.lot + 0 ASC") or die($mysqli->error);
+$resultLot_selectBlock = $con->query("SELECT * FROM lot INNER JOIN block ON lot.block_id = block.block_id INNER JOIN subdivision ON block.subdivision_id = subdivision.subdivision_id ORDER BY block.block + 0, lot.lot + 0 ASC") or die($mysqli->error);
 if (isset($_GET['lot_id'])) {
-    $resultUpdateBlock = $con->query("SELECT * FROM block WHERE subdivision_id ='$subdivision_id_lot' ORDER BY block ASC") or die($mysqli->error);
+    $resultUpdateBlock = $con->query("SELECT * FROM block WHERE subdivision_id ='$subdivision_id_lot' ORDER BY block + 0 ASC") or die($mysqli->error);
 }
 ?>
 
@@ -537,7 +537,7 @@ if (isset($_GET['lot_id'])) {
                                 <td>Subdivision:</td>
                                 <td>
                                     <select name="subdivision_id_block" id="" required>
-                                        <option value="">Select...</option>
+                                        <option>Select...</option>
                                         <?php while ($row = $resultSubdivision_selectBlock->fetch_assoc()) : ?>
                                             <option value="<?php echo $row['subdivision_id'] ?>" <?php
                                                                                                     if (isset($_GET['block_id'])) {
@@ -675,7 +675,7 @@ if (isset($_GET['lot_id'])) {
                                                 echo 'disabled>' . $row['subdivision_name'] . '</option>';
                                             endwhile;
                                         } else {
-                                            echo '<option value="">Select...</option>';
+                                            echo '<option>Select...</option>';
                                             while ($row = $resultSubdivision_selectLot->fetch_assoc()) :
                                                 echo '<option value="' . $row['subdivision_id'] . '">' . $row['subdivision_name'] . '</option>';
                                             endwhile;
@@ -697,10 +697,10 @@ if (isset($_GET['lot_id'])) {
                                                         echo 'selected="selected"';
                                                     }
                                                 }
-                                                echo 'disabled>' . $row['block'] . '</option>';
+                                                echo '>' . $row['block'] . '</option>';
                                             endwhile;
                                         } else {
-                                            echo "<option value=''>Select Subdivision First...</option>";
+                                            echo "<option>Select Subdivision First...</option>";
                                         }
                                         ?>
                                     </select>
