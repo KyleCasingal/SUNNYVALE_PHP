@@ -1,6 +1,7 @@
 <?php
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
-$result = $con->query("SELECT * FROM audit_trail");
+$result = $con->query("SELECT user, action, DATE(datetime) AS DATE, TIME(datetime) AS TIME FROM audit_trail ");
+
 
 ?>
 <!DOCTYPE html>
@@ -12,12 +13,33 @@ $result = $con->query("SELECT * FROM audit_trail");
     <meta name="theme-color" content="#000000" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
-    
-    <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
-    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jqc-1.12.4/dt-1.13.4/b-2.3.6/sl-1.6.2/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="Editor-2.1.2/css/editor.dataTables.css">
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.4.0/css/dataTables.dateTime.min.css" />
+
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/datetime/1.4.0/js/dataTables.dateTime.min.js"></script>
+
+
+    <script type="text/javascript" src="Editor-2.1.2/js/dataTables.editor.js"></script>
+
+
+
+
+
     <title>SUNNYVALE</title>
 </head>
 <style>
@@ -80,48 +102,51 @@ $result = $con->query("SELECT * FROM audit_trail");
 
     }
 
-     
-  .fab-wrapper {
-    position: fixed;
-    bottom: 3rem;
-    right: 3rem;
-  }
 
-  .fab {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    bottom: -1rem;
-    right: -1rem;
-    width: 4vw;
-    height: 4vw;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    z-index: 1;
-    background-color: rgb(248, 186, 55);
-    box-shadow: 5px 10px 8px #888888;
-  }
+    .fab-wrapper {
+        position: fixed;
+        bottom: 3rem;
+        right: 3rem;
+    }
 
-  .fc-clear {
-    background-color: rgb(170, 192, 175, 0.3);
-  }
+    .fab {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        bottom: -1rem;
+        right: -1rem;
+        width: 4vw;
+        height: 4vw;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        z-index: 1;
+        background-color: rgb(248, 186, 55);
+        box-shadow: 5px 10px 8px #888888;
+    }
 
-  .fc-toolbar {
-    background-color: rgb(170, 192, 175, 0.3);
-  }
-  @media only print {
-   .tblFilter, .noprint{
-      visibility: hidden;
-   }
-}
+    .fc-clear {
+        background-color: rgb(170, 192, 175, 0.3);
+    }
+
+    .fc-toolbar {
+        background-color: rgb(170, 192, 175, 0.3);
+    }
+
+    @media only print {
+
+        .tblFilter,
+        .noprint, .dataTables_filter {
+            visibility: hidden;
+        }
+    }
 </style>
 <script>
-     $(document).ready(function() {
-    $("#print").click(function() {
-        window.print();
+    $(document).ready(function() {
+        $("#print").click(function() {
+            window.print();
+        });
     });
-  });
 </script>
 <!-- onload="print();" onafterprint="close();" -->
 
@@ -140,18 +165,36 @@ $result = $con->query("SELECT * FROM audit_trail");
         </div>
         <div class="reportContainer">
             <label class="tblTitle">Audit Trail</label>
-            <table class="tblReportData">
+
+            <table border="0" cellspacing="5" cellpadding="5" class="noprint">
+                <tbody>
+                    <tr>
+                        <td>Minimum date:</td>
+                        <td><input type="text" id="min" name="min"></td>
+                    </tr>
+                    <tr>
+                        <td>Maximum date:</td>
+                        <td><input type="text" id="max" name="max"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+            <table class="tblReportData" id="tblReportData">
+
                 <thead>
                     <th>User</th>
                     <th>Activity</th>
-                    <th>Date/Time</th>
+                    <th>Date</th>
+                    <th>Time</th>
                 </thead>
                 <?php while ($row = $result->fetch_assoc()) : ?>
                     <tr>
                         <td><?php echo $row['user']; ?></td>
                         <td><?php echo $row['action']; ?></td>
-                        <td><?php echo $row['datetime']; ?></td>
-
+                        <td><?php echo $row['DATE']; ?></td>
+                        <td><?php echo $row['TIME']; ?></td>
                     </tr>
                 <?php endwhile; ?>
 
@@ -159,6 +202,72 @@ $result = $con->query("SELECT * FROM audit_trail");
             </table>
         </div>
     </div>
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+<script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script> -->
 </body>
+<script>
+    //   function myFunction1() {
+    //     // Declare variables
+    //     var input, filter, table, tr, td, i, txtValue;
+    //     input = document.getElementById("tblFilter");
+    //     filter = input.value.toUpperCase();
+    //     table = document.getElementById("tblReportData");
+    //     tr = table.getElementsByTagName("tr");
+
+    //     // Loop through all table rows, and hide those who don't match the search query
+    //     for (i = 0; i < tr.length; i++) {
+    //       td = tr[i].getElementsByTagName("td")[1];
+    //       if (td) {
+    //         txtValue = td.textContent || td.innerText;
+    //         if (txtValue.toUpperCase().indexOf(filter) > -1) {
+    //           tr[i].style.display = "";
+    //         } else {
+    //           tr[i].style.display = "none";
+    //         }
+    //       }
+    //     }
+    //   };
+
+    var minDate, maxDate;
+
+    // Custom filtering function which will search data in column four between two values
+    $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+            var min = minDate.val();
+            var max = maxDate.val();
+            var date = new Date(data[2]);
+
+            if (
+                (min === null && max === null) ||
+                (min === null && date <= max) ||
+                (min <= date && max === null) ||
+                (min <= date && date <= max)
+            ) {
+                return true;
+            }
+            return false;
+        }
+    );
+
+    $(document).ready(function() {
+        // Create date inputs
+        minDate = new DateTime($('#min'), {
+            format: 'MMMM Do YYYY'
+        });
+        maxDate = new DateTime($('#max'), {
+            format: 'MMMM Do YYYY'
+        });
+
+        // DataTables initialisation
+        var table = $('#tblReportData').DataTable();
+
+        // Refilter the table
+        $('#min, #max').on('change', function() {
+            table.draw();
+        });
+    });
+</script>
 
 </html>

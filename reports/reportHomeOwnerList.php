@@ -4,6 +4,8 @@ $res = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $
 $row = $res->fetch_assoc();
 $result = $con->query("SELECT * FROM homeowner_profile WHERE email_address != '' ORDER BY homeowner_id ASC ") or die($mysqli->error);
 $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC") or die($mysqli->error);
+$result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,11 +16,12 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
     <meta name="theme-color" content="#000000" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
-    <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
-    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+
     <title>SUNNYVALE</title>
 </head>
 <style>
@@ -144,24 +147,17 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
         </div>
         <div class="reportContainer">
             <label class="tblTitle">Homeowner List</label>
-            <!-- <table class="tblReportData">
-            <thead>
-                <th>Amenity</th>
-                <th>Renter</th>
-                <th>Date/time from</th>
-                <th>Date/time to</th>
-                <th>cost</th>
-            </thead>
-            <tr>
-                <td>Basketball Court</td>
-                <td>Mon Carlo Delima</td>
-                <td>2022-11-26 01:00:00</td>
-                <td>2022-11-26 02:00:00</td>
-                <td>150</td>
-            </tr>
-           
-
-        </table> -->
+            <div>
+                <label class="tblFilter" for="">filter by transaction type:</label>
+                <select name="tblFilter" class="noprint" id="tblFilter" onclick="myFunction1()">
+                    <option value="">Select...</option>
+                    <?php
+                    while ($row0 = $result0->fetch_assoc()) {
+                        echo '<option value="' . $row0['subdivision_name'] . '">' . $row0['subdivision_name'] . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
             <div class="tblContainer">
                 <table class="tblHomeowners">
                     <thead>
@@ -192,7 +188,7 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
                             $middle_name = " " . $row['middle_name'];
                         }
                         $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['barangay'];
-
+                        
                     ?>
                         <tr>
                             <!-- <td>
@@ -238,5 +234,28 @@ $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC
         </div>
     </div>
 </body>
+<script>
+    function myFunction1() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("tblFilter");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tblReportData");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[5];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    };
+</script>
 
 </html>
