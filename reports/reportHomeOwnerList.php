@@ -159,7 +159,7 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
                 </select>
             </div>
             <div class="tblContainer">
-                <table class="tblHomeowners">
+                <table class="tblHomeowners" id="tblReportData">
                     <thead>
                         <!-- <th></th> -->
                         <th>Homeowner ID</th>
