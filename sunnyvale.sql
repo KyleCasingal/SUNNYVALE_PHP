@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Apr 11, 2023 at 11:37 PM
+-- Generation Time: Apr 12, 2023 at 12:06 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -1839,7 +1839,7 @@ CREATE TABLE IF NOT EXISTS `lot` (
   `block_id` int(11) NOT NULL,
   `lot` varchar(10) NOT NULL,
   PRIMARY KEY (`lot_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=404 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=405 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `lot`
@@ -1847,8 +1847,6 @@ CREATE TABLE IF NOT EXISTS `lot` (
 
 INSERT INTO `lot` (`lot_id`, `block_id`, `lot`) VALUES
 (1, 1, '2'),
-(2, 3, '1'),
-(3, 7, '2'),
 (4, 2, '2'),
 (5, 5, '1'),
 (6, 1, '1'),
@@ -1871,7 +1869,7 @@ INSERT INTO `lot` (`lot_id`, `block_id`, `lot`) VALUES
 (23, 2, '10'),
 (24, 4, '1'),
 (25, 4, '2'),
-(26, 4, '3'),
+(404, 11, '5'),
 (27, 4, '4'),
 (28, 4, '5'),
 (29, 4, '6'),
@@ -1883,7 +1881,6 @@ INSERT INTO `lot` (`lot_id`, `block_id`, `lot`) VALUES
 (35, 10, '2'),
 (36, 4, '3'),
 (37, 10, '3'),
-(38, 10, '4'),
 (39, 10, '5'),
 (40, 10, '6'),
 (41, 10, '7'),
@@ -1907,7 +1904,7 @@ INSERT INTO `lot` (`lot_id`, `block_id`, `lot`) VALUES
 (59, 12, '6'),
 (60, 12, '7'),
 (61, 12, '8'),
-(62, 11, '9'),
+(62, 11, '4'),
 (63, 12, '10'),
 (64, 12, '9'),
 (65, 13, '1'),
