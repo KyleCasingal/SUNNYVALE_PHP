@@ -7,7 +7,6 @@ $result = $con->query("SELECT * FROM transaction");
 <html lang="en">
 
 <head>
-<<<<<<< HEAD
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#000000" />
@@ -18,23 +17,23 @@ $result = $con->query("SELECT * FROM transaction");
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
-=======
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#000000" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
-    
-    <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"/>
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-<!-- 
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/> -->
->>>>>>> eb238ca3eb09877d5de710ca1436affee15312fb
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jqc-1.12.4/dt-1.13.4/b-2.3.6/sl-1.6.2/datatables.min.css" />
+  <link rel="stylesheet" type="text/css" href="Editor-2.1.2/css/editor.dataTables.css">
 
 
-  <title>SUNNYVALE</title>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.4.0/css/dataTables.dateTime.min.css" />
+
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/datetime/1.4.0/js/dataTables.dateTime.min.js"></script>
+
+
+  <script type="text/javascript" src="Editor-2.1.2/js/dataTables.editor.js"></script>
+
 </head>
 <style>
   body {
@@ -125,11 +124,18 @@ $result = $con->query("SELECT * FROM transaction");
   .fc-toolbar {
     background-color: rgb(170, 192, 175, 0.3);
   }
+  .print-button{
+    font-family: 'Poppins', sans-serif;
+    font-size: 1vw;
+    color: white;
+
+  }
 
   @media only print {
 
     .tblFilter,
-    .noprint {
+    .noprint,
+    .print-button{
       visibility: hidden;
     }
   }
@@ -147,62 +153,54 @@ $result = $con->query("SELECT * FROM transaction");
   <!-- <nav class="navbar navbar-expand-md bg-dark navbar-dark">
   <h class="navbar-brand" onclick="location.href='../modules/settingsAmenity.php'">Back</h>
 </nav> -->
-<<<<<<< HEAD
+
   <div class="fab-wrapper">
     <label class="fab" for="print" id="print">
       <center>
-        <i class="fa fa-print" aria-hidden="true" id="print">
+        <span class="print-button">Print</span>
       </center>
     </label>
   </div>
   <div class="reportPage">
-=======
-     <div class="fab-wrapper">
-      <label class="fab noprint" for="print" id="print">
-        <center>
-         <i class="fa fa-print" aria-hidden="true" id="print">
-        </center>
-      </label>
+
+
+      <div class="head">
+        <label class="reportHeader">Sunnyvale Home Owners Association</label>
+        <label class="reportSubtext">Sunnyvale Subdivision Compound, Binangonan, Rizal</label>
+      </div>
+      <div class="reportContainer">
+        <label class="tblTitle">Transactions</label>
+
+
+        <label class="tblFilter" for="">filter by transaction type:</label>
+        <select name="tblFilter" class="noprint" id="tblFilter" onclick="myFunction1()">
+          <option value="">Select...</option>
+          <?php
+          while ($row0 = $result0->fetch_assoc()) {
+            echo '<option value="' . $row0['transaction_type'] . '">' . $row0['transaction_type'] . '</option>';
+          }
+          ?>
+        </select>
+
+        <table class="tblReportData" id="tblReportData">
+          <thead>
+
+            <th>Renter Name</th>
+            <th>Transaction Type</th>
+            <th>Total Cost</th>
+          </thead>
+          <?php while ($row = $result->fetch_assoc()) : ?>
+            <tr>
+              <td><?php echo $row['name']; ?></td>
+              <td><?php echo $row['transaction_type']; ?></td>
+              <td><?php echo $row['total_cost']; ?></td>
+            </tr>
+          <?php endwhile; ?>
+
+
+        </table>
+      </div>
     </div>
-    <div class="reportPage">
->>>>>>> eb238ca3eb09877d5de710ca1436affee15312fb
-    <div class="head">
-      <label class="reportHeader">Sunnyvale Home Owners Association</label>
-      <label class="reportSubtext">Sunnyvale Subdivision Compound, Binangonan, Rizal</label>
-    </div>
-    <div class="reportContainer">
-      <label class="tblTitle">Transactions</label>
-
-
-      <label class="tblFilter" for="">filter by transaction type:</label>
-      <select name="tblFilter" class="noprint" id="tblFilter" onclick="myFunction1()">
-        <option value="">Select...</option>
-        <?php
-        while ($row0 = $result0->fetch_assoc()) {
-          echo '<option value="' . $row0['transaction_type'] . '">' . $row0['transaction_type'] . '</option>';
-        }
-        ?>
-      </select>
-
-      <table class="tblReportData" id="tblReportData">
-        <thead>
-
-          <th>Renter Name</th>
-          <th>Transaction Type</th>
-          <th>Total Cost</th>
-        </thead>
-        <?php while ($row = $result->fetch_assoc()) : ?>
-          <tr>
-            <td><?php echo $row['name']; ?></td>
-            <td><?php echo $row['transaction_type']; ?></td>
-            <td><?php echo $row['total_cost']; ?></td>
-          </tr>
-        <?php endwhile; ?>
-
-
-      </table>
-    </div>
-  </div>
 </body>
 <script>
   function myFunction1() {

@@ -114,10 +114,18 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
         background-color: rgb(170, 192, 175, 0.3);
     }
 
+    .print-button {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1vw;
+        color: white;
+
+    }
+
     @media only print {
 
         .tblFilter,
-        .noprint {
+        .noprint,
+        .print-button {
             visibility: hidden;
         }
     }
@@ -136,7 +144,7 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
     <div class="fab-wrapper">
         <label class="fab" for="print" id="print">
             <center>
-                <i class="fa fa-print" aria-hidden="true" id="print">
+                <span class="print-button">Print</span>
             </center>
         </label>
     </div>
@@ -189,7 +197,7 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
                             $middle_name = " " . $row['middle_name'];
                         }
                         $residence_address = $row['street'] . ' ' . $row['barangay'];
-                        
+
                     ?>
                         <tr>
                             <!-- <td>

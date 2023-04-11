@@ -15,6 +15,7 @@ $result = $con->query("SELECT user, action, DATE(datetime) AS DATE, TIME(datetim
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
 
     <!-- Bootstrap CSS -->
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
@@ -133,10 +134,21 @@ $result = $con->query("SELECT user, action, DATE(datetime) AS DATE, TIME(datetim
         background-color: rgb(170, 192, 175, 0.3);
     }
 
+    .print-button {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1vw;
+        color: white;
+
+    }
+
     @media only print {
 
         .tblFilter,
-        .noprint, .dataTables_filter {
+        .noprint,
+        .dataTables_filter,
+        .dataTables_paginate,
+        .dataTables_info,
+        .print-button {
             visibility: hidden;
         }
     }
@@ -154,7 +166,7 @@ $result = $con->query("SELECT user, action, DATE(datetime) AS DATE, TIME(datetim
     <div class="fab-wrapper">
         <label class="fab" for="print" id="print">
             <center>
-                <i class="fa fa-print" aria-hidden="true" id="print">
+                <span class="print-button">Print</span>
             </center>
         </label>
     </div>
