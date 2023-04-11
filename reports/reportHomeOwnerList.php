@@ -167,6 +167,7 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
                         <th>Date of Birth</th>
                         <th>Sex</th>
                         <th>Residence Address</th>
+                        <th>Subdivision</th>
                         <th>Email</th>
                         <th>Mobile Number</th>
                         <th>Business Address</th>
@@ -187,7 +188,7 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
                         } else {
                             $middle_name = " " . $row['middle_name'];
                         }
-                        $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['barangay'];
+                        $residence_address = $row['street'] . ' ' . $row['barangay'];
                         
                     ?>
                         <tr>
@@ -212,6 +213,7 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
                             <td>
                                 <?php echo $residence_address; ?>
                             </td>
+                            <td><?php echo $row['subdivision']; ?></td>
                             <td>
                                 <?php echo $row['email_address']; ?>
                             </td>
