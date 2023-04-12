@@ -165,20 +165,21 @@
                         <ul class="dropdown-menu">
                             <li id="Subdivision" onclick="location.href='../modules/homeownerRegistration.php'">Homeowner Registration</li>
                             <li id="Amenities" onclick="location.href='../modules/homeownerlist.php'">Registered Homeowners</li>
+                            <li id="Amenities" onclick="location.href='../modules/tenantManagement.php'">Tenant Management</li>
                         </ul>
                     </li>
                 <?php } ?>
                 <?php if ($row['user_type'] != 'Secretary') { ?>
                     <li>
-                         <button type="button" class="btnReports" data-bs-toggle="dropdown" aria-expanded="false">
-                        Monthly Dues <i class="fa-sharp fa-solid fa-chevron-right"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li id="dues" onclick="location.href='../modules/treasurerPanel.php'">Monthly Dues</li>
-                        <li id="Amenities" onclick="location.href='../modules/monthlyDuesTransaction.php'">Monthly Dues Transaction</li>
-                    </ul>
+                        <button type="button" class="btnReports" data-bs-toggle="dropdown" aria-expanded="false">
+                            Monthly Dues <i class="fa-sharp fa-solid fa-chevron-right"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li id="dues" onclick="location.href='../modules/treasurerPanel.php'">Monthly Dues</li>
+                            <li id="Amenities" onclick="location.href='../modules/monthlyDuesTransaction.php'">Monthly Dues Transaction</li>
+                        </ul>
                     </li>
-                   
+
                 <?php } ?>
                 <?php if ($row['user_type'] != 'Treasurer') { ?>
                     <li id="reports">

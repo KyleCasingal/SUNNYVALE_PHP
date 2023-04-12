@@ -1573,8 +1573,40 @@ if (isset($_POST['payDues'])) {
       $rowSumTotal = $resultSumTotal->fetch_assoc();
       $total_cost += $rowSumTotal['amount'];
     }
-    
+
     $sql1 = "INSERT INTO transaction (user_id, name, total_cost, payment_proof, transaction_type, status, datetime) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', NULL, 'Monthly Dues', 'Paid', NOW())";
     $result1 = mysqli_query($con, $sql1);
   }
+}
+
+// REGISTRATION OF HOMEOWNERS
+if (isset($_POST['tenant_submit'])) {
+  $first_name = $_POST['first_name'];
+  $middle_name = $_POST['middle_name'];
+  $last_name = $_POST['last_name'];
+  $suffix = $_POST['suffix'];
+  $mobile_number = $_POST['mobile_number'];
+  $birthdate = strtotime($_POST['birthdate']);
+  $birthdate = date('Y-m-d', $birthdate);
+  $sex = $_POST['sex'];
+  $email_address = $_POST['email_address'];
+
+  $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+  $row = $resultSession->fetch_assoc();
+  $homeowner_id = $row['user_homeowner_id'];
+
+  if ($middle_name == 'N/A' AND $suffix == 'N/A') {
+    $full_name = $first_name . " " . $last_name;
+  } else if ($suffix == 'N/A') {
+    $full_name = $first_name . " " . $middle_name . " " . $last_name;
+  } else if ($middle_name == 'N/A') {
+    $full_name = $first_name . " " . $last_name . " " . $suffix;
+  } else {
+    $full_name = $first_name . " " . $middle_name . " " . $last_name . " " . $suffix;
+  }
+
+  $sql = "INSERT INTO tenant(homeowner_id, full_name, birthdate, sex, email, mobile_no) VALUES ('$homeowner_id', '$full_name', '$birthdate', '$sex', '$email_address', '$mobile_number')";
+  $result = mysqli_query($con, $sql);
+
+  header("Location: tenantHomeowner.php");
 }
