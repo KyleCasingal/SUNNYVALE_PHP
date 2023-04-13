@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 12, 2023 at 04:42 PM
+-- Generation Time: Apr 13, 2023 at 04:48 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -161,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1283 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=1286 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `audit_trail`
@@ -1436,7 +1436,10 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (1279, 'SV1_Admin', 'logged out', '2023-04-12 23:58:45'),
 (1280, 'Mon Carlo Delima', 'logged in', '2023-04-12 23:58:59'),
 (1281, 'Mon Carlo Delima', 'logged out', '2023-04-13 00:42:21'),
-(1282, 'SV1_Admin', 'logged in', '2023-04-13 00:42:25');
+(1282, 'SV1_Admin', 'logged in', '2023-04-13 00:42:25'),
+(1283, 'SV1_Admin', 'logged out', '2023-04-13 00:45:00'),
+(1284, 'Mon Carlo Delima', 'logged in', '2023-04-13 00:45:05'),
+(1285, 'Mon Carlo Delima', 'logged out', '2023-04-13 11:25:07');
 
 -- --------------------------------------------------------
 
@@ -2473,6 +2476,7 @@ CREATE TABLE IF NOT EXISTS `tenant` (
   `sex` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `mobile_no` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `display_picture` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`tenant_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -2480,10 +2484,10 @@ CREATE TABLE IF NOT EXISTS `tenant` (
 -- Dumping data for table `tenant`
 --
 
-INSERT INTO `tenant` (`tenant_id`, `homeowner_id`, `full_name`, `birthdate`, `sex`, `email`, `mobile_no`) VALUES
-(1, 1, 'Monkey D. Luffy', '2023-04-12', 'Male', 'monkeydluffy@gmail.com', '09123456789'),
-(2, 1, 'Bogart D. Explorer', '2023-03-01', 'Male', 'bogartdexplorer@gmail.com', '09123456789'),
-(3, 1, 'Portgas D. Ace', '2023-04-13', 'Male', 'donut@gmail.com', '09123456789');
+INSERT INTO `tenant` (`tenant_id`, `homeowner_id`, `full_name`, `birthdate`, `sex`, `email`, `mobile_no`, `display_picture`) VALUES
+(1, 1, 'Monkey D. Luffy', '2023-04-12', 'Male', 'dmoncarlo@gmail.com', '09123456789', 'default.png'),
+(2, 1, 'Bogart D. Explorer', '2023-03-01', 'Male', 'bogartdexplorer@gmail.com', '09123456789', 'default.png'),
+(3, 1, 'Portgas D. Ace', '2023-04-13', 'Male', 'donut@gmail.com', '09123456789', 'default.png');
 
 -- --------------------------------------------------------
 
@@ -2528,7 +2532,8 @@ INSERT INTO `transaction` (`transaction_id`, `user_id`, `name`, `total_cost`, `p
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int NOT NULL AUTO_INCREMENT,
-  `user_homeowner_id` int NOT NULL,
+  `user_homeowner_id` int DEFAULT NULL,
+  `user_tenant_id` int DEFAULT NULL,
   `full_name` varchar(50) NOT NULL,
   `user_type` varchar(15) NOT NULL,
   `password` varchar(30) NOT NULL,
@@ -2543,20 +2548,20 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_homeowner_id`, `full_name`, `user_type`, `password`, `email_address`, `account_status`, `verification_code`, `email_verified_at`) VALUES
-(55, 2, 'Kyle Andrei Casingal', 'Homeowner', 'password', 'kylecasingal36@gmail.com', 'Activated', '248425', '2022-12-01 10:11:20'),
-(3, 3, 'Jeune Paolus Flores', 'Homeowner', 'thisfeelsgud', 'floresjeunepaolus@gmail.com', 'Activated', '943962', '2022-11-10 22:51:58'),
-(1, 1, 'Mon Carlo Delima', 'Homeowner', '12345', 'dmoncarlo6@gmail.com', 'Activated', '286140', '2022-11-24 13:48:07'),
-(27, 16, 'Janwel Castillo', 'Homeowner', 'dadada', 'janweljigycastillo20@gmail.com', 'Activated', '943962', '2022-11-15 20:43:59'),
-(58, 50, 'SV3_Admin', 'Admin', 'password', 'SV3_Admin', 'Activated', NULL, NULL),
-(18, 18, 'SV1_Admin', 'Admin', 'password', 'SV1_Admin', 'Activated', NULL, NULL),
-(42, 17, 'Roiemar Escueta', 'Homeowner', '123', 'escuetaroiemar@gmail.com', 'Deactivated', '135447', '2022-11-28 23:28:23'),
-(46, 28, 'SV1_Secretary', 'Secretary', '123', 'SV1_Secretary', 'Activated', NULL, NULL),
-(48, 36, 'SV1_Treasurer', 'Treasurer', '123', 'SV1_Treasurer', 'Activated', NULL, NULL),
-(49, 37, 'SV2_Admin', 'Admin', 'password', 'SV2_Admin', 'Activated', NULL, NULL),
-(52, 39, 'Marco Ivan Sta. Maria', 'Homeowner', '123', 'marcoivanstamaria@gmail.com', 'Activated', '257545', '2022-12-01 06:31:28'),
-(53, 8, 'Krishtalene BendaÃ±a', 'Homeowner', '123', 'tissabendana@gmail.com', 'Activated', '573856', '2022-12-01 06:37:48'),
-(59, 51, 'SV1_Guard', 'Guard', '123', 'SV1_Guard', 'Activated', NULL, NULL);
+INSERT INTO `user` (`user_id`, `user_homeowner_id`, `user_tenant_id`, `full_name`, `user_type`, `password`, `email_address`, `account_status`, `verification_code`, `email_verified_at`) VALUES
+(55, 2, NULL, 'Kyle Andrei Casingal', 'Homeowner', 'password', 'kylecasingal36@gmail.com', 'Activated', '248425', '2022-12-01 10:11:20'),
+(3, 3, NULL, 'Jeune Paolus Flores', 'Homeowner', 'thisfeelsgud', 'floresjeunepaolus@gmail.com', 'Activated', '943962', '2022-11-10 22:51:58'),
+(1, 1, NULL, 'Mon Carlo Delima', 'Homeowner', '12345', 'dmoncarlo6@gmail.com', 'Activated', '286140', '2022-11-24 13:48:07'),
+(27, 16, NULL, 'Janwel Castillo', 'Homeowner', 'dadada', 'janweljigycastillo20@gmail.com', 'Activated', '943962', '2022-11-15 20:43:59'),
+(58, 50, NULL, 'SV3_Admin', 'Admin', 'password', 'SV3_Admin', 'Activated', NULL, NULL),
+(18, 18, NULL, 'SV1_Admin', 'Admin', 'password', 'SV1_Admin', 'Activated', NULL, NULL),
+(42, 17, NULL, 'Roiemar Escueta', 'Homeowner', '123', 'escuetaroiemar@gmail.com', 'Deactivated', '135447', '2022-11-28 23:28:23'),
+(46, 28, NULL, 'SV1_Secretary', 'Secretary', '123', 'SV1_Secretary', 'Activated', NULL, NULL),
+(48, 36, NULL, 'SV1_Treasurer', 'Treasurer', '123', 'SV1_Treasurer', 'Activated', NULL, NULL),
+(49, 37, NULL, 'SV2_Admin', 'Admin', 'password', 'SV2_Admin', 'Activated', NULL, NULL),
+(52, 39, NULL, 'Marco Ivan Sta. Maria', 'Homeowner', '123', 'marcoivanstamaria@gmail.com', 'Activated', '257545', '2022-12-01 06:31:28'),
+(53, 8, NULL, 'Krishtalene BendaÃ±a', 'Homeowner', '123', 'tissabendana@gmail.com', 'Activated', '573856', '2022-12-01 06:37:48'),
+(59, 51, NULL, 'SV1_Guard', 'Guard', '123', 'SV1_Guard', 'Activated', NULL, NULL);
 
 -- --------------------------------------------------------
 

@@ -49,15 +49,22 @@ if (isset($_POST['register'])) {
   $email_address = $_POST['email_address'];
   //   $password = $_POST['password'];
   //   $confirm_password = $_POST['confirm_password'];
-  $sql = "SELECT * FROM homeowner_profile WHERE email_address = '$email_address' ";
+  $sql = "SELECT * FROM homeowner_profile WHERE email_address = '$email_address'";
   $result = mysqli_query($con, $sql);
   $row = $result->fetch_assoc();
-  $first_name = $row['first_name'];
-  $last_name = $row['last_name'];
+  $first_name = $row['first_name'] ?? '';
+  $last_name = $row['last_name'] ?? '';
   $full_name = $first_name . " " . $last_name;
+
   $sql1 = "SELECT * FROM user WHERE email_address = '$email_address'";
   $result1 = mysqli_query($con, $sql1);
   $homeowner_id = $row['homeowner_id'] ?? '';
+
+  $sql2 = "SELECT * FROM tenant WHERE email = '$email_address'";
+  $result2 = mysqli_query($con, $sql2);
+  $row2 = $result2->fetch_assoc();
+  $fullnameTenant = $row2['full_name'] ?? '';
+  $tenant_id = $row2['tenant_id'] ?? '';
 
   if (mysqli_num_rows($result1) == 1) {
     echo
@@ -93,11 +100,38 @@ if (isset($_POST['register'])) {
     } catch (Exception $e) {
       echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
+  } else if (mysqli_num_rows($result2) == 1) {
+    $mail = new PHPMailer(true);
+    try {
+      $mail->SMTPDebug = 2;
+      $mail->isSMTP();
+      $mail->Host = 'smtp.gmail.com';
+      $mail->SMTPAuth = true;
+      $mail->Username = 'sunnyvalesubdivision0@gmail.com';
+      $mail->Password = 'qfmixbvqlsbxrqob';
+      $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+      $mail->Port = 587;
+      $mail->setFrom('sunnyvalesubdivision0@gmail.com');
+      $mail->addAddress($email_address, $full_name);
+      $mail->isHTML(true);
+      $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
+      $mail->Subject = 'Account Activation';
+      $mail->Body = '<p>Your temporary password is: <b style="font-size: 30px;">' . $verification_code . '</b></p><p>Please change it immediately after successful login. </p>';
+      $mail->send();
+      $sql = "INSERT INTO user (user_homeowner_id, user_tenant_id, full_name, password,user_type,email_address,account_status,verification_code,email_verified_at) VALUES(NULL, $tenant_id, '$fullnameTenant', '$verification_code','Homeowner','$email_address','Activated', '$verification_code', NOW())";
+      $result = mysqli_query($con, $sql);
+      $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('$fullnameTenant' ,  'created an account', NOW())";
+      mysqli_query($con, $sql1);
+      header("Location: ../modules/login.php");
+      exit();
+    } catch (Exception $e) {
+      echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
   } else {
     echo
     "<div class='messageFail'>
           <label>
-          The email address that you have provided is not found in the homeowners' list. Please try again.
+          The email address that you have provided is not found in the homeowners' or tenants' list. Please try again.
           </label>
         </div>";
   }
@@ -1579,7 +1613,8 @@ if (isset($_POST['payDues'])) {
   }
 }
 
-// REGISTRATION OF HOMEOWNERS
+// REGISTRATION OF TENANTS
+
 if (isset($_POST['tenant_submit'])) {
   $first_name = $_POST['first_name'];
   $middle_name = $_POST['middle_name'];
@@ -1595,7 +1630,7 @@ if (isset($_POST['tenant_submit'])) {
   $row = $resultSession->fetch_assoc();
   $homeowner_id = $row['user_homeowner_id'];
 
-  if ($middle_name == 'N/A' AND $suffix == 'N/A') {
+  if ($middle_name == 'N/A' and $suffix == 'N/A') {
     $full_name = $first_name . " " . $last_name;
   } else if ($suffix == 'N/A') {
     $full_name = $first_name . " " . $middle_name . " " . $last_name;
@@ -1605,7 +1640,7 @@ if (isset($_POST['tenant_submit'])) {
     $full_name = $first_name . " " . $middle_name . " " . $last_name . " " . $suffix;
   }
 
-  $sql = "INSERT INTO tenant(homeowner_id, full_name, birthdate, sex, email, mobile_no) VALUES ('$homeowner_id', '$full_name', '$birthdate', '$sex', '$email_address', '$mobile_number')";
+  $sql = "INSERT INTO tenant(homeowner_id, full_name, birthdate, sex, email, mobile_no, display_picture) VALUES ('$homeowner_id', '$full_name', '$birthdate', '$sex', '$email_address', '$mobile_number', 'default.png')";
   $result = mysqli_query($con, $sql);
 
   header("Location: tenantHomeowner.php");
