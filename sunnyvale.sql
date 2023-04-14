@@ -1453,7 +1453,7 @@ CREATE TABLE IF NOT EXISTS `billing_period` (
   `month` varchar(45) NOT NULL,
   `year` varchar(45) NOT NULL,
   PRIMARY KEY (`billingPeriod_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `billing_period`
@@ -1550,7 +1550,7 @@ CREATE TABLE IF NOT EXISTS `bill_consumer` (
   `datetime_paid` datetime DEFAULT NULL,
   `status` varchar(45) NOT NULL,
   PRIMARY KEY (`billConsumer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `bill_consumer`
@@ -2478,7 +2478,7 @@ CREATE TABLE IF NOT EXISTS `tenant` (
   `mobile_no` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `display_picture` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`tenant_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `tenant`
@@ -2600,7 +2600,7 @@ CREATE TABLE IF NOT EXISTS `years` (
   `yearID` int NOT NULL AUTO_INCREMENT,
   `year` varchar(45) NOT NULL,
   PRIMARY KEY (`yearID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `years`
