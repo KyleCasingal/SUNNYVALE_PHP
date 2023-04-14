@@ -155,7 +155,7 @@
         <li class="topListItemLanding" onclick="location.href='./modules/amenitiesGuest.php'">AMENITIES</li>
 
         <button class="registerButtonLanding" name="registerButtonLanding" id="registerButtonLanding">
-          Verify your Account
+          Activate your Account
         </button>
         <button class="loginButtonLanding" name="loginButtonLanding" id="loginButtonLanding">
           Login
