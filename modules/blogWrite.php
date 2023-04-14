@@ -125,7 +125,7 @@
       <div class='blogWritePage'>
         <div class='formBlog'>
           <?php
-          if ($rowUser['user_type'] == 'Homeowner') {
+          if ($rowUser['user_type'] == 'Homeowner' or $rowUser['user_type'] == 'Tenant') {
             echo "<label class='writeText'>Add Photos</label>
             <input class='attInput' type='file' name='image' id='image' accept='image/*' onchange='preview()'></input>
             <img class='imagePrev' id='imagePreview' src=# alt='' />

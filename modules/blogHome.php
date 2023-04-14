@@ -1,6 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-$result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'No' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
+$result = $con->query("SELECT post.post_id, post.full_name, post.title, post.content, post.content_image, post.published_at, tenant.full_name, tenant.display_picture FROM post, tenant WHERE tenant.full_name = post.full_name AND officer_post = 'No' AND post_status = 'Active' UNION SELECT post.post_id, post.full_name, post.title, post.content, post.content_image, post.published_at, CONCAT(homeowner_profile.first_name, ' ', homeowner_profile.last_name), homeowner_profile.display_picture FROM post, homeowner_profile WHERE CONCAT(homeowner_profile.first_name, ' ', homeowner_profile.last_name) = post.full_name AND officer_post = 'No' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
 $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
 $resultOfficer1 = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
 $resultUser = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
@@ -506,7 +506,7 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
             if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
               echo "<button id='archivedPosts' name='archivedPosts' type='submit' class='archived-post-btn'>Archived Posts</button>
           <button id='newPost' type='button' class='new-announcement-btn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>+ New Announcement</button>";
-            } else if ($rowUser['user_type'] == 'Homeowner') {
+            } else if ($rowUser['user_type'] == 'Homeowner' or $rowUser['user_type'] == 'Tenant') {
               echo "<button id='newPost' type='button' class='newPostBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
                     + New Post
                   </button>";
@@ -520,7 +520,7 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
                   <?php
                   if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
                     echo "<h5 class='modal-title' id='staticBackdropLabel'>Add new announcement</h5>";
-                  } else if ($rowUser['user_type'] == 'Homeowner') {
+                  } else if ($rowUser['user_type'] == 'Homeowner' or $rowUser['user_type'] == 'Tenant') {
                     echo "<h5 class='modal-title' id='staticBackdropLabel'>Add new post</h5>";
                   }
                   ?>

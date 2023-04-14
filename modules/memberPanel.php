@@ -1,12 +1,19 @@
 <?php
 require '../marginals/topbar.php';
-$result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
-$row = $result->fetch_assoc();
-$user_type = $row['user_type'];
-$residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['barangay'];
-$resultSubd = $con->query("SELECT * FROM subdivision");
-$resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id = " . $user_id = $_SESSION['user_id'] . " AND user_type = 'Homeowner' AND full_name = homeowner_name");
-$resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id  WHERE homeowner_id = '$homeowner_id_profile' AND status = 'PAID' ORDER BY billing_period.billingPeriod_id ASC");
+if ($_SESSION['user_type'] == 'Tenant') {
+  $result = $con->query("SELECT * FROM user, tenant  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND user.full_name = tenant.full_name") or die($mysqli->error);
+  $row = $result->fetch_assoc();
+  $user_type = $row['user_type'];
+} else {
+  $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
+  $row = $result->fetch_assoc();
+  $user_type = $row['user_type'];
+  $residence_address = $row['street'] . ' ' . $row['subdivision'] . ' ' . $row['barangay'];
+  $resultSubd = $con->query("SELECT * FROM subdivision");
+  $resultDues = $con->query("SELECT * FROM user, monthly_dues_bill WHERE user_id = " . $user_id = $_SESSION['user_id'] . " AND user_type = 'Homeowner' AND full_name = homeowner_name");
+  $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id  WHERE homeowner_id = '$homeowner_id_profile' AND status = 'PAID' ORDER BY billing_period.billingPeriod_id ASC");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -605,6 +612,8 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billin
         <label class='lblProfile'><?php
                                   if ($user_type == 'Homeowner') {
                                     echo "Member Profile";
+                                  } else if ($user_type == 'Tenant') {
+                                    echo "Tenant Profile";
                                   } else {
                                     echo "Profile";
                                   }
@@ -621,11 +630,15 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billin
               <tr>
                 <td class="lbl">Name:</td>
                 <td class="data"><?php
-                                  if ($row['suffix'] == "N/A") {
-                                    echo $row['first_name'] . " " . $row['middle_name']  . " " . $row['last_name'];
-                                  } else {
-                                    echo $row['first_name'] . " " . $row['middle_name']  . " " . $row['last_name'] . " " . $row['suffix'];
-                                  }
+                                  if ($user_type == 'Homeowner') {
+                                    if ($row['suffix'] == "N/A") {
+                                      echo $row['first_name'] . " " . $row['middle_name']  . " " . $row['last_name'];
+                                    } else {
+                                      echo $row['first_name'] . " " . $row['middle_name']  . " " . $row['last_name'] . " " . $row['suffix'];
+                                    }
+                                  } else if ($user_type == 'Tenant') {
+                                    echo $row['full_name'];
+                                  };
                                   ?></td>
                 <td class="editBtn">
                   <?php
@@ -680,6 +693,26 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billin
               <td class='data'>" . $row['vehicle_registration'] . "</td>
               <td class='editBtn'><button class='change-password' type='button' data-bs-toggle='modal' data-bs-target='#editPassword'>Change password <i class='fa-solid fa-lock'></i></button></td>
             </tr>";
+              } else if ($user_type == 'Tenant') {
+                $datetime = strtotime($row['birthdate']);
+                echo "<tr>
+                <td class='lbl'>Date of Birth:</td>
+                <td class='data'>
+                               " . $phptime = date('F/d/Y', $datetime) . "
+                </td>
+              </tr>
+              <tr>
+                <td class='lbl'>Sex:</td>
+                <td class='data'> " . $row['sex'] . "</td>
+              </tr>
+              <tr>
+                <td class='lbl'>Email:</td>
+                <td class='data'>" . $row['email_address'] . "</td>
+              </tr>
+              <tr>
+                <td class='lbl'>Mobile Number:</td>
+                <td class='data'>" . $row['mobile_no'] . "</td>
+              </tr>";
               }
               ?>
             </tbody>

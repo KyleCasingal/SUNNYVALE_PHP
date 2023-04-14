@@ -80,11 +80,11 @@ if (isset($_POST['register'])) {
       $mail->isSMTP();
       $mail->Host = 'smtp.gmail.com';
       $mail->SMTPAuth = true;
-      $mail->Username = 'sunnyvalesubdivision0@gmail.com';
-      $mail->Password = 'qfmixbvqlsbxrqob';
+      $mail->Username = 'subdivisionsunnyvale@gmail.com';
+      $mail->Password = 'snemytstdrbbmqia';
       $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
       $mail->Port = 587;
-      $mail->setFrom('sunnyvalesubdivision0@gmail.com');
+      $mail->setFrom('subdivisionsunnyvale@gmail.com');
       $mail->addAddress($email_address, $full_name);
       $mail->isHTML(true);
       $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
@@ -107,18 +107,18 @@ if (isset($_POST['register'])) {
       $mail->isSMTP();
       $mail->Host = 'smtp.gmail.com';
       $mail->SMTPAuth = true;
-      $mail->Username = 'sunnyvalesubdivision0@gmail.com';
-      $mail->Password = 'qfmixbvqlsbxrqob';
+      $mail->Username = 'subdivisionsunnyvale@gmail.com';
+      $mail->Password = 'snemytstdrbbmqia';
       $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
       $mail->Port = 587;
-      $mail->setFrom('sunnyvalesubdivision0@gmail.com');
+      $mail->setFrom('subdivisionsunnyvale@gmail.com');
       $mail->addAddress($email_address, $full_name);
       $mail->isHTML(true);
       $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
       $mail->Subject = 'Account Activation';
       $mail->Body = '<p>Your temporary password is: <b style="font-size: 30px;">' . $verification_code . '</b></p><p>Please change it immediately after successful login. </p>';
       $mail->send();
-      $sql = "INSERT INTO user (user_homeowner_id, user_tenant_id, full_name, password,user_type,email_address,account_status,verification_code,email_verified_at) VALUES(NULL, $tenant_id, '$fullnameTenant', '$verification_code','Homeowner','$email_address','Activated', '$verification_code', NOW())";
+      $sql = "INSERT INTO user (user_homeowner_id, user_tenant_id, full_name, password,user_type,email_address,account_status,verification_code,email_verified_at) VALUES(NULL, $tenant_id, '$fullnameTenant', '$verification_code','Tenant','$email_address','Activated', '$verification_code', NOW())";
       $result = mysqli_query($con, $sql);
       $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('$fullnameTenant' ,  'created an account', NOW())";
       mysqli_query($con, $sql1);
@@ -267,7 +267,7 @@ if (isset($_POST['submitPost'])) {
   $user_id = $row['user_id'];
   $full_name = $row['full_name'];
 
-  if ($row['user_type'] != "Homeowner") {
+  if ($row['user_type'] != "Homeowner" AND $row['user_type'] != "Tenant") {
     $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, days_archive, content_image, officer_post, post_status) VALUES ('$user_id','$full_name', '$title', '$content', now(), '$days', '', 'Yes', 'Active')";
     mysqli_query($con, $sql);
   } else {

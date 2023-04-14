@@ -1,6 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Homeowner') {
+if ($_SESSION['user_type'] != 'Homeowner' AND $_SESSION['user_type'] != 'Tenant') {
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }

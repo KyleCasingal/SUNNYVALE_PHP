@@ -4,16 +4,29 @@ if (empty($_SESSION)) {
   header("Location: ../index.php");
   exit;
 }
-$result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
-$result1 = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
-$row1 = $result1->fetch_assoc();
-$homeowner_id_profile = $row1['user_homeowner_id'];
-$fullname_monthlyDues = $row1['full_name'];
-$user_type = $row1['user_type'];
-$resultSubdivision = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
-$rowSubdivision = $resultSubdivision->fetch_assoc();
-$subdivision_name1 = $rowSubdivision['subdivision'];
-$resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivision ='$subdivision_name1' AND homeowner_id != '$homeowner_id_profile' ORDER BY first_name");
+if ($_SESSION['user_type'] == 'Tenant') {
+  $result = $con->query("SELECT * FROM user, tenant WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND user.full_name = tenant.full_name") or die($mysqli->error);
+  $result1 = $con->query("SELECT * FROM user, tenant WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND user.full_name = tenant.full_name")  or die($mysqli->error);
+  $row1 = $result1->fetch_assoc();
+  $homeowner_id_profile = $row1['user_homeowner_id'];
+  $fullname_monthlyDues = $row1['full_name'];
+  $user_type = $row1['user_type'];
+  $resultSubdivision = $con->query("SELECT * FROM user, tenant, homeowner_profile WHERE user_id = " . $user_id = $_SESSION['user_id'] . " AND user.full_name = tenant.full_name AND homeowner_profile.homeowner_id = tenant.homeowner_id") or die($mysqli->error);
+  $rowSubdivision = $resultSubdivision->fetch_assoc();
+  $subdivision_name1 = $rowSubdivision['subdivision'];
+  $resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivision ='$subdivision_name1' AND homeowner_id != '$homeowner_id_profile' ORDER BY first_name");
+} else {
+  $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
+  $result1 = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
+  $row1 = $result1->fetch_assoc();
+  $homeowner_id_profile = $row1['user_homeowner_id'];
+  $fullname_monthlyDues = $row1['full_name'];
+  $user_type = $row1['user_type'];
+  $resultSubdivision = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
+  $rowSubdivision = $resultSubdivision->fetch_assoc();
+  $subdivision_name1 = $rowSubdivision['subdivision'];
+  $resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivision ='$subdivision_name1' AND homeowner_id != '$homeowner_id_profile' ORDER BY first_name");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -352,10 +365,10 @@ $resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivisi
         <ul class="topList">
           <li data-bs-toggle="modal" data-bs-target="#confirmLogout" onclick="location.href='#confirmLogout'" class="topListItem1">HOME</li>
           <?php
-          if ($user_type == 'Homeowner') {
+          if ($user_type == 'Homeowner' or $user_type == 'Tenant') {
           ?>
             <li onclick="location.href='../modules/amenities.php'" class="topListItem1">AMENITIES</li>
-            
+
           <?php
           }
           ?>
@@ -382,17 +395,19 @@ $resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivisi
                 <?php
                 if ($row['user_type'] == 'Homeowner') {
                   echo 'Member Profile';
+                } else if ($row['user_type'] == 'Tenant') {
+                  echo 'Tenant Profile';
                 } else {
                   echo 'Profile';
                 }
                 ?></a>
               <?php
-              if ($row['user_type'] == 'Homeowner') {
+              if ($row['user_type'] == 'Homeowner' OR $row['user_type'] == 'Tenant') {
                 echo '<a class="dropdown-item" href="../modules/inboxPanel.php">Inbox</a>';
               }
               ?>
               <?php
-              if ($row['user_type'] == 'Homeowner') {
+              if ($row['user_type'] == 'Homeowner' OR $row['user_type'] == 'Tenant') {
                 echo ' <a data-bs-toggle="modal" data-bs-target="#raiseConcern" class="dropdown-item" href="#raiseConcern">Submit a Complaint</a>';
               }
               ?>
