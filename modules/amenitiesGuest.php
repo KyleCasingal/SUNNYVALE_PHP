@@ -23,7 +23,7 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
   <link href="https://fonts.googleapis.com/css2?family=Poppins:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  
+
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
@@ -39,8 +39,8 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
-  
+
+
   <title>SUNNYVALE</title>
 </head>
 <style>
@@ -202,7 +202,7 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
     background-color: rgb(253, 200, 86);
   }
 
-  
+
   .calendar-container {
     display: flex;
     justify-content: center;
@@ -425,7 +425,7 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
   </div>
   <form method="post" enctype="multipart/form-data">
 
-  <div class="fab-wrapper">
+    <div class="fab-wrapper">
       <label class="fab" for="showcalendarmodal">
         <center>
           <i style="font-size:2vw" class="fa fa-calendar" id="showcalendarmodal"></i>
@@ -454,7 +454,7 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
       <div class="amenitiesForm">
         <label>Name</label>
         <input type="text" name="full_name" value="<?php echo $_POST['full_name'] ?? '' ?>" id="name" required />
-        
+
 
         <div class="timeinput">
           <label>Time</label>
@@ -550,56 +550,34 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
                                                 $date = date('Y-m-d', strtotime('today'));
                                                 echo "min='$date'"
                                                 ?>>
-        <label>Amenity</label>
-        <select name="amenity" id="" required>
-          <option value="">Select...</option>
-          <?php
-          while ($row = $result->fetch_assoc()) :
-            $price =  $row['price']
-          ?>
-            <option <?php
-                    if (isset($_POST['compute'])) {
-                      $amenity = $_POST['amenity'];
-                      if ($amenity == $row['amenity_name']) {
-                        echo 'selected="selected"';
-                      }
-                    }
-                    ?>>
-              <?php echo $row['amenity_name'] ?>
-            </option>
-          <?php endwhile; ?>
-        </select>
-
-
-
         <label>Subdivision</label>
-            <select name="subdivision" id="subdivision_id" required>
-              <option value="0" selected="selected">Select...</option>
-              <?php
-              while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
-                echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
-              }
-              ?>
-            </select>
-            <label>Amenity</label>
-            <select name="amenity" id="amenity_id" required>
-              <option value="0">Select Subdivision first...</option>
-            </select>
-            <label>Purpose</label>
-            <select name="purpose" id="purpose_id" required>
-              <option value="0">Select Amenity first...</option>
-            </select>
-            <label>Rate per Hour</label>
-            <div>
-              <label>Day</label>
-              <input type="text" id="day_id" size="6" readonly>
-              <label>Night</label>
-              <input type="text" id="night_id" size="6" readonly>
-              <label>Night rate starts at 6pm</label>
-            </div>
+        <select name="subdivision" id="subdivision_id" required>
+          <option value="0" selected="selected">Select...</option>
+          <?php
+          while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
+            echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
+          }
+          ?>
+        </select>
+        <label>Amenity</label>
+        <select name="amenity" id="amenity_id" required>
+          <option value="0">Select Subdivision first...</option>
+        </select>
+        <label>Purpose</label>
+        <select name="purpose" id="purpose_id" required>
+          <option value="0">Select Amenity first...</option>
+        </select>
+        <label>Rate per Hour</label>
+        <div>
+          <label>Day</label>
+          <input type="text" id="day_id" size="6" readonly>
+          <label>Night</label>
+          <input type="text" id="night_id" size="6" readonly>
+          <label>Night rate starts at 6pm</label>
+        </div>
 
-        
-        <label>Amount</label>
+
+        <label>Total Cost</label>
         <input name="cost" type="text" id="price" readOnly <?php
                                                             //AMOUNT COMPUTATION
                                                             if (isset($_POST['compute'])) {
@@ -625,9 +603,9 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
                                                                 echo "value = ''";
                                                               } else if ($_POST['ampmFrom'] == 'am' and $_POST['hrFrom'] < 6) {
                                                                 echo "value = ''";
-                                                              } else if ($_POST['ampmFrom'] == 'pm' and $_POST['hrFrom'] >= 9 and $_POST['minsFrom'] >=0) {
+                                                              } else if ($_POST['ampmFrom'] == 'pm' and $_POST['hrFrom'] >= 9 and $_POST['minsFrom'] >= 0) {
                                                                 echo "value = ''";
-                                                              } else if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] >=9 and $_POST['minsTo'] >=1) {
+                                                              } else if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] >= 9 and $_POST['minsTo'] >= 1) {
                                                                 echo "value = ''";
                                                               } else {
                                                                 echo "value = '$cost'";
@@ -639,7 +617,7 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
         <button class="btnSubmit" name="submitReservation" id="submitPost">Submit Reservation</button>
       </div>
       <div class="paymentForm">
-      <!-- <div class="timeinput">
+        <!-- <div class="timeinput">
                 <label>Time</label>
                 <select name="hrFrom" id="from1" required>
                   <option value="">hr</option>

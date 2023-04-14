@@ -715,7 +715,7 @@ if (isset($_POST['subdivision_id_lot'])) {
 if (isset($_POST['block_id'])) {
   $block_id = $_POST['block_id'];
 
-  $result = $con->query("SELECT * FROM lot WHERE block_id = '$block_id' ORDER BY lot ASC");
+  $result = $con->query("SELECT * FROM lot WHERE block_id = '$block_id' ORDER BY lot + 0 ASC");
 
   if (mysqli_num_rows($result) > 0) {
     echo '<option value="0">Select Lot...</option>';

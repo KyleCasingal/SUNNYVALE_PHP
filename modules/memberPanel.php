@@ -638,6 +638,8 @@ if ($_SESSION['user_type'] == 'Tenant') {
                                     }
                                   } else if ($user_type == 'Tenant') {
                                     echo $row['full_name'];
+                                  } else {
+                                    echo $row['first_name'];
                                   };
                                   ?></td>
                 <td class="editBtn">

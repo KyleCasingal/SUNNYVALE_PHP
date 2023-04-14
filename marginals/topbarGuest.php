@@ -173,7 +173,7 @@ if (isset($_SESSION['user_id'])) {
         <li class="topListItemLanding">AMENITIES</li>
 
         <button class="registerButtonLanding" name="registerButtonGuest" id="registerButtonGuest">
-          Register your Account
+          Activate your Account
         </button>
         <button class="loginButtonLanding" name="loginButtonGuest" id="loginButtonGuest">
           Login
