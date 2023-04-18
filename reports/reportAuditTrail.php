@@ -56,7 +56,11 @@ $result = $con->query("SELECT user, action, DATE(datetime) AS DATE, TIME(datetim
     }
 
     .head {
+        display: flex;
+        gap: 18vw;
+    }
 
+    .head-text {
         padding-bottom: 2vw;
         display: flex;
         flex-direction: column;
@@ -103,7 +107,6 @@ $result = $con->query("SELECT user, action, DATE(datetime) AS DATE, TIME(datetim
 
     }
 
-
     .fab-wrapper {
         position: fixed;
         bottom: 3rem;
@@ -141,16 +144,23 @@ $result = $con->query("SELECT user, action, DATE(datetime) AS DATE, TIME(datetim
 
     }
 
+    .logo-header {
+        max-width: 9vw;
+        max-height: 9vw;
+        height: 9vw;
+        width: 9vw;
+    }
+
     @media only print {
 
         .tblFilter,
         .noprint,
-        .dataTables_filter,
-        .dataTables_paginate,
+        .print-button,
         .dataTables_info,
-        .print-button {
-            visibility: hidden;
-        }
+        .tblReportData_filter,
+        .dataTables_paginate{
+        visibility: hidden;
+    }
     }
 </style>
 <script>
@@ -172,8 +182,11 @@ $result = $con->query("SELECT user, action, DATE(datetime) AS DATE, TIME(datetim
     </div>
     <div class="reportPage">
         <div class="head">
-            <label class="reportHeader">Sunnyvale Home Owners Association</label>
-            <label class="reportSubtext">Sunnyvale Subdivision Compound, Binangonan, Rizal</label>
+            <img class="logo-header" src="../media/content-images/sv2_logo.png" alt="">
+            <div class="head-text">
+                <label class="reportHeader">Sunnyvale Home Owners Association</label>
+                <label class="reportSubtext">Sunnyvale Subdivision Compound, Binangonan, Rizal</label>
+            </div>
         </div>
         <div class="reportContainer">
             <label class="tblTitle">Audit Trail</label>

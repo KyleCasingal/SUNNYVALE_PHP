@@ -33,11 +33,15 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
     }
 
     .reportPage {
-        width: 1000px;
+        width: 80%px;
     }
 
     .head {
+        display: flex;
+        gap: 18vw;
+    }
 
+    .head-text {
         padding-bottom: 2vw;
         display: flex;
         flex-direction: column;
@@ -65,6 +69,7 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
     }
 
     .tblReportData {
+        table-layout: fixed;
         margin-top: 2vw;
         width: 100%;
         border-collapse: collapse;
@@ -121,11 +126,25 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
 
     }
 
+    .logo-header {
+        max-width: 9vw;
+        max-height: 9vw;
+        height: 9vw;
+        width: 9vw;
+    }
+
+    .ID-column {
+        width: 8%;
+        white-space: nowrap;
+    }
+
     @media only print {
 
         .tblFilter,
         .noprint,
-        .print-button {
+        .print-button,
+        .print-button,
+        .fab-wrapper {
             visibility: hidden;
         }
     }
@@ -150,8 +169,11 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
     </div>
     <div class="reportPage">
         <div class="head">
-            <label class="reportHeader">Sunnyvale Home Owners Association</label>
-            <label class="reportSubtext">Sunnyvale Subdivision Compound, Binangonan, Rizal</label>
+            <img class="logo-header" src="../media/content-images/sv2_logo.png" alt="">
+            <div class="head-text">
+                <label class="reportHeader">Sunnyvale Home Owners Association</label>
+                <label class="reportSubtext">Sunnyvale Subdivision Compound, Binangonan, Rizal</label>
+            </div>
         </div>
         <div class="reportContainer">
             <label class="tblTitle">Homeowner List</label>
@@ -167,20 +189,15 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
                 </select>
             </div>
             <div class="tblContainer">
-                <table class="tblHomeowners" id="tblReportData">
+                <table class="tblReportData" id="tblReportData">
                     <thead>
                         <!-- <th></th> -->
-                        <th>Homeowner ID</th>
+                        <th class="ID-column">Homeowner ID</th>
                         <th>Full Name</th>
                         <th>Date of Birth</th>
                         <th>Sex</th>
                         <th>Residence Address</th>
-                        <th>Subdivision</th>
                         <th>Email</th>
-                        <th>Mobile Number</th>
-                        <th>Business Address</th>
-                        <th>Occupation</th>
-                        <th>Employer</th>
                     </thead>
                     <?php
                     while ($row = $result->fetch_assoc()) :
@@ -196,14 +213,14 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
                         } else {
                             $middle_name = " " . $row['middle_name'];
                         }
-                        $residence_address = $row['street'] . ' ' . $row['barangay'];
+                        $residence_address = $row['street'] . ' ' . $row['subdivision'] . ', ' . $row['barangay'];
 
                     ?>
                         <tr>
                             <!-- <td>
                                 <a href="homeownerRegistration.php?homeowner_id=<?php echo $row['homeowner_id']; ?>" class="btnEdit">Edit</a>
                             </td> -->
-                            <td>
+                            <td >
                                 <?php echo $row['homeowner_id']; ?>
                             </td>
                             <td>
@@ -221,21 +238,8 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
                             <td>
                                 <?php echo $residence_address; ?>
                             </td>
-                            <td><?php echo $row['subdivision']; ?></td>
                             <td>
                                 <?php echo $row['email_address']; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['mobile_number']; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['business_address']; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['occupation']; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['employer']; ?>
                             </td>
                         </tr>
                     <?php endwhile; ?>

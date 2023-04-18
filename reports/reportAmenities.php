@@ -48,7 +48,11 @@ $result = $con->query("SELECT * FROM transaction");
   }
 
   .head {
+    display: flex;
+    gap: 18vw;
+  }
 
+  .head-text {
     padding-bottom: 2vw;
     display: flex;
     flex-direction: column;
@@ -124,18 +128,26 @@ $result = $con->query("SELECT * FROM transaction");
   .fc-toolbar {
     background-color: rgb(170, 192, 175, 0.3);
   }
-  .print-button{
+
+  .print-button {
     font-family: 'Poppins', sans-serif;
     font-size: 1vw;
     color: white;
 
   }
 
+  .logo-header {
+    max-width: 9vw;
+    max-height: 9vw;
+    width: 9vw;
+    height: 9vw;
+  }
+
   @media only print {
 
     .tblFilter,
     .noprint,
-    .print-button{
+    .print-button {
       visibility: hidden;
     }
   }
@@ -162,45 +174,47 @@ $result = $con->query("SELECT * FROM transaction");
     </label>
   </div>
   <div class="reportPage">
-
-
-      <div class="head">
+    <div class="head">
+      <img class="logo-header" src="../media/content-images/sv2_logo.png" alt="">
+      <div class="head-text">
         <label class="reportHeader">Sunnyvale Home Owners Association</label>
         <label class="reportSubtext">Sunnyvale Subdivision Compound, Binangonan, Rizal</label>
       </div>
-      <div class="reportContainer">
-        <label class="tblTitle">Transactions</label>
-
-
-        <label class="tblFilter" for="">filter by transaction type:</label>
-        <select name="tblFilter" class="noprint" id="tblFilter" onclick="myFunction1()">
-          <option value="">Select...</option>
-          <?php
-          while ($row0 = $result0->fetch_assoc()) {
-            echo '<option value="' . $row0['transaction_type'] . '">' . $row0['transaction_type'] . '</option>';
-          }
-          ?>
-        </select>
-
-        <table class="tblReportData" id="tblReportData">
-          <thead>
-
-            <th>Renter Name</th>
-            <th>Transaction Type</th>
-            <th>Total Cost</th>
-          </thead>
-          <?php while ($row = $result->fetch_assoc()) : ?>
-            <tr>
-              <td><?php echo $row['name']; ?></td>
-              <td><?php echo $row['transaction_type']; ?></td>
-              <td><?php echo $row['total_cost']; ?></td>
-            </tr>
-          <?php endwhile; ?>
-
-
-        </table>
-      </div>
     </div>
+
+    <div class="reportContainer">
+      <label class="tblTitle">Transactions</label>
+
+
+      <label class="tblFilter" for="">filter by transaction type:</label>
+      <select name="tblFilter" class="noprint" id="tblFilter" onclick="myFunction1()">
+        <option value="">Select...</option>
+        <?php
+        while ($row0 = $result0->fetch_assoc()) {
+          echo '<option value="' . $row0['transaction_type'] . '">' . $row0['transaction_type'] . '</option>';
+        }
+        ?>
+      </select>
+
+      <table class="tblReportData" id="tblReportData">
+        <thead>
+
+          <th>Renter Name</th>
+          <th>Transaction Type</th>
+          <th>Total Cost</th>
+        </thead>
+        <?php while ($row = $result->fetch_assoc()) : ?>
+          <tr>
+            <td><?php echo $row['name']; ?></td>
+            <td><?php echo $row['transaction_type']; ?></td>
+            <td><?php echo $row['total_cost']; ?></td>
+          </tr>
+        <?php endwhile; ?>
+
+
+      </table>
+    </div>
+  </div>
 </body>
 <script>
   function myFunction1() {
