@@ -2,8 +2,8 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3307
--- Generation Time: Apr 14, 2023 at 10:47 PM
+-- Host: 127.0.0.1:3306
+-- Generation Time: May 01, 2023 at 07:26 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -161,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1326 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1357 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -1479,7 +1479,38 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (1322, 'Mon Carlo Delima', 'logged in', '2023-04-14 22:27:37'),
 (1323, 'Mon Carlo Delima', 'logged out', '2023-04-14 22:29:32'),
 (1324, 'Monkey D. Luffy', 'created an account', '2023-04-14 22:46:46'),
-(1325, 'Monkey D. Luffy', 'logged in', '2023-04-14 22:47:03');
+(1325, 'Monkey D. Luffy', 'logged in', '2023-04-14 22:47:03'),
+(1326, 'SV1_Admin', 'logged out', '2023-05-01 13:45:25'),
+(1327, 'Mon Carlo Delima', 'logged in', '2023-05-01 13:45:50'),
+(1328, 'Mon Carlo Delima', 'logged out', '2023-05-01 13:46:33'),
+(1329, 'Mon Carlo Delima', 'logged in', '2023-05-01 13:46:36'),
+(1330, 'Mon Carlo Delima', 'logged out', '2023-05-01 13:46:38'),
+(1331, 'SV1_Admin', 'logged in', '2023-05-01 13:46:56'),
+(1332, 'SV1_Admin', 'logged out', '2023-05-01 13:51:13'),
+(1333, 'SV1_Admin', 'logged in', '2023-05-01 13:52:56'),
+(1334, 'SV1_Admin', 'logged out', '2023-05-01 13:56:55'),
+(1335, 'SV1_Admin', 'logged in', '2023-05-01 13:57:20'),
+(1336, 'SV1_Admin', 'added a new subdivision officer Juan Tamad-President', '2023-05-01 14:04:11'),
+(1337, 'SV1_Admin', 'added a new subdivision officer Rie Takahashi-Vice President', '2023-05-01 14:05:42'),
+(1338, 'SV1_Admin', 'updated an existing subdivision officer Saddie Wheele-President', '2023-05-01 14:24:34'),
+(1339, 'SV1_Admin', 'updated an existing subdivision officer Saddie Wheeler-President', '2023-05-01 14:24:39'),
+(1340, 'SV1_Admin', 'updated an existing subdivision officer Juan Tama-President', '2023-05-02 00:10:26'),
+(1341, 'SV1_Admin', 'updated an existing subdivision officer Juan Tamad-President', '2023-05-02 00:11:01'),
+(1342, 'SV1_Admin', 'updated an existing subdivision officer Saddie Wheeler-President', '2023-05-02 00:11:11'),
+(1343, 'SV1_Admin', 'updated an existing subdivision officer Saddie Wheeler-President', '2023-05-02 00:11:27'),
+(1344, 'SV1_Admin', 'updated an existing subdivision officer Saddie Wheeler-President', '2023-05-02 00:12:36'),
+(1345, 'SV1_Admin', 'updated an existing subdivision officer Rie Takahash-Vice President', '2023-05-02 00:12:47'),
+(1346, 'SV1_Admin', 'updated an existing subdivision officer Rie Takahashi-Vice President', '2023-05-02 00:12:56'),
+(1347, 'SV1_Admin', 'logged out', '2023-05-02 00:14:49'),
+(1348, 'SV1_Admin', 'logged in', '2023-05-02 03:08:34'),
+(1349, 'SV1_Admin', 'logged out', '2023-05-02 03:08:56'),
+(1350, 'SV1_Admin', 'logged in', '2023-05-02 03:16:23'),
+(1351, 'SV1_Admin', 'added a new subdivision officer Aya Price-Vice President', '2023-05-02 03:16:39'),
+(1352, 'SV1_Admin', 'added a new subdivision officer Maxim Diaz-Secretary', '2023-05-02 03:16:59'),
+(1353, 'SV1_Admin', 'added a new subdivision officer Zakir Hodges-Treasurer', '2023-05-02 03:17:14'),
+(1354, 'SV1_Admin', 'added a new subdivision officer Gloria Sharp-Auditor', '2023-05-02 03:17:22'),
+(1355, 'SV1_Admin', 'added a new subdivision officer Dulcie Matthams-PIO', '2023-05-02 03:17:42'),
+(1356, 'SV1_Admin', 'logged out', '2023-05-02 03:18:46');
 
 -- --------------------------------------------------------
 
@@ -2380,25 +2411,27 @@ CREATE TABLE IF NOT EXISTS `officers` (
   `subdivision_name` varchar(50) NOT NULL,
   `officer_name` varchar(255) NOT NULL,
   `position_name` varchar(50) NOT NULL,
+  `officer_img` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`officer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `officers`
 --
 
-INSERT INTO `officers` (`officer_id`, `subdivision_name`, `officer_name`, `position_name`) VALUES
-(1, 'Sunnyvale 1', 'Saddie Wheeler', 'President'),
-(2, 'Sunnyvale 1', 'Bennett Cooke', 'Vice President'),
-(3, 'Sunnyvale 1', 'Martin Craig', 'Secretary'),
-(4, 'Sunnyvale 1', 'Audrey Benson', 'Treasurer'),
-(5, 'Sunnyvale 1', 'Ruth Walsh', 'Auditor'),
-(6, 'Sunnyvale 1', 'Hadley Steele', 'PIO'),
-(7, 'Sunnyvale 1', 'Tadano Hitohito', 'Sgt.at Arms'),
-(10, 'Sunnyvale 2', 'Bogart D. Explorer', 'President'),
-(13, 'Sunnyvale 10', 'Monkey D. Luffy', 'President'),
-(14, 'Sunnyvale 10', 'Portgas D. Ace', 'Vice President'),
-(15, 'Sunnyvale 10', 'Chopper', 'Treasurer');
+INSERT INTO `officers` (`officer_id`, `subdivision_name`, `officer_name`, `position_name`, `officer_img`) VALUES
+(1, 'Sunnyvale 1', 'Saddie Wheeler', 'President', 'pf1.jpg'),
+(2, 'Sunnyvale 1', 'Bennett Cooke', 'Vice President', 'pf2.jpg'),
+(3, 'Sunnyvale 1', 'Martin Craig', 'Secretary', 'pf3.jpg'),
+(4, 'Sunnyvale 1', 'Audrey Benson', 'Treasurer', 'pf4.jpg'),
+(5, 'Sunnyvale 1', 'Ruth Walsh', 'Auditor', 'pf5.jpg'),
+(6, 'Sunnyvale 1', 'Hadley Steele', 'PIO', 'pf6.jpg'),
+(20, 'Sunnyvale 2', 'Zakir Hodges', 'Treasurer', ''),
+(10, 'Sunnyvale 2', 'Bogart D. Explorer', 'President', NULL),
+(18, 'Sunnyvale 2', 'Aya Price', 'Vice President', ''),
+(19, 'Sunnyvale 2', 'Maxim Diaz', 'Secretary', ''),
+(21, 'Sunnyvale 2', 'Gloria Sharp', 'Auditor', ''),
+(22, 'Sunnyvale 2', 'Dulcie Matthams', 'PIO', '');
 
 -- --------------------------------------------------------
 
@@ -2425,8 +2458,7 @@ INSERT INTO `positions` (`position_id`, `subdivision_id`, `subdivision_name`, `p
 (3, 1, 'Sunnyvale 1', 'Secretary'),
 (4, 1, 'Sunnyvale 1', 'Treasurer'),
 (5, 1, 'Sunnyvale 1', 'Auditor'),
-(6, 1, 'Sunnyvale 1', 'PIO'),
-(7, 1, 'Sunnyvale 1', 'Sgt.at Arms');
+(6, 1, 'Sunnyvale 1', 'PIO');
 
 -- --------------------------------------------------------
 

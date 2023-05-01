@@ -1,3 +1,9 @@
+<?php
+$resultSubidivision = $con->query("SELECT * FROM subdivision WHERE subdivision_id != 1") or die($mysqli->error);
+$resultOfficer1 = $con->query("SELECT * FROM officers WHERE subdivision_name = 'Sunnyvale 1' ORDER BY officer_id LIMIT 3");
+$resultOfficer2 = $con->query("SELECT * FROM officers WHERE subdivision_name = 'Sunnyvale 1' ORDER BY officer_id LIMIT 3 OFFSET 3");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -268,260 +274,72 @@
                     <td class="OfficersTitle" colspan="3">Sunnyvale 1 Officers</td>
                   </tr>
                   <tr>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf4.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Noelle Maxwell</p>
-                          <p class="card-subtext">President</p>
+                    <?php while ($row = $resultOfficer1->fetch_assoc()) : ?>
+                      <td>
+                        <div class="card" style="width: 18rem;">
+                          <img src="./media/content-images/<?php echo $row['officer_img']; ?>" class="card-img-top" alt="...">
+                          <div class="card-body">
+                            <p class="card-title"><?php echo $row['officer_name'] ?></p>
+                            <p class="card-subtext"><?php echo $row['position_name'] ?></p>
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf5.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Harriet Fennimore</p>
-                          <p class="card-subtext">Vice President</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf6.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Aileen Sims</p>
-                          <p class="card-subtext">Secretary</p>
-                        </div>
-                      </div>
-                    </td>
+                      </td>
+                    <?php endwhile; ?>
                   </tr>
                   <tr>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf1.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Damon Reese</p>
-                          <p class="card-subtext">Treasurer</p>
+                    <?php while ($row = $resultOfficer2->fetch_assoc()) : ?>
+                      <td>
+                        <div class="card" style="width: 18rem;">
+                          <img src="./media/content-images/<?php echo $row['officer_img']; ?>" class="card-img-top" alt="...">
+                          <div class="card-body">
+                            <p class="card-title"><?php echo $row['officer_name'] ?></p>
+                            <p class="card-subtext"><?php echo $row['position_name'] ?></p>
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf2.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Frederick Roffe</p>
-                          <p class="card-subtext">Auditor</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf3.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Phoebe Jackson</p>
-                          <p class="card-subtext">P.I.O</p>
-                        </div>
-                      </div>
-                    </td>
+                      </td>
+                    <?php endwhile; ?>
                   </tr>
                 </table>
               </div>
-              <div class="carousel-item">
-
-                <table>
-                  <tr>
-                    <td class="OfficersTitle" colspan="3">Sunnyvale 2 Officers</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf4.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Noelle Maxwell</p>
-                          <p class="card-subtext">President</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf5.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Harriet Fennimore</p>
-                          <p class="card-subtext">Vice President</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf6.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Aileen Sims</p>
-                          <p class="card-subtext">Secretary</p>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf1.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Damon Reese</p>
-                          <p class="card-subtext">Treasurer</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf2.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Frederick Roffe</p>
-                          <p class="card-subtext">Auditor</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf3.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Phoebe Jackson</p>
-                          <p class="card-subtext">P.I.O</p>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-              <div class="carousel-item">
-                <table>
-                  <tr>
-                    <td class="OfficersTitle" colspan="3">Sunnyvale 3 Officers</td>
-                  <tr>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf4.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Noelle Maxwell</p>
-                          <p class="card-subtext">President</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf5.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Harriet Fennimore</p>
-                          <p class="card-subtext">Vice President</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf6.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Aileen Sims</p>
-                          <p class="card-subtext">Secretary</p>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf1.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Damon Reese</p>
-                          <p class="card-subtext">Treasurer</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf2.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Frederick Roffe</p>
-                          <p class="card-subtext">Auditor</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf3.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Phoebe Jackson</p>
-                          <p class="card-subtext">P.I.O</p>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-              <div class="carousel-item">
-                <table>
-                  <tr>
-                    <td class="OfficersTitle" colspan="3">Sunnyvale 4 Officers</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf4.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Noelle Maxwell</p>
-                          <p class="card-subtext">President</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf5.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Harriet Fennimore</p>
-                          <p class="card-subtext">Vice President</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf6.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Aileen Sims</p>
-                          <p class="card-subtext">Secretary</p>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf1.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Damon Reese</p>
-                          <p class="card-subtext">Treasurer</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf2.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Frederick Roffe</p>
-                          <p class="card-subtext">Auditor</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="card" style="width: 18rem;">
-                        <img src="./media/content-images/pf3.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <p class="card-title">Phoebe Jackson</p>
-                          <p class="card-subtext">P.I.O</p>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </table>
-              </div>
+              <?php
+              while ($row = $resultSubidivision->fetch_assoc()) :
+                $resultOfficer1 = $con->query("SELECT * FROM officers WHERE subdivision_name ='" . $row['subdivision_name'] . "' ORDER BY officer_id LIMIT 3");
+                $resultOfficer2 = $con->query("SELECT * FROM officers WHERE subdivision_name ='" . $row['subdivision_name'] . "' ORDER BY officer_id LIMIT 3 OFFSET 3");
+              ?>
+                <div class="carousel-item">
+                  <table>
+                    <tr>
+                      <td class="OfficersTitle" colspan="3"><?php echo $row['subdivision_name'] ?> Officers</td>
+                    </tr>
+                    <tr>
+                      <?php while ($row = $resultOfficer1->fetch_assoc()) : ?>
+                        <td>
+                          <div class="card" style="width: 18rem;">
+                            <img src="./media/content-images/<?php echo $row['officer_img']; ?>" class="card-img-top" alt="...">
+                            <div class="card-body">
+                              <p class="card-title"><?php echo $row['officer_name'] ?></p>
+                              <p class="card-subtext"><?php echo $row['position_name'] ?></p>
+                            </div>
+                          </div>
+                        </td>
+                      <?php endwhile; ?>
+                    </tr>
+                    <tr>
+                      <?php while ($row = $resultOfficer2->fetch_assoc()) : ?>
+                        <td>
+                          <div class="card" style="width: 18rem;">
+                            <img src="./media/content-images/<?php echo $row['officer_img']; ?>" class="card-img-top" alt="...">
+                            <div class="card-body">
+                              <p class="card-title"><?php echo $row['officer_name'] ?></p>
+                              <p class="card-subtext"><?php echo $row['position_name'] ?></p>
+                            </div>
+                          </div>
+                        </td>
+                      <?php endwhile; ?>
+                    </tr>
+                  </table>
+                </div>
+              <?php endwhile; ?>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>

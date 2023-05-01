@@ -1,6 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Admin' AND $_SESSION['user_type'] != 'Secretary') {
+if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
 }
@@ -393,7 +393,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
             <label class="lblSettings">Subivision Officers</label>
             <div class="settingsOfficers" id="settingsOfficers">
                 <div class="addAmenityForm">
-                    <form method="post" autocomplete="off">
+                    <form method="post" autocomplete="off" enctype='multipart/form-data'>
                         <input type="hidden" name="officer_id" value="<?php echo $officer_id ?? ''; ?>">
                         <table class="tblAmenityForm">
                             <tr>
@@ -434,6 +434,25 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                                                                                 ?>><?php echo $row['position_name'] ?> </option>
                                         <?php endwhile; ?>
                                     </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+
+                                    <?php
+                                    if (isset($_GET['officer_id'])) {
+                                    ?>
+                                        <input class='attInput' type='file' name='image' id='image' accept='image/*' onchange='preview()' ?></input>
+                                        <img class="avatarBlog" id='imagePreview' <?php
+                                                                                    $imageURL = '../media/content-images/' . $officer_img;
+                                                                                    ?> src="<?= $imageURL ?>" alt="" />
+                                    <?php
+                                    } else {
+                                        echo "<input class='attInput' type='file' name='image' id='image' accept='image/*' onchange='preview()'></input>";
+                                        echo "<img class='imagePrev' id='imagePreview' src=# alt='' />";
+                                    }
+                                    ?>
+                                    <label for='image' class='upload'>Upload Photo</label>
                                 </td>
                             </tr>
                         </table>
@@ -521,6 +540,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                             <th>Subdivision</th>
                             <th>Officer Name</th>
                             <th>Position</th>
+                            <th></th>
                         </thead>
                         <?php while ($row = $resultOfficer->fetch_assoc()) : ?>
                             <tr>
@@ -530,6 +550,9 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                 <td><?php echo $row['subdivision_name'] ?></td>
                                 <td><?php echo $row['officer_name'] ?></td>
                                 <td><?php echo $row['position_name'] ?></td>
+                                <td><img class="avatarBlog" <?php
+                                                            $imageURL = '../media/content-images/' . $row['officer_img'];
+                                                            ?> src="<?= $imageURL ?>" alt="" /></td>
                             </tr>
                         <?php endwhile; ?>
                     </table>
@@ -541,6 +564,23 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
     require '../marginals/footer2.php'
     ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        function readURL(input, id) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#' + id).attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#image").change(function() {
+            readURL(this, 'imagePreview');
+        });
+    </script>
 </body>
 
 

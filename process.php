@@ -267,7 +267,7 @@ if (isset($_POST['submitPost'])) {
   $user_id = $row['user_id'];
   $full_name = $row['full_name'];
 
-  if ($row['user_type'] != "Homeowner" AND $row['user_type'] != "Tenant") {
+  if ($row['user_type'] != "Homeowner" and $row['user_type'] != "Tenant") {
     $sql = "INSERT INTO post(user_id, full_name, title, content, published_at, days_archive, content_image, officer_post, post_status) VALUES ('$user_id','$full_name', '$title', '$content', now(), '$days', '', 'Yes', 'Active')";
     mysqli_query($con, $sql);
   } else {
@@ -857,12 +857,20 @@ if (isset($_POST['sysAccUpdate'])) {
 
 // SUBDIVISION OFFICER ADD
 if (isset($_POST['officerAdd'])) {
+  $targetDir = '../media/content-images/';
+  $fileName = '' . $_FILES['image']['name'] ?? '';
+  $targetFilePath = $targetDir . $fileName;
+  if ($_FILES['image']['size'] != 0) {
+    copy($_FILES['image']['tmp_name'], $targetFilePath);
+  }
+
   $officer_name = $_POST['officer_name'];
   $subdivision_name = $_POST['subdivision_name'];
   $position_name = $_POST['position_name'];
-  $sql = "INSERT INTO officers(subdivision_name, officer_name, position_name) VALUES ('$subdivision_name', '$officer_name', '$position_name')";
   $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $row = $result->fetch_assoc();
+  $sql = "INSERT INTO officers(subdivision_name, officer_name, position_name, officer_img) VALUES ('$subdivision_name', '$officer_name', '$position_name', '$fileName')";
+  
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'added a new subdivision officer' . ' ' . "$officer_name" . '-' . "$position_name" . "', NOW())";
   mysqli_query($con, $sql1);
   mysqli_query($con, $sql);
@@ -878,6 +886,7 @@ if (isset($_GET['officer_id'])) {
     $officer_name = $row['officer_name'];
     $subdivision_name = $row['subdivision_name'];
     $position_name = $row['position_name'];
+    $officer_img = $row['officer_img'];
   }
 }
 
@@ -887,7 +896,18 @@ if (isset($_POST['officerUpdate'])) {
   $officer_name = $_POST['officer_name'];
   $subdivision_name = $_POST['subdivision_name'];
   $position_name = $_POST['position_name'];
-  $con->query("UPDATE officers SET subdivision_name = '$subdivision_name', officer_name = '$officer_name', position_name = '$position_name' WHERE officer_id = '$officer_id'");
+  
+  $targetDir = '../media/content-images/';
+  $fileName = '' . $_FILES['image']['name'] ?? '';
+  $targetFilePath = $targetDir . $fileName;
+  if ($_FILES['image']['size'] != 0) {
+    copy($_FILES['image']['tmp_name'], $targetFilePath);
+    $con->query("UPDATE officers SET subdivision_name = '$subdivision_name', officer_name = '$officer_name', position_name = '$position_name', officer_img = '$fileName' WHERE officer_id = '$officer_id'");
+  } else {
+    $con->query("UPDATE officers SET subdivision_name = '$subdivision_name', officer_name = '$officer_name', position_name = '$position_name' WHERE officer_id = '$officer_id'");
+  }
+
+  
   $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $row = $result->fetch_assoc();
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an existing subdivision officer' . ' ' . "$officer_name" . '-' . "$position_name" . "', NOW())";
@@ -1592,7 +1612,7 @@ if (isset($_POST['payDues'])) {
   $rowID = $resultID->fetch_assoc();
   $max = $rowID['max'];
 
-  $resultUserID = $con->query("SELECT * FROM homeowner WHERE user_id = '" . $_SESSION['user_id'] . "'");
+  $resultUserID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $rowUserID = $resultUserID->fetch_assoc();
   $homeowner_id = $rowUserID['user_homeowner_id'];
 
