@@ -551,7 +551,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                   Close
                 </button>
-                <button type="button" id="approveReservation"class="btn btn-success" data-bs-dismiss="modal"> 
+                <button type="button" id="approveReservation"class="btn btn-success"> 
                   Approve
                 </button>
               </div>
