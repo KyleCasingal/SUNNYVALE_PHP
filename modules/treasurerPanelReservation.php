@@ -561,24 +561,24 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
       </div>
     
 
-     
-  <div class="modal fade" id="approve" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
+      <div class="modal fade" id="approve" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
           Do you really want to approve this Reservation?
-        </div>
-        <div class="modal-footer">
-          <button type="submit" name="approveReservation" class="btn btn-primary" >Yes</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+          </div>
+          <div class="modal-footer">
+            <button name="approveReservation" type="submit" class="btn btn-success">Yes</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+
+    
   </form>
   <?php endwhile; ?>
   
