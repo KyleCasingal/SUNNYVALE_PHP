@@ -927,6 +927,18 @@ if (isset($_POST['missionVision'])) {
   header("Location: settingsMissionVision.php");
 }
 
+// UPDATING PRIVACY
+if (isset($_POST['privacy'])) {
+  $id = $_POST['privacyID'];
+  $description = mysqli_real_escape_string($con, $_POST['description']);
+  $con->query("UPDATE privacy SET description = '$description' WHERE privacy_id = '$id'");
+  // $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+  // $row = $result->fetch_assoc();
+  // $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an existing subdivision officer' . ' ' . "$officer_name" . '-' . "$position_name" . "', NOW())";
+  // mysqli_query ($con, $sql1);
+  header("Location: settingsPrivacy.php");
+}
+
 // SUBMITTING A CONCERN
 if (isset($_POST['concernSubmit'])) {
   $concern_address = $_POST['concern_address'];

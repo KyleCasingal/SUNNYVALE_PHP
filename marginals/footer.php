@@ -2,6 +2,7 @@
 $resultSubidivision = $con->query("SELECT * FROM subdivision WHERE subdivision_id != 1") or die($mysqli->error);
 $resultOfficer1 = $con->query("SELECT * FROM officers WHERE subdivision_name = 'Sunnyvale 1' ORDER BY officer_id LIMIT 3");
 $resultOfficer2 = $con->query("SELECT * FROM officers WHERE subdivision_name = 'Sunnyvale 1' ORDER BY officer_id LIMIT 3 OFFSET 3");
+$resultPrivacy = $con->query("SELECT * FROM privacy");
 ?>
 
 <!DOCTYPE html>
@@ -428,25 +429,10 @@ $resultOfficer2 = $con->query("SELECT * FROM officers WHERE subdivision_name = '
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body privacy-policy">
-          <h4>Privacy Policy for Sunnyvale Subdivisions</h4>
-          <p>At Sunnyvale Subdivisions, we take your privacy seriously. This Privacy Policy outlines the types of personal information that we may collect from you when you visit our website and how we use and protect that information. By using our website, you agree to the terms of this Privacy Policy.</p>
-          <h4>What information do we collect?</h4>
-          <p>We may collect personal information such as your name, email address, mailing address, phone number, and other information that you voluntarily provide to us when you sign up for our newsletter, fill out a form, or contact us through our website.</p>
-          <p>We also automatically collect certain non-personal information about your visit to our website, such as your IP address, browser type, device type, and operating system. This information is used to analyze and improve the performance and usability of our website.</p>
-          <h4>How do we use your information?</h4>
-          <p>We may use the personal information that you provide to us to respond to your inquiries, send you our newsletter or marketing communications, process your orders, and provide you with other information or services that you request from us.</p>
-          <p>We may also use the non-personal information that we collect to analyze trends and usage patterns, improve our website, and to protect our website and our users from fraudulent or unauthorized activities.</p>
-          <h4>Do we share your information?</h4>
-          <p>We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as necessary to provide you with the services that you have requested from us. We may also share your information with our trusted service providers who assist us in operating our website, conducting our business, or servicing you, as long as those parties agree to keep this information confidential.</p>
-          <p>We may also disclose your information if we are required to do so by law or in response to a legal process, or if we believe that such disclosure is necessary to protect our rights, property, or safety, or the rights, property, or safety of our users or others.</p>
-          <h4>How do we protect your information?</h4>
-          <p>We take reasonable measures to protect your personal information from unauthorized access, use, disclosure, alteration, or destruction. However, no data transmission over the Internet or storage of electronic data can be guaranteed to be 100% secure, and we cannot guarantee the security of any information that you provide to us.d</p>
-          <h4>Your rights and choices</h4>
-          <p>You have the right to access and modify the personal information that we have collected from you by contacting us at [Your Contact Information]. You may also opt-out of receiving our newsletter or marketing communications at any time by following the instructions provided in those communications.</p>
-          <h4>Updates to this Privacy Policy</h4>
-          <p>We may update this Privacy Policy from time to time by posting a new version on our website. You should check this page periodically to ensure that you are aware of any changes.</p>
-          <h4>Contact Us</h4>
-          <p>If you have any questions or concerns about this Privacy Policy, please contact us at sunnyvalesubdivisions0@gmail.com</p>
+        <?php while ($row = $resultPrivacy->fetch_assoc()) : ?>
+          <h4><?php echo $row['type']; ?></h4>
+          <p><?php echo $row['description']; ?></p>
+        <?php endwhile; ?>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

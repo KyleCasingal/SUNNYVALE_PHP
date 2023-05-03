@@ -1,12 +1,12 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Admin' AND $_SESSION['user_type'] != 'Secretary') {
+if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
 }
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysqli->error);
+$resultPrivacy = $con->query("SELECT * FROM privacy") or die($mysqli->error);
 ?>
 
 <!DOCTYPE html>
@@ -398,52 +398,50 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
         </div>
         <div class="secretaryPanel">
             <!-- SETTINGS MONTHLY DUES -->
-            <?php while ($rowMissionVision = $resultMissionVision->fetch_assoc()) : ?>
+            <?php while ($rowPrivacy = $resultPrivacy->fetch_assoc()) : ?>
                 <label class="lblSettings"><?php
-                                            echo $rowMissionVision['type'];
+                                            echo $rowPrivacy['type'];
                                             ?></label>
                 <div class="settingsMonthlyDues" id="settingsMonthlyDues">
                     <div class="addAmenityForm">
                         <form method="post" autocomplete="off">
-                            <input type="hidden" name="monthly_dues_id" value="<?php echo $monthly_dues_id ?? ''; ?>">
                             <table class="tblAmenityForm">
                                 <tr>
                                     <td>
                                         <?php
-                                        echo $rowMissionVision['description'];
+                                        echo $rowPrivacy['description'];
                                         ?>
                                     </td>
                             </table>
-
-                            <!-- MODAL EDIT MISSION VISON GOALS -->
+                            <!-- MODAL EDIT PRIVACY -->
                             <div class="modal fade" id="addMonthlyDuesModal<?php
-                                                                            echo $rowMissionVision['id'];
+                                                                            echo $rowPrivacy['privacy_id'];
                                                                             ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Edit <?php
-                                                                                                echo $rowMissionVision['type'];
+                                                                                                echo $rowPrivacy['type'];
                                                                                                 ?></h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <input type="hidden" name="missionVisionID" value="<?php
-                                                                        echo $rowMissionVision['id'];
-                                                                        ?>">
+                                            <input type="hidden" name="privacyID" value="<?php
+                                                                                        echo $rowPrivacy['privacy_id'];
+                                                                                        ?>">
                                             <textarea type="text" name="description" id="" cols="30" rows="10"><?php
-                                                                                                    echo $rowMissionVision['description'];
-                                                                                                    ?></textarea>
+                                                                                                                echo $rowPrivacy['description'];
+                                                                                                                ?></textarea>
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="missionVision" type="submit" class="btn btn-primary">Save Changes</button>
+                                            <button name="privacy" type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="btnArea">
                                 <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addMonthlyDuesModal<?php
-                                                                                                                                        echo $rowMissionVision['id'];
+                                                                                                                                        echo $rowPrivacy['privacy_id'];
                                                                                                                                         ?>">
                                     Edit
                                 </button>
