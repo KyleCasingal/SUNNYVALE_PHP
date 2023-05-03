@@ -210,6 +210,7 @@
                             ?>
                             <li id="missionVision" onclick="location.href='../modules/settingsMissionVision.php'">Mission/Vision</li>
                             <li id="MonthlyDues" onclick="location.href='../modules/settingsMonthlydues.php'">Monthly Dues</li>
+                            <li id="MonthlyDues" onclick="location.href='../modules/settingsPrivacy.php'">Privacy</li>
                             <?php
                             if ($row['user_type'] == 'Admin') {
                                 echo "<li id='Subdivision' onclick=";
