@@ -554,19 +554,21 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
               </div>
               <?php
               if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-                echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='archive-btn'>ARCHIVE</a>";
+              ?>
+                <a href='../process.php?post_archive=" . $row[' post_id'] . "'class='archive-btn'>ARCHIVE</a>
+              <?php
               }
               ?>
-            </div>
-            <div class="postContent">
-              <img class="postImg" <?php
-                                    $imageURL = '../media/postsPhotos/' . $row['content_image'];
-                                    ?> src="<?= $imageURL ?>" alt="">
-              </img>
-              <p class="blogTitle"><?php echo $row['title']; ?></p>
-              <p class="blogBody">
-                <?php echo $row['content']; ?>
-              </p>
+              </div>
+                  <div class=" postContent">
+                  <img class="postImg" <?php
+                                        $imageURL = '../media/postsPhotos/' . $row['content_image'];
+                                        ?> src="<?= $imageURL ?>" alt="">
+                  </img>
+                  <p class="blogTitle"><?php echo $row['title']; ?></p>
+                  <p class="blogBody">
+                    <?php echo $row['content']; ?>
+                  </p>
             </div>
           </div>
         <?php endwhile; ?>
