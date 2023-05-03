@@ -3,6 +3,8 @@ $resultSubidivision = $con->query("SELECT * FROM subdivision WHERE subdivision_i
 $resultOfficer1 = $con->query("SELECT * FROM officers WHERE subdivision_name = 'Sunnyvale 1' ORDER BY officer_id LIMIT 3");
 $resultOfficer2 = $con->query("SELECT * FROM officers WHERE subdivision_name = 'Sunnyvale 1' ORDER BY officer_id LIMIT 3 OFFSET 3");
 $resultPrivacy = $con->query("SELECT * FROM privacy");
+$resultContact = $con->query("SELECT * FROM contact INNER JOIN subdivision WHERE contact.subdivision_id = subdivision.subdivision_id ORDER BY subdivision.subdivision_id LIMIT 2") or die($mysqli->error);
+$resultContact2 = $con->query("SELECT * FROM contact INNER JOIN subdivision WHERE contact.subdivision_id = subdivision.subdivision_id ORDER BY subdivision.subdivision_id LIMIT 2 OFFSET 2") or die($mysqli->error);
 ?>
 
 <!DOCTYPE html>
@@ -369,49 +371,33 @@ $resultPrivacy = $con->query("SELECT * FROM privacy");
         <div class="modal-body">
           <table class="tbl-contacts">
             <tr>
-              <td>
-                <div class="card" style="width: 18rem;">
-                  <div class="card-body">
-                    <h5 class="card-title">Sunnyvale 1</h5>
-                    <p class="card-text">Email: Sunnyvale1@gmail.com</p>
-                    <p class="card-text">Telephone: +63-280-555-7381</p>
+              <?php while ($row = $resultContact->fetch_assoc()) : ?>
 
+                <td>
+                  <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                      <h5 class="card-title"><?php echo $row['subdivision_name'] ?></h5>
+                      <p class="card-text">Email: <?php echo $row['email'] ?></p>
+                      <p class="card-text">Telephone: <?php echo $row['telephone'] ?></p>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td>
-                <div class="card" style="width: 18rem;">
-                  <div class="card-body">
-                    <h5 class="card-title">Sunnyvale 2</h5>
-                    <p class="card-text">Email: Sunnyvale2@gmail.com</p>
-                    <p class="card-text">Telephone: +63-929-555-0584</p>
-
-                  </div>
-                </div>
-              </td>
+                </td>
+              <?php endwhile; ?>
             </tr>
             <tr>
-              <td>
-                <div class="card" style="width: 18rem;">
-                  <div class="card-body">
-                    <h5 class="card-title">Sunnyvale 3</h5>
-                    <p class="card-text">Email: Sunnyvale3@gmail.com</p>
-                    <p class="card-text">Telephone: +63-933-555-8050</p>
-
+              <?php while ($row = $resultContact2->fetch_assoc()) : ?>
+                <td>
+                  <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                      <h5 class="card-title"><?php echo $row['subdivision_name'] ?></h5>
+                      <p class="card-text">Email: <?php echo $row['email'] ?></p>
+                      <p class="card-text">Telephone: <?php echo $row['telephone'] ?></p>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td>
-                <div class="card" style="width: 18rem;">
-                  <div class="card-body">
-                    <h5 class="card-title">Sunnyvale 4</h5>
-                    <p class="card-text">Email: Sunnyvale4@gmail.com</p>
-                    <p class="card-text">Telephone: +63-280-555-7381</p>
-
-                  </div>
-                </div>
-              </td>
+                </td>
+              <?php endwhile; ?>
             </tr>
+
           </table>
         </div>
         <div class="modal-footer">
@@ -429,10 +415,10 @@ $resultPrivacy = $con->query("SELECT * FROM privacy");
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body privacy-policy">
-        <?php while ($row = $resultPrivacy->fetch_assoc()) : ?>
-          <h4><?php echo $row['type']; ?></h4>
-          <p><?php echo $row['description']; ?></p>
-        <?php endwhile; ?>
+          <?php while ($row = $resultPrivacy->fetch_assoc()) : ?>
+            <h4><?php echo $row['type']; ?></h4>
+            <p><?php echo $row['description']; ?></p>
+          <?php endwhile; ?>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

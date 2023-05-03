@@ -209,6 +209,12 @@
                             }
                             ?>
                             <li id='Collection Report' onclick="location.href='../Backup/backup.php'" target='_blank'>Backup</li>
+                            <?php
+                            if ($row['user_type'] == 'Admin') { ?>
+                            <li id="missionVision" onclick="location.href='../modules/settingsContact.php'">Contact Information</li>
+                            <?php
+                            }
+                            ?>
                             <li id="missionVision" onclick="location.href='../modules/settingsMissionVision.php'">Mission/Vision</li>
                             <li id="MonthlyDues" onclick="location.href='../modules/settingsMonthlydues.php'">Monthly Dues</li>
 

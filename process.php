@@ -943,6 +943,48 @@ if (isset($_POST['privacy'])) {
   header("Location: settingsPrivacy.php");
 }
 
+// CONTACT ADD, EDIT
+if (isset($_POST['contactAdd'])) {
+  $email = $_POST['newEmail'];
+  $telephone = $_POST['newTelephone'];
+  $subdivision_id = $_POST['subdivision_id'];
+
+  $sql = "INSERT INTO contact(subdivision_id, telephone, email) VALUES ('$subdivision_id', '$telephone', '$email')";
+  mysqli_query($con, $sql);
+  // $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+  // $row = $result->fetch_assoc();
+  // $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'added a new amenity' . ' ' . "$subdivision_name" . '-' . "$newAmenity" . "', NOW())";
+  // mysqli_query($con, $sql1);
+  header("Location: settingsContact.php");
+}
+
+//SELECTING A ROW TO EDIT CONTACT
+if (isset($_GET['contact_id'])) {
+  $contact_id = $_GET['contact_id'];
+  $result = $con->query("SELECT * FROM contact WHERE contact_id = '$contact_id'");
+  if ($result->num_rows) {
+    $row = $result->fetch_array();
+    $email = $row['email'];
+    $subdivision_id = $row['subdivision_id'];
+    $telephone = $row['telephone'];
+  }
+}
+
+// UPDATING A ROW CONTACT
+if (isset($_POST['contactUpdate'])) {
+  $contact_id = $_POST['contact_id'];
+  $email = $_POST['newEmail'];
+  $telephone = $_POST['newTelephone'];
+  $subdivision_id = $_POST['subdivision_id'];
+
+  $con->query("UPDATE contact SET email = '$email', subdivision_id = '$subdivision_id', telephone = '$telephone' WHERE contact_id = '$contact_id'");
+  // $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+  // $row = $result->fetch_assoc();
+  // $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an exisiting amenity' . ' ' . "$subdivision_name" . '-' . "$amenity_name" . "', NOW())";
+  // mysqli_query($con, $sql1);
+  header("Location: settingsContact.php");
+}
+
 // SUBMITTING A CONCERN
 if (isset($_POST['concernSubmit'])) {
   $concern_address = $_POST['concern_address'];
