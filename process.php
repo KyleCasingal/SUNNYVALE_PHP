@@ -870,7 +870,7 @@ if (isset($_POST['officerAdd'])) {
   $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $row = $result->fetch_assoc();
   $sql = "INSERT INTO officers(subdivision_name, officer_name, position_name, officer_img) VALUES ('$subdivision_name', '$officer_name', '$position_name', '$fileName')";
-  
+
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'added a new subdivision officer' . ' ' . "$officer_name" . '-' . "$position_name" . "', NOW())";
   mysqli_query($con, $sql1);
   mysqli_query($con, $sql);
@@ -896,7 +896,7 @@ if (isset($_POST['officerUpdate'])) {
   $officer_name = $_POST['officer_name'];
   $subdivision_name = $_POST['subdivision_name'];
   $position_name = $_POST['position_name'];
-  
+
   $targetDir = '../media/content-images/';
   $fileName = '' . $_FILES['image']['name'] ?? '';
   $targetFilePath = $targetDir . $fileName;
@@ -907,7 +907,7 @@ if (isset($_POST['officerUpdate'])) {
     $con->query("UPDATE officers SET subdivision_name = '$subdivision_name', officer_name = '$officer_name', position_name = '$position_name' WHERE officer_id = '$officer_id'");
   }
 
-  
+
   $result = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $row = $result->fetch_assoc();
   $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','" . 'updated an existing subdivision officer' . ' ' . "$officer_name" . '-' . "$position_name" . "', NOW())";
@@ -1026,7 +1026,7 @@ if (isset($_POST['subdivision_id'])) {
   $result = $con->query("SELECT * FROM amenities WHERE subdivision_id=$subdivision_id ORDER BY amenity_name DESC");
 
   if (mysqli_num_rows($result) > 0) {
-    echo '<option value="0">Select Amenity...</option>';
+    echo '<option>Select Amenity...</option>';
     while ($row = $result->fetch_assoc()) {
       echo '<option value="' . $row['amenity_id'] . '">' . $row['amenity_name'] . '</option>';
       echo '<script type="text/javascript"> 
@@ -1035,7 +1035,7 @@ if (isset($_POST['subdivision_id'])) {
 </script>';
     }
   } else {
-    echo '<option value="0">No Amenity Found</option>';
+    echo '<option>No Amenity Found</option>';
     echo '<script type="text/javascript">
   document.getElementById("day_id").setAttribute("value","");
   document.getElementById("night_id").setAttribute("value","");
@@ -1048,7 +1048,7 @@ if (isset($_POST['amenity_id'])) {
   $result = $con->query("SELECT * FROM amenity_purpose WHERE amenity_id=$amenity_id ORDER BY amenity_purpose DESC");
 
   if (mysqli_num_rows($result) > 0) {
-    echo '<option value="0">Select Purpose...</option>';
+    echo '<option>Select Purpose...</option>';
     while ($row = $result->fetch_assoc()) {
       echo '<option value="' . $row['amenity_purpose_id'] . '">' . $row['amenity_purpose'] . '</option>';
       echo '<script type="text/javascript"> 
@@ -1057,7 +1057,7 @@ if (isset($_POST['amenity_id'])) {
 </script>';
     }
   } else {
-    echo '<option value="0">No Purpose Found</option>';
+    echo '<option>No Purpose Found</option>';
     echo '<script type="text/javascript"> 
   document.getElementById("day_id").setAttribute("value","");
   document.getElementById("night_id").setAttribute("value","");
@@ -1082,6 +1082,8 @@ if (isset($_POST['purpose_id'])) {
 </script>';
   }
 }
+
+
 
 // ADDING TO CART AMENITIES
 
@@ -1170,7 +1172,6 @@ if (isset($_POST['applyDateTime'])) {
 
         $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE amenity_renting_id = '$amenity_renting_id'";
         $result = mysqli_query($con, $sql);
-      } else if ($_POST['hrTo'] == 12 and $_POST['ampmFrom'] == 'pm') {
       } else {
         $timeTo = strtotime($timeTo);
         $timeFrom = strtotime($timeFrom);

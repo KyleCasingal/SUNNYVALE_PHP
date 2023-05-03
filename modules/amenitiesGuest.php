@@ -1,10 +1,5 @@
 <?php
 require '../marginals/topbarGuest.php';
-// if (empty($_SESSION)) {
-//   header("Location: ./amenitiesGuest.php");
-//   exit;
-// }
-// $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
 $result = $con->query("SELECT * FROM amenities WHERE availability =  'Available' ORDER BY subdivision_name ASC") or die($mysqli->error);
 $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
 $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date_from)=curdate()");
@@ -267,10 +262,10 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
     padding: 15px 15px 30px;
   }
 
-  /*.modal.left_modal  {
+  /* .modal.left_modal {
     pointer-events: none;
     background: transparent;
-}*/
+  } */
 
   .modal-backdrop {
     display: none;
@@ -418,6 +413,102 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
       }
     });
   });
+
+  $(document).ready(function() {
+    $("#hrFromId").on('click', function() {
+      var hrFromId = $(this).val();
+      if (hrFromId) {
+        $.ajax({
+          type: 'POST',
+          url: '../process.php/',
+          data: 'hrFromId=' + hrFromId,
+          success: function(html) {
+
+            $(document).ready(function() {
+              $("#minsFromId").on('click', function() {
+                var minsFromId = $(this).val();
+                if (minsFromId) {
+                  $.ajax({
+                    type: 'POST',
+                    url: '../process.php/',
+                    data: 'minsFromId=' + minsFromId,
+                    success: function(html) {
+
+                      $(document).ready(function() {
+                        $("#ampmFromId").on('click', function() {
+                          var ampmFromId = $(this).val();
+                          if (ampmFromId) {
+                            $.ajax({
+                              type: 'POST',
+                              url: '../process.php/',
+                              data: 'ampmFromId=' + ampmFromId,
+                              success: function(html) {
+
+                                $(document).ready(function() {
+                                  $("#hrToId").on('click', function() {
+                                    var hrToId = $(this).val();
+                                    if (hrToId) {
+                                      $.ajax({
+                                        type: 'POST',
+                                        url: '../process.php/',
+                                        data: 'hrToId=' + hrToId,
+                                        success: function(html) {
+
+                                          $(document).ready(function() {
+                                            $("#minsToId").on('click', function() {
+                                              var minsToId = $(this).val();
+                                              if (minsToId) {
+                                                $.ajax({
+                                                  type: 'POST',
+                                                  url: '../process.php/',
+                                                  data: 'minsToId=' + minsToId,
+                                                  success: function(html) {
+
+                                                    $(document).ready(function() {
+                                                      $("#ampmToId").on('click', function() {
+                                                        var ampmToId = $(this).val();
+                                                        if (ampmToId) {
+                                                          $.ajax({
+                                                            type: 'POST',
+                                                            url: '../process.php/',
+                                                            data: 'ampmToId=' + ampmToId,
+                                                            success: function(html) {
+                                                              $("#cost_id").html(html);
+                                                            }
+                                                          });
+                                                        }
+                                                      });
+                                                    });
+
+                                                  }
+                                                });
+                                              }
+                                            });
+                                          });
+
+                                        }
+                                      });
+                                    }
+                                  });
+                                });
+
+                              }
+                            });
+                          }
+                        });
+                      });
+
+                    }
+                  });
+                }
+              });
+            });
+
+          }
+        });
+      }
+    });
+  });
 </script>
 
 <body>
@@ -454,105 +545,9 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
       <div class="amenitiesForm">
         <label>Name</label>
         <input type="text" name="full_name" value="<?php echo $_POST['full_name'] ?? '' ?>" id="name" required />
-
-
-        <div class="timeinput">
-          <label>Time</label>
-          <select name="hrFrom" id="" required>
-            <option value="">hr</option>
-            <?php
-            for ($x = 1; $x <= 12; $x++) {
-              $x = sprintf("%02d", $x);
-              echo "<option value='$x'";
-              if (isset($_POST['compute'])) {
-                if ($_POST['hrFrom'] == $x) echo "selected='selected'";
-              }
-              echo ">  $x ";
-            }
-            ?>
-          </select>
-          <select name="minsFrom" id="" required>
-            <option value="">mins</option>
-            <?php
-            for ($x = 0; $x <= 55; $x = $x + 5) {
-              $x = sprintf("%02d", $x);
-              echo "<option value='$x'";
-              if (isset($_POST['compute'])) {
-                if ($_POST['minsFrom'] == $x) echo "selected='selected'";
-              }
-              echo ">  $x ";
-            }
-            ?>
-          </select>
-          <select name="ampmFrom" id="" required>
-            <option value="">am/pm</option>
-            <option value="am" <?php
-                                if (isset($_POST['compute'])) {
-                                  if ($_POST['ampmFrom'] == "am") echo 'selected="selected"';
-                                }
-                                ?>>am</option>
-            <option value="pm" <?php
-                                if (isset($_POST['compute'])) {
-                                  if ($_POST['ampmFrom'] == "pm") echo 'selected="selected"';
-                                }
-                                ?>>pm</option>
-          </select>
-          <label>To</label>
-          <select name="hrTo" id="" required>
-            <option value="">hr</option>
-            <?php
-            for ($x = 1; $x <= 12; $x++) {
-              $x = sprintf("%02d", $x);
-              echo "<option value='$x'";
-              if (isset($_POST['compute'])) {
-                if ($_POST['hrTo'] == $x) echo "selected='selected'";
-              }
-              echo ">  $x ";
-            }
-            ?>
-          </select>
-          </option>
-          </select>
-          <select name="minsTo" id="" required>
-            <option value="">mins</option>
-            <?php
-            for ($x = 0; $x <= 55; $x = $x + 05) {
-              $x = sprintf("%02d", $x);
-              echo "<option value='$x'";
-              if (isset($_POST['compute'])) {
-                if ($_POST['minsTo'] == $x) echo "selected='selected'";
-              }
-              echo ">  $x ";
-            }
-            ?>
-          </select>
-          <select name="ampmTo" id="" required>
-            <option value="">am/pm</option>
-            <option value="am" <?php
-                                if (isset($_POST['compute'])) {
-                                  if ($_POST['ampmTo'] == "am") echo 'selected="selected"';
-                                }
-                                ?>>am</option>
-            <option value="pm" <?php
-                                if (isset($_POST['compute'])) {
-                                  if ($_POST['ampmTo'] == "pm") echo 'selected="selected"';
-                                }
-                                ?>>pm</option>
-          </select>
-          <label>6:00am to 9:00pm only</label>
-        </div>
-        <label>Date</label>
-        <input required type="date" name="date" <?php
-                                                if (isset($_POST['compute'])) {
-                                                  $date = $_POST['date'];
-                                                  echo "value = '$date'";
-                                                }
-                                                $date = date('Y-m-d', strtotime('today'));
-                                                echo "min='$date'"
-                                                ?>>
         <label>Subdivision</label>
         <select name="subdivision" id="subdivision_id" required>
-          <option value="0" selected="selected">Select...</option>
+          <option selected="selected">Select...</option>
           <?php
           while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
             echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
@@ -561,11 +556,11 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
         </select>
         <label>Amenity</label>
         <select name="amenity" id="amenity_id" required>
-          <option value="0">Select Subdivision first...</option>
+          <option>Select Subdivision first...</option>
         </select>
         <label>Purpose</label>
         <select name="purpose" id="purpose_id" required>
-          <option value="0">Select Amenity first...</option>
+          <option>Select Amenity first...</option>
         </select>
         <label>Rate per Hour</label>
         <div>
@@ -575,129 +570,74 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
           <input type="text" id="night_id" size="6" readonly>
           <label>Night rate starts at 6pm</label>
         </div>
-
-
+        <div class="timeinput">
+          <label>Time</label>
+          <select name="hrFrom" id="hrFromId" required>
+            <option value="">hr</option>
+            <?php
+            for ($x = 1; $x <= 12; $x++) {
+              $x = sprintf("%02d", $x);
+              echo "<option value='$x'>$x</option>";
+            }
+            ?>
+          </select>
+          <select name="minsFrom" id="minsFromId" required>
+            <option>mins</option>
+            <?php
+            for ($x = 0; $x <= 59; $x = $x + 1) {
+              $x = sprintf("%02d", $x);
+              echo "<option value='$x'>$x</option>";
+            }
+            ?>
+          </select>
+          <select name="ampmFrom" id="ampmFromId" required>
+            <option>am/pm</option>
+            <option value="am">am</option>
+            <option value="pm">pm</option>
+          </select>
+          <label>To</label>
+          <select name="hrTo" id="hrToId" required>
+            <option value="">hr</option>
+            <?php
+            for ($x = 1; $x <= 12; $x++) {
+              $x = sprintf("%02d", $x);
+              echo "<option value='$x'>$x</option>";
+            }
+            ?>
+          </select>
+          </option>
+          </select>
+          <select name="minsTo" id="minsToId" required>
+            <option value="">mins</option>
+            <?php
+            for ($x = 0; $x <= 59; $x = $x + 1) {
+              $x = sprintf("%02d", $x);
+              echo "<option value='$x'>$x</option>";
+            }
+            ?>
+          </select>
+          <select name="ampmTo" id="ampmToId" required>
+            <option value="">am/pm</option>
+            <option value="am">am</option>
+            <option value="pm">pm</option>
+          </select>
+        </div>
+        <label>Date</label>
+        <input required type="date" name="date">
         <label>Total Cost</label>
-        <input name="cost" type="text" id="price" readOnly <?php
-                                                            //AMOUNT COMPUTATION
-                                                            if (isset($_POST['compute'])) {
-                                                              function to_24_hour($hours, $minutes, $meridiem)
-                                                              {
-                                                                $hours = sprintf('%02d', (int) $hours);
-                                                                $minutes = sprintf('%02d', (int) $minutes);
-                                                                $meridiem = (strtolower($meridiem) == 'am') ? 'am' : 'pm';
-                                                                return date('H:i', strtotime("{$hours}:{$minutes} {$meridiem}"));
-                                                              }
-                                                              $timeFrom = to_24_hour($_POST['hrFrom'], $_POST['minsFrom'], $_POST['ampmFrom']);
-                                                              $timeTo = to_24_hour($_POST['hrTo'], $_POST['minsTo'], $_POST['ampmTo']);
-                                                              $timeFrom = strtotime($timeFrom);
-                                                              $timeTo = strtotime($timeTo);
-                                                              $difference = ($timeTo - $timeFrom);
-                                                              $totalHrs = ($difference / 3600);
-                                                              $totalHrs = number_format((float)$totalHrs, 2, '.', '');
-                                                              $res = $con->query("SELECT * FROM amenities WHERE amenity_name = '$amenity'") or die($mysqli->error);
-                                                              $row = $res->fetch_assoc();
-                                                              $cost = $totalHrs * $row['price'];
-
-                                                              if ($cost < 0) {
-                                                                echo "value = ''";
-                                                              } else if ($_POST['ampmFrom'] == 'am' and $_POST['hrFrom'] < 6) {
-                                                                echo "value = ''";
-                                                              } else if ($_POST['ampmFrom'] == 'pm' and $_POST['hrFrom'] >= 9 and $_POST['minsFrom'] >= 0) {
-                                                                echo "value = ''";
-                                                              } else if ($_POST['ampmTo'] == 'pm' and $_POST['hrTo'] >= 9 and $_POST['minsTo'] >= 1) {
-                                                                echo "value = ''";
-                                                              } else {
-                                                                echo "value = '$cost'";
-                                                              }
-                                                            }
-                                                            ?> required />
+        <input name="cost" type="text" id="cost_id" readOnly required />
         <br>
-        <button name="compute" class="btnCompute">Compute</button>
         <button class="btnSubmit" name="submitReservation" id="submitPost">Submit Reservation</button>
       </div>
       <div class="paymentForm">
-        <!-- <div class="timeinput">
-                <label>Time</label>
-                <select name="hrFrom" id="from1" required>
-                  <option value="">hr</option>
-                  <?php
-                  for ($x = 1; $x <= 12; $x++) {
-                    $x = sprintf("%02d", $x);
-                    echo "<option value='$x'>$x";
-                  }
-                  ?>
-                </select>
-                <select name="minsFrom" id="from3" required>
-                  <option value="">mins</option>
-                  <?php
-                  for ($x = 0; $x <= 59; $x++) {
-                    $x = sprintf("%02d", $x);
-                    echo "<option value='$x'>$x";
-                  }
-                  ?>
-                </select>
-                <select name="ampmFrom" id="from2" required>
-                  <option value="">am/pm</option>
-                  <option value="am">am</option>
-                  <option value="pm">pm</option>
-                </select>
-                <label>To</label>
-                <select name="hrTo" id="to1" required>
-                  <option value="">hr</option>
-                  <?php
-                  for ($x = 1; $x <= 12; $x++) {
-                    $x = sprintf("%02d", $x);
-                    echo "<option value='$x'> $x ";
-                  }
-                  ?>
-                </select>
-                <select name="minsTo" id="to3" required>
-                  <option value="">mins</option>
-                  <?php
-                  for ($x = 0; $x <= 59; $x++) {
-                    $x = sprintf("%02d", $x);
-                    echo "<option value='$x'>$x";
-                  }
-                  ?>
-                </select>
-                </option>
-                <select name="ampmTo" id="to2" required>
-                  <option value="">am/pm</option>
-                  <option value="am">am</option>
-                  <option value="pm">pm</option>
-                </select>
-              </div>
-              <div>
-                <label>Total Hours:</label>
-                <input type="text" id="total_id" size="6">
-              </div> -->
         <label class="writeText">Upload proof of payment here:</label>
         <div class="BlogWrite">
-          <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()"></input>
+          <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()" required></input>
           <img class="imagePrev" id="imagePreview" src=# alt="" />
         </div>
         <label for="image" class="upload">Upload Photo</label>
       </div>
     </div>
-    <!-- <table class="table table-hover">
-      <thead>
-        <th>Amenity</th>
-        <th>Renter</th>
-        <th>From</th>
-        <th>To</th>
-        <th>Cost</th>
-      </thead>
-      <?php while ($row = $resultReservation->fetch_assoc()) : ?>
-        <tr>
-          <td><?php echo $row['renter_name'] ?></td>
-          <td><?php echo $row['amenity_name'] ?></td>
-          <td><?php echo $row['date_from'] ?></td>
-          <td><?php echo $row['date_to'] ?></td>
-          <td><?php echo $row['cost'] ?></td>
-        </tr>
-      <?php endwhile; ?>
-    </table> -->
   </form>
   <?php
   require '../marginals/footer2.php';
