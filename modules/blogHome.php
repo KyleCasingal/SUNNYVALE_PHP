@@ -555,7 +555,7 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
               <?php
               if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
               ?>
-                <a href='../process.php?post_archive=" <?php echo $row[' post_id'] ?>' class='archive-btn'>ARCHIVE</a>
+                <a href='../process.php?post_archive=<?php echo $row[' post_id'] ?>' class='archive-btn'>ARCHIVE</a>
               <?php
               }
               ?>
