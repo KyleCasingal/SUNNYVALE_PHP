@@ -140,17 +140,17 @@
                     </li>
                     </li>
                 <?php } ?>
-                <?php if ($row['user_type'] != 'Secretary' && $row['user_type'] != 'Treasurer') { ?>
+                <!-- <?php if ($row['user_type'] != 'Secretary' && $row['user_type'] != 'Treasurer') { ?>
                     <li id='Backup'>
                         <button type='button' class='btnReports' data-bs-toggle='dropdown' aria-expanded='false'>
-                            Backup & Restore <i class='fa-sharp fa-solid fa-chevron-right'></i>
+                            Backup<i class='fa-sharp fa-solid fa-chevron-right'></i>
                         </button>
                         <ul class='dropdown-menu'>
                             <li id='Collection Report' onclick="location.href='../BackupRestore/backup.php'" target='_blank'>Backup</li>
                             <li id='Home Owner List' onclick="location.href='../BackupRestore/restore.php'" target='_blank'>Restore</li>
                         </ul>
                     </li>
-                <?php } ?>
+                <?php } ?> -->
                 <?php if ($row['user_type'] != 'Secretary') { ?>
                     <li id="billing" onclick="location.href='../modules/billing.php'">Billing</li>
                 <?php } ?>
@@ -208,6 +208,7 @@
                                 echo ">Billing Period</li>";
                             }
                             ?>
+                            <li id='Collection Report' onclick="location.href='../Backup/backup.php'" target='_blank'>Backup</li>
                             <li id="missionVision" onclick="location.href='../modules/settingsMissionVision.php'">Mission/Vision</li>
                             <li id="MonthlyDues" onclick="location.href='../modules/settingsMonthlydues.php'">Monthly Dues</li>
                             <?php
