@@ -211,14 +211,16 @@
                             <li id='Collection Report' onclick="location.href='../Backup/backup.php'" target='_blank'>Backup</li>
                             <li id="missionVision" onclick="location.href='../modules/settingsMissionVision.php'">Mission/Vision</li>
                             <li id="MonthlyDues" onclick="location.href='../modules/settingsMonthlydues.php'">Monthly Dues</li>
-                            <li id="MonthlyDues" onclick="location.href='../modules/settingsPrivacy.php'">Privacy</li>
+
                             <?php
                             if ($row['user_type'] == 'Admin') {
                                 echo "<li id='Subdivision' onclick=";
                                 echo '"';
                                 echo "location.href='../modules/settingsSubdivision.php'";
                                 echo '"';
-                                echo ">Subdivisions</li>";
+                                echo ">Subdivisions</li>"; ?>
+                                <li id="MonthlyDues" onclick="location.href='../modules/settingsPrivacy.php'">Privacy</li>
+                            <?php
                             }
                             ?>
                             <li id="Subdivision Officers" onclick="location.href='../modules/settingsSubdivisionOfficer.php'">Subdivision Officers</li>

@@ -58,7 +58,7 @@ CREATE TABLE `amenity_renting` (
   `cost` int(11) DEFAULT NULL,
   `cart` varchar(10) NOT NULL,
   PRIMARY KEY (`amenity_renting_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 INSERT INTO amenity_renting VALUES("9","","1","Mon Carlo Delima","Sunnyvale 1","Court","1","2023-02-13 01:00:00","2023-02-13 02:00:00","50","Removed");
 INSERT INTO amenity_renting VALUES("8","","1","Mon Carlo Delima","Sunnyvale 1","Court","1","2023-02-12 18:00:00","2023-02-12 21:00:00","450","Removed");
@@ -68,11 +68,12 @@ INSERT INTO amenity_renting VALUES("12","","1","Mon Carlo Delima","Sunnyvale 1",
 INSERT INTO amenity_renting VALUES("14","1","1","Mon Carlo Delima","Sunnyvale 1","Court","3","2023-02-15 09:00:00","2023-02-15 12:00:00","150","Approved");
 INSERT INTO amenity_renting VALUES("15","1","1","Mon Carlo Delima","Sunnyvale 1","Court","1","2023-02-16 18:00:00","2023-02-16 21:00:00","450","Approved");
 INSERT INTO amenity_renting VALUES("16","","1","Mon Carlo Delima","Sunnyvale 1","Court","1","","","","Removed");
-INSERT INTO amenity_renting VALUES("26","11","1","Mon Carlo Delima","Sunnyvale 1","Swimming Pool","5","2023-04-10 08:00:00","2023-04-10 09:00:00","50","Pending");
+INSERT INTO amenity_renting VALUES("26","11","1","Mon Carlo Delima","Sunnyvale 1","Swimming Pool","5","2023-04-10 08:00:00","2023-04-10 09:00:00","50","Approved");
 INSERT INTO amenity_renting VALUES("20","","48","SV1_Treasurer","Sunnyvale 1","Court","3","","","","Removed");
 INSERT INTO amenity_renting VALUES("25","3","1","Mon Carlo Delima","Sunnyvale 3","Clubhouse","8","2023-04-15 01:00:00","2023-04-15 02:00:00","150","Approved");
 INSERT INTO amenity_renting VALUES("23","2","48","SV1_Treasurer","Sunnyvale 2","Court","11","2023-04-08 08:00:00","2023-04-08 10:00:00","40","Approved");
 INSERT INTO amenity_renting VALUES("24","2","48","SV1_Treasurer","Sunnyvale 2","Court","12","2023-04-08 10:00:00","2023-04-08 12:00:00","140","Approved");
+INSERT INTO amenity_renting VALUES("27","","1","Mon Carlo Delima","Sunnyvale 1","Court","10","2023-05-02 12:00:00","2023-05-02 18:00:00","480","Yes");
 
 
 
@@ -101,7 +102,7 @@ CREATE TABLE `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1357 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1399 DEFAULT CHARSET=utf8;
 
 INSERT INTO audit_trail VALUES("3","SV1_Admin","logged in","2022-11-29 12:32:22");
 INSERT INTO audit_trail VALUES("5","SV1_Admin","logged in","2022-11-29 12:36:16");
@@ -1445,6 +1446,48 @@ INSERT INTO audit_trail VALUES("1353","SV1_Admin","added a new subdivision offic
 INSERT INTO audit_trail VALUES("1354","SV1_Admin","added a new subdivision officer Gloria Sharp-Auditor","2023-05-02 03:17:22");
 INSERT INTO audit_trail VALUES("1355","SV1_Admin","added a new subdivision officer Dulcie Matthams-PIO","2023-05-02 03:17:42");
 INSERT INTO audit_trail VALUES("1356","SV1_Admin","logged out","2023-05-02 03:18:46");
+INSERT INTO audit_trail VALUES("1357","SV1_Admin","logged in","2023-05-02 22:58:27");
+INSERT INTO audit_trail VALUES("1358","SV1_Admin","logged out","2023-05-02 22:59:43");
+INSERT INTO audit_trail VALUES("1359","SV1_Admin","logged in","2023-05-02 23:00:00");
+INSERT INTO audit_trail VALUES("1360","SV1_Admin","logged out","2023-05-02 23:01:08");
+INSERT INTO audit_trail VALUES("1361","SV1_Admin","logged in","2023-05-02 23:01:15");
+INSERT INTO audit_trail VALUES("1362","SV1_Admin","logged out","2023-05-02 23:01:17");
+INSERT INTO audit_trail VALUES("1363","SV1_Admin","logged in","2023-05-02 23:06:45");
+INSERT INTO audit_trail VALUES("1364","SV1_Admin","logged out","2023-05-02 23:06:56");
+INSERT INTO audit_trail VALUES("1365","SV1_Admin","logged in","2023-05-02 23:08:50");
+INSERT INTO audit_trail VALUES("1366","SV1_Admin","logged out","2023-05-02 23:09:01");
+INSERT INTO audit_trail VALUES("1367","SV1_Admin","logged in","2023-05-02 23:14:26");
+INSERT INTO audit_trail VALUES("1368","SV1_Admin","logged out","2023-05-02 23:14:42");
+INSERT INTO audit_trail VALUES("1369","Mon Carlo Delima","logged in","2023-05-02 23:32:09");
+INSERT INTO audit_trail VALUES("1370","Mon Carlo Delima","logged out","2023-05-02 23:36:03");
+INSERT INTO audit_trail VALUES("1371","Mon Carlo Delima","logged in","2023-05-03 00:03:13");
+INSERT INTO audit_trail VALUES("1372","Mon Carlo Delima","logged out","2023-05-03 00:03:35");
+INSERT INTO audit_trail VALUES("1373","SV1_Admin","logged in","2023-05-03 00:03:38");
+INSERT INTO audit_trail VALUES("1374","SV1_Admin","logged in","2023-05-03 20:47:17");
+INSERT INTO audit_trail VALUES("1375","SV1_Admin","logged out","2023-05-03 20:47:51");
+INSERT INTO audit_trail VALUES("1376","Mon Carlo Delima","logged in","2023-05-03 20:47:54");
+INSERT INTO audit_trail VALUES("1377","Mon Carlo Delima","logged out","2023-05-03 20:48:59");
+INSERT INTO audit_trail VALUES("1378","SV1_Admin","logged in","2023-05-03 20:49:02");
+INSERT INTO audit_trail VALUES("1379","SV1_Admin","logged out","2023-05-03 21:11:13");
+INSERT INTO audit_trail VALUES("1380","Mon Carlo Delima","logged in","2023-05-03 21:11:16");
+INSERT INTO audit_trail VALUES("1381","Mon Carlo Delima","logged out","2023-05-03 21:11:40");
+INSERT INTO audit_trail VALUES("1382","Mon Carlo Delima","logged in","2023-05-03 21:11:43");
+INSERT INTO audit_trail VALUES("1383","Mon Carlo Delima","logged out","2023-05-03 21:11:51");
+INSERT INTO audit_trail VALUES("1384","SV1_Admin","logged in","2023-05-03 21:11:54");
+INSERT INTO audit_trail VALUES("1385","SV1_Admin","logged out","2023-05-03 22:18:31");
+INSERT INTO audit_trail VALUES("1386","SV1_Admin","logged in","2023-05-03 22:22:44");
+INSERT INTO audit_trail VALUES("1387","SV1_Admin","logged out","2023-05-03 22:27:31");
+INSERT INTO audit_trail VALUES("1388","SV1_Admin","logged in","2023-05-03 22:27:33");
+INSERT INTO audit_trail VALUES("1389","SV1_Admin","logged out","2023-05-03 22:27:35");
+INSERT INTO audit_trail VALUES("1390","SV1_Treasurer","logged in","2023-05-03 22:27:37");
+INSERT INTO audit_trail VALUES("1391","SV1_Treasurer","logged out","2023-05-03 22:27:43");
+INSERT INTO audit_trail VALUES("1392","SV1_Admin","logged in","2023-05-03 22:39:02");
+INSERT INTO audit_trail VALUES("1393","SV1_Admin","logged out","2023-05-03 22:48:13");
+INSERT INTO audit_trail VALUES("1394","SV1_Admin","logged in","2023-05-03 22:48:44");
+INSERT INTO audit_trail VALUES("1395","SV1_Admin","logged out","2023-05-03 22:50:04");
+INSERT INTO audit_trail VALUES("1396","SV1_Admin","logged in","2023-05-03 23:20:06");
+INSERT INTO audit_trail VALUES("1397","SV1_Admin","logged out","2023-05-03 23:20:28");
+INSERT INTO audit_trail VALUES("1398","SV1_Secretary","logged in","2023-05-03 23:20:31");
 
 
 
@@ -1750,6 +1793,18 @@ INSERT INTO concern VALUES("1","1","Mon Carlo Delima","","","Road concern","Unfi
 INSERT INTO concern VALUES("2","16","Janwel Castillo","1","Mon Carlo Delima","Ipapa tulfo kita","wahahahaha","Processing","2023-04-07 15:07:47","2023-04-06 23:44:02");
 INSERT INTO concern VALUES("3","1","Mon Carlo Delima","16","Janwel Castillo","Noise Complaint","Neighbor playing guitar loudly past midnight.","Resolved","2023-04-08 12:10:44","2023-04-06 23:59:18");
 INSERT INTO concern VALUES("4","2","Kyle Andrei Casingal","4","John Doe","John Doe is doing it","Akala ko ikaw ay akin.","Processing","2023-04-08 18:02:58","2023-04-08 12:30:20");
+
+
+
+DROP TABLE contact;
+
+CREATE TABLE `contact` (
+  `contact_id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) NOT NULL,
+  `telephone` varchar(100) NOT NULL,
+  PRIMARY KEY (`contact_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 
 
@@ -2359,6 +2414,32 @@ INSERT INTO post VALUES("39","61","Monkey D. Luffy","Japanese Street","Lorem ips
 
 
 
+DROP TABLE privacy;
+
+CREATE TABLE `privacy` (
+  `privacy_id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`privacy_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+INSERT INTO privacy VALUES("1","Privacy Policy for Sunnyvale Subdivisions","At Sunnyvale Subdivisions, we take your privacy seriously. This Privacy Policy outlines the types of personal information that we may collect from you when you visit our website and how we use and protect that information. By using our website, you agree to the terms of this Privacy Policy.");
+INSERT INTO privacy VALUES("2","What information do we collect?","We may collect personal information such as your name, email address, mailing address, phone number, and other information that you voluntarily provide to us when you sign up for our newsletter, fill out a form, or contact us through our website.
+
+We also automatically collect certain non-personal information about your visit to our website, such as your IP address, browser type, device type, and operating system. This information is used to analyze and improve the performance and usability of our website.");
+INSERT INTO privacy VALUES("3","How do we use your information?","We may use the personal information that you provide to us to respond to your inquiries, send you our newsletter or marketing communications, process your orders, and provide you with other information or services that you request from us.
+
+We may also use the non-personal information that we collect to analyze trends and usage patterns, improve our website, and to protect our website and our users from fraudulent or unauthorized activities.");
+INSERT INTO privacy VALUES("4","Do we share your information?","We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as necessary to provide you with the services that you have requested from us. We may also share your information with our trusted service providers who assist us in operating our website, conducting our business, or servicing you, as long as those parties agree to keep this information confidential.
+
+We may also disclose your information if we are required to do so by law or in response to a legal process, or if we believe that such disclosure is necessary to protect our rights, property, or safety, or the rights, property, or safety of our users or others.");
+INSERT INTO privacy VALUES("5","How do we protect your information?","We take reasonable measures to protect your personal information from unauthorized access, use, disclosure, alteration, or destruction. However, no data transmission over the Internet or storage of electronic data can be guaranteed to be 100% secure, and we cannot guarantee the security of any information that you provide to us.");
+INSERT INTO privacy VALUES("6","Your rights and choices","You have the right to access and modify the personal information that we have collected from you by contacting us at [Your Contact Information]. You may also opt-out of receiving our newsletter or marketing communications at any time by following the instructions provided in those communications.");
+INSERT INTO privacy VALUES("7","Updates to this Privacy Policy","We may update this Privacy Policy from time to time by posting a new version on our website. You should check this page periodically to ensure that you are aware of any changes.");
+INSERT INTO privacy VALUES("8","Contact Us","If you have any questions or concerns about this Privacy Policy, please contact us at subdivisionsunnyvale@gmail.com");
+
+
+
 DROP TABLE subdivision;
 
 CREATE TABLE `subdivision` (
@@ -2417,7 +2498,7 @@ INSERT INTO transaction VALUES("5","55","Kyle Andrei Casingal","1500","328148270
 INSERT INTO transaction VALUES("6","55","Kyle Andrei Casingal","1500","328148270_726681382138928_1391919010667224674_n.png","Monthly Dues","Paid","");
 INSERT INTO transaction VALUES("9","48","SV1_Treasurer","800","","Monthly Dues","Paid","");
 INSERT INTO transaction VALUES("10","48","SV1_Treasurer","1000","","Monthly Dues","Paid","");
-INSERT INTO transaction VALUES("11","1","Mon Carlo Delima","50","328148270_726681382138928_1391919010667224674_n.png","Amenity Renting","Pending","");
+INSERT INTO transaction VALUES("11","1","Mon Carlo Delima","50","328148270_726681382138928_1391919010667224674_n.png","Amenity Renting","Approved","2023-05-03 21:01:20");
 
 
 
