@@ -38,6 +38,10 @@ if (isset($_POST['loginButtonGuest'])) {
 if (isset($_POST['archivedPosts'])) {
   header("Location: archivedPosts.php");
 }
+if (isset($_POST['return'])) {
+  header("Location: blogHome.php");
+}
+
 // REGISTER A NEW USER
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;

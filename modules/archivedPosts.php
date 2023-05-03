@@ -405,6 +405,16 @@ $rowUser = $resultUser->fetch_assoc();
     padding: 0.5em;
 
   }
+  .archived-post-btn {
+    background-color: rgb(248, 186, 55);
+    color: white;
+    justify-self: flex-end;
+    font-size: 1vw;
+    height: 3vw;
+    width: 10vw;
+    border-radius: 0.5vw;
+    border: 0 none;
+  }
 </style>
 
 <body>
@@ -413,6 +423,8 @@ $rowUser = $resultUser->fetch_assoc();
     <div class="blogScroll">
       <div class="blogHead">
         <p class="headTxt">Archived Posts</p>
+        <form action="" method="POST">
+        <button id='archivedPosts' name='return' type='submit' class='archived-post-btn'>Return</button>
       </div>
       <?php while ($row = $result->fetch_assoc()) : ?>
         <div class="blogPost">

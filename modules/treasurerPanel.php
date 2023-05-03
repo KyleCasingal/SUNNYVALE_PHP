@@ -227,6 +227,24 @@ $resultBilling = $con->query(
           <div class="filter-area">
             <form action="" method="post">
 
+              <div class="modal fade" id="confirmMonthlytrans" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Do you really want to Submit?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-success" name="payDues" id="payDues">Yes</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <label>Search:</label>
               <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names..">
               <!-- <label for="">filter by Subdivision:</label>
@@ -260,7 +278,7 @@ $resultBilling = $con->query(
               <?php endwhile; ?>
             </table>
           </div>
-          <button type="submit" class="btnSubmitPost" name="payDues" id="payDues">Submit Payment</button>
+          <button type="button" class="btnSubmitPost" name="payDues" id="payDues1">Submit Payment</button>
           </form>
         </div>
 
@@ -316,6 +334,11 @@ $resultBilling = $con->query(
       }
     }
   };
+  $(document).ready(function() {
+    $("#payDues1").click(function() {
+      $('#confirmMonthlytrans').modal('show');
+    });
+  });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
