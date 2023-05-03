@@ -448,12 +448,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
   }
 </style>
 <script type="text/javascript">
- $(document).ready(function() {
-    $("#approveReservation").click(function() {
-      $('#approve').modal('show');
-    });
-  });
-  
+
 </script>
 
 <body>
@@ -491,6 +486,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
 
   <?php while ($row1 = $resultAmenityRenting->fetch_assoc()) : ?>
     <form action="" method="POST">
+
       <div class="modal fade" id="complaintModal<?php
                                                 echo $row1['transaction_id'];
                                                 ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -551,7 +547,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                   Close
                 </button>
-                <button type="button" id="approveReservation"class="btn btn-success"> 
+                <button type="button" id="approveReservation" class="btn btn-success">
                   Approve
                 </button>
               </div>
@@ -559,30 +555,29 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
           </div>
         </div>
       </div>
-    
-
+<!-- llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll -->
       <div class="modal fade" id="approve" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-          Do you really want to approve this Reservation?
-          </div>
-          <div class="modal-footer">
-            <button name="approveReservation" type="submit" class="btn btn-success">Yes</button>
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Do you really want to approve this Reservation?
+            </div>
+            <div class="modal-footer">
+              <button name="approveReservation" type="submit" class="btn btn-success">Yes</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    
-  </form>
+    </form>
   <?php endwhile; ?>
-  
+
   <script>
+    
     $('#select-all').click(function(event) {
       if (this.checked) {
         // Iterate each checkbox
@@ -595,6 +590,13 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
         });
       }
     });
+
+    $(document).ready(function() {
+      $("#approveReservation").click(function() {
+        $('#approve').modal('show');
+      });
+    });
+
   </script>
   <?php
   require '../marginals/footer2.php';

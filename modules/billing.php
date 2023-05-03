@@ -36,6 +36,11 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
     <title>SUNNYVALE</title>
 </head>
 <style>
@@ -366,6 +371,25 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                 <div class="accordion-body" id="accordion-body">
                                     <form action="" method="post" id="myForm">
+
+                                        <div class="modal fade" id="confirmHome" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Do you really want to generate?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-success" name="billHomeowner" id="billHomeowner">Yes</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <table class="tblBilling-form">
 
                                             <tr>
@@ -373,7 +397,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                                                 filter kung ano ano lalabas gamit subdivision, at kung nahanap na yung homeowner ay mag auto na lagay yung subdivision.
                                                 or pwede din mag lagay nalang ng button dun sa babang table para i echo nalang yung laman nung full name dito sa name-->
                                                 <td><label for="">Select Subdivision:</label></td>
-                                                <td> <select name="subdivision" id="subdivisionHomeowner_id">
+                                                <td> <select name="subdivision" id="subdivisionHomeowner_id" required>
                                                         <option value="">Select...</option>
                                                         <?php
                                                         while ($rowSubdivision = $resultSubdivision->fetch_assoc()) : {
@@ -386,7 +410,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
 
                                                 </td>
                                                 <td><label>Name:</label></td>
-                                                <td><select name="homeowner" id="Homeowner_id">
+                                                <td><select name="homeowner" id="Homeowner_id" required>
 
                                                         <option value="">Select...</option>
                                                         <!-- <?php
@@ -401,7 +425,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                                             <tr>
                                                 <td><label for="">From:</label></td>
                                                 <td>
-                                                    <select name="month_select_monthly_dues_from" id="month-select-monthly-dues-from">
+                                                    <select name="month_select_monthly_dues_from" id="month-select-monthly-dues-from" required>
                                                         <option value="">Select...</option>
                                                         <?php
                                                         while ($rowMonth = $resultYearToday->fetch_assoc()) : {
@@ -412,7 +436,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                                                     </select>
                                                 </td>
                                                 <td><label for="">To:</label></td>
-                                                <td><select name="month_select_monthly_dues_to" id="month-select-monthly-dues-to">
+                                                <td><select name="month_select_monthly_dues_to" id="month-select-monthly-dues-to" required>
                                                         <option value="">Select...</option>
                                                         <?php
                                                         while ($rowMonth = $resultYearToday1->fetch_assoc()) : {
@@ -434,7 +458,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <button class="btnSubmitPost" name="billHomeowner" id="billHomeowner">Generate</button>
+                                                    <button type="button" class="btnSubmitPost" id="billHomeowner1">Generate</button>
                                                 </td>
                                             </tr>
                                         </table>
@@ -442,6 +466,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                                 </div>
                             </div>
                         </div>
+
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingTwo">
                                 <button onclick="ClearFields();" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -451,10 +476,29 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                 <div class="accordion-body" id="accordion-body">
                                     <form action="" method="post" id="myForm">
+
+                                        <div class="modal fade" id="confirmMonth" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Do you really want to generate?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-success" name="billMonth" id="billMonth">Yes</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <table class="tblBilling-form">
                                             <tr>
                                                 <td><label for="">Select Subdivision</label></td>
-                                                <td> <select name="subdivision-monthly" id="monthly_dues_id">
+                                                <td> <select name="subdivision-monthly" id="monthly_dues_id" required>
                                                         <option value="">Select...</option>
                                                         <?php
                                                         while ($rowSubdivision1 = $resultSubdivision1->fetch_assoc()) : {
@@ -467,7 +511,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                                             <tr>
                                                 <td><label for="">From:</label></td>
                                                 <td>
-                                                    <select name="month_select_monthly_dues_from" id="month-select-monthly-dues-from">
+                                                    <select name="month_select_monthly_dues_from" id="month-select-monthly-dues-from" required>
                                                         <option value="">Select...</option>
                                                         <?php
                                                         while ($rowMonth = $resultYearToday2->fetch_assoc()) : {
@@ -478,7 +522,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                                                     </select>
                                                 </td>
                                                 <td><label for="">To:</label></td>
-                                                <td><select name="month_select_monthly_dues_to" id="month-select-monthly-dues-to">
+                                                <td><select name="month_select_monthly_dues_to" id="month-select-monthly-dues-to" required>
                                                         <option value="">Select...</option>
                                                         <?php
                                                         while ($rowMonth = $resultYearToday3->fetch_assoc()) : {
@@ -500,10 +544,11 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <button type="submit" class="btnSubmitPost" name="billMonth" id="billMonth">Generate</button>
+                                                    <button type="button" class="btnSubmitPost" name="billMonth" id="billMonth1">Generate</button>
                                                 </td>
                                             </tr>
                                         </table>
+
                                     </form>
                                 </div>
                             </div>
@@ -517,12 +562,30 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                             <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                 <div class="accordion-body" id="accordion-body">
                                     <form action="" method="post" id="myForm">
+
+                                        <div class="modal fade" id="confirmAnnual" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Do you really want to generate?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-success" name="billAnnual" id="billAnnual">Yes</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <table class="tblBilling-form">
                                             <tr>
                                                 <!-- <td> <label for="">Search for Homeowner</label> </td>
                                             <td><input type="search" name="" id=""></td> -->
                                                 <td><label for="">Select Subdivision</label></td>
-                                                <td> <select name="subdivision-annual" id="subdivisionAnnual_id">
+                                                <td> <select name="subdivision-annual" id="subdivisionAnnual_id" required>
                                                         <option value="">Select...</option>
                                                         <?php
                                                         while ($rowSubdivision2 = $resultSubdivision2->fetch_assoc()) : {
@@ -535,7 +598,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                                             <tr>
                                                 <td><label for="">From:</label></td>
                                                 <td>
-                                                    <select name="month_select_annual_from" id="month-select-annual-from">
+                                                    <select name="month_select_annual_from" id="month-select-annual-from" required>
                                                         <!-- <option value="">Select...</option> -->
                                                         <?php
                                                         while ($rowMonth = $resultYearToday4->fetch_assoc()) : {
@@ -546,7 +609,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                                                 </td>
                                                 <td><label for="">To:</label></td>
                                                 <td>
-                                                    <select name="month_select_annual_to" id="month-select-annual-to">
+                                                    <select name="month_select_annual_to" id="month-select-annual-to" required>
                                                         <!-- <option value="">Select...</option> -->
                                                         <?php
                                                         while ($rowMonth = $resultYearToday5->fetch_assoc()) : {
@@ -571,7 +634,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                                                 <td>
                                                     <form action="" method="post">
 
-                                                        <button type="submit" class="btnSubmitPost" name="billAnnual" id="billAnnual">Generate</button>
+                                                        <button type="button" class="btnSubmitPost" name="billAnnual" id="billAnnual1">Generate</button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -633,6 +696,24 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
             }
         }
     };
+
+    $(document).ready(function() {
+        $("#billHomeowner1").click(function() {
+            $('#confirmHome').modal('show');
+        });
+    });
+
+    $(document).ready(function() {
+        $("#billMonth1").click(function() {
+            $('#confirmMonth').modal('show');
+        });
+    });
+
+    $(document).ready(function() {
+        $("#billAnnual1").click(function() {
+            $('#confirmAnnual').modal('show');
+        });
+    });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
