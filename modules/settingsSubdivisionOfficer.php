@@ -122,6 +122,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
 
     .tblAmenityForm td {
         color: rgb(89, 89, 89);
+        padding: 0.5;
         font-size: 1.2vw;
         border: none !important;
         text-align: left;
@@ -380,6 +381,33 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
     .tbl tr:hover {
         background-color: rgb(211, 211, 211);
     }
+
+    .avatarBlog {
+        max-width: 100px;
+        max-height: 200px;
+    }
+
+    .photo-upload-area {
+        padding: 1vw;
+        display: flex;
+        flex-direction: column;
+        gap: 2vw;
+    }
+
+    .upload {
+        text-align: center;
+        background-color: rgb(248, 186, 55);
+        border: 0;
+        padding: 0.5vw;
+        max-width: 50vw;
+        width: 10vw;
+        font-family: "Poppins", sans-serif;
+        font-size: 1vw;
+        color: white;
+        border-radius: 0.8vw;
+        cursor: pointer;
+        margin-bottom: 1vw;
+    }
 </style>
 
 
@@ -436,26 +464,24 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                     </select>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-
-                                    <?php
-                                    if (isset($_GET['officer_id'])) {
-                                    ?>
-                                        <input class='attInput' type='file' name='image' id='image' accept='image/*' onchange='preview()' ?></input>
-                                        <img class="avatarBlog" id='imagePreview' <?php
-                                                                                    $imageURL = '../media/content-images/' . $officer_img;
-                                                                                    ?> src="<?= $imageURL ?>" alt="" />
-                                    <?php
-                                    } else {
-                                        echo "<input class='attInput' type='file' name='image' id='image' accept='image/*' onchange='preview()'></input>";
-                                        echo "<img class='imagePrev' id='imagePreview' src=# alt='' />";
-                                    }
-                                    ?>
-                                    <label for='image' class='upload'>Upload Photo</label>
-                                </td>
-                            </tr>
                         </table>
+
+                        <div class="photo-upload-area">
+                            <?php
+                            if (isset($_GET['officer_id'])) {
+                            ?>
+                                <input class='attInput' type='file' name='image' id='image' accept='image/*' onchange='preview()' ?></input>
+                                <img class="avatarBlog" id='imagePreview' <?php
+                                                                            $imageURL = '../media/content-images/' . $officer_img;
+                                                                            ?> src="<?= $imageURL ?>" alt="" />
+                            <?php
+                            } else {
+                                echo "<input class='attInput' type='file' name='image' id='image' accept='image/*' onchange='preview()'></input>";
+                                echo "<img class='imagePrev' id='imagePreview' src=# alt='' />";
+                            }
+                            ?>
+                            <label for='image' class='upload'>Upload Photo</label>
+                        </div>
 
                         <!-- MODAL ADD SUBDIVISION OFFICER -->
                         <div class="modal fade" id="addOfficer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

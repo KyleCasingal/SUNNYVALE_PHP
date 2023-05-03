@@ -319,6 +319,10 @@ $resultComplaints1 = $con->query("SELECT * FROM tenant, user WHERE tenant.homeow
         background-color: rgba(170, 192, 175, 0);
 
     }
+
+    .tbl-tenant-list {
+        table-layout: fixed;
+    }
 </style>
 
 
@@ -364,7 +368,7 @@ $resultComplaints1 = $con->query("SELECT * FROM tenant, user WHERE tenant.homeow
                                                         echo $row1['user_homeowner_id']
                                                         ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <?php $resultComplaints1 = $con->query("SELECT * FROM tenant WHERE homeowner_id = " .  $row1['user_homeowner_id']  . "") ?>
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="staticBackdropLabel">
@@ -373,7 +377,7 @@ $resultComplaints1 = $con->query("SELECT * FROM tenant, user WHERE tenant.homeow
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modalConcernBody">
-                            <table>
+                            <table class="tbl-tenant-list">
                                 <tr>
                                     <td>Homeowner:</td>
                                     <td id=""><?php echo $row1['full_name'] ?></td>
