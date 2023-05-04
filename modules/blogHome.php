@@ -519,12 +519,16 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
           <form action="" method="POST">
             <?php
             if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-              echo "<button id='archivedPosts' name='archivedPosts' type='submit' class='archived-post-btn'>Archived Posts</button>
-          <button id='newPost' type='button' class='new-announcement-btn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>+ New Announcement</button>";
+            ?>
+              <button id='archivedPosts' name='archivedPosts' type='submit' class='archived-post-btn'>Archived Posts</button>
+              <button id='newPost' type='button' class='new-announcement-btn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>+ New Announcement</button>";
+            <?php
             } else if ($rowUser['user_type'] == 'Homeowner' or $rowUser['user_type'] == 'Tenant') {
-              echo "<button id='newPost' type='button' class='newPostBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
-                    + New Post
-                  </button>";
+            ?>
+              <button id='newPost' type='button' class='newPostBtn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
+                + New Post
+              </button>
+            <?php
             }
             ?>
           </form>
@@ -533,10 +537,13 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
               <div class="modal-content">
                 <div class="modal-header">
                   <?php
-                  if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-                    echo "<h5 class='modal-title' id='staticBackdropLabel'>Add new announcement</h5>";
+                  if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') { ?>
+                    <h5 class='modal-title' id='staticBackdropLabel'>Add new announcement</h5>
+                  <?php
                   } else if ($rowUser['user_type'] == 'Homeowner' or $rowUser['user_type'] == 'Tenant') {
-                    echo "<h5 class='modal-title' id='staticBackdropLabel'>Add new post</h5>";
+                  ?>
+                    <h5 class='modal-title' id='staticBackdropLabel'>Add new post</h5>
+                  <?php
                   }
                   ?>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

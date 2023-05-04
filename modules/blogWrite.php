@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -126,10 +127,12 @@
         <div class='formBlog'>
           <?php
           if ($rowUser['user_type'] == 'Homeowner' or $rowUser['user_type'] == 'Tenant') {
-            echo "<label class='writeText'>Add Photos</label>
+          ?>
+            <label class='writeText'>Add Photos</label>
             <input class='attInput' type='file' name='image' id='image' accept='image/*' onchange='preview()'></input>
             <img class='imagePrev' id='imagePreview' src=# alt='' />
-            <label for='image' class='upload'>Upload Photo</label>";
+            <label for='image' class='upload'>Upload Photo</label>
+          <?php
           }
           ?>
           <label class='lblPostForm'>Title</label>
@@ -138,9 +141,11 @@
           <textarea class='descInput' type='text' name='content' id='content' maxLength={255} required></textarea>
           <?php
           if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
-            echo " <label class='lblPostForm'>Archive Post after </label>
+          ?>
+            <label class='lblPostForm'>Archive Post after </label>
             <input type='text' pattern='[0-9]+' name='days' id='' maxlength='3' size='3' />
-            <label class='lblPostForm'>Days</label>";
+            <label class='lblPostForm'>Days</label>
+          <?php
           }
           ?>
           <button class='btnSubmitPost' name="submitPost" id="submitPost">Submit</button>

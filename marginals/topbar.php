@@ -280,7 +280,7 @@ if ($_SESSION['user_type'] == 'Tenant') {
     margin: 0;
     padding: 0.5vw;
     width: 100%;
-    border: 1px solid rgb(228, 228, 228);
+    border: none !important;
   }
 
   .subjectText {
