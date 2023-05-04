@@ -1,7 +1,7 @@
 [class*="cal-cell"] {
   float: left;
   margin-left: 0;
-  min-height: 1px;
+  min-height: 10vw;
 }
 .cal-row-fluid {
   width: 100%;
@@ -500,7 +500,7 @@ span[data-cal-date]:hover {
   line-height: 22px;
 }
 .events-list {
-  max-height: 47px;
+  max-height: 100%;
   padding-left: 5px;
 }
 .cal-column {

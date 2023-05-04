@@ -36,7 +36,6 @@ if ($_SESSION['user_type'] == 'Tenant') {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#000000" />
-  <link rel="stylesheet" href="../topbar/topBar.css">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -53,7 +52,7 @@ if ($_SESSION['user_type'] == 'Tenant') {
     align-items: center;
   }
 
-  .nav {
+  .navigation {
     margin-top: 0;
     margin-bottom: 0;
     padding: 0;
@@ -378,7 +377,7 @@ if ($_SESSION['user_type'] == 'Tenant') {
 </script>
 
 <body>
-  <div class='nav'>
+  <div class='navigation'>
     <div class="topLeft">
       <img src="..\img\logoSV.png" alt="" />
       <i class="topIcon">SUNNYVALE</i>
