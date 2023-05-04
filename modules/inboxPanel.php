@@ -236,13 +236,11 @@ $resultTransactionAmenity = $con->query("SELECT * FROM amenity_renting WHERE use
         overflow-x: hidden;
     }
 
-    .modalConcernBody {
+    .modal-header,
+    .modal-footer {
         background-color: rgb(170, 192, 175, 0.3);
     }
 
-    .modal-footer {
-        background-color: rgb(0, 0, 0, 0);
-    }
 </style>
 
 <body>
@@ -322,7 +320,7 @@ $resultTransactionAmenity = $con->query("SELECT * FROM amenity_renting WHERE use
                             <td class=" msgTime" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
                                                                                                         echo $row['concern_id']
                                                                                                         ?>"><?php $datetime = strtotime($row['datetime']);
-                                                                                                                echo $phptime = date("g:i A m/d/y", $datetime); ?></td>
+                                                                                                            echo $phptime = date("g:i A m/d/y", $datetime); ?></td>
                             <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintStatus<?php
                                                                                                             echo $row['concern_id']
                                                                                                             ?>"> <?php echo $row['status']; ?></td>

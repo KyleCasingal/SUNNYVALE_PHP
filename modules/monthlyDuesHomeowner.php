@@ -172,7 +172,7 @@ $resultBilling = $con->query(
     font-family: 'Poppins', sans-serif;
   }
 
-  .Homeowner-table th{
+  .Homeowner-table th {
     border: none !important;
     font-family: 'Poppins', sans-serif;
   }
@@ -236,6 +236,12 @@ $resultBilling = $con->query(
 
   .upload:hover {
     background-color: rgb(253, 200, 86);
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    background-color: rgb(170, 192, 175, 0.3);
   }
 </style>
 

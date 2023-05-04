@@ -491,6 +491,20 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
     display: flex;
     padding: 0.5vw;
   }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    background-color: rgb(170, 192, 175, 0.3);
+  }
+
+  .footer-announcement{
+    background-color: rgb(0, 0, 0, 0);
+  }
+  .concernSubject,
+  .concernMessage{
+    background-color: rgb(0, 0, 0, 0);
+  }
 </style>
 
 <body>
@@ -568,13 +582,13 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
                         Do you really want to Archive?
                       </div>
                       <div class="modal-footer">
-                      <a href='../process.php?post_archive=<?php echo $row['post_id'] ?>'  class="btn btn-success">Yes</a>
+                        <a href='../process.php?post_archive=<?php echo $row['post_id'] ?>' class="btn btn-success">Yes</a>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                       </div>
                     </div>
                   </div>
                 </div>
-                
+
               <?php
               }
               ?>
@@ -775,7 +789,7 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
                                                   echo $phptime = date("g:i A m/d/y", $datetime); ?></td>
             </tr>
           </table>
-          <div class="modal-footer">
+          <div class="modal-footer footer-announcement">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Close
             </button>
@@ -788,7 +802,7 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
 <!-- <?php require '../marginals/footer2.php' ?> -->
 </body>
 <script>
-   $(document).ready(function() {
+  $(document).ready(function() {
     $("#archive1").click(function() {
       $('#confirmArchive').modal('show');
     });

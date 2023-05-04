@@ -372,6 +372,16 @@ $resultComplaints1 = $con->query("SELECT * FROM tenant WHERE homeowner_id = '$ho
         border-radius: 0.8vw;
         cursor: pointer;
     }
+
+    .modal-footer {
+        background-color: rgb(0, 0, 0, 0);
+    }
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        background-color: rgb(170, 192, 175, 0.3);
+    }
 </style>
 <script>
     $("#form_id").trigger("reset");
@@ -553,7 +563,7 @@ $resultComplaints1 = $con->query("SELECT * FROM tenant WHERE homeowner_id = '$ho
                             </button>
 
                             <div class="modal fade" id="importCSVModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-dialog modal-dialog-centered modal-xl">
                                     <div class="modal-content">
                                         <form method="post" enctype="multipart/form-data">
                                             <div class="modal-header">

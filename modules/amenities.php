@@ -1,6 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Homeowner' AND $_SESSION['user_type'] != 'Tenant') {
+if ($_SESSION['user_type'] != 'Homeowner' and $_SESSION['user_type'] != 'Tenant') {
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
@@ -376,6 +376,12 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   }
 
   .fc-toolbar {
+    background-color: rgb(170, 192, 175, 0.3);
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
     background-color: rgb(170, 192, 175, 0.3);
   }
 </style>

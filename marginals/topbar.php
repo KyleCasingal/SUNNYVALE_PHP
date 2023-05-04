@@ -254,10 +254,12 @@ if ($_SESSION['user_type'] == 'Tenant') {
 
 
   .concernSubject {
+    background-color: rgb(170, 192, 175, 0.3);
     height: auto;
     display: flex;
     align-items: stretch;
     margin: 0;
+    padding: 0.5vw;
     width: 100%;
     border-bottom: 1px solid rgb(228, 228, 228);
   }
@@ -268,12 +270,15 @@ if ($_SESSION['user_type'] == 'Tenant') {
     font-size: 1vw;
   }
 
+
   .concernMessage {
+    background-color: rgb(170, 192, 175, 0.3);
     height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0;
+    padding: 0.5vw;
     width: 100%;
     border: 1px solid rgb(228, 228, 228);
   }
@@ -342,10 +347,28 @@ if ($_SESSION['user_type'] == 'Tenant') {
     justify-content: center;
   }
 
-  .modal-header,
-  .modal-body,
-  .modal-footer {
+  .modal-header-concern,
+  .modal-body-concern,
+  .modal-footer-concern {
     background-color: rgb(170, 192, 175, 0.3);
+  }
+
+  .select-concern {
+    border: none;
+    border-radius: 1vw;
+    font-size: 1em;
+  }
+
+  .lbl-concern-text {
+    font-size: 1rem;
+    padding-right: 0.5vw;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  textarea {
+    border-radius: 1vw;
+    border: none !important;
+    width: 100%;
   }
 </style>
 <script>
@@ -402,12 +425,12 @@ if ($_SESSION['user_type'] == 'Tenant') {
                 }
                 ?></a>
               <?php
-              if ($row['user_type'] == 'Homeowner' OR $row['user_type'] == 'Tenant') {
+              if ($row['user_type'] == 'Homeowner' or $row['user_type'] == 'Tenant') {
                 echo '<a class="dropdown-item" href="../modules/inboxPanel.php">Inbox</a>';
               }
               ?>
               <?php
-              if ($row['user_type'] == 'Homeowner' OR $row['user_type'] == 'Tenant') {
+              if ($row['user_type'] == 'Homeowner' or $row['user_type'] == 'Tenant') {
                 echo ' <a data-bs-toggle="modal" data-bs-target="#raiseConcern" class="dropdown-item" href="#raiseConcern">Submit a Complaint</a>';
               }
               ?>
@@ -442,8 +465,8 @@ if ($_SESSION['user_type'] == 'Tenant') {
           </div>
           <div class="modalConcernBody">
             <div class="concernSubject">
-              <label>Concern Address: </label>
-              <select name="concern_address" id="" required>
+              <label class="lbl-concern-text">Concern Address: </label>
+              <select class="select-concern" name="concern_address" id="" required>
                 <option value="">Select...</option>
                 <option value="0">Community</option>
                 <?php
@@ -454,11 +477,11 @@ if ($_SESSION['user_type'] == 'Tenant') {
               </select>
             </div>
             <div class="concernSubject">
-              <label>Subject:</label>
+              <label class="lbl-concern-text">Subject:</label>
               <textarea name="concern_subject" id="" cols="30" rows="10" class="subjectText" required></textarea>
             </div>
             <div class="concernMessage">
-              <textarea name="concern_description" id="" cols="30" rows="10" class="concernText" placeholder="Explain briefly your concern..." maxLength={255} required></textarea>
+              <textarea class="lbl-concern" name="concern_description" id="" cols="30" rows="10" class="concernText" placeholder="Explain briefly your concern..." maxLength={255} required></textarea>
             </div>
           </div>
           <div class="modal-footer">
