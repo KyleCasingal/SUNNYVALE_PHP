@@ -544,7 +544,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <button type="button" class="btnSubmitPost" name="billMonth" id="billMonth1">Generate</button>
+                                                    <button type="button" class="btnSubmitPost" id="billMonth1">Generate</button>
                                                 </td>
                                             </tr>
                                         </table>
