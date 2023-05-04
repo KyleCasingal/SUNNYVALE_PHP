@@ -436,6 +436,7 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
     font-size: 0.8vw;
     background-color: lightcoral;
     padding: 0.5vw;
+    border: none;
   }
 
   .archive-btn:hover {
@@ -555,7 +556,25 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
               <?php
               if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
               ?>
-                <a href='../process.php?post_archive=<?php echo $row['post_id'] ?>' class='archive-btn'>ARCHIVE</a>
+                <button type="button" class='archive-btn' name="archive" id="archive1" data-bs-toggle="modal" data-bs-target="#confirmArchive<?php echo $row['post_id'] ?>">ARCHIVE</button>
+                <div class="modal fade" id="confirmArchive<?php echo $row['post_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Do you really want to Archive?
+                      </div>
+                      <div class="modal-footer">
+                      <a href='../process.php?post_archive=<?php echo $row['post_id'] ?>'  class="btn btn-success">Yes</a>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
               <?php
               }
               ?>
@@ -768,5 +787,12 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
 <?php endwhile; ?>
 <!-- <?php require '../marginals/footer2.php' ?> -->
 </body>
+<script>
+   $(document).ready(function() {
+    $("#archive1").click(function() {
+      $('#confirmArchive').modal('show');
+    });
+  });
+</script>
 
 </html>
