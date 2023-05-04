@@ -19,6 +19,10 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   <title>SUNNYVALE</title>
 </head>
 <style>
@@ -457,7 +461,102 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
       <?php require '../marginals/sidebarAdmin.php'; ?>
     </div>
 
+
     <div class="treasurerPanel">
+
+      <?php while ($row1 = $resultAmenityRenting->fetch_assoc()) : ?>
+        <form action="" method="POST">
+          <div class="modal fade" id="complaintModal<?php
+                                                    echo $row1['transaction_id'];
+                                                    ?>" aria-labelledby="exampleModalToggleLabel" tabindex="-1" style="display: none;" aria-hidden="true">
+            <?php $resultAmenityRenting2 = $con->query("SELECT * FROM amenity_renting, amenity_purpose WHERE amenity_renting.transaction_id = " . $row1['transaction_id'] . " AND amenity_renting.amenity_purpose = amenity_purpose.amenity_purpose_id"); ?>
+            <div class="modal-dialog  modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Reservation Details</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                  <table class="availed-amenity-list">
+                    <tr>
+                      <input type="hidden" name="transaction_id" value="<?php echo $row1['transaction_id'] ?>">
+                    </tr>
+                    <tr>
+                      <td style="font-weight: bold;">Renter Name: </td>
+                      <td id="" colspan="5"><?php echo $row1['name'] ?></td>
+                    </tr>
+                    <tr>
+                      <td id="" style="font-weight: bold;">Subdivision</td>
+                      <td id="" style="font-weight: bold;">Amenity</td>
+                      <td id="" style="font-weight: bold;">Purpose</td>
+                      <td id="" style="font-weight: bold;">From</td>
+                      <td id="" style="font-weight: bold;">To</td>
+                      <td id="" style="font-weight: bold;">Cost</td>
+                    </tr>
+                    <?php while ($row2 = $resultAmenityRenting2->fetch_assoc()) : ?>
+                      <input type="hidden" name="concern_id" value="<?php echo $row2['amenity_renting_id'] ?>">
+                      <tr>
+                        <td id=""><?php echo $row2['subdivision_name'] ?></td>
+                        <td id=""><?php echo $row2['amenity_name'] ?></td>
+                        <td id=""><?php echo $row2['amenity_purpose'] ?></td>
+                        <td id=""><?php $datetime = strtotime($row2['date_from']);
+                                  echo $phptime = date("m/d/y g:i A", $datetime); ?></td>
+                        <td id=""><?php $datetime = strtotime($row2['date_to']);
+                                  echo $phptime = date("m/d/y g:i A ", $datetime); ?></td>
+                        <td id=""><?php echo $row2['cost'] ?></td>
+                      </tr>
+                    <?php endwhile; ?>
+                    <tr>
+                      <td style="font-weight: bold;">Total Cost:</td>
+                      <td><?php echo $row1['total_cost'] ?></td>
+                    </tr>
+                    <tr>
+                      <td>Payment Proof:</td>
+                      <td>
+                        <img class="postImg" <?php
+                                              $imageURL = '../media/paymentProof/' . $row1['payment_proof'];
+                                              ?> src="<?= $imageURL ?>" alt="">
+                        </img>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                  </button>
+                  <button type="button" id="approveReservation1" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approve<?php echo $row1['transaction_id']; ?>">
+                    Approve
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="approve<?php echo $row1['transaction_id']; ?>" aria-labelledby="exampleModalToggleLabel2" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Confirmation</h1>
+                </div>
+                <div class="modal-body">
+                  Do you really want to approve this Reservation?
+                </div>
+                <div class="modal-footer">
+                  <button name="approveReservation" type="submit" class="btn btn-success">Yes</button>
+                  <button class="btn btn-primary" data-bs-target="#complaintModal<?php
+                                                                                  echo $row1['transaction_id'];
+                                                                                  ?>" data-bs-toggle="modal">No</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </form>
+      <?php endwhile; ?>
+
       <label class="lblSettings" id="amenity">Reservation List</label>
       <div class="complaintManagement">
         <div class="inboxContainer">
@@ -484,99 +583,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
     </div>
   </div>
 
-  <?php while ($row1 = $resultAmenityRenting->fetch_assoc()) : ?>
-    <form action="" method="POST">
 
-      <div class="modal fade" id="complaintModal<?php
-                                                echo $row1['transaction_id'];
-                                                ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <?php $resultAmenityRenting2 = $con->query("SELECT * FROM amenity_renting, amenity_purpose WHERE amenity_renting.transaction_id = " . $row1['transaction_id'] . " AND amenity_renting.amenity_purpose = amenity_purpose.amenity_purpose_id"); ?>
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">
-                Reservation Details
-              </h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modalConcernBody">
-              <table class="availed-amenity-list">
-                <tr>
-                  <input type="hidden" name="transaction_id" value="<?php echo $row1['transaction_id'] ?>">
-                </tr>
-                <tr>
-                  <td style="font-weight: bold;">Renter Name: </td>
-                  <td id="" colspan="5"><?php echo $row1['name'] ?></td>
-                </tr>
-                <tr>
-                  <td id="" style="font-weight: bold;">Subdivision</td>
-                  <td id="" style="font-weight: bold;">Amenity</td>
-                  <td id="" style="font-weight: bold;">Purpose</td>
-                  <td id="" style="font-weight: bold;">From</td>
-                  <td id="" style="font-weight: bold;">To</td>
-                  <td id="" style="font-weight: bold;">Cost</td>
-                </tr>
-                <?php while ($row2 = $resultAmenityRenting2->fetch_assoc()) : ?>
-                  <input type="hidden" name="concern_id" value="<?php echo $row2['amenity_renting_id'] ?>">
-                  <tr>
-                    <td id=""><?php echo $row2['subdivision_name'] ?></td>
-                    <td id=""><?php echo $row2['amenity_name'] ?></td>
-                    <td id=""><?php echo $row2['amenity_purpose'] ?></td>
-                    <td id=""><?php $datetime = strtotime($row2['date_from']);
-                              echo $phptime = date("m/d/y g:i A", $datetime); ?></td>
-                    <td id=""><?php $datetime = strtotime($row2['date_to']);
-                              echo $phptime = date("m/d/y g:i A ", $datetime); ?></td>
-                    <td id=""><?php echo $row2['cost'] ?></td>
-                  </tr>
-                <?php endwhile; ?>
-                <tr>
-                  <td style="font-weight: bold;">Total Cost:</td>
-                  <td><?php echo $row1['total_cost'] ?></td>
-                </tr>
-                <tr>
-                  <td>Payment Proof:</td>
-                  <td>
-                    <img class="postImg" <?php
-                                          $imageURL = '../media/paymentProof/' . $row1['payment_proof'];
-                                          ?> src="<?= $imageURL ?>" alt="">
-                    </img>
-                  </td>
-                </tr>
-              </table>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                  Close
-                </button>
-                <button type="button" id="approveReservation1" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approve<?php echo $row1['transaction_id']; ?>">
-                  Approve
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal fade" id="approve<?php echo $row1['transaction_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              Do you really want to approve this Reservation?
-            </div>
-            <div class="modal-footer">
-              <button name="approveReservation" type="submit" class="btn btn-success">Yes</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-
-
-
-    </form>
-  <?php endwhile; ?>
 
   <script>
     $('#select-all').click(function(event) {
@@ -592,11 +599,11 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
       }
     });
 
-    $(document).ready(function() {
-      $("#approveReservation1").click(function() {
-        $('#approve').modal('show');
-      });
-    });
+    // $(document).ready(function() {
+    //   $("#approveReservation1").click(function() {
+    //     $('#approve').modal('show');
+    //   });
+    // });
   </script>
   <?php
   require '../marginals/footer2.php';

@@ -445,7 +445,9 @@ $resultComplaints1 = $con->query("SELECT * FROM concern WHERE status = 'Pending'
                         </div>
                         <div class="modal-footer">
                             <button name="concernProcess" type="submit" class="btn btn-success">Yes</button>
-                            <button type="button" id="closeProcess" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-secondary" data-bs-target="#complaintModal<?php
+                                                                                  echo $row1['concern_id'];
+                                                                                  ?>" data-bs-toggle="modal">No</button>
                         </div>
                     </div>
                 </div>
@@ -462,7 +464,9 @@ $resultComplaints1 = $con->query("SELECT * FROM concern WHERE status = 'Pending'
                         </div>
                         <div class="modal-footer">
                             <button name="concernResolved" type="submit" class="btn btn-success">Yes</button>
-                            <button type="button" id="closeProcess" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-secondary" data-bs-target="#complaintModal<?php
+                                                                                  echo $row1['concern_id'];
+                                                                                  ?>" data-bs-toggle="modal">No</button>
                         </div>
                     </div>
                 </div>
