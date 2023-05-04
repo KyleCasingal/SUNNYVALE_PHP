@@ -1,6 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Admin' AND $_SESSION['user_type'] != 'Secretary') {
+if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
 }
@@ -338,8 +338,8 @@ $resultComplaints1 = $con->query("SELECT * FROM concern WHERE status = 'Pending'
                         <?php while ($row = $resultComplaints->fetch_assoc()) : ?>
                             <tr class="trComplaints">
                                 <!-- <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
-                                                                                                                echo $row['concern_id']
-                                                                                                                ?>"><?php echo $row['concern_id'] ?></td> -->
+                                                                                                                    echo $row['concern_id']
+                                                                                                                    ?>"><?php echo $row['concern_id'] ?></td> -->
                                 <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
                                                                                                                 echo $row['concern_id']
                                                                                                                 ?>"><?php echo $row['full_name']; ?></td>
@@ -370,6 +370,22 @@ $resultComplaints1 = $con->query("SELECT * FROM concern WHERE status = 'Pending'
     ?>
     <?php while ($row1 = $resultComplaints1->fetch_assoc()) : ?>
         <form action="" method="POST">
+            <div class="modal fade" id="processing<?php echo $row1['concern_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Do you really want to approve this Reservation?
+                        </div>
+                        <div class="modal-footer">
+                            <button name="concernProcess" type="submit" class="btn btn-success">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="modal fade" id="complaintModal<?php
                                                         echo $row1['concern_id']
                                                         ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -421,7 +437,7 @@ $resultComplaints1 = $con->query("SELECT * FROM concern WHERE status = 'Pending'
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                     Close
                                 </button>
-                                <button type="submit" name="concernProcess" class="btn btn-primary">
+                                <button type="button" name="concernProcess1" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#processing<?php echo $row1['concern_id']; ?>">
                                     Processing
                                 </button>
                                 <button type="submit" name="concernResolved" class="btn btn-success">
@@ -433,9 +449,17 @@ $resultComplaints1 = $con->query("SELECT * FROM concern WHERE status = 'Pending'
                     </div>
                 </div>
             </div>
+
         </form>
     <?php endwhile; ?>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        $("#concernProcess1").click(function() {
+            $('#processing').modal('show');
+        });
+    });
+</script>
 
 </html>

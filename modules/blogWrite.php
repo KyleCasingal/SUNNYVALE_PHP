@@ -133,9 +133,9 @@
           }
           ?>
           <label class='lblPostForm'>Title</label>
-          <input type='text' name='title' id='title' />
+          <input type='text' name='title' id='title' required/>
           <label class='lblPostForm'>Description</label>
-          <textarea class='descInput' type='text' name='content' id='content' maxLength={255}></textarea>
+          <textarea class='descInput' type='text' name='content' id='content' maxLength={255} required></textarea>
           <?php
           if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
             echo " <label class='lblPostForm'>Archive Post after </label>

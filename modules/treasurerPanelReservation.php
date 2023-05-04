@@ -547,7 +547,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                   Close
                 </button>
-                <button type="button" id="approveReservation" class="btn btn-success">
+                <button type="button" id="approveReservation1"  class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approve<?php echo $row1['transaction_id']; ?>">
                   Approve
                 </button>
               </div>
@@ -555,8 +555,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
           </div>
         </div>
       </div>
-<!-- llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll -->
-      <div class="modal fade" id="approve" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="approve<?php echo $row1['transaction_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -572,12 +571,14 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
           </div>
         </div>
       </div>
+      
+
+
 
     </form>
   <?php endwhile; ?>
 
   <script>
-    
     $('#select-all').click(function(event) {
       if (this.checked) {
         // Iterate each checkbox
@@ -592,11 +593,10 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
     });
 
     $(document).ready(function() {
-      $("#approveReservation").click(function() {
+      $("#approveReservation1").click(function() {
         $('#approve').modal('show');
       });
     });
-
   </script>
   <?php
   require '../marginals/footer2.php';
