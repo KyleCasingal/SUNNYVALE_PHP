@@ -37,6 +37,9 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   <!-- JS for full calender -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+
+
+  
   <!-- bootstrap css and js -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
@@ -559,6 +562,9 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
       </div>
     </div> -->
 
+
+
+
     <!-- left modal -->
     <div class="modal modal_outer left_modal fade" id="calendarmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
       <div class="modal-dialog" role="document">
@@ -570,7 +576,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
           </div>
           <div class="modal-body get_quote_view_modal_body">
             <div class="calendar-container">
-              <div id="calendar" class="calendar"></div>
+              <div id="calendar" class ="calendar"></div>
             </div>
           </div>
         </div>
