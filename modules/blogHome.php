@@ -491,6 +491,20 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
     display: flex;
     padding: 0.5vw;
   }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    background-color: rgb(170, 192, 175, 0.3);
+  }
+
+  .footer-announcement{
+    background-color: rgb(0, 0, 0, 0);
+  }
+  .concernSubject,
+  .concernMessage{
+    background-color: rgb(0, 0, 0, 0);
+  }
 </style>
 
 <body>
@@ -782,7 +796,7 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
                                                   echo $phptime = date("g:i A m/d/y", $datetime); ?></td>
             </tr>
           </table>
-          <div class="modal-footer">
+          <div class="modal-footer footer-announcement">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Close
             </button>

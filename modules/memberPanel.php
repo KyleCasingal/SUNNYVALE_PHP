@@ -600,6 +600,12 @@ if ($_SESSION['user_type'] == 'Tenant') {
     display: flex;
     align-items: flex-end;
   }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    background-color: rgb(170, 192, 175, 0.3);
+  }
 </style>
 
 <body>
