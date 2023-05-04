@@ -102,7 +102,7 @@ CREATE TABLE `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1399 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1416 DEFAULT CHARSET=utf8;
 
 INSERT INTO audit_trail VALUES("3","SV1_Admin","logged in","2022-11-29 12:32:22");
 INSERT INTO audit_trail VALUES("5","SV1_Admin","logged in","2022-11-29 12:36:16");
@@ -1488,6 +1488,23 @@ INSERT INTO audit_trail VALUES("1395","SV1_Admin","logged out","2023-05-03 22:50
 INSERT INTO audit_trail VALUES("1396","SV1_Admin","logged in","2023-05-03 23:20:06");
 INSERT INTO audit_trail VALUES("1397","SV1_Admin","logged out","2023-05-03 23:20:28");
 INSERT INTO audit_trail VALUES("1398","SV1_Secretary","logged in","2023-05-03 23:20:31");
+INSERT INTO audit_trail VALUES("1399","SV1_Secretary","logged out","2023-05-03 23:28:12");
+INSERT INTO audit_trail VALUES("1400","SV1_Admin","logged in","2023-05-03 23:28:15");
+INSERT INTO audit_trail VALUES("1401","SV1_Admin","logged out","2023-05-03 23:28:39");
+INSERT INTO audit_trail VALUES("1402","SV1_Secretary","logged in","2023-05-03 23:28:41");
+INSERT INTO audit_trail VALUES("1403","SV1_Secretary","logged out","2023-05-03 23:28:51");
+INSERT INTO audit_trail VALUES("1404","SV1_Admin","logged in","2023-05-03 23:28:53");
+INSERT INTO audit_trail VALUES("1405","SV1_Admin","logged out","2023-05-03 23:30:26");
+INSERT INTO audit_trail VALUES("1406","SV1_Secretary","logged in","2023-05-03 23:30:29");
+INSERT INTO audit_trail VALUES("1407","SV1_Secretary","logged out","2023-05-03 23:30:35");
+INSERT INTO audit_trail VALUES("1408","SV1_Admin","logged in","2023-05-03 23:30:40");
+INSERT INTO audit_trail VALUES("1409","SV1_Admin","logged in","2023-05-03 23:44:20");
+INSERT INTO audit_trail VALUES("1410","SV1_Admin","logged out","2023-05-04 00:05:48");
+INSERT INTO audit_trail VALUES("1411","SV1_Admin","logged in","2023-05-04 00:30:28");
+INSERT INTO audit_trail VALUES("1412","SV1_Admin","logged out","2023-05-04 00:30:39");
+INSERT INTO audit_trail VALUES("1413","SV1_Admin","logged in","2023-05-04 10:01:36");
+INSERT INTO audit_trail VALUES("1414","SV1_Admin","logged out","2023-05-04 10:03:41");
+INSERT INTO audit_trail VALUES("1415","SV1_Admin","logged in","2023-05-04 10:04:28");
 
 
 
@@ -1800,11 +1817,16 @@ DROP TABLE contact;
 
 CREATE TABLE `contact` (
   `contact_id` int(11) NOT NULL AUTO_INCREMENT,
+  `subdivision_id` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
   `telephone` varchar(100) NOT NULL,
   PRIMARY KEY (`contact_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
+INSERT INTO contact VALUES("1","1","Sunnyvale1@gmail.com","+63-280-555-7381");
+INSERT INTO contact VALUES("2","2","Sunnyvale2@gmail.com","+63-929-555-0584");
+INSERT INTO contact VALUES("3","3","Sunnyvale3@gmail.com","+63-933-555-8050");
+INSERT INTO contact VALUES("4","4","Sunnyvale4@gmail.com","+63-280-555-7381");
 
 
 
@@ -2406,11 +2428,11 @@ INSERT INTO post VALUES("31","1","Mon Carlo Delima","Nihonjin Desu","Lorem ipsum
 INSERT INTO post VALUES("32","1","Mon Carlo Delima","Magical World","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.","2023-04-02 13:00:31","","sEt5ph.jpg","No","Archived");
 INSERT INTO post VALUES("33","18","SV1_Admin","Power Interruption","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.","2023-02-04 13:06:44","1","","Yes","Archived");
 INSERT INTO post VALUES("34","18","SV1_Admin","Basketball Tryouts","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.","2023-02-22 21:43:21","30","","Yes","Archived");
-INSERT INTO post VALUES("35","18","SV1_Admin","Volleyball Tryouts","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.","2023-03-17 21:43:35","30","","Yes","Active");
+INSERT INTO post VALUES("35","18","SV1_Admin","Volleyball Tryouts","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.","2023-03-17 21:43:35","30","","Yes","Archived");
 INSERT INTO post VALUES("36","18","SV1_Admin","Swimming Lessons","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.","2023-01-04 21:43:46","30","","Yes","Archived");
 INSERT INTO post VALUES("37","18","SV1_Admin","Founding Anniv. Celebration","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.","2023-02-01 21:44:01","30","","Yes","Archived");
 INSERT INTO post VALUES("38","1","Mon Carlo Delima","Sun and Moon","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.","2023-04-14 14:19:37","","dsa.jpg","No","Active");
-INSERT INTO post VALUES("39","61","Monkey D. Luffy","Japanese Street","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.","2023-04-14 14:23:15","","lockscreen.png","No","Active");
+INSERT INTO post VALUES("39","61","Monkey D. Luffy","Japanese Street","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.","2023-04-14 14:23:15","","lockscreen.png","No","Archived");
 
 
 

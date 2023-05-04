@@ -2,8 +2,8 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: May 01, 2023 at 07:26 PM
+-- Host: 127.0.0.1:3307
+-- Generation Time: May 04, 2023 at 11:35 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `amenity_renting` (
   `cost` int(11) DEFAULT NULL,
   `cart` varchar(10) NOT NULL,
   PRIMARY KEY (`amenity_renting_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenity_renting`
@@ -117,11 +117,12 @@ INSERT INTO `amenity_renting` (`amenity_renting_id`, `transaction_id`, `user_id`
 (14, 1, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '3', '2023-02-15 09:00:00', '2023-02-15 12:00:00', 150, 'Approved'),
 (15, 1, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', '2023-02-16 18:00:00', '2023-02-16 21:00:00', 450, 'Approved'),
 (16, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '1', NULL, NULL, NULL, 'Removed'),
-(26, 11, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Swimming Pool', '5', '2023-04-10 08:00:00', '2023-04-10 09:00:00', 50, 'Pending'),
+(26, 11, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Swimming Pool', '5', '2023-04-10 08:00:00', '2023-04-10 09:00:00', 50, 'Approved'),
 (20, NULL, 48, 'SV1_Treasurer', 'Sunnyvale 1', 'Court', '3', NULL, NULL, NULL, 'Removed'),
 (25, 3, 1, 'Mon Carlo Delima', 'Sunnyvale 3', 'Clubhouse', '8', '2023-04-15 01:00:00', '2023-04-15 02:00:00', 150, 'Approved'),
 (23, 2, 48, 'SV1_Treasurer', 'Sunnyvale 2', 'Court', '11', '2023-04-08 08:00:00', '2023-04-08 10:00:00', 40, 'Approved'),
-(24, 2, 48, 'SV1_Treasurer', 'Sunnyvale 2', 'Court', '12', '2023-04-08 10:00:00', '2023-04-08 12:00:00', 140, 'Approved');
+(24, 2, 48, 'SV1_Treasurer', 'Sunnyvale 2', 'Court', '12', '2023-04-08 10:00:00', '2023-04-08 12:00:00', 140, 'Approved'),
+(27, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '10', '2023-05-02 12:00:00', '2023-05-02 18:00:00', 480, 'Yes');
 
 -- --------------------------------------------------------
 
@@ -161,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1357 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1417 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -1510,7 +1511,67 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (1353, 'SV1_Admin', 'added a new subdivision officer Zakir Hodges-Treasurer', '2023-05-02 03:17:14'),
 (1354, 'SV1_Admin', 'added a new subdivision officer Gloria Sharp-Auditor', '2023-05-02 03:17:22'),
 (1355, 'SV1_Admin', 'added a new subdivision officer Dulcie Matthams-PIO', '2023-05-02 03:17:42'),
-(1356, 'SV1_Admin', 'logged out', '2023-05-02 03:18:46');
+(1356, 'SV1_Admin', 'logged out', '2023-05-02 03:18:46'),
+(1357, 'SV1_Admin', 'logged in', '2023-05-02 22:58:27'),
+(1358, 'SV1_Admin', 'logged out', '2023-05-02 22:59:43'),
+(1359, 'SV1_Admin', 'logged in', '2023-05-02 23:00:00'),
+(1360, 'SV1_Admin', 'logged out', '2023-05-02 23:01:08'),
+(1361, 'SV1_Admin', 'logged in', '2023-05-02 23:01:15'),
+(1362, 'SV1_Admin', 'logged out', '2023-05-02 23:01:17'),
+(1363, 'SV1_Admin', 'logged in', '2023-05-02 23:06:45'),
+(1364, 'SV1_Admin', 'logged out', '2023-05-02 23:06:56'),
+(1365, 'SV1_Admin', 'logged in', '2023-05-02 23:08:50'),
+(1366, 'SV1_Admin', 'logged out', '2023-05-02 23:09:01'),
+(1367, 'SV1_Admin', 'logged in', '2023-05-02 23:14:26'),
+(1368, 'SV1_Admin', 'logged out', '2023-05-02 23:14:42'),
+(1369, 'Mon Carlo Delima', 'logged in', '2023-05-02 23:32:09'),
+(1370, 'Mon Carlo Delima', 'logged out', '2023-05-02 23:36:03'),
+(1371, 'Mon Carlo Delima', 'logged in', '2023-05-03 00:03:13'),
+(1372, 'Mon Carlo Delima', 'logged out', '2023-05-03 00:03:35'),
+(1373, 'SV1_Admin', 'logged in', '2023-05-03 00:03:38'),
+(1374, 'SV1_Admin', 'logged in', '2023-05-03 20:47:17'),
+(1375, 'SV1_Admin', 'logged out', '2023-05-03 20:47:51'),
+(1376, 'Mon Carlo Delima', 'logged in', '2023-05-03 20:47:54'),
+(1377, 'Mon Carlo Delima', 'logged out', '2023-05-03 20:48:59'),
+(1378, 'SV1_Admin', 'logged in', '2023-05-03 20:49:02'),
+(1379, 'SV1_Admin', 'logged out', '2023-05-03 21:11:13'),
+(1380, 'Mon Carlo Delima', 'logged in', '2023-05-03 21:11:16'),
+(1381, 'Mon Carlo Delima', 'logged out', '2023-05-03 21:11:40'),
+(1382, 'Mon Carlo Delima', 'logged in', '2023-05-03 21:11:43'),
+(1383, 'Mon Carlo Delima', 'logged out', '2023-05-03 21:11:51'),
+(1384, 'SV1_Admin', 'logged in', '2023-05-03 21:11:54'),
+(1385, 'SV1_Admin', 'logged out', '2023-05-03 22:18:31'),
+(1386, 'SV1_Admin', 'logged in', '2023-05-03 22:22:44'),
+(1387, 'SV1_Admin', 'logged out', '2023-05-03 22:27:31'),
+(1388, 'SV1_Admin', 'logged in', '2023-05-03 22:27:33'),
+(1389, 'SV1_Admin', 'logged out', '2023-05-03 22:27:35'),
+(1390, 'SV1_Treasurer', 'logged in', '2023-05-03 22:27:37'),
+(1391, 'SV1_Treasurer', 'logged out', '2023-05-03 22:27:43'),
+(1392, 'SV1_Admin', 'logged in', '2023-05-03 22:39:02'),
+(1393, 'SV1_Admin', 'logged out', '2023-05-03 22:48:13'),
+(1394, 'SV1_Admin', 'logged in', '2023-05-03 22:48:44'),
+(1395, 'SV1_Admin', 'logged out', '2023-05-03 22:50:04'),
+(1396, 'SV1_Admin', 'logged in', '2023-05-03 23:20:06'),
+(1397, 'SV1_Admin', 'logged out', '2023-05-03 23:20:28'),
+(1398, 'SV1_Secretary', 'logged in', '2023-05-03 23:20:31'),
+(1399, 'SV1_Secretary', 'logged out', '2023-05-03 23:28:12'),
+(1400, 'SV1_Admin', 'logged in', '2023-05-03 23:28:15'),
+(1401, 'SV1_Admin', 'logged out', '2023-05-03 23:28:39'),
+(1402, 'SV1_Secretary', 'logged in', '2023-05-03 23:28:41'),
+(1403, 'SV1_Secretary', 'logged out', '2023-05-03 23:28:51'),
+(1404, 'SV1_Admin', 'logged in', '2023-05-03 23:28:53'),
+(1405, 'SV1_Admin', 'logged out', '2023-05-03 23:30:26'),
+(1406, 'SV1_Secretary', 'logged in', '2023-05-03 23:30:29'),
+(1407, 'SV1_Secretary', 'logged out', '2023-05-03 23:30:35'),
+(1408, 'SV1_Admin', 'logged in', '2023-05-03 23:30:40'),
+(1409, 'SV1_Admin', 'logged in', '2023-05-03 23:44:20'),
+(1410, 'SV1_Admin', 'logged out', '2023-05-04 00:05:48'),
+(1411, 'SV1_Admin', 'logged in', '2023-05-04 00:30:28'),
+(1412, 'SV1_Admin', 'logged out', '2023-05-04 00:30:39'),
+(1413, 'SV1_Admin', 'logged in', '2023-05-04 10:01:36'),
+(1414, 'SV1_Admin', 'logged out', '2023-05-04 10:03:41'),
+(1415, 'SV1_Admin', 'logged in', '2023-05-04 10:04:28'),
+(1416, 'SV1_Admin', 'logged out', '2023-05-04 10:05:34');
 
 -- --------------------------------------------------------
 
@@ -1852,6 +1913,31 @@ INSERT INTO `concern` (`concern_id`, `complainant_homeowner_id`, `full_name`, `c
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `contact`
+--
+
+DROP TABLE IF EXISTS `contact`;
+CREATE TABLE IF NOT EXISTS `contact` (
+  `contact_id` int(11) NOT NULL AUTO_INCREMENT,
+  `subdivision_id` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `telephone` varchar(100) NOT NULL,
+  PRIMARY KEY (`contact_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `contact`
+--
+
+INSERT INTO `contact` (`contact_id`, `subdivision_id`, `email`, `telephone`) VALUES
+(1, 1, 'Sunnyvale1@gmail.com', '+63-280-555-7381'),
+(2, 2, 'Sunnyvale2@gmail.com', '+63-929-555-0584'),
+(3, 3, 'Sunnyvale3@gmail.com', '+63-933-555-8050'),
+(4, 4, 'Sunnyvale4@gmail.com', '+63-280-555-7381');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `homeowner_profile`
 --
 
@@ -1900,7 +1986,7 @@ INSERT INTO `homeowner_profile` (`homeowner_id`, `last_name`, `first_name`, `mid
 (37, '', 'SV2_Admin', NULL, NULL, '', '', '', '', NULL, NULL, '', NULL, NULL, NULL, NULL, 'default.png'),
 (39, 'Sta. Maria', 'Marco Ivan', 'Quierrez', 'N/A', 'Male', 'Lot 4 Block 3', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'marcoivanstamaria@gmail.com', '2001-06-13', '09123456789', 'N/A', 'N/A', '290509682_1413885909103188_6599438684369654480_n.jpg'),
 (40, 'Dalisay', 'Cardo', 'Dela Cruz', 'N/A', 'Male', 'Block 3 Lot 5', 'Sunnyvale 2', 'Palangoy', 'Palangoy', 'N/A', 'cardoDalisay@gmail.com', '1977-11-07', '09123456789', 'N/A', 'N/A', 'default.png'),
-(44, 'test', 'test', 'pogi', 'N/A', 'Male', 'Lot 1 Block 1', 'Sunnyvale 4', 'Pantok', 'N/A', 'N/A', 'test@gmail.com', '2023-04-09', '09987654321', 'N/A', 'LTO 1234', 'default.png'),
+(44, 'test', 'test', 'pogi', 'N/A', 'Male', 'Lot 1 Block 1', 'Sunnyvale 4', 'Pantok', 'N/A', 'N/A', 'dmoncarlo@gmail.com', '2023-04-09', '09987654321', 'N/A', 'LTO 1234', 'default.png'),
 (18, '', 'SV1_Admin', NULL, NULL, '', '', '', '', NULL, NULL, '', NULL, NULL, NULL, NULL, 'default.png'),
 (50, '', 'SV3_Admin', NULL, NULL, '', '', '', '', NULL, NULL, '', NULL, NULL, NULL, NULL, 'default.png');
 
@@ -2504,11 +2590,39 @@ INSERT INTO `post` (`post_id`, `user_id`, `full_name`, `title`, `content`, `publ
 (32, 1, 'Mon Carlo Delima', 'Magical World', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-02 13:00:31', NULL, 'sEt5ph.jpg', 'No', 'Archived'),
 (33, 18, 'SV1_Admin', 'Power Interruption', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-02-04 13:06:44', 1, '', 'Yes', 'Archived'),
 (34, 18, 'SV1_Admin', 'Basketball Tryouts', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-02-22 21:43:21', 30, '', 'Yes', 'Archived'),
-(35, 18, 'SV1_Admin', 'Volleyball Tryouts', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-03-17 21:43:35', 30, '', 'Yes', 'Active'),
+(35, 18, 'SV1_Admin', 'Volleyball Tryouts', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-03-17 21:43:35', 30, '', 'Yes', 'Archived'),
 (36, 18, 'SV1_Admin', 'Swimming Lessons', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-01-04 21:43:46', 30, '', 'Yes', 'Archived'),
 (37, 18, 'SV1_Admin', 'Founding Anniv. Celebration', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-02-01 21:44:01', 30, '', 'Yes', 'Archived'),
 (38, 1, 'Mon Carlo Delima', 'Sun and Moon', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-14 14:19:37', NULL, 'dsa.jpg', 'No', 'Active'),
-(39, 61, 'Monkey D. Luffy', 'Japanese Street', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-14 14:23:15', NULL, 'lockscreen.png', 'No', 'Active');
+(39, 61, 'Monkey D. Luffy', 'Japanese Street', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-14 14:23:15', NULL, 'lockscreen.png', 'No', 'Archived');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `privacy`
+--
+
+DROP TABLE IF EXISTS `privacy`;
+CREATE TABLE IF NOT EXISTS `privacy` (
+  `privacy_id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`privacy_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `privacy`
+--
+
+INSERT INTO `privacy` (`privacy_id`, `type`, `description`) VALUES
+(1, 'Privacy Policy for Sunnyvale Subdivisions', 'At Sunnyvale Subdivisions, we take your privacy seriously. This Privacy Policy outlines the types of personal information that we may collect from you when you visit our website and how we use and protect that information. By using our website, you agree to the terms of this Privacy Policy.'),
+(2, 'What information do we collect?', 'We may collect personal information such as your name, email address, mailing address, phone number, and other information that you voluntarily provide to us when you sign up for our newsletter, fill out a form, or contact us through our website.\r\n\r\nWe also automatically collect certain non-personal information about your visit to our website, such as your IP address, browser type, device type, and operating system. This information is used to analyze and improve the performance and usability of our website.'),
+(3, 'How do we use your information?', 'We may use the personal information that you provide to us to respond to your inquiries, send you our newsletter or marketing communications, process your orders, and provide you with other information or services that you request from us.\r\n\r\nWe may also use the non-personal information that we collect to analyze trends and usage patterns, improve our website, and to protect our website and our users from fraudulent or unauthorized activities.'),
+(4, 'Do we share your information?', 'We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as necessary to provide you with the services that you have requested from us. We may also share your information with our trusted service providers who assist us in operating our website, conducting our business, or servicing you, as long as those parties agree to keep this information confidential.\r\n\r\nWe may also disclose your information if we are required to do so by law or in response to a legal process, or if we believe that such disclosure is necessary to protect our rights, property, or safety, or the rights, property, or safety of our users or others.'),
+(5, 'How do we protect your information?', 'We take reasonable measures to protect your personal information from unauthorized access, use, disclosure, alteration, or destruction. However, no data transmission over the Internet or storage of electronic data can be guaranteed to be 100% secure, and we cannot guarantee the security of any information that you provide to us.'),
+(6, 'Your rights and choices', 'You have the right to access and modify the personal information that we have collected from you by contacting us at [Your Contact Information]. You may also opt-out of receiving our newsletter or marketing communications at any time by following the instructions provided in those communications.'),
+(7, 'Updates to this Privacy Policy', 'We may update this Privacy Policy from time to time by posting a new version on our website. You should check this page periodically to ensure that you are aware of any changes.'),
+(8, 'Contact Us', 'If you have any questions or concerns about this Privacy Policy, please contact us at subdivisionsunnyvale@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -2558,7 +2672,7 @@ CREATE TABLE IF NOT EXISTS `tenant` (
 --
 
 INSERT INTO `tenant` (`tenant_id`, `homeowner_id`, `full_name`, `birthdate`, `sex`, `email`, `mobile_no`, `display_picture`) VALUES
-(1, 1, 'Monkey D. Luffy', '2023-04-12', 'Male', 'dmoncarlo@gmail.com', '09123456789', 'default.png'),
+(1, 1, 'Monkey D. Luffy', '2023-04-12', 'Male', 'monkeydluffy@gmail.com', '09123456789', 'default.png'),
 (2, 1, 'Bogart D. Explorer', '2023-03-01', 'Male', 'bogartdexplorer@gmail.com', '09123456789', 'default.png'),
 (3, 1, 'Portgas D. Ace', '2023-04-13', 'Male', 'donut@gmail.com', '09123456789', 'default.png');
 
@@ -2594,7 +2708,7 @@ INSERT INTO `transaction` (`transaction_id`, `user_id`, `name`, `total_cost`, `p
 (6, 55, 'Kyle Andrei Casingal', 1500, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid', NULL),
 (9, 48, 'SV1_Treasurer', 800, NULL, 'Monthly Dues', 'Paid', NULL),
 (10, 48, 'SV1_Treasurer', 1000, NULL, 'Monthly Dues', 'Paid', NULL),
-(11, 1, 'Mon Carlo Delima', 50, '328148270_726681382138928_1391919010667224674_n.png', 'Amenity Renting', 'Pending', NULL);
+(11, 1, 'Mon Carlo Delima', 50, '328148270_726681382138928_1391919010667224674_n.png', 'Amenity Renting', 'Approved', '2023-05-03 21:01:20');
 
 -- --------------------------------------------------------
 
@@ -2635,7 +2749,7 @@ INSERT INTO `user` (`user_id`, `user_homeowner_id`, `user_tenant_id`, `full_name
 (52, 39, NULL, 'Marco Ivan Sta. Maria', 'Homeowner', '123', 'marcoivanstamaria@gmail.com', 'Activated', '257545', '2022-12-01 06:31:28'),
 (53, 8, NULL, 'Krishtalene BendaÃ±a', 'Homeowner', '123', 'tissabendana@gmail.com', 'Activated', '573856', '2022-12-01 06:37:48'),
 (59, 51, NULL, 'SV1_Guard', 'Guard', '123', 'SV1_Guard', 'Activated', NULL, NULL),
-(61, NULL, 1, 'Monkey D. Luffy', 'Tenant', '12345', 'dmoncarlo@gmail.com', 'Activated', '665824', '2023-04-14 22:46:46');
+(61, NULL, 1, 'Monkey D. Luffy', 'Tenant', '12345', 'monkeydluffy@gmail.com', 'Activated', '665824', '2023-04-14 22:46:46');
 
 -- --------------------------------------------------------
 

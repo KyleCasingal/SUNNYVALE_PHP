@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
 //Redirect to register page when in index page
 if (isset($_POST['registerButtonLanding'])) {
@@ -80,13 +79,13 @@ if (isset($_POST['register'])) {
   } else if (mysqli_num_rows($result) == 1) {
     $mail = new PHPMailer(true);
     try {
-      $mail->SMTPDebug = 2;
       $mail->isSMTP();
+      $mail->SMTPDebug = SMTP::DEBUG_SERVER;
       $mail->Host = 'smtp.gmail.com';
       $mail->SMTPAuth = true;
       $mail->Username = 'subdivisionsunnyvale@gmail.com';
-      $mail->Password = 'snemytstdrbbmqia';
-      $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+      $mail->Password = 'rwttevqjkrwcbupp';
+      $mail->SMTPSecure = 'tls';
       $mail->Port = 587;
       $mail->setFrom('subdivisionsunnyvale@gmail.com');
       $mail->addAddress($email_address, $full_name);
@@ -107,13 +106,13 @@ if (isset($_POST['register'])) {
   } else if (mysqli_num_rows($result2) == 1) {
     $mail = new PHPMailer(true);
     try {
-      $mail->SMTPDebug = 2;
       $mail->isSMTP();
+      $mail->SMTPDebug = SMTP::DEBUG_SERVER;
       $mail->Host = 'smtp.gmail.com';
       $mail->SMTPAuth = true;
       $mail->Username = 'subdivisionsunnyvale@gmail.com';
-      $mail->Password = 'snemytstdrbbmqia';
-      $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+      $mail->Password = 'rwttevqjkrwcbupp';
+      $mail->SMTPSecure = 'tls';
       $mail->Port = 587;
       $mail->setFrom('subdivisionsunnyvale@gmail.com');
       $mail->addAddress($email_address, $full_name);
@@ -227,6 +226,7 @@ if (isset($_POST['register'])) {
 
 // LOGGING IN
 if (isset($_POST['login'])) {
+  
   $email_address = $_POST['email_address'];
   $password = $_POST['password'];
   $sql = "SELECT * FROM user WHERE BINARY email_address = '$email_address' AND BINARY password = '$password' AND account_status = 'Activated' ";
@@ -235,7 +235,7 @@ if (isset($_POST['login'])) {
   $result1 = mysqli_query($con, $sql1);
 
   if (mysqli_num_rows($result) == 1) {
-
+    
     $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
     $result = $con->query("SELECT * FROM user WHERE email_address = '$email_address'");
     $row = $result->fetch_assoc();
