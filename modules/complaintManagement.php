@@ -370,25 +370,10 @@ $resultComplaints1 = $con->query("SELECT * FROM concern WHERE status = 'Pending'
     ?>
     <?php while ($row1 = $resultComplaints1->fetch_assoc()) : ?>
         <form action="" method="POST">
-            <div class="modal fade" id="processing<?php echo $row1['concern_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Do you really want to approve this Reservation?
-                        </div>
-                        <div class="modal-footer">
-                            <button name="concernProcess" type="submit" class="btn btn-success">Yes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="complaintModal<?php
+           
+            <div class="modal fade " id="complaintModal<?php
                                                         echo $row1['concern_id']
-                                                        ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                        ?>" data-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -437,10 +422,10 @@ $resultComplaints1 = $con->query("SELECT * FROM concern WHERE status = 'Pending'
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                     Close
                                 </button>
-                                <button type="button" name="concernProcess1" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#processing<?php echo $row1['concern_id']; ?>">
+                                <button type="button" name="concernProcess1" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#processingModal<?php echo $row1['concern_id']; ?>">
                                     Processing
                                 </button>
-                                <button type="submit" name="concernResolved" class="btn btn-success">
+                                <button type="button" name="concernResolved1" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#resolvedModal<?php echo $row1['concern_id']; ?>">
                                     Resolved
                                 </button>
 
@@ -449,17 +434,50 @@ $resultComplaints1 = $con->query("SELECT * FROM concern WHERE status = 'Pending'
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="processingModal<?php echo $row1['concern_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                        </div>
+                        <div class="modal-body">
+                            Do you really want to Process this Complaint?
+                        </div>
+                        <div class="modal-footer">
+                            <button name="concernProcess" type="submit" class="btn btn-success">Yes</button>
+                            <button type="button" id="closeProcess" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="modal fade" id="resolvedModal<?php echo $row1['concern_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                        </div>
+                        <div class="modal-body">
+                            Do you really want to Resolved this Complaint?
+                        </div>
+                        <div class="modal-footer">
+                            <button name="concernResolved" type="submit" class="btn btn-success">Yes</button>
+                            <button type="button" id="closeProcess" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     <?php endwhile; ?>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <script>
-    $(document).ready(function() {
-        $("#concernProcess1").click(function() {
-            $('#processing').modal('show');
-        });
-    });
+    // $(document).ready(function() {
+    //     $("#closeProcess").click(function() {
+    //         $('#processing').modal('hide');
+    //     });
+    // });
+ 
 </script>
 
 </html>

@@ -521,7 +521,7 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
             if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
             ?>
               <button id='archivedPosts' name='archivedPosts' type='submit' class='archived-post-btn'>Archived Posts</button>
-              <button id='newPost' type='button' class='new-announcement-btn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>+ New Announcement</button>";
+              <button id='newPost' type='button' class='new-announcement-btn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>+ New Announcement</button>
             <?php
             } else if ($rowUser['user_type'] == 'Homeowner' or $rowUser['user_type'] == 'Tenant') {
             ?>

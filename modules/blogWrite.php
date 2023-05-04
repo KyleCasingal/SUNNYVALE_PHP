@@ -148,10 +148,26 @@
           <?php
           }
           ?>
-          <button class='btnSubmitPost' name="submitPost" id="submitPost">Submit</button>
+          <button type="button" class='btnSubmitPost' id="submitPost1">Submit</button>
         </div>
       </div>
     </div>
+    <div class="modal fade" id="approvePost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Do you really want to Post?
+            </div>
+            <div class="modal-footer">
+              <button name="submitPost" type="submit" class="btn btn-success">Yes</button>
+            </div>
+          </div>
+        </div>
+      </div>
   </form>
 </body>
 
@@ -173,4 +189,9 @@
   $("#image").change(function() {
     readURL(this, 'imagePreview');
   });
+  $(document).ready(function() {
+      $("#submitPost1").click(function() {
+        $('#approvePost').modal('show');
+      });
+    });
 </script>
