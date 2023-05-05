@@ -79,9 +79,22 @@
     }
 
     .receipt-label {
-        padding: 0.8em;
         font-size: 1em;
         font-weight: bold;
+        align-self: flex-start;
+    }
+
+    .receipt-text {
+        font-size: 1em;
+        font-weight: normal;
+    }
+
+    .receipt-number {
+        align-self: flex-start;
+        padding-bottom: 1em;
+    }
+
+    .receipt-transaction {
         align-self: flex-start;
     }
 </style>
@@ -100,7 +113,16 @@
                         <label class="head-subtext" for="">Sunnyvale Subdivision Compound, Binangonan Rizal</label>
                     </div>
                     <div class="receipt-body">
-                        <label class="receipt-label">Monthly Dues</label>
+                        <div class="receipt-transaction">
+                            <label class="receipt-label">Transaction:</label>
+                            <label class="receipt-text">Monthly Dues</label>
+                        </div>
+
+                        <div class="receipt-number">
+                            <label class="receipt-label">Receipt Number:</label>
+                            <label class="receipt-text">93825928323</label>
+                        </div>
+
                         <table class="receipt-table">
                             <thead>
                                 <th>Name</th>
