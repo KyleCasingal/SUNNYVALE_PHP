@@ -5,48 +5,76 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <title>Document</title>
 </head>
 <style>
-    body{
+    body {
         font-family: 'Poppins', sans-serif;
     }
-    .receipt-head{
+
+    .receipt-head {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
     }
-    .receipt-body{
+
+    .receipt-body {
         display: flex;
         align-items: center;
         justify-content: center;
         padding-top: 1.5em;
     }
-    .head-title{
+
+    .head-title {
         font-weight: bold;
         font-size: 1em;
     }
-    .head-subtext{
+
+    .head-subtext {
         font-weight: normal;
         font-size: 0.7em;
     }
-    .receipt-table{
+
+    .receipt-table {
         width: 60%;
         font-size: 0.8em;
     }
-    .receipt-table tbody{
+
+    .receipt-table tbody {
         border: 1px solid black;
     }
-    .receipt-table th{
+
+    .receipt-table th {
         border: 1px solid black;
     }
-    .receipt-table td, th{
+
+    .receipt-table td,
+    th {
         padding: 0.5em;
     }
-    .amount-td{
-        border-left: 1px solid black;
+
+    .amount-td,
+    .total-amount-td {
+        border: 1px solid black;
+        text-align: center;
+    }
+
+    .amount-total-label {
+        border: 1px solid black;
+    }
+
+    .modal-body {
+        width: 80%;
+        align-self: center;
+        justify-self: center;
+    }
+
+    .receipt-content {
+        text-align: center;
     }
 </style>
 
@@ -73,10 +101,14 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Kyle Casingal</td>
-                                    <td>5/5/2023</td>
-                                    <td>PAID</td>
+                                    <td class="receipt-content">Kyle Casingal</td>
+                                    <td class="receipt-content">5/5/2023</td>
+                                    <td class="receipt-content">PAID</td>
                                     <td class="amount-td">500</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="amount-total-label">Total:</td>
+                                    <td class="total-amount-td">500</td>
                                 </tr>
                             </tbody>
                         </table>
