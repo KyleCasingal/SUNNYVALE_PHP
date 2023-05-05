@@ -24,6 +24,7 @@
 
     .receipt-body {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         padding-top: 1.5em;
@@ -31,7 +32,7 @@
 
     .head-title {
         font-weight: bold;
-        font-size: 1em;
+        font-size: 1.2em;
     }
 
     .head-subtext {
@@ -40,7 +41,7 @@
     }
 
     .receipt-table {
-        width: 60%;
+        width: 100%;
         font-size: 0.8em;
     }
 
@@ -76,6 +77,13 @@
     .receipt-content {
         text-align: center;
     }
+
+    .receipt-label {
+        padding: 0.8em;
+        font-size: 1em;
+        font-weight: bold;
+        align-self: flex-start;
+    }
 </style>
 
 <body>
@@ -92,6 +100,7 @@
                         <label class="head-subtext" for="">Sunnyvale Subdivision Compound, Binangonan Rizal</label>
                     </div>
                     <div class="receipt-body">
+                        <label class="receipt-label">Monthly Dues</label>
                         <table class="receipt-table">
                             <thead>
                                 <th>Name</th>
