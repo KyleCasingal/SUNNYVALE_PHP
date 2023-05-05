@@ -19,28 +19,38 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#000000" />
+
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  
-  
+
+
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
   <!-- calendar -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" /> -->
   <!-- JS for jQuery -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
   <!-- JS for full calender -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script> -->
+
+  <!-- calendar script and bootstrap -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="css/calendar.css">
+
+
   <!-- bootstrap css and js -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
+
   <title>SUNNYVALE</title>
 </head>
 <style>
@@ -283,6 +293,20 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     border-bottom: 1px solid lightgray;
   }
 
+  .container {
+    width: 100%;
+    max-width: 90%;
+    max-height: 100%;
+    margin: 0;
+    justify-self: center;
+    align-self: center;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
   .calendar-container {
     display: flex;
     justify-content: center;
@@ -308,125 +332,83 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
 
 
 
-  /*left right modal*/
-  .modal.left_modal {
-    position: fixed;
-    z-index: 99999;
-  }
-
-  .modal.left_modal .modal-dialog {
-    /* position: fixed; */
-    margin: auto;
-    width: 90%;
-    height: 90%;
-    -webkit-transform: translate3d(0%, 0, 0);
-    -ms-transform: translate3d(0%, 0, 0);
-    -o-transform: translate3d(0%, 0, 0);
-    transform: translate3d(0%, 0, 0);
-  }
-
-  .modal-dialog {
-    /* max-width: 100%; */
-    margin: 1.75rem auto;
-  }
-
-  @media (min-width: 576px) {
-    .left_modal .modal-dialog {
-      max-width: 100%;
-    }
-
-  }
-
-  .modal.left_modal .modal-content {
-    /*overflow-y: auto;
-    overflow-x: hidden;*/
-    height: 100vh !important;
-  }
-
-  .modal.left_modal .modal-body {
-    padding: 15px 15px 30px;
-  }
-
-  /*.modal.left_modal  {
-    pointer-events: none;
-    background: transparent;
-}*/
-
-  .modal-backdrop {
-    display: none;
-  }
-
-  /*Left*/
-  .modal.left_modal.fade .modal-dialog {
-    left: -50%;
-    -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
-    -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
-    -o-transition: opacity 0.3s linear, left 0.3s ease-out;
-    transition: opacity 0.3s linear, left 0.3s ease-out;
-  }
-
-  .modal.left_modal.fade.show .modal-dialog {
-    left: 0;
-    box-shadow: 0px 0px 19px rgba(0, 0, 0, .5);
-  }
-
-
-  /* ----- MODAL STYLE ----- */
-  .modal-content {
-    border-radius: 0;
-    border: none;
-  }
-
-  .modal-header.left_modal {
-
-    padding: 10px 15px;
-    border-bottom-color:
-      #EEEEEE;
-    background-color:
-      #FAFAFA;
-  }
-
-  .modal_outer .modal-body {
-    /*height:90%;*/
-    /* overflow-y: auto; */
-    overflow-x: hidden;
-    height: 91vh;
-  }
-
-
-
-  .fab-wrapper {
-    position: fixed;
-    bottom: 3rem;
-    right: 3rem;
-  }
-
-  .fab {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    bottom: -1rem;
-    right: -1rem;
-    width: 4vw;
-    height: 4vw;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    z-index: 1;
-    background-color: rgb(248, 186, 55);
-    box-shadow: 5px 10px 8px #888888;
-  }
-
   .calendar {
     background-color: rgb(170, 192, 175, 0);
   }
 
-  .fc-clear {
-    background-color: rgb(170, 192, 175, 0.3);
+  #calendar-days {
+    font-size: 0.8vw;
+    font-family: 'Poppins', sans-serif;
   }
 
-  .fc-toolbar {
-    background-color: rgb(170, 192, 175, 0.3);
+  #calendar-header {
+    font-size: 1.5vw;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .btn-default-calendar {
+    font-size: 1vw;
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(0 142 255);
+    color: white;
+  }
+
+  .btn-primary-calendar {
+    font-size: 1vw;
+    font-family: 'Poppins', sans-serif;
+    background-color: rgba(106, 153, 78);
+    color: white;
+  }
+
+  .btn-warning-calendar {
+    border-radius: 0.5em;
+    font-size: 1vw;
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(248, 186, 55);
+    color: white;
+  }
+
+  .btn-group {
+    margin: 0 0.5em;
+
+  }
+
+  .calendar-month-year {
+    font-size: 2vw;
+
+  }
+
+  button:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .page-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+  }
+
+  #eventlist li {
+    font-size: 1em;
+    width: 100%;
+    padding: 0.5vw;
+    border-radius: 0.5vw;
+  }
+
+  #eventlist li:hover {
+    background-color: lightgray;
+  }
+
+  #eventlist a:hover {
+    text-decoration: none;
+  }
+
+  .unstyled li {
+    display: flex;
   }
 </style>
 <script type="text/javascript">
@@ -555,35 +537,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
       $("#purpose_id").removeAttr("required");
     });
   });
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth'
-    });
-    calendar.render();
-  });
-
-  $(document).ready(function() {
-    $("#showcalendarmodal").click(function() {
-      $("#date1").removeAttr("required");
-      $("#from1").removeAttr("required");
-      $("#from2").removeAttr("required");
-      $("#from3").removeAttr("required");
-      $("#to1").removeAttr("required");
-      $("#to2").removeAttr("required");
-      $("#to3").removeAttr("required");
-      $("#subdivision_id").removeAttr("required");
-      $("#amenity_id").removeAttr("required");
-      $("#purpose_id").removeAttr("required");
-      $('#calendarmodal').modal('show');
-
-    });
-  });
-  $(document).ready(function() {
-    $("#modalclose").click(function() {
-      $('#calendarmodal').modal('hide');
-    });
-  });
 </script>
 
 <body>
@@ -591,34 +544,41 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     <div class="sideBar">
       <?php require '../marginals/sidebarAdmin.php'; ?>
     </div>
-    <div class="fab-wrapper">
-      <label class="fab" for="showcalendarmodal">
-        <center>
-          <i style="font-size:2vw" class="fa fa-calendar" id="showcalendarmodal"></i>
-        </center>
-      </label>
-    </div>
 
-    <div class="modal modal_outer left_modal fade" id="calendarmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content ">
-          <div class="modal-header">
-            <button type="button" class="close" id="modalclose" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body get_quote_view_modal_body">
-            <div class="calendar-container">
-              <div id="calendar" class="calendar"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
 
 
     <div class="treasurerPanel">
       <label class="lblSettings" id="amenity">Amenity Renting</label>
+      <div class="container">
+        <div class="page-header">
+          <h3 class="calendar-month-year"></h3>
+          <div class="pull-right form-inline">
+            <div class="btn-group">
+              <button class="btn btn-primary-calendar" data-calendar-nav="prev">
+                << Prev</button>
+                  <button class="btn btn-default-calendar" data-calendar-nav="today">Today</button>
+                  <button class="btn btn-primary-calendar" data-calendar-nav="next">Next >></button>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-warning-calendar" data-calendar-view="year">Year</button>
+              <button class="btn btn-warning-calendar active" data-calendar-view="month">Month</button>
+              <button class="btn btn-warning-calendar" data-calendar-view="week">Week</button>
+              <button class="btn btn-warning-calendar" data-calendar-view="day">Day</button>
+            </div>
+          </div>
+        </div>
+        <div class="row" id="calendar-days">
+          <div class="col-md-9">
+            <div id="showEventCalendar"></div>
+          </div>
+          <div class="col-md-3">
+            <h4>All Events List</h4>
+            <ul id="eventlist" class="nav nav-list"></ul>
+          </div>
+        </div>
+      </div>
+
       <form method="post" enctype="multipart/form-data">
         <div class='amenities'>
           <div class="amenitiesForm">
@@ -790,21 +750,26 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
                                                                 $rowTotal = $resultTotal->fetch_assoc();
                                                                 echo $rowTotal['total_cost'];
                                                                 ?>" readonly>
-              <div class="paymentForm">
+              <!-- <div class="paymentForm">
                 <label class="writeText">Upload proof of payment here:</label>
                 <div class="BlogWrite">
                   <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()" required></input>
                   <img class="imagePrev" id="imagePreview" src=# alt="" />
                 </div>
                 <label for="image" class="upload">Upload Photo</label>
-              </div>
+              </div> -->
               <button class="btnSubmit" name="checkout" id="checkout_id">Checkout All</button>
             </div>
           </div>
         </div>
+
     </div>
     </form>
   </div>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  <script type="text/javascript" src="js/calendar.js"></script>
+  <script type="text/javascript" src="js/events.js"></script>
   <script>
     $('#select-all').click(function(event) {
       if (this.checked) {
@@ -818,60 +783,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
         });
       }
     });
-    //calendar
-    $(document).ready(function() {
-      display_events();
-    }); //end document.ready block
-
-    function display_events() {
-      var events = new Array();
-      $.ajax({
-        url: 'display_event.php',
-        dataType: 'json',
-        success: function(response) {
-
-          var result = response.data;
-          $.each(result, function(i, item) {
-            events.push({
-              event_id: result[i].id,
-              title: result[i].title,
-              start: result[i].start,
-              end: result[i].end,
-              // color: result[i].color,
-              // url: result[i].url
-            });
-          })
-
-          var calendar = $('#calendar').fullCalendar({
-            defaultView: 'month',
-            timeZone: 'local',
-            // editable: true,
-            header: {
-              left: 'prev,next today',
-              center: 'title',
-              right: 'month,agendaWeek,agendaDay,listWeek'
-            },
-            selectable: true,
-            selectHelper: true,
-            events: events,
-
-
-            eventRender: function(event, element, view) {
-              element.bind('click', function() {
-
-                alert(event.start);
-                alert(event.end);
-
-
-              });
-            }
-          }); //end fullCalendar block	
-        }, //end success block
-        error: function(xhr, status) {
-          alert(response.msg);
-        }
-      }); //end ajax block	
-    }
   </script>
   <?php
   require '../marginals/footer2.php';

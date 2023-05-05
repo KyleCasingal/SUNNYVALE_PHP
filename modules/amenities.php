@@ -271,135 +271,10 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     /* max-width: 90%; */
   }
 
-
-
-
-  /*left right modal*/
-  .modal.left_modal {
-    position: fixed;
-    z-index: 99999;
-  }
-
-  .modal.left_modal .modal-dialog {
-    /* position: fixed; */
-    margin: auto;
-    width: 90%;
-    height: 90%;
-    -webkit-transform: translate3d(0%, 0, 0);
-    -ms-transform: translate3d(0%, 0, 0);
-    -o-transform: translate3d(0%, 0, 0);
-    transform: translate3d(0%, 0, 0);
-  }
-
-  .modal-dialog {
-    /* max-width: 100%; */
-    margin: 1.75rem auto;
-  }
-
-  @media (min-width: 576px) {
-    .left_modal .modal-dialog {
-      max-width: 100%;
-    }
-
-  }
-
-  .modal.left_modal .modal-content {
-    /*overflow-y: auto;
-    overflow-x: hidden;*/
-    height: 100vh !important;
-  }
-
-  .modal.left_modal .modal-body {
-    padding: 15px 15px 30px;
-  }
-
-  /*.modal.left_modal  {
-    pointer-events: none;
-    background: transparent;
-}*/
-
-  .modal-backdrop {
-    display: none;
-  }
-
-  /*Left*/
-  .modal.left_modal.fade .modal-dialog {
-    left: -50%;
-    -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
-    -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
-    -o-transition: opacity 0.3s linear, left 0.3s ease-out;
-    transition: opacity 0.3s linear, left 0.3s ease-out;
-  }
-
-  .modal.left_modal.fade.show .modal-dialog {
-    left: 0;
-    box-shadow: 0px 0px 19px rgba(0, 0, 0, .5);
-  }
-
-
-  /* ----- MODAL STYLE ----- */
-  .modal-content {
-    border-radius: 0;
-    border: none;
-  }
-
-  .modal-header.left_modal {
-
-    padding: 10px 15px;
-    border-bottom-color:
-      #EEEEEE;
-    background-color:
-      #FAFAFA;
-  }
-
-  .modal_outer .modal-body {
-    /*height:90%;*/
-    /* overflow-y: auto; */
-    overflow-x: hidden;
-    height: 91vh;
-  }
-
-
-
-  .fab-wrapper {
-    position: fixed;
-    bottom: 3rem;
-    right: 3rem;
-  }
-
-  .fab {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    bottom: -1rem;
-    right: -1rem;
-    width: 4vw;
-    height: 4vw;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    z-index: 1;
-    background-color: rgb(248, 186, 55);
-    box-shadow: 5px 10px 8px #888888;
-  }
-
   .calendar {
     background-color: rgb(170, 192, 175, 0);
   }
 
-  .fc-clear {
-    background-color: rgb(170, 192, 175, 0.3);
-  }
-
-  .fc-toolbar {
-    background-color: rgb(170, 192, 175, 0.3);
-  }
-
-  .modal-header,
-  .modal-body,
-  .modal-footer {
-    background-color: rgb(170, 192, 175, 0.3);
-  }
 
   #calendar-days {
     font-size: 0.8vw;
@@ -464,13 +339,15 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     border-radius: 0.5vw;
   }
 
-  #eventlist li:hover{
+  #eventlist li:hover {
     background-color: lightgray;
-  } 
+  }
+
   #eventlist a:hover {
     text-decoration: none;
   }
-  .unstyled li{
+
+  .unstyled li {
     display: flex;
   }
 </style>
@@ -634,48 +511,9 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   <div class="amenity-forms">
     <form method="post" enctype="multipart/form-data">
 
-      <!-- <div class="fab-wrapper">
-      <label class="fab" for="showcalendarmodal">
-        <center>
-          <i style="font-size:2vw" class="fa fa-calendar" id="showcalendarmodal"></i>
-        </center>
-      </label>
-    </div> -->
-
-
-      <!-- <div class="container">
-      <div class="row">
-        <div class="col-md-12 text-center">
-          <button class="btn  btn-primary  mt-3" id="modal_view_left" data-toggle="modal" data-target="#calendarmodal">Open left modal</button>
-        </div>
-      </div>
-    </div> -->
 
 
 
-
-      <!-- left modal -->
-      <div class="modal modal_outer left_modal fade" id="calendarmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content ">
-            <div class="modal-header">
-              <button type="button" id="modalclose" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body get_quote_view_modal_body">
-              <div class="calendar-container">
-                <div id="calendar" class="calendar"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <!-- calendar -->
-
-      <!-- calendar -->
 
 
       <div class='amenities'>
