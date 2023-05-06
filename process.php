@@ -239,9 +239,15 @@ if (isset($_POST['login'])) {
     $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
     $result = $con->query("SELECT * FROM user WHERE email_address = '$email_address'");
     $row = $result->fetch_assoc();
+    $homeowner_id = $row['user_homeowner_id'];
+
+    $resultSubdivision = $con->query("SELECT * FROM homeowner_profile WHERE homeowner_id = '$homeowner_id'");
+    $rowSubdivision = $resultSubdivision->fetch_assoc();
+
     $user_type = $row['user_type'];
     $_SESSION['user_id'] = $row['user_id'];
     $_SESSION['user_type'] = $row['user_type'];
+    $_SESSION['subdivision'] = $rowSubdivision['subdivision'];
     $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "','logged in', NOW())";
     mysqli_query($con, $sql1);
   } elseif (mysqli_num_rows($result1) == 1) {
@@ -1707,6 +1713,7 @@ if (isset($_POST['tenant_submit'])) {
   $birthdate = date('Y-m-d', $birthdate);
   $sex = $_POST['sex'];
   $email_address = $_POST['email_address'];
+  $subdivision = $_SESSION['subdivision'];
 
   $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
   $row = $resultSession->fetch_assoc();
@@ -1722,7 +1729,7 @@ if (isset($_POST['tenant_submit'])) {
     $full_name = $first_name . " " . $middle_name . " " . $last_name . " " . $suffix;
   }
 
-  $sql = "INSERT INTO tenant(homeowner_id, full_name, birthdate, sex, email, mobile_no, display_picture) VALUES ('$homeowner_id', '$full_name', '$birthdate', '$sex', '$email_address', '$mobile_number', 'default.png')";
+  $sql = "INSERT INTO tenant(homeowner_id, full_name, subdivision, birthdate, sex, email, mobile_no, display_picture) VALUES ('$homeowner_id', '$full_name', '$subdivision', '$birthdate', '$sex', '$email_address', '$mobile_number', 'default.png')";
   $result = mysqli_query($con, $sql);
 
   header("Location: tenantHomeowner.php");

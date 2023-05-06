@@ -6,7 +6,7 @@ if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary')
 }
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultComplaints = $con->query("SELECT * FROM concern WHERE status = 'Pending' OR status = 'Processing'");
+$resultComplaints = $con->query("SELECT * FROM concern, homeowner_profile WHERE (status = 'Pending' OR status = 'Processing') AND concern.complainant_homeowner_id = homeowner_profile.homeowner_id AND subdivision = '" . $_SESSION['subdivision'] . "'");
 $resultComplaints1 = $con->query("SELECT * FROM concern WHERE status = 'Pending' OR status = 'Processing'");
 ?>
 

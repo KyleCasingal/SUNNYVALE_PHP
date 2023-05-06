@@ -4,7 +4,7 @@ if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin')
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
-$resultTransaction = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Monthly Dues'");
+$resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Monthly Dues' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "'");
 $resultBillConsumer = $con->query("SELECT * FROM bill_consumer, transaction WHERE bill_consumer.transaction_id = transaction.transaction_id");
 ?>
 <!DOCTYPE html>
@@ -25,6 +25,10 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer, transaction WHER
 <style>
   * {
     margin: 0;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
   }
 
   .messageSuccess {
@@ -447,6 +451,89 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer, transaction WHER
     cursor: pointer;
     border-bottom: 1px solid lightgray;
   }
+
+  .receipt-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .receipt-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1.5em;
+  }
+
+  .head-title {
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+
+  .head-subtext {
+    font-weight: normal;
+    font-size: 0.7em;
+  }
+
+  .receipt-table {
+    width: 100%;
+    font-size: 0.8em;
+  }
+
+  .receipt-table tbody {
+    border: 1px solid black;
+  }
+
+  .receipt-table th {
+    border: 1px solid black;
+  }
+
+  .receipt-table td,
+  th {
+    padding: 0.5em;
+  }
+
+  .amount-td,
+  .total-amount-td {
+    border: 1px solid black;
+    text-align: center;
+  }
+
+  .amount-total-label {
+    border: 1px solid black;
+  }
+
+  .modal-body {
+    width: 80%;
+    align-self: center;
+    justify-self: center;
+  }
+
+  .receipt-content {
+    text-align: center;
+  }
+
+  .receipt-label {
+    font-size: 1em;
+    font-weight: bold;
+    align-self: flex-start;
+  }
+
+  .receipt-text {
+    font-size: 1em;
+    font-weight: normal;
+  }
+
+  .receipt-number {
+    align-self: flex-start;
+    padding-bottom: 1em;
+  }
+
+  .receipt-transaction {
+    align-self: flex-start;
+  }
 </style>
 <script type="text/javascript">
 </script>
@@ -476,6 +563,11 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer, transaction WHER
                 <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
                                                                                               echo $row['transaction_id']
                                                                                               ?>"><?php echo $row['status'] ?></td>
+                <?php if ($row['status'] == 'Paid') { ?>
+                  <td class="use-address" data-bs-toggle="modal" data-bs-target="#exampleModalToggle<?php
+                                                                                                    echo $row['transaction_id']
+                                                                                                    ?>">Print Receipt</td>
+                <?php } ?>
               </tr>
             <?php endwhile; ?>
           </table>
@@ -489,6 +581,7 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer, transaction WHER
                                                 echo $row1['transaction_id'];
                                                 ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <?php $resultBillConsumer2 = $con->query("SELECT * FROM bill_consumer, billing_period WHERE transaction_id = " . $row1['transaction_id'] . " AND billing_period.billingPeriod_id = bill_consumer.billingPeriod_id"); ?>
+        <?php $resultBillConsumer3 = $con->query("SELECT * FROM bill_consumer, billing_period WHERE transaction_id = " . $row1['transaction_id'] . " AND billing_period.billingPeriod_id = bill_consumer.billingPeriod_id"); ?>
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
@@ -507,7 +600,7 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer, transaction WHER
                   <td id="" colspan="5"><?php echo $row1['name'] ?></td>
                 </tr>
                 <tr>
-                <td id="" style="font-weight: bold;">Name</td>
+                  <td id="" style="font-weight: bold;">Name</td>
                   <td id="" style="font-weight: bold;">Month</td>
                   <td id="" style="font-weight: bold;">Year</td>
                   <td id="" style="font-weight: bold;">Amount</td>
@@ -516,7 +609,7 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer, transaction WHER
                 <?php while ($row2 = $resultBillConsumer2->fetch_assoc()) : ?>
                   <input type="hidden" name="concern_id" value="<?php echo $row2['billConsumer_id'] ?>">
                   <tr>
-                  <td id=""><?php echo $row2['fullname'] ?></td>
+                    <td id=""><?php echo $row2['fullname'] ?></td>
                     <td id=""><?php echo $row2['month'] ?></td>
                     <td id=""><?php echo $row2['year'] ?></td>
                     <td id=""><?php echo $row2['amount'] ?></td>
@@ -544,6 +637,65 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer, transaction WHER
                   Paid
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="exampleModalToggle<?php
+                                                    echo $row1['transaction_id']
+                                                    ?>" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Receipt</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="receipt-head">
+                <label class="head-title" for="">Sunnyvale Home Owners Association</label>
+                <label class="head-subtext" for="">Sunnyvale Subdivision Compound, Binangonan Rizal</label>
+              </div>
+              <div class="receipt-body">
+                <div class="receipt-transaction">
+                  <label class="receipt-label">Transaction:</label>
+                  <label class="receipt-text">Monthly Dues</label>
+                </div>
+
+                <div class="receipt-number">
+                  <label class="receipt-label">Receipt Number:</label>
+                  <label class="receipt-text">SNNVL-MNTH-<?php echo $row1['transaction_id'] ?></label>
+                </div>
+
+                <div class="receipt-number">
+                  <label class="receipt-label">Date Paid:</label>
+                  <label class="receipt-text"><?php echo $row1['datetime'] ?></label>
+                </div>
+
+                <table class="receipt-table">
+                  <thead>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Amount</th>
+                  </thead>
+                  <tbody>
+                    <?php while ($row = $resultBillConsumer3->fetch_assoc()) : ?>
+                      <tr>
+                        <td class="receipt-content"><?php echo $row['fullname'] ?></td>
+                        <td class="receipt-content"><?php echo $row['status'] ?></td>
+                        <td class="amount-td"><?php echo $row['amount'] ?></td>
+                      </tr>
+                    <?php endwhile; ?>
+                    <tr>
+                      <td colspan="2" class="amount-total-label">Total:</td>
+                      <td class="total-amount-td"><?php echo $row1['total_cost'] ?></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="receipt-footer"></div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
             </div>
           </div>
         </div>

@@ -260,6 +260,9 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
     .secretarySideBar li:hover {
         background-color: rgb(236, 235, 226);
     }
+    .year-text{
+        margin-left: 1em;
+    }
 </style>
 <script>
     $(document).ready(function() {
@@ -531,7 +534,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                                                         ?>
                                                         <?php endwhile; ?>
                                                     </select></td>
-                                                <td><input type="text" <?php
+                                                <td><input class="year-text" type="text" <?php
                                                                         $dateYear = date('Y');
                                                                         echo "value = '$dateYear'";
                                                                         ?> id="" readonly></td>
@@ -619,7 +622,7 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                                                         <?php endwhile; ?>
 
                                                 </td>
-                                                <td><input type="text" name="yearNow" value="<?php
+                                                <td><input class="year-text" type="text" name="yearNow" value="<?php
                                                                                                 $dateYear = date('Y');
                                                                                                 echo $dateYear;
                                                                                                 ?>" id="yearNow" readonly></td>
