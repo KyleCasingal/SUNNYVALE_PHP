@@ -4,7 +4,7 @@ if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin')
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
-$resultTransaction = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Amenity Renting'");
+$resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Amenity Renting' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "'");
 $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction WHERE amenity_renting.transaction_id = transaction.transaction_id");
 $resultAmenityRenting1 = $con->query("SELECT DISTINCT amenity_renting.transaction_id FROM amenity_renting, transaction WHERE amenity_renting.transaction_id = transaction.transaction_id ");
 ?>
