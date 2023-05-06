@@ -6,8 +6,8 @@ if ($_SESSION['user_type'] != 'Admin') {
 }
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
-$resultContact = $con->query("SELECT * FROM contact INNER JOIN subdivision WHERE contact.subdivision_id = subdivision.subdivision_id") or die($mysqli->error);
+$resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
+$resultContact = $con->query("SELECT * FROM contact INNER JOIN subdivision WHERE contact.subdivision_id = subdivision.subdivision_id AND subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
 ?>
 
 <?php

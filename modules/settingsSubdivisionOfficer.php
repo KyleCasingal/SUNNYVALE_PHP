@@ -6,11 +6,11 @@ if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary')
 }
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultSubdivision = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultSubdivision_selectOfficers = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
+$resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
+$resultSubdivision_table = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
+$resultSubdivision_selectOfficers = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ") or die($mysqli->error);
 
-$resultOfficer = $con->query("SELECT * FROM officers") or die($mysqli->error);
+$resultOfficer = $con->query("SELECT * FROM officers WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
 
 $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error);
 ?>

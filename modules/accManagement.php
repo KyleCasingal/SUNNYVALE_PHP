@@ -1,71 +1,139 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Admin' AND $_SESSION['user_type'] != 'Secretary') {
+if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary' and $_SESSION['user_type'] != 'Super Admin') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
 }
-$res = $con->query("SELECT * FROM user, homeowner_profile WHERE subdivision = '" . $_SESSION['subdivision'] . "' AND homeowner_id = user_homeowner_id AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER  by user_id ASC") or die($mysqli->error);
-//ACCOUNT MANAGEMENT SORT, ACTIVATE, DEACTIVATE
-$status_filter = $_POST['status_filter'] ?? '';
-if (isset($_POST['filterButton'])) {
-    if ($status_filter == 'Activated') {
-        $res = $con->query("SELECT * FROM user, homeowner_profile WHERE subdivision = '" . $_SESSION['subdivision'] . "' AND homeowner_id = user_homeowner_id AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
-    } elseif ($status_filter == 'Deactivated') {
-        $res = $con->query("SELECT * FROM user, homeowner_profile WHERE subdivision = '" . $_SESSION['subdivision'] . "' AND homeowner_id = user_homeowner_id AND account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+
+if ($_SESSION['subdivision'] != '') {
+    $res = $con->query("SELECT * FROM user, homeowner_profile WHERE subdivision = '" . $_SESSION['subdivision'] . "' AND homeowner_id = user_homeowner_id AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER  by user_id ASC") or die($mysqli->error);
+    //ACCOUNT MANAGEMENT SORT, ACTIVATE, DEACTIVATE
+    $status_filter = $_POST['status_filter'] ?? '';
+    if (isset($_POST['filterButton'])) {
+        if ($status_filter == 'Activated') {
+            $res = $con->query("SELECT * FROM user, homeowner_profile WHERE subdivision = '" . $_SESSION['subdivision'] . "' AND homeowner_id = user_homeowner_id AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+        } elseif ($status_filter == 'Deactivated') {
+            $res = $con->query("SELECT * FROM user, homeowner_profile WHERE subdivision = '" . $_SESSION['subdivision'] . "' AND homeowner_id = user_homeowner_id AND account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+        }
     }
-}
-if (isset($_POST['activate'])) {
-    if (isset($_POST['checkbox'])) {
-        echo "<div class='messageSuccess'>
+    if (isset($_POST['activate'])) {
+        if (isset($_POST['checkbox'])) {
+            echo "<div class='messageSuccess'>
         <label >
           Selected user/s are activated!
         </label>
       </div>";
-        foreach ($_POST['checkbox'] as $user_id) {
-            $sql = "UPDATE user SET account_status = 'Activated' WHERE user_id = '$user_id'";
-            $result = mysqli_query($con, $sql);
-            $resultActivate = $con->query("SELECT * FROM user WHERE user_id = '$user_id'");
-            $row = $resultActivate->fetch_assoc();
-            $full_name = $row['full_name'];
-            $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
-            $row = $resultSession->fetch_assoc();
-            $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" .  'activated user' . ' ' . "$full_name" . "' , NOW())";
-            mysqli_query($con, $sql1);
+            foreach ($_POST['checkbox'] as $user_id) {
+                $sql = "UPDATE user SET account_status = 'Activated' WHERE user_id = '$user_id'";
+                $result = mysqli_query($con, $sql);
+                $resultActivate = $con->query("SELECT * FROM user WHERE user_id = '$user_id'");
+                $row = $resultActivate->fetch_assoc();
+                $full_name = $row['full_name'];
+                $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+                $row = $resultSession->fetch_assoc();
+                $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" .  'activated user' . ' ' . "$full_name" . "' , NOW())";
+                mysqli_query($con, $sql1);
+            }
+        } else {
+            echo 'Please select an account to activate!';
         }
-    } else {
-        echo 'Please select an account to activate!';
+        if ($status_filter == 'Activated') {
+            $res = $con->query("SELECT * FROM user WHERE account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+        } else if ($status_filter == 'Deactivated') {
+            $res = $con->query("SELECT * FROM user WHERE account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+        }
     }
-    if ($status_filter == 'Activated') {
-        $res = $con->query("SELECT * FROM user WHERE account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
-    } else if ($status_filter == 'Deactivated') {
-        $res = $con->query("SELECT * FROM user WHERE account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
-    }
-}
-if (isset($_POST['deactivate'])) {
-    if (isset($_POST['checkbox'])) {
-        echo "<div class='messageSuccess'>
+    if (isset($_POST['deactivate'])) {
+        if (isset($_POST['checkbox'])) {
+            echo "<div class='messageSuccess'>
         <label >
           Selected user/s are deactivated!
         </label>
       </div>";
-        foreach ($_POST['checkbox'] as $user_id) {
-            $sql = "UPDATE user SET account_status = 'Deactivated' WHERE user_id = '$user_id'";
-            $result = mysqli_query($con, $sql);
-            $resultDeactivate = $con->query("SELECT * FROM user WHERE user_id = '$user_id'");
-            $row = $resultDeactivate->fetch_assoc();
-            $full_name = $row['full_name'];
-            $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
-            $row = $resultSession->fetch_assoc();
-            $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" .  'deactivated user' . ' ' . "$full_name" . "' , NOW())";
-            mysqli_query($con, $sql1);
+            foreach ($_POST['checkbox'] as $user_id) {
+                $sql = "UPDATE user SET account_status = 'Deactivated' WHERE user_id = '$user_id'";
+                $result = mysqli_query($con, $sql);
+                $resultDeactivate = $con->query("SELECT * FROM user WHERE user_id = '$user_id'");
+                $row = $resultDeactivate->fetch_assoc();
+                $full_name = $row['full_name'];
+                $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+                $row = $resultSession->fetch_assoc();
+                $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" .  'deactivated user' . ' ' . "$full_name" . "' , NOW())";
+                mysqli_query($con, $sql1);
+            }
+        } else {
+            echo 'Please select an account to deactivate!';
         }
-    } else {
-        echo 'Please select an account to deactivate!';
+        if ($status_filter == 'Activated') {
+            $res = $con->query("SELECT * FROM user, homeowner_profile WHERE subdivision = '" . $_SESSION['subdivision'] . "' AND homeowner_id = user_homeowner_id AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+        } else if ($status_filter == 'Deactivated') {
+            $res = $con->query("SELECT * FROM user, homeowner_profile WHERE subdivision = '" . $_SESSION['subdivision'] . "' AND homeowner_id = user_homeowner_id AND account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+        }
     }
-    if ($status_filter == 'Activated') {
-        $res = $con->query("SELECT * FROM user, homeowner_profile WHERE subdivision = '" . $_SESSION['subdivision'] . "' AND homeowner_id = user_homeowner_id AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
-    } else if ($status_filter == 'Deactivated') {
-        $res = $con->query("SELECT * FROM user, homeowner_profile WHERE subdivision = '" . $_SESSION['subdivision'] . "' AND homeowner_id = user_homeowner_id AND account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+} else {
+    $res = $con->query("SELECT * FROM user, homeowner_profile WHERE homeowner_id = user_homeowner_id AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER  by user_id ASC") or die($mysqli->error);
+    //ACCOUNT MANAGEMENT SORT, ACTIVATE, DEACTIVATE
+    $status_filter = $_POST['status_filter'] ?? '';
+    if (isset($_POST['filterButton'])) {
+        if ($status_filter == 'Activated') {
+            $res = $con->query("SELECT * FROM user, homeowner_profile WHERE homeowner_id = user_homeowner_id AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+        } elseif ($status_filter == 'Deactivated') {
+            $res = $con->query("SELECT * FROM user, homeowner_profile WHERE homeowner_id = user_homeowner_id AND account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+        }
+    }
+    if (isset($_POST['activate'])) {
+        if (isset($_POST['checkbox'])) {
+            echo "<div class='messageSuccess'>
+        <label >
+          Selected user/s are activated!
+        </label>
+      </div>";
+            foreach ($_POST['checkbox'] as $user_id) {
+                $sql = "UPDATE user SET account_status = 'Activated' WHERE user_id = '$user_id'";
+                $result = mysqli_query($con, $sql);
+                $resultActivate = $con->query("SELECT * FROM user WHERE user_id = '$user_id'");
+                $row = $resultActivate->fetch_assoc();
+                $full_name = $row['full_name'];
+                $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+                $row = $resultSession->fetch_assoc();
+                $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" .  'activated user' . ' ' . "$full_name" . "' , NOW())";
+                mysqli_query($con, $sql1);
+            }
+        } else {
+            echo 'Please select an account to activate!';
+        }
+        if ($status_filter == 'Activated') {
+            $res = $con->query("SELECT * FROM user WHERE account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+        } else if ($status_filter == 'Deactivated') {
+            $res = $con->query("SELECT * FROM user WHERE account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+        }
+    }
+    if (isset($_POST['deactivate'])) {
+        if (isset($_POST['checkbox'])) {
+            echo "<div class='messageSuccess'>
+        <label >
+          Selected user/s are deactivated!
+        </label>
+      </div>";
+            foreach ($_POST['checkbox'] as $user_id) {
+                $sql = "UPDATE user SET account_status = 'Deactivated' WHERE user_id = '$user_id'";
+                $result = mysqli_query($con, $sql);
+                $resultDeactivate = $con->query("SELECT * FROM user WHERE user_id = '$user_id'");
+                $row = $resultDeactivate->fetch_assoc();
+                $full_name = $row['full_name'];
+                $resultSession = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+                $row = $resultSession->fetch_assoc();
+                $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" .  'deactivated user' . ' ' . "$full_name" . "' , NOW())";
+                mysqli_query($con, $sql1);
+            }
+        } else {
+            echo 'Please select an account to deactivate!';
+        }
+        if ($status_filter == 'Activated') {
+            $res = $con->query("SELECT * FROM user, homeowner_profile WHERE homeowner_id = user_homeowner_id AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+        } else if ($status_filter == 'Deactivated') {
+            $res = $con->query("SELECT * FROM user, homeowner_profile WHERE homeowner_id = user_homeowner_id AND account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+        }
     }
 }
 ?>

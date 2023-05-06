@@ -1,12 +1,22 @@
 <?php
 require '../marginals/topbar.php';
 
-$result = $con->query("SELECT post.post_id, post.full_name, post.title, post.content, post.content_image, post.published_at, tenant.full_name, tenant.display_picture, tenant.homeowner_id, tenant.subdivision FROM post, tenant WHERE tenant.full_name = post.full_name AND officer_post = 'No' AND post_status = 'Active' AND tenant.subdivision = '" . $_SESSION['subdivision'] . "' UNION SELECT post.post_id, post.full_name, post.title, post.content, post.content_image, post.published_at, CONCAT(homeowner_profile.first_name, ' ', homeowner_profile.last_name), homeowner_profile.display_picture, homeowner_profile.homeowner_id, homeowner_profile.subdivision FROM post, homeowner_profile WHERE CONCAT(homeowner_profile.first_name, ' ', homeowner_profile.last_name) = post.full_name AND officer_post = 'No' AND post_status = 'Active' AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "' ORDER BY post_id DESC") or die($mysqli->error);
-$resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Active' AND subdivision = '" . $_SESSION['subdivision'] . "' ORDER BY post_id DESC") or die($mysqli->error);
-$resultOfficer1 = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Active' AND subdivision = '" . $_SESSION['subdivision'] . "' ORDER BY post_id DESC") or die($mysqli->error);
-$resultUser = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
-$rowUser = $resultUser->fetch_assoc();
-$resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime DESC");
+if ($_SESSION['subdivision'] != '') {
+  $result = $con->query("SELECT post.post_id, post.full_name, post.title, post.content, post.content_image, post.published_at, tenant.full_name, tenant.display_picture, tenant.homeowner_id, tenant.subdivision FROM post, tenant WHERE tenant.full_name = post.full_name AND officer_post = 'No' AND post_status = 'Active' AND tenant.subdivision = '" . $_SESSION['subdivision'] . "' UNION SELECT post.post_id, post.full_name, post.title, post.content, post.content_image, post.published_at, CONCAT(homeowner_profile.first_name, ' ', homeowner_profile.last_name), homeowner_profile.display_picture, homeowner_profile.homeowner_id, homeowner_profile.subdivision FROM post, homeowner_profile WHERE CONCAT(homeowner_profile.first_name, ' ', homeowner_profile.last_name) = post.full_name AND officer_post = 'No' AND post_status = 'Active' AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "' ORDER BY post_id DESC") or die($mysqli->error);
+  $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Active' AND subdivision = '" . $_SESSION['subdivision'] . "' ORDER BY post_id DESC") or die($mysqli->error);
+  $resultOfficer1 = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Active' AND subdivision = '" . $_SESSION['subdivision'] . "' ORDER BY post_id DESC") or die($mysqli->error);
+  $resultUser = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
+  $rowUser = $resultUser->fetch_assoc();
+  $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime DESC");
+} else {
+  $result = $con->query("SELECT post.post_id, post.full_name, post.title, post.content, post.content_image, post.published_at, tenant.full_name, tenant.display_picture, tenant.homeowner_id, tenant.subdivision FROM post, tenant WHERE tenant.full_name = post.full_name AND officer_post = 'No' AND post_status = 'Active' UNION SELECT post.post_id, post.full_name, post.title, post.content, post.content_image, post.published_at, CONCAT(homeowner_profile.first_name, ' ', homeowner_profile.last_name), homeowner_profile.display_picture, homeowner_profile.homeowner_id, homeowner_profile.subdivision FROM post, homeowner_profile WHERE CONCAT(homeowner_profile.first_name, ' ', homeowner_profile.last_name) = post.full_name AND officer_post = 'No' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
+  $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Active'") or die($mysqli->error);
+  $resultOfficer1 = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Active'") or die($mysqli->error);
+  $resultUser = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
+  $rowUser = $resultUser->fetch_assoc();
+  $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime DESC");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -499,11 +509,12 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
     background-color: rgb(170, 192, 175, 0.3);
   }
 
-  .footer-announcement{
+  .footer-announcement {
     background-color: rgb(0, 0, 0, 0);
   }
+
   .concernSubject,
-  .concernMessage{
+  .concernMessage {
     background-color: rgb(0, 0, 0, 0);
   }
 </style>
@@ -519,7 +530,7 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
           <p class="headTxt">Recent Posts</p>
           <form action="" method="POST">
             <?php
-            if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
+            if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary' or $rowUser['user_type'] == 'Super Admin') {
             ?>
               <button id='archivedPosts' name='archivedPosts' type='submit' class='archived-post-btn'>Archived Posts</button>
               <button id='newPost' type='button' class='new-announcement-btn' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>+ New Announcement</button>
@@ -576,7 +587,7 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
                 </p>
               </div>
               <?php
-              if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
+              if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary' or $rowUser['user_type'] == 'Super Admin') {
               ?>
                 <button type="button" class='archive-btn' name="archive" id="archive1" data-bs-toggle="modal" data-bs-target="#confirmArchive<?php echo $row['post_id'] ?>">ARCHIVE</button>
                 <div class="modal fade" id="confirmArchive<?php echo $row['post_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -748,7 +759,7 @@ $resultVehicle = $con->query("SELECT * FROM vehicle_monitoring ORDER BY datetime
                                                                                                         echo $phptime = date("g:i A m/d/y", $datetime);
                                                                                                         ?></td>
             <td><?php
-                if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary') {
+                if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary' or $rowUser['user_type'] == 'Super Admin') {
 
                   echo "<a href='../process.php?post_archive=" . $row['post_id'] . "'class='archive-btn'>ARCHIVE</a>";
                 }

@@ -6,10 +6,10 @@ if ($_SESSION['user_type'] != 'Admin') {
 }
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultSubdivision = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultSubdivision_table = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultSubdivision_selectSysAcc = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultSysAcc = $con->query("SELECT * FROM user WHERE user_type = 'Secretary' OR user_type = 'Treasurer' OR user_type = 'Admin' OR user_type = 'Guard' ORDER BY full_name ASC ") or die($mysqli->error);
+$resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
+$resultSubdivision_table = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
+$resultSubdivision_selectSysAcc = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
+$resultSysAcc = $con->query("SELECT * FROM user, homeowner_profile WHERE (user_type = 'Secretary' OR user_type = 'Treasurer' OR user_type = 'Admin' OR user_type = 'Guard') AND user_homeowner_id = homeowner_id AND subdivision = '" . $_SESSION['subdivision'] . "' ORDER BY full_name ASC") or die($mysqli->error);
 $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error);
 ?>
 

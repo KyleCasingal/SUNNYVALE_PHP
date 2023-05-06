@@ -1,13 +1,21 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Admin' AND $_SESSION['user_type'] != 'Secretary') {
+if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary' and $_SESSION['user_type'] != 'Super Admin') {
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
-$result = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'No' AND post_status = 'Archived' ORDER BY post_id DESC") or die($mysqli->error);
-$resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Archived' ORDER BY post_id DESC") or die($mysqli->error);
-$resultUser = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
-$rowUser = $resultUser->fetch_assoc();
+
+if ($_SESSION['subdivision'] != '') {
+  $result = $con->query("SELECT post.post_id, post.full_name, post.title, post.content, post.content_image, post.published_at, tenant.full_name, tenant.display_picture, tenant.homeowner_id, tenant.subdivision FROM post, tenant WHERE tenant.full_name = post.full_name AND officer_post = 'No' AND post_status = 'Archived' AND tenant.subdivision = '" . $_SESSION['subdivision'] . "' UNION SELECT post.post_id, post.full_name, post.title, post.content, post.content_image, post.published_at, CONCAT(homeowner_profile.first_name, ' ', homeowner_profile.last_name), homeowner_profile.display_picture, homeowner_profile.homeowner_id, homeowner_profile.subdivision FROM post, homeowner_profile WHERE CONCAT(homeowner_profile.first_name, ' ', homeowner_profile.last_name) = post.full_name AND officer_post = 'No' AND post_status = 'Archived' AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "' ORDER BY post_id DESC") or die($mysqli->error);
+  $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Archived' AND subdivision = '" . $_SESSION['subdivision'] . "' ORDER BY post_id DESC") or die($mysqli->error);
+  $resultUser = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
+  $rowUser = $resultUser->fetch_assoc();
+} else {
+  $result = $con->query("SELECT post.post_id, post.full_name, post.title, post.content, post.content_image, post.published_at, tenant.full_name, tenant.display_picture, tenant.homeowner_id, tenant.subdivision FROM post, tenant WHERE tenant.full_name = post.full_name AND officer_post = 'No' AND post_status = 'Archived' UNION SELECT post.post_id, post.full_name, post.title, post.content, post.content_image, post.published_at, CONCAT(homeowner_profile.first_name, ' ', homeowner_profile.last_name), homeowner_profile.display_picture, homeowner_profile.homeowner_id, homeowner_profile.subdivision FROM post, homeowner_profile WHERE CONCAT(homeowner_profile.first_name, ' ', homeowner_profile.last_name) = post.full_name AND officer_post = 'No' AND post_status = 'Archived' ORDER BY post_id DESC") or die($mysqli->error);
+  $resultOfficer = $con->query("SELECT * FROM post, homeowner_profile WHERE full_name = CONCAT(first_name, ' ', last_name) AND officer_post = 'Yes' AND post_status = 'Archived' ORDER BY post_id DESC") or die($mysqli->error);
+  $resultUser = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
+  $rowUser = $resultUser->fetch_assoc();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -405,6 +413,7 @@ $rowUser = $resultUser->fetch_assoc();
     padding: 0.5em;
 
   }
+
   .archived-post-btn {
     background-color: rgb(248, 186, 55);
     color: white;
@@ -424,7 +433,7 @@ $rowUser = $resultUser->fetch_assoc();
       <div class="blogHead">
         <p class="headTxt">Archived Posts</p>
         <form action="" method="POST">
-        <button id='archivedPosts' name='return' type='submit' class='archived-post-btn'>Return</button>
+          <button id='archivedPosts' name='return' type='submit' class='archived-post-btn'>Return</button>
       </div>
       <?php while ($row = $result->fetch_assoc()) : ?>
         <div class="blogPost">

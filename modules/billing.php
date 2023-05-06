@@ -6,10 +6,10 @@ if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin')
 }
 $rowZ = $result->fetch_assoc();
 $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
-$resultSubdivision = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
-$resultSubdivision1 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
-$resultSubdivision2 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
-$resultSubdivision3 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
+$resultSubdivision = $con->query("SELECT * FROM monthly_dues WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY monthly_dues_id ASC");
+$resultSubdivision1 = $con->query("SELECT * FROM monthly_dues WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY monthly_dues_id ASC");
+$resultSubdivision2 = $con->query("SELECT * FROM monthly_dues WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY monthly_dues_id ASC");
+$resultSubdivision3 = $con->query("SELECT * FROM monthly_dues WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY monthly_dues_id ASC");
 $resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ");
 $resultHomeowners1 = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ");
 

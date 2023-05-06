@@ -437,6 +437,9 @@ if ($_SESSION['user_type'] == 'Tenant') {
               if ($row['user_type'] == 'Admin') {
                 echo '<a class="dropdown-item" href="../modules/accManagement.php">Admin Panel</a>';
               }
+              if ($row['user_type'] == 'Super Admin') {
+                echo '<a class="dropdown-item" href="../modules/accManagement.php">Admin Panel</a>';
+              }
               if ($row['user_type'] == 'Treasurer') {
                 echo '<a class="dropdown-item" href="../modules/treasurerPanel.php">Treasurer Panel</a>';
               }

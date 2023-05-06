@@ -6,8 +6,8 @@ if ($_SESSION['user_type'] != 'Admin' AND $_SESSION['user_type'] != 'Secretary')
 }
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultSubdivision_selectMonthly = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
-$resultMonthly = $con->query("SELECT * FROM monthly_dues") or die($mysqli->error);
+$resultSubdivision_selectMonthly = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
+$resultMonthly = $con->query("SELECT * FROM monthly_dues WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
 ?>
 
 <!DOCTYPE html>
