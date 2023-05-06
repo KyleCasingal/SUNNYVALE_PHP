@@ -4,7 +4,7 @@ if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin')
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
-$resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Amenity Renting' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "'");
+$resultTransaction = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Amenity Renting'");
 $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction WHERE amenity_renting.transaction_id = transaction.transaction_id");
 ?>
 <!DOCTYPE html>
@@ -21,12 +21,11 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> -->
-  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   <title>SUNNYVALE</title>
 </head>
 <style>
-  * {
+   * {
     margin: 0;
   }
 
@@ -188,6 +187,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
   }
 
   .tblAmenity {
+
     width: 100%;
     margin-bottom: 2vw;
     overflow-x: auto;
@@ -401,12 +401,6 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
     font-weight: 800;
   }
 
-  /* .modal-header,
-  .modalConcernBody {
-    /* background-color: rgba(170, 192, 175, 0.3); */
-  } 
-
-
 
   .renter-name {
     font-weight: bold;
@@ -560,6 +554,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
                                                     echo $row1['transaction_id'];
                                                     ?>" aria-labelledby="exampleModalToggleLabel" tabindex="-1" style="display: none;" aria-hidden="true">
             <?php $resultAmenityRenting2 = $con->query("SELECT * FROM amenity_renting, amenity_purpose WHERE amenity_renting.transaction_id = " . $row1['transaction_id'] . " AND amenity_renting.amenity_purpose = amenity_purpose.amenity_purpose_id"); ?>
+            <?php $resultAmenityRenting3 = $con->query("SELECT * FROM amenity_renting, amenity_purpose WHERE amenity_renting.transaction_id = " . $row1['transaction_id'] . " AND amenity_renting.amenity_purpose = amenity_purpose.amenity_purpose_id"); ?>
             <div class="modal-dialog  modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
@@ -604,9 +599,9 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
                     <tr>
                       <td>Payment Proof:</td>
                       <td>
-                        <img class="proof-img" <?php
-                                                $imageURL = '../media/paymentProof/' . $row1['payment_proof'];
-                                                ?> src="<?= $imageURL ?>" alt="">
+                        <img class="postImg" <?php
+                                              $imageURL = '../media/paymentProof/' . $row1['payment_proof'];
+                                              ?> src="<?= $imageURL ?>" alt="">
                         </img>
                       </td>
                     </tr>
