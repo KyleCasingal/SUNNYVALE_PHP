@@ -25,7 +25,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
   <title>SUNNYVALE</title>
 </head>
 <style>
-   * {
+  * {
     margin: 0;
   }
 
@@ -488,6 +488,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
 
   .receipt-table th {
     border: 1px solid black;
+    font-size: 1em;
   }
 
   .receipt-table td,
@@ -503,6 +504,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
 
   .amount-total-label {
     border: 1px solid black;
+    text-align: right;
   }
 
   .modal-body {
@@ -528,11 +530,17 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
 
   .receipt-number {
     align-self: flex-start;
-    padding-bottom: 1em;
+    margin: 0;
+  }
+
+  .receipt-date {
+    align-self: flex-start;
+    padding-bottom: 0.5rem;
   }
 
   .receipt-transaction {
     align-self: flex-start;
+    margin: 0;
   }
 </style>
 <script type="text/javascript">
@@ -661,19 +669,19 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
                       <label class="receipt-text">SNNVL-RNTNG-<?php echo $row1['transaction_id'] ?></label>
                     </div>
 
-                    <div class="receipt-number">
+                    <div class="receipt-date">
                       <label class="receipt-label">Date Paid:</label>
                       <label class="receipt-text"><?php echo $row1['datetime'] ?></label>
                     </div>
 
                     <table class="receipt-table">
                       <thead>
-                      <th>Subdivision</td>
-                      <th>Amenity</td>
-                      <th>Purpose</td>
-                      <th>From</td>
-                      <th>To</td>
-                      <th>Cost</td>
+                        <th>Subdivision</td>
+                        <th>Amenity</td>
+                        <th>Purpose</td>
+                        <th>From</td>
+                        <th>To</td>
+                        <th>Cost</td>
                       </thead>
                       <tbody>
                         <?php while ($row = $resultAmenityRenting3->fetch_assoc()) : ?>
