@@ -134,9 +134,9 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
 
   .paymentForm {
     display: flex;
-    padding: 2vw;
-    margin: 1.5vw;
-    width: 40%;
+    padding: 0;
+    margin: 0;
+    width: 100%;
     border-radius: 1vw;
     flex-direction: column;
     background-color: rgb(170, 192, 175, 0.0);
