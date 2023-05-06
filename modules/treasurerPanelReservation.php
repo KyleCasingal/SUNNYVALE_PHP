@@ -401,10 +401,10 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
     font-weight: 800;
   }
 
-  .modal-header,
+  /* .modal-header,
   .modalConcernBody {
     /* background-color: rgba(170, 192, 175, 0.3); */
-  }
+  } 
 
 
 
