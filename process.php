@@ -1321,7 +1321,7 @@ if (isset($_POST['subdivision_id_homeowner'])) {
 
   $result = $con->query("SELECT * FROM monthly_dues WHERE subdivision_id=$monthly_dues_id");
   $row = $result->fetch_assoc();
-  $result2 = $con->query("SELECT *, CONCAT(first_name, ' ', last_name)  AS fullname FROM homeowner_profile WHERE subdivision='" . $row['subdivision_name'] . "' ");
+  $result2 = $con->query("SELECT *, CONCAT(first_name, ' ', last_name)  AS fullname FROM homeowner_profile WHERE subdivision='" . $row['subdivision_name'] . "' AND last_name != '' ");
 
   if (mysqli_num_rows($result) > 0) {
     echo '<script type="text/javascript">

@@ -4,6 +4,7 @@ if (empty($_SESSION)) {
   header("Location: ../index.php");
   exit;
 }
+
 if ($_SESSION['user_type'] == 'Tenant') {
   $result = $con->query("SELECT * FROM user, tenant WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND user.full_name = tenant.full_name") or die($mysqli->error);
   $result1 = $con->query("SELECT * FROM user, tenant WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND user.full_name = tenant.full_name")  or die($mysqli->error);
@@ -39,7 +40,7 @@ if ($_SESSION['user_type'] == 'Tenant') {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script>
 
   </script>
@@ -390,7 +391,6 @@ if ($_SESSION['user_type'] == 'Tenant') {
           if ($user_type == 'Homeowner' or $user_type == 'Tenant') {
           ?>
             <li onclick="location.href='../modules/amenities.php'" class="topListItem1">AMENITIES</li>
-
           <?php
           }
           ?>
@@ -401,7 +401,6 @@ if ($_SESSION['user_type'] == 'Tenant') {
           <?php
           }
           ?>
-        </ul>
       </div>
       <div class="topRight">
         <div class='menu-trigger'>
@@ -434,10 +433,7 @@ if ($_SESSION['user_type'] == 'Tenant') {
               }
               ?>
               <?php
-              if ($row['user_type'] == 'Admin') {
-                echo '<a class="dropdown-item" href="../modules/accManagement.php">Admin Panel</a>';
-              }
-              if ($row['user_type'] == 'Super Admin') {
+              if ($row['user_type'] == 'Admin' or $row['user_type'] == 'Super Admin') {
                 echo '<a class="dropdown-item" href="../modules/accManagement.php">Admin Panel</a>';
               }
               if ($row['user_type'] == 'Treasurer') {
@@ -456,7 +452,7 @@ if ($_SESSION['user_type'] == 'Tenant') {
     </form>
   </div>
   <form action="" method="post">
-    <div class="modal fade" id="raiseConcern" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal fade" id="raiseConcern" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
