@@ -202,9 +202,7 @@ if ($_SESSION['user_type'] == 'Tenant') {
   }
 
   .tblForm {
-    border: 0 none !important;
-
-
+    border: none !important;
   }
 
   .tblForm th,
@@ -574,7 +572,9 @@ if ($_SESSION['user_type'] == 'Tenant') {
   }
 
   .mdl-body {
-    margin: 1vw;
+    padding: 1rem;
+    background-color: rgb(170, 192, 175, 0.3);
+
   }
 
   .formBlog {
@@ -584,7 +584,6 @@ if ($_SESSION['user_type'] == 'Tenant') {
 
   .formBlog label {
     padding-top: 1vw;
-    font-size: 1.5vw;
   }
 
   .change-password {
@@ -605,6 +604,25 @@ if ($_SESSION['user_type'] == 'Tenant') {
   .modal-body,
   .modal-footer {
     background-color: rgb(170, 192, 175, 0.3);
+  }
+
+  .upload {
+    text-align: center;
+    background-color: rgb(248, 186, 55);
+    border: 0;
+    padding: 0.5vw;
+    max-width: 20vw;
+    width: 10vw;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.2em;
+    margin-top: 2vw;
+    color: white;
+    border-radius: 0.8vw;
+    cursor: pointer;
+  }
+
+  .upload:hover {
+    background-color: rgb(253, 200, 86);
   }
 </style>
 
@@ -921,7 +939,7 @@ if ($_SESSION['user_type'] == 'Tenant') {
               <div class="blogWritePage">
                 <div class="formBlog">
                   <label class="writeText">Add Photos</label>
-                  <input class="attInput" type="file" name="image" id="image" accept="image/*" onchange="preview()"></input>
+                  <input class="attInput" type="file" name="image" id="image" accept="image/*" onchange="preview()" hidden></input>
                   <img class="imagePrev" id="imagePreview" src=# alt="" />
                   <label for="image" class="upload">Upload Photo</label>
                   <button data-bs-toggle="modal" type="button" class="savePhoto">Submit</button>

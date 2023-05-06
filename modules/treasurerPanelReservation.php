@@ -401,14 +401,12 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
     font-weight: 800;
   }
 
-  .modal-header,
+  /* .modal-header,
   .modalConcernBody {
-    background-color: rgba(170, 192, 175, 0.3);
-  }
+    /* background-color: rgba(170, 192, 175, 0.3); */
+  } 
 
-  .modal-footer {
-    background-color: rgba(170, 192, 175, 0);
-  }
+
 
   .renter-name {
     font-weight: bold;
@@ -421,7 +419,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
   }
 
   .availed-amenity-list td {
-    padding: 1vw;
+    padding: 0.5vw;
   }
 
   .sideBar {
@@ -449,6 +447,15 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
     font-size: max(1.5vw, min(10px));
     cursor: pointer;
     border-bottom: 1px solid lightgray;
+  }
+
+  .proof-img {
+    max-width: 20vw;
+    max-height: 20vw;
+  }
+
+  .modal-footer {
+    background-color: rgba(170, 192, 175, 0.3);
   }
 
   .receipt-head {
@@ -553,7 +560,6 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
                                                     echo $row1['transaction_id'];
                                                     ?>" aria-labelledby="exampleModalToggleLabel" tabindex="-1" style="display: none;" aria-hidden="true">
             <?php $resultAmenityRenting2 = $con->query("SELECT * FROM amenity_renting, amenity_purpose WHERE amenity_renting.transaction_id = " . $row1['transaction_id'] . " AND amenity_renting.amenity_purpose = amenity_purpose.amenity_purpose_id"); ?>
-            <?php $resultAmenityRenting3 = $con->query("SELECT * FROM amenity_renting, amenity_purpose WHERE amenity_renting.transaction_id = " . $row1['transaction_id'] . " AND amenity_renting.amenity_purpose = amenity_purpose.amenity_purpose_id"); ?>
             <div class="modal-dialog  modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
@@ -598,9 +604,9 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
                     <tr>
                       <td>Payment Proof:</td>
                       <td>
-                        <img class="postImg" <?php
-                                              $imageURL = '../media/paymentProof/' . $row1['payment_proof'];
-                                              ?> src="<?= $imageURL ?>" alt="">
+                        <img class="proof-img" <?php
+                                                $imageURL = '../media/paymentProof/' . $row1['payment_proof'];
+                                                ?> src="<?= $imageURL ?>" alt="">
                         </img>
                       </td>
                     </tr>
