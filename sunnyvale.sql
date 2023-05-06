@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: May 04, 2023 at 11:35 AM
+-- Generation Time: May 06, 2023 at 02:27 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `amenity_renting` (
   `cost` int(11) DEFAULT NULL,
   `cart` varchar(10) NOT NULL,
   PRIMARY KEY (`amenity_renting_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenity_renting`
@@ -122,7 +122,8 @@ INSERT INTO `amenity_renting` (`amenity_renting_id`, `transaction_id`, `user_id`
 (25, 3, 1, 'Mon Carlo Delima', 'Sunnyvale 3', 'Clubhouse', '8', '2023-04-15 01:00:00', '2023-04-15 02:00:00', 150, 'Approved'),
 (23, 2, 48, 'SV1_Treasurer', 'Sunnyvale 2', 'Court', '11', '2023-04-08 08:00:00', '2023-04-08 10:00:00', 40, 'Approved'),
 (24, 2, 48, 'SV1_Treasurer', 'Sunnyvale 2', 'Court', '12', '2023-04-08 10:00:00', '2023-04-08 12:00:00', 140, 'Approved'),
-(27, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '10', '2023-05-02 12:00:00', '2023-05-02 18:00:00', 480, 'Yes');
+(27, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '10', '2023-05-02 12:00:00', '2023-05-02 18:00:00', 480, 'Yes'),
+(28, NULL, 18, 'Test', 'Sunnyvale 1', 'Swimming Pool', '5', '2023-05-05 01:00:00', '2023-05-05 02:00:00', 50, 'Yes');
 
 -- --------------------------------------------------------
 
@@ -162,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1417 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1540 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -1571,7 +1572,130 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (1413, 'SV1_Admin', 'logged in', '2023-05-04 10:01:36'),
 (1414, 'SV1_Admin', 'logged out', '2023-05-04 10:03:41'),
 (1415, 'SV1_Admin', 'logged in', '2023-05-04 10:04:28'),
-(1416, 'SV1_Admin', 'logged out', '2023-05-04 10:05:34');
+(1416, 'SV1_Admin', 'logged out', '2023-05-04 10:05:34'),
+(1417, 'SV1_Admin', 'logged in', '2023-05-04 11:42:48'),
+(1418, 'SV1_Admin', 'logged in', '2023-05-04 11:42:52'),
+(1419, 'SV1_Admin', 'logged in', '2023-05-04 11:43:04'),
+(1420, 'SV1_Admin', 'logged in', '2023-05-04 11:43:16'),
+(1421, 'SV1_Admin', 'logged out', '2023-05-04 11:53:41'),
+(1422, 'Mon Carlo Delima', 'logged in', '2023-05-04 12:05:24'),
+(1423, 'Mon Carlo Delima', 'logged out', '2023-05-04 12:07:34'),
+(1424, 'SV1_Admin', 'logged in', '2023-05-05 14:50:25'),
+(1425, 'SV1_Admin', 'logged out', '2023-05-05 14:50:27'),
+(1426, 'SV1_Admin', 'logged in', '2023-05-05 14:50:29'),
+(1427, 'SV1_Admin', 'logged out', '2023-05-05 14:50:31'),
+(1428, 'Mon Carlo Delima', 'logged in', '2023-05-05 14:50:33'),
+(1429, 'Mon Carlo Delima', 'logged out', '2023-05-05 14:51:33'),
+(1430, 'Mon Carlo Delima', 'logged in', '2023-05-05 15:22:51'),
+(1431, 'Mon Carlo Delima', 'logged out', '2023-05-05 15:27:54'),
+(1432, 'SV1_Treasurer', 'logged in', '2023-05-05 15:32:56'),
+(1433, 'SV1_Treasurer', 'logged out', '2023-05-05 15:33:04'),
+(1434, 'Mon Carlo Delima', 'logged in', '2023-05-05 15:33:07'),
+(1435, 'Mon Carlo Delima', 'logged out', '2023-05-05 15:43:46'),
+(1436, 'SV1_Admin', 'logged in', '2023-05-05 15:43:48'),
+(1437, 'SV1_Admin', 'logged out', '2023-05-05 15:52:51'),
+(1438, 'SV1_Admin', 'logged in', '2023-05-05 15:52:54'),
+(1439, 'SV1_Admin', 'logged out', '2023-05-05 15:55:34'),
+(1440, 'SV1_Admin', 'logged in', '2023-05-05 15:55:36'),
+(1441, 'SV1_Admin', 'logged in', '2023-05-06 07:14:01'),
+(1442, 'SV1_Admin', 'logged out', '2023-05-06 07:15:17'),
+(1443, 'SV1_Admin', 'logged in', '2023-05-06 07:15:21'),
+(1444, 'SV1_Admin', 'logged out', '2023-05-06 07:45:25'),
+(1445, 'SV1_Treasurer', 'logged in', '2023-05-06 07:45:28'),
+(1446, 'SV1_Treasurer', 'logged out', '2023-05-06 08:00:59'),
+(1447, 'SV1_Admin', 'logged in', '2023-05-06 08:01:02'),
+(1448, 'SV1_Admin', 'logged out', '2023-05-06 08:04:13'),
+(1449, 'SV1_Admin', 'logged in', '2023-05-06 08:04:19'),
+(1450, 'SV1_Admin', 'logged out', '2023-05-06 08:05:04'),
+(1451, 'SV1_Admin', 'logged in', '2023-05-06 08:05:06'),
+(1452, 'SV1_Admin', 'logged out', '2023-05-06 08:05:13'),
+(1453, 'test test', 'created an account', '2023-05-06 08:05:53'),
+(1454, 'test test', 'logged in', '2023-05-06 08:06:36'),
+(1455, 'test test', 'logged out', '2023-05-06 08:07:13'),
+(1456, 'SV1_Admin', 'logged in', '2023-05-06 08:07:17'),
+(1457, 'SV1_Admin', 'logged out', '2023-05-06 08:09:15'),
+(1458, 'SV1_Admin', 'logged in', '2023-05-06 08:09:25'),
+(1459, 'SV1_Admin', 'logged out', '2023-05-06 08:09:32'),
+(1460, 'SV1_Admin', 'logged in', '2023-05-06 08:09:35'),
+(1461, 'SV1_Admin', 'logged out', '2023-05-06 08:11:22'),
+(1462, 'SV1_Admin', 'logged in', '2023-05-06 08:11:26'),
+(1463, 'SV1_Admin', 'logged out', '2023-05-06 08:13:51'),
+(1464, 'SV1_Admin', 'logged in', '2023-05-06 12:29:42'),
+(1465, 'SV1_Admin', 'logged out', '2023-05-06 12:35:57'),
+(1466, 'SV1_Admin', 'logged in', '2023-05-06 12:36:14'),
+(1467, 'SV1_Admin', 'logged out', '2023-05-06 12:43:42'),
+(1468, 'SV1_Admin', 'logged in', '2023-05-06 12:43:44'),
+(1469, 'SV1_Admin', 'logged out', '2023-05-06 12:43:57'),
+(1470, 'SV1_Admin', 'logged in', '2023-05-06 12:44:02'),
+(1471, 'SV1_Admin', 'logged out', '2023-05-06 12:44:14'),
+(1472, 'SV1_Admin', 'logged in', '2023-05-06 12:44:16'),
+(1473, 'SV1_Admin', 'logged out', '2023-05-06 12:44:33'),
+(1474, 'SV1_Admin', 'logged in', '2023-05-06 12:44:36'),
+(1475, 'SV1_Admin', 'logged out', '2023-05-06 12:44:37'),
+(1476, 'Mon Carlo Delima', 'logged in', '2023-05-06 12:44:40'),
+(1477, 'Mon Carlo Delima', 'logged out', '2023-05-06 12:46:11'),
+(1478, 'Mon Carlo Delima', 'logged in', '2023-05-06 12:46:14'),
+(1479, 'Mon Carlo Delima', 'logged out', '2023-05-06 12:47:01'),
+(1480, 'Mon Carlo Delima', 'logged in', '2023-05-06 12:47:04'),
+(1481, 'Mon Carlo Delima', 'logged out', '2023-05-06 12:51:12'),
+(1482, 'Mon Carlo Delima', 'logged in', '2023-05-06 12:51:15'),
+(1483, 'Mon Carlo Delima', 'logged out', '2023-05-06 12:51:19'),
+(1484, 'SV2_Admin', 'logged in', '2023-05-06 12:51:41'),
+(1485, 'SV2_Admin', 'logged out', '2023-05-06 12:53:13'),
+(1486, 'SV1_Admin', 'logged in', '2023-05-06 12:53:15'),
+(1487, 'SV1_Admin', 'logged out', '2023-05-06 13:15:05'),
+(1488, 'SV1_Admin', 'logged in', '2023-05-06 13:15:08'),
+(1489, 'SV1_Admin', 'logged out', '2023-05-06 13:16:10'),
+(1490, 'SV1_Admin', 'logged in', '2023-05-06 13:16:13'),
+(1491, 'SV1_Admin', 'logged out', '2023-05-06 13:16:41'),
+(1492, 'Mon Carlo Delima', 'logged in', '2023-05-06 13:16:44'),
+(1493, 'Mon Carlo Delima', 'logged out', '2023-05-06 13:16:52'),
+(1494, 'SV1_Admin', 'logged in', '2023-05-06 13:16:57'),
+(1495, 'SV1_Admin', 'logged out', '2023-05-06 13:18:01'),
+(1496, 'SV1_Secretary', 'logged in', '2023-05-06 13:18:04'),
+(1497, 'SV1_Secretary', 'logged out', '2023-05-06 13:18:05'),
+(1498, 'Mon Carlo Delima', 'logged in', '2023-05-06 13:18:08'),
+(1499, 'Mon Carlo Delima', 'logged out', '2023-05-06 13:18:37'),
+(1500, 'SV2_Admin', 'logged in', '2023-05-06 13:18:40'),
+(1501, 'SV2_Admin', 'logged out', '2023-05-06 13:19:21'),
+(1502, 'Kyle Andrei Casingal', 'logged in', '2023-05-06 13:19:25'),
+(1503, 'Kyle Andrei Casingal', 'logged out', '2023-05-06 13:19:59'),
+(1504, 'Mon Carlo Delima', 'logged in', '2023-05-06 13:20:02'),
+(1505, 'Mon Carlo Delima', 'logged out', '2023-05-06 13:20:53'),
+(1506, 'SV1_Admin', 'logged in', '2023-05-06 13:20:56'),
+(1507, 'SV1_Admin', 'logged out', '2023-05-06 13:22:33'),
+(1508, 'SV1_Admin', 'logged in', '2023-05-06 13:22:35'),
+(1509, 'SV1_Admin', 'logged out', '2023-05-06 13:23:09'),
+(1510, 'Mon Carlo Delima', 'logged in', '2023-05-06 13:23:11'),
+(1511, 'Mon Carlo Delima', 'logged out', '2023-05-06 13:25:02'),
+(1512, 'Mon Carlo Delima', 'logged in', '2023-05-06 13:25:04'),
+(1513, 'Mon Carlo Delima', 'logged out', '2023-05-06 13:25:06'),
+(1514, 'SV1_Admin', 'logged in', '2023-05-06 13:25:08'),
+(1515, 'SV1_Admin', 'logged out', '2023-05-06 13:25:12'),
+(1516, 'SV2_Admin', 'logged in', '2023-05-06 13:25:14'),
+(1517, 'SV2_Admin', 'logged out', '2023-05-06 13:25:19'),
+(1518, 'SV1_Admin', 'logged in', '2023-05-06 13:36:07'),
+(1519, 'SV1_Admin', 'logged out', '2023-05-06 13:36:14'),
+(1520, 'SV2_Admin', 'logged in', '2023-05-06 13:36:17'),
+(1521, 'SV2_Admin', 'logged out', '2023-05-06 13:36:20'),
+(1522, 'SV1_Guard', 'logged in', '2023-05-06 13:36:25'),
+(1523, 'SV1_Guard', 'logged out', '2023-05-06 13:37:44'),
+(1524, 'SV1_Admin', 'logged in', '2023-05-06 13:37:47'),
+(1525, 'SV1_Admin', 'activated user Roiemar Escueta', '2023-05-06 13:47:46'),
+(1526, 'SV1_Admin', 'logged out', '2023-05-06 13:48:08'),
+(1527, 'SV2_Admin', 'logged in', '2023-05-06 13:48:11'),
+(1528, 'SV2_Admin', 'logged out', '2023-05-06 13:48:29'),
+(1529, 'SV3_Admin', 'logged in', '2023-05-06 13:48:34'),
+(1530, 'SV3_Admin', 'logged out', '2023-05-06 13:51:28'),
+(1531, 'SV1_Admin', 'logged in', '2023-05-06 13:51:32'),
+(1532, 'SV1_Admin', 'logged out', '2023-05-06 13:56:53'),
+(1533, 'SV2_Admin', 'logged in', '2023-05-06 13:56:55'),
+(1534, 'SV2_Admin', 'logged out', '2023-05-06 13:57:00'),
+(1535, 'SV1_Admin', 'logged in', '2023-05-06 13:57:03'),
+(1536, 'SV1_Admin', 'logged out', '2023-05-06 14:09:59'),
+(1537, 'SV2_Admin', 'logged in', '2023-05-06 14:10:02'),
+(1538, 'SV2_Admin', 'logged out', '2023-05-06 14:19:29'),
+(1539, 'SV1_Admin', 'logged in', '2023-05-06 14:19:31');
 
 -- --------------------------------------------------------
 
@@ -1971,24 +2095,24 @@ INSERT INTO `homeowner_profile` (`homeowner_id`, `last_name`, `first_name`, `mid
 (1, 'Delima', 'Mon Carlo', 'Zonio', 'N/A', 'Male', 'Lot 2 Block 2', 'Sunnyvale 1', 'Pantok', 'N/A', 'N/A', 'dmoncarlo6@gmail.com', '2002-10-06', '09157189636', 'N/A', 'LTO 5678', 'DELIMA_2x2.png'),
 (2, 'Casingal', 'Kyle Andrei', 'Morillo', 'N/A', 'Male', 'Lot 1 Block 1', 'Sunnyvale 3', 'Palangoy', 'N/A', 'N/A', 'kylecasingal36@gmail.com', '2001-09-02', '09123456789', 'N/A', 'N/A', '316495100_870517180796101_3304939871151226288_n.jpg'),
 (3, 'Flores', 'Jeune Paolus', 'Damaso', 'N/A', 'Male', 'Lot 1 Block 3', 'Sunnyvale 2', 'Pantok', 'N/A', 'N/A', 'floresjeunepaolus@gmail.com', '2002-06-16', '09123123123', 'Inya', 'N/A', '316156823_3360766927514073_2770550987709432568_n.jpg'),
-(51, '', 'SV1_Guard', NULL, NULL, '', '', '', '', NULL, NULL, '', NULL, NULL, NULL, NULL, 'default.png'),
+(51, '', 'SV1_Guard', NULL, NULL, '', '', 'Sunnyvale 1', '', NULL, NULL, '', NULL, NULL, NULL, NULL, 'default.png'),
 (8, 'BendaÃ±a', 'Krishtalene', 'Edejer', 'N/A', 'Female', 'Lot 1 Block 5', 'Sunnyvale 2', 'Pantok', 'N/A', 'N/A', 'tissabendana@gmail.com', '2002-10-19', '09123456789', 'N/A', 'N/A', '86705321_2748280675293170_833038108541845504_n.jpg'),
 (17, 'Escueta', 'Roiemar', 'Conchada', 'N/A', 'Male', 'Lot 4 Block 3', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'escuetaroiemar@gmail.com', '2022-11-28', '09123456789', 'N/A', 'N/A', 'default.png'),
 (16, 'Castillo', 'Janwel', NULL, 'N/A', 'Male', 'Lot 2 Block 3 ', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'janweljigycastillo20@gmail.com', '2022-11-25', '09123456789', 'N/A', 'N/A', '315887907_1137649846869408_655406644278059076_n.png'),
 (30, 'Doe', 'John', 'Smith', 'N/A', 'Male', 'Lot 1 Block 8', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'johndoe@gmail.com', '2010-01-01', '09123456789', 'N/A', 'N/A', 'default.png'),
-(28, '', 'SV1_Secretary', NULL, NULL, '', '', '', '', NULL, NULL, '', '2022-11-29', '', NULL, NULL, 'default.png'),
+(28, '', 'SV1_Secretary', NULL, NULL, '', '', 'Sunnyvale 1', '', NULL, NULL, '', '2022-11-29', '', NULL, NULL, 'default.png'),
 (31, 'Lowery', 'Amirah', 'Meyers', 'N/A', 'Female', 'Lot 1 Block 7', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'amirahlowery@gmail.com', '2009-01-15', '09123456789', 'N/A', 'N/A', 'default.png'),
 (32, 'Miller', 'Kian', 'Smith', 'N/A', 'Female', 'Lot 2 Block 10', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'Kian Miller', '1997-07-16', '09123456789', 'N/A', 'N/A', 'default.png'),
 (33, 'Shepherd', 'Leona', 'Villegas', 'N/A', 'Female', 'Lot 2 Block 4', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'leonashepherd@gmail.com', '2000-02-29', '09123456789', 'N/A', 'N/A', 'default.png'),
 (34, 'Warner', 'Sophie', 'Manning', 'N/A', 'Female', 'Lot 3 Block 7', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'sophiewarner@gmail.com', '1998-06-03', '09123456789', 'N/A', 'N/A', 'default.png'),
 (35, 'Hudson', 'Tristram', 'Ray', 'N/A', 'Male', 'Lot 4 Block 1', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'tristramhudson', '1982-07-29', '09123456789', 'N/A', 'N/A', 'default.png'),
-(36, '', 'SV1_Treasurer', NULL, NULL, '', '', '', '', NULL, NULL, '', NULL, NULL, NULL, NULL, 'default.png'),
-(37, '', 'SV2_Admin', NULL, NULL, '', '', '', '', NULL, NULL, '', NULL, NULL, NULL, NULL, 'default.png'),
+(36, '', 'SV1_Treasurer', NULL, NULL, '', '', 'Sunnyvale 1', '', NULL, NULL, '', NULL, NULL, NULL, NULL, 'default.png'),
+(37, '', 'SV2_Admin', NULL, NULL, '', '', 'Sunnyvale 2', '', NULL, NULL, '', NULL, NULL, NULL, NULL, 'default.png'),
 (39, 'Sta. Maria', 'Marco Ivan', 'Quierrez', 'N/A', 'Male', 'Lot 4 Block 3', 'Sunnyvale 1', 'Palangoy', 'N/A', 'N/A', 'marcoivanstamaria@gmail.com', '2001-06-13', '09123456789', 'N/A', 'N/A', '290509682_1413885909103188_6599438684369654480_n.jpg'),
 (40, 'Dalisay', 'Cardo', 'Dela Cruz', 'N/A', 'Male', 'Block 3 Lot 5', 'Sunnyvale 2', 'Palangoy', 'Palangoy', 'N/A', 'cardoDalisay@gmail.com', '1977-11-07', '09123456789', 'N/A', 'N/A', 'default.png'),
 (44, 'test', 'test', 'pogi', 'N/A', 'Male', 'Lot 1 Block 1', 'Sunnyvale 4', 'Pantok', 'N/A', 'N/A', 'dmoncarlo@gmail.com', '2023-04-09', '09987654321', 'N/A', 'LTO 1234', 'default.png'),
-(18, '', 'SV1_Admin', NULL, NULL, '', '', '', '', NULL, NULL, '', NULL, NULL, NULL, NULL, 'default.png'),
-(50, '', 'SV3_Admin', NULL, NULL, '', '', '', '', NULL, NULL, '', NULL, NULL, NULL, NULL, 'default.png');
+(18, '', 'SV1_Admin', NULL, NULL, '', '', 'Sunnyvale 1', '', NULL, NULL, '', NULL, NULL, NULL, NULL, 'default.png'),
+(50, '', 'SV3_Admin', NULL, NULL, '', '', 'Sunnyvale 3', '', NULL, NULL, '', NULL, NULL, NULL, NULL, 'default.png');
 
 -- --------------------------------------------------------
 
@@ -2576,25 +2700,25 @@ INSERT INTO `post` (`post_id`, `user_id`, `full_name`, `title`, `content`, `publ
 (2, 24, 'Jeune Paolus Flores', 'Fascinating art created by nature.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-11 09:59:54', NULL, '316218368_829271824950879_360246867658747215_n.png', 'No', 'Active'),
 (3, 23, 'Kyle Andrei Casingal', 'Reflection', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-11 10:03:11', NULL, '316189223_691988422233113_5145406262467036356_n.png', 'No', 'Active'),
 (4, 23, 'Kyle Andrei Casingal', 'Windows of truth shows the real beauty of nature.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-11 10:04:40', NULL, '313194508_684251046380877_4560164667618025920_n.png', 'No', 'Active'),
-(5, 28, 'Mon Carlo Delima', 'Vintage mansion represents calm, warm, and peace.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2022-11-24 10:05:22', NULL, '312140489_698881924813395_203606755662892340_n.png', 'No', 'Archived'),
-(15, 52, 'Marco Ivan Sta. Maria', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2022-12-01 06:37:21', NULL, 'Picture2.jpg', 'No', 'Archived'),
-(17, 53, 'Krishtalene BendaÃ±a', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2022-12-01 06:48:54', NULL, 'Picture4.png', 'No', 'Archived'),
-(18, 52, 'Marco Ivan Sta. Maria', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2022-12-01 06:49:23', NULL, 'Picture5.jpg', 'No', 'Archived'),
-(19, 53, 'Krishtalene BendaÃ±a', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2022-12-01 06:50:15', NULL, 'Picture6.jpg', 'No', 'Archived'),
-(20, 52, 'Marco Ivan Sta. Maria', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2022-12-01 06:51:00', NULL, 'Picture3.png', 'No', 'Archived'),
-(24, 55, 'Kyle Andrei Casingal', 'Light Bulb', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2022-12-01 10:13:20', NULL, '188-1889845_a-very-simple-concept-infinitustoken-medium-light-bulb.png', 'No', 'Archived'),
+(5, 28, 'Mon Carlo Delima', 'Vintage mansion represents calm, warm, and peace.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2022-11-24 10:05:22', NULL, '312140489_698881924813395_203606755662892340_n.png', 'No', 'Active'),
+(15, 52, 'Marco Ivan Sta. Maria', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2022-12-01 06:37:21', NULL, 'Picture2.jpg', 'No', 'Active'),
+(17, 53, 'Krishtalene BendaÃ±a', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2022-12-01 06:48:54', NULL, 'Picture4.png', 'No', 'Active'),
+(18, 52, 'Marco Ivan Sta. Maria', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2022-12-01 06:49:23', NULL, 'Picture5.jpg', 'No', 'Active'),
+(19, 53, 'Krishtalene BendaÃ±a', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2022-12-01 06:50:15', NULL, 'Picture6.jpg', 'No', 'Active'),
+(20, 52, 'Marco Ivan Sta. Maria', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2022-12-01 06:51:00', NULL, 'Picture3.png', 'No', 'Active'),
+(24, 55, 'Kyle Andrei Casingal', 'Light Bulb', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2022-12-01 10:13:20', NULL, '188-1889845_a-very-simple-concept-infinitustoken-medium-light-bulb.png', 'No', 'Active'),
 (28, 18, 'SV1_Admin', 'Water interruption', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-01-24 20:00:38', NULL, '', 'Yes', 'Active'),
-(29, 18, 'SV1_Admin', 'Chinese New Year event', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-01-24 20:06:20', NULL, '', 'Yes', 'Archived'),
-(30, 1, 'Mon Carlo Delima', 'URS', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-03-16 22:24:20', NULL, 'URS.png', 'No', 'Archived'),
-(31, 1, 'Mon Carlo Delima', 'Nihonjin Desu', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-02 12:59:46', NULL, 'lockscreen.png', 'No', 'Archived'),
-(32, 1, 'Mon Carlo Delima', 'Magical World', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-02 13:00:31', NULL, 'sEt5ph.jpg', 'No', 'Archived'),
-(33, 18, 'SV1_Admin', 'Power Interruption', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-02-04 13:06:44', 1, '', 'Yes', 'Archived'),
-(34, 18, 'SV1_Admin', 'Basketball Tryouts', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-02-22 21:43:21', 30, '', 'Yes', 'Archived'),
-(35, 18, 'SV1_Admin', 'Volleyball Tryouts', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-03-17 21:43:35', 30, '', 'Yes', 'Archived'),
-(36, 18, 'SV1_Admin', 'Swimming Lessons', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-01-04 21:43:46', 30, '', 'Yes', 'Archived'),
-(37, 18, 'SV1_Admin', 'Founding Anniv. Celebration', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-02-01 21:44:01', 30, '', 'Yes', 'Archived'),
+(29, 18, 'SV1_Admin', 'Chinese New Year event', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-01-24 20:06:20', NULL, '', 'Yes', 'Active'),
+(30, 1, 'Mon Carlo Delima', 'URS', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-03-16 22:24:20', NULL, 'URS.png', 'No', 'Active'),
+(31, 1, 'Mon Carlo Delima', 'Nihonjin Desu', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-02 12:59:46', NULL, 'lockscreen.png', 'No', 'Active'),
+(32, 1, 'Mon Carlo Delima', 'Magical World', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-02 13:00:31', NULL, 'sEt5ph.jpg', 'No', 'Active'),
+(33, 18, 'SV1_Admin', 'Power Interruption', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-02-04 13:06:44', 1, '', 'Yes', 'Active'),
+(34, 18, 'SV1_Admin', 'Basketball Tryouts', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-02-22 21:43:21', 30, '', 'Yes', 'Active'),
+(35, 18, 'SV1_Admin', 'Volleyball Tryouts', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-03-17 21:43:35', 30, '', 'Yes', 'Active'),
+(36, 18, 'SV1_Admin', 'Swimming Lessons', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-01-04 21:43:46', 30, '', 'Yes', 'Active'),
+(37, 18, 'SV1_Admin', 'Founding Anniv. Celebration', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-02-01 21:44:01', 30, '', 'Yes', 'Active'),
 (38, 1, 'Mon Carlo Delima', 'Sun and Moon', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-14 14:19:37', NULL, 'dsa.jpg', 'No', 'Active'),
-(39, 61, 'Monkey D. Luffy', 'Japanese Street', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-14 14:23:15', NULL, 'lockscreen.png', 'No', 'Archived');
+(39, 61, 'Monkey D. Luffy', 'Japanese Street', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-14 14:23:15', NULL, 'lockscreen.png', 'No', 'Active');
 
 -- --------------------------------------------------------
 
@@ -2659,6 +2783,7 @@ CREATE TABLE IF NOT EXISTS `tenant` (
   `tenant_id` int(11) NOT NULL AUTO_INCREMENT,
   `homeowner_id` int(11) NOT NULL,
   `full_name` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
+  `subdivision` varchar(50) DEFAULT NULL,
   `birthdate` date NOT NULL,
   `sex` varchar(10) CHARACTER SET utf8mb4 NOT NULL,
   `email` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
@@ -2671,10 +2796,10 @@ CREATE TABLE IF NOT EXISTS `tenant` (
 -- Dumping data for table `tenant`
 --
 
-INSERT INTO `tenant` (`tenant_id`, `homeowner_id`, `full_name`, `birthdate`, `sex`, `email`, `mobile_no`, `display_picture`) VALUES
-(1, 1, 'Monkey D. Luffy', '2023-04-12', 'Male', 'monkeydluffy@gmail.com', '09123456789', 'default.png'),
-(2, 1, 'Bogart D. Explorer', '2023-03-01', 'Male', 'bogartdexplorer@gmail.com', '09123456789', 'default.png'),
-(3, 1, 'Portgas D. Ace', '2023-04-13', 'Male', 'donut@gmail.com', '09123456789', 'default.png');
+INSERT INTO `tenant` (`tenant_id`, `homeowner_id`, `full_name`, `subdivision`, `birthdate`, `sex`, `email`, `mobile_no`, `display_picture`) VALUES
+(1, 1, 'Monkey D. Luffy', 'Sunnyvale 1', '2023-04-12', 'Male', 'monkeydluffy@gmail.com', '09123456789', 'default.png'),
+(2, 1, 'Bogart D. Explorer', 'Sunnyvale 1', '2023-03-01', 'Male', 'bogartdexplorer@gmail.com', '09123456789', 'default.png'),
+(3, 1, 'Portgas D. Ace', 'Sunnyvale 1', '2023-04-13', 'Male', 'donut@gmail.com', '09123456789', 'default.png');
 
 -- --------------------------------------------------------
 
@@ -2700,15 +2825,15 @@ CREATE TABLE IF NOT EXISTS `transaction` (
 --
 
 INSERT INTO `transaction` (`transaction_id`, `user_id`, `name`, `total_cost`, `payment_proof`, `transaction_type`, `status`, `datetime`) VALUES
-(1, 1, 'Mon Carlo Delima', 1500, '315887907_1137649846869408_655406644278059076_n.png', 'Amenity Renting', 'Approved', NULL),
-(2, 48, 'SV1_Treasurer', 180, '315887907_1137649846869408_655406644278059076_n.png', 'Amenity Renting', 'Approved', NULL),
-(3, 1, 'Mon Carlo Delima', 2150, '328148270_726681382138928_1391919010667224674_n.png', 'Amenity Renting', 'Approved', NULL),
-(4, 1, 'Mon Carlo Delima', 600, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid', '2023-04-11 22:06:01'),
-(5, 55, 'Kyle Andrei Casingal', 1500, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid', NULL),
-(6, 55, 'Kyle Andrei Casingal', 1500, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid', NULL),
-(9, 48, 'SV1_Treasurer', 800, NULL, 'Monthly Dues', 'Paid', NULL),
-(10, 48, 'SV1_Treasurer', 1000, NULL, 'Monthly Dues', 'Paid', NULL),
-(11, 1, 'Mon Carlo Delima', 50, '328148270_726681382138928_1391919010667224674_n.png', 'Amenity Renting', 'Approved', '2023-05-03 21:01:20');
+(1, 1, 'Mon Carlo Delima', 1500, '315887907_1137649846869408_655406644278059076_n.png', 'Amenity Renting', 'Approved', '2023-05-06 07:59:14'),
+(2, 48, 'SV1_Treasurer', 180, '315887907_1137649846869408_655406644278059076_n.png', 'Amenity Renting', 'Approved', '2023-05-06 08:00:25'),
+(3, 1, 'Mon Carlo Delima', 2150, '328148270_726681382138928_1391919010667224674_n.png', 'Amenity Renting', 'Approved', '2023-05-06 08:00:27'),
+(4, 1, 'Mon Carlo Delima', 600, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid', '2023-05-06 08:07:37'),
+(5, 55, 'Kyle Andrei Casingal', 1500, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid', '2023-05-06 07:28:09'),
+(6, 55, 'Kyle Andrei Casingal', 1500, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid', '2023-05-06 07:27:54'),
+(9, 48, 'SV1_Treasurer', 800, NULL, 'Monthly Dues', 'Paid', '2023-05-06 07:28:16'),
+(10, 48, 'SV1_Treasurer', 1000, NULL, 'Monthly Dues', 'Paid', '2023-05-06 07:28:17'),
+(11, 1, 'Mon Carlo Delima', 50, '328148270_726681382138928_1391919010667224674_n.png', 'Amenity Renting', 'Approved', '2023-05-06 08:00:29');
 
 -- --------------------------------------------------------
 
@@ -2729,7 +2854,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `verification_code` varchar(6) DEFAULT NULL,
   `email_verified_at` datetime DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
@@ -2742,14 +2867,15 @@ INSERT INTO `user` (`user_id`, `user_homeowner_id`, `user_tenant_id`, `full_name
 (27, 16, NULL, 'Janwel Castillo', 'Homeowner', 'dadada', 'janweljigycastillo20@gmail.com', 'Activated', '943962', '2022-11-15 20:43:59'),
 (58, 50, NULL, 'SV3_Admin', 'Admin', 'password', 'SV3_Admin', 'Activated', NULL, NULL),
 (18, 18, NULL, 'SV1_Admin', 'Admin', 'password', 'SV1_Admin', 'Activated', NULL, NULL),
-(42, 17, NULL, 'Roiemar Escueta', 'Homeowner', '123', 'escuetaroiemar@gmail.com', 'Deactivated', '135447', '2022-11-28 23:28:23'),
+(42, 17, NULL, 'Roiemar Escueta', 'Homeowner', '123', 'escuetaroiemar@gmail.com', 'Activated', '135447', '2022-11-28 23:28:23'),
 (46, 28, NULL, 'SV1_Secretary', 'Secretary', '123', 'SV1_Secretary', 'Activated', NULL, NULL),
 (48, 36, NULL, 'SV1_Treasurer', 'Treasurer', '123', 'SV1_Treasurer', 'Activated', NULL, NULL),
 (49, 37, NULL, 'SV2_Admin', 'Admin', 'password', 'SV2_Admin', 'Activated', NULL, NULL),
 (52, 39, NULL, 'Marco Ivan Sta. Maria', 'Homeowner', '123', 'marcoivanstamaria@gmail.com', 'Activated', '257545', '2022-12-01 06:31:28'),
 (53, 8, NULL, 'Krishtalene BendaÃ±a', 'Homeowner', '123', 'tissabendana@gmail.com', 'Activated', '573856', '2022-12-01 06:37:48'),
 (59, 51, NULL, 'SV1_Guard', 'Guard', '123', 'SV1_Guard', 'Activated', NULL, NULL),
-(61, NULL, 1, 'Monkey D. Luffy', 'Tenant', '12345', 'monkeydluffy@gmail.com', 'Activated', '665824', '2023-04-14 22:46:46');
+(61, NULL, 1, 'Monkey D. Luffy', 'Tenant', '12345', 'monkeydluffy@gmail.com', 'Activated', '665824', '2023-04-14 22:46:46'),
+(63, 44, NULL, 'test test', 'Homeowner', '622896', 'dmoncarlo@gmail.com', 'Activated', '622896', '2023-05-06 08:05:53');
 
 -- --------------------------------------------------------
 

@@ -4,7 +4,7 @@ if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin')
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
-$resultTransaction = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Monthly Dues'");
+$resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Monthly Dues' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "'");
 $resultBillConsumer = $con->query("SELECT * FROM bill_consumer, transaction WHERE bill_consumer.transaction_id = transaction.transaction_id");
 ?>
 <!DOCTYPE html>
