@@ -6,6 +6,7 @@ if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin')
 }
 $resultTransaction = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Amenity Renting'");
 $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction WHERE amenity_renting.transaction_id = transaction.transaction_id");
+$resultAmenityRenting1 = $con->query("SELECT DISTINCT amenity_renting.transaction_id FROM amenity_renting, transaction WHERE amenity_renting.transaction_id = transaction.transaction_id ");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -542,7 +543,9 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
     align-self: flex-start;
     margin: 0;
   }
+
   @media only print {
+
     title,
     .navigation,
     .topleft,
@@ -550,13 +553,14 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
     .footer,
     .treasurer,
     .modal-footer,
-    .modal-header{
+    .modal-header {
       visibility: hidden;
     }
-    .modal-body{
+
+    .modal-body {
       visibility: visible;
     }
-}
+  }
 </style>
 <script type="text/javascript">
 
@@ -721,7 +725,9 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
                   <div class="receipt-footer"></div>
                 </div>
                 <div class="modal-footer">
-                  <button class="btn btn-primary" id="print" >Open second modal</button>
+                  <button class="btn btn-primary" id="print<?php
+                                                            echo $row1['transaction_id']
+                                                            ?>">Open second modal</button>
                 </div>
               </div>
             </div>
@@ -780,12 +786,15 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
     //   $("#approveReservation1").click(function() {
     //     $('#approve').modal('show');
     //   });
-    // });
+    // });.
+
     $(document).ready(function() {
-    $("#print").click(function() {
-      window.print();
+      <?php while ($row1 = $resultAmenityRenting1->fetch_assoc()) : ?>
+        $("#print<?php echo $row1['transaction_id'] ?>").click(function() {
+          window.print();
+        });
+      <?php endwhile; ?>
     });
-  });
   </script>
   <?php
   require '../marginals/footer2.php';
