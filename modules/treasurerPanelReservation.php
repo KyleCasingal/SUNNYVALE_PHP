@@ -19,7 +19,6 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -29,6 +28,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
   * {
     margin: 0;
   }
+
 
   .messageSuccess {
     display: flex;
@@ -450,6 +450,89 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
     cursor: pointer;
     border-bottom: 1px solid lightgray;
   }
+
+  .receipt-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .receipt-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1.5em;
+  }
+
+  .head-title {
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+
+  .head-subtext {
+    font-weight: normal;
+    font-size: 0.7em;
+  }
+
+  .receipt-table {
+    width: 100%;
+    font-size: 0.8em;
+  }
+
+  .receipt-table tbody {
+    border: 1px solid black;
+  }
+
+  .receipt-table th {
+    border: 1px solid black;
+  }
+
+  .receipt-table td,
+  th {
+    padding: 0.5em;
+  }
+
+  .amount-td,
+  .total-amount-td {
+    border: 1px solid black;
+    text-align: center;
+  }
+
+  .amount-total-label {
+    border: 1px solid black;
+  }
+
+  .modal-body {
+    width: 80%;
+    align-self: center;
+    justify-self: center;
+  }
+
+  .receipt-content {
+    text-align: center;
+  }
+
+  .receipt-label {
+    font-size: 1em;
+    font-weight: bold;
+    align-self: flex-start;
+  }
+
+  .receipt-text {
+    font-size: 1em;
+    font-weight: normal;
+  }
+
+  .receipt-number {
+    align-self: flex-start;
+    padding-bottom: 1em;
+  }
+
+  .receipt-transaction {
+    align-self: flex-start;
+  }
 </style>
 <script type="text/javascript">
 
@@ -470,6 +553,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
                                                     echo $row1['transaction_id'];
                                                     ?>" aria-labelledby="exampleModalToggleLabel" tabindex="-1" style="display: none;" aria-hidden="true">
             <?php $resultAmenityRenting2 = $con->query("SELECT * FROM amenity_renting, amenity_purpose WHERE amenity_renting.transaction_id = " . $row1['transaction_id'] . " AND amenity_renting.amenity_purpose = amenity_purpose.amenity_purpose_id"); ?>
+            <?php $resultAmenityRenting3 = $con->query("SELECT * FROM amenity_renting, amenity_purpose WHERE amenity_renting.transaction_id = " . $row1['transaction_id'] . " AND amenity_renting.amenity_purpose = amenity_purpose.amenity_purpose_id"); ?>
             <div class="modal-dialog  modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
@@ -551,9 +635,73 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
               </div>
             </div>
           </div>
+          <div class="modal fade" id="exampleModalToggle<?php
+                                                        echo $row1['transaction_id']
+                                                        ?>" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Receipt</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="receipt-head">
+                    <label class="head-title" for="">Sunnyvale Home Owners Association</label>
+                    <label class="head-subtext" for="">Sunnyvale Subdivision Compound, Binangonan Rizal</label>
+                  </div>
+                  <div class="receipt-body">
+                    <div class="receipt-transaction">
+                      <label class="receipt-label">Transaction:</label>
+                      <label class="receipt-text">Amenity Renting</label>
+                    </div>
 
+                    <div class="receipt-number">
+                      <label class="receipt-label">Receipt Number:</label>
+                      <label class="receipt-text">SNNVL-RNTNG-<?php echo $row1['transaction_id'] ?></label>
+                    </div>
 
+                    <div class="receipt-number">
+                      <label class="receipt-label">Date Paid:</label>
+                      <label class="receipt-text"><?php echo $row1['datetime'] ?></label>
+                    </div>
 
+                    <table class="receipt-table">
+                      <thead>
+                      <th>Subdivision</td>
+                      <th>Amenity</td>
+                      <th>Purpose</td>
+                      <th>From</td>
+                      <th>To</td>
+                      <th>Cost</td>
+                      </thead>
+                      <tbody>
+                        <?php while ($row = $resultAmenityRenting3->fetch_assoc()) : ?>
+                          <tr>
+                            <td id=""><?php echo $row['subdivision_name'] ?></td>
+                            <td id=""><?php echo $row['amenity_name'] ?></td>
+                            <td id=""><?php echo $row['amenity_purpose'] ?></td>
+                            <td id=""><?php $datetime = strtotime($row['date_from']);
+                                      echo $phptime = date("m/d/y g:i A", $datetime); ?></td>
+                            <td id=""><?php $datetime = strtotime($row['date_to']);
+                                      echo $phptime = date("m/d/y g:i A ", $datetime); ?></td>
+                            <td id=""><?php echo $row['cost'] ?></td>
+                          </tr>
+                        <?php endwhile; ?>
+                        <tr>
+                          <td colspan="5" class="amount-total-label">Total:</td>
+                          <td class="total-amount-td"><?php echo $row1['total_cost'] ?></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="receipt-footer"></div>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </form>
       <?php endwhile; ?>
 
@@ -575,6 +723,11 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
                 <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
                                                                                               echo $row['transaction_id']
                                                                                               ?>"><?php echo $row['status'] ?></td>
+                <?php if ($row['status'] == 'Approved') { ?>
+                  <td class="use-address" data-bs-toggle="modal" data-bs-target="#exampleModalToggle<?php
+                                                                                                    echo $row['transaction_id']
+                                                                                                    ?>">Print Receipt</td>
+                <?php } ?>
               </tr>
             <?php endwhile; ?>
           </table>
@@ -610,6 +763,6 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
   ?>
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script> -->
 
 </html>
