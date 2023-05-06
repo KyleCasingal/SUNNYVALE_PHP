@@ -731,7 +731,7 @@ $resultAmenityRenting1 = $con->query("SELECT DISTINCT amenity_renting.transactio
                 <div class="modal-footer">
                   <button class="btn btn-primary" id="print<?php
                                                             echo $row1['transaction_id']
-                                                            ?>">Open second modal</button>
+                                                            ?>">Print Receipt</button>
                 </div>
               </div>
             </div>

@@ -6,6 +6,8 @@ if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin')
 }
 $resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Monthly Dues' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "'");
 $resultBillConsumer = $con->query("SELECT * FROM bill_consumer, transaction WHERE bill_consumer.transaction_id = transaction.transaction_id");
+$resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id FROM bill_consumer, transaction WHERE bill_consumer.transaction_id = transaction.transaction_id");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -534,6 +536,23 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer, transaction WHER
   .receipt-transaction {
     align-self: flex-start;
   }
+  @media only print {
+
+title,
+.navigation,
+.topleft,
+.topbarNav,
+.footer,
+.treasurer,
+.modal-footer,
+.modal-header {
+  visibility: hidden;
+}
+
+.modal-body {
+  visibility: visible;
+}
+}
 </style>
 <script type="text/javascript">
 </script>
@@ -695,7 +714,9 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer, transaction WHER
               <div class="receipt-footer"></div>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
+              <button class="btn btn-primary" id="print<?php
+                                                            echo $row1['transaction_id']
+                                                            ?>">Print Receipt</button>
             </div>
           </div>
         </div>
@@ -714,6 +735,13 @@ $resultBillConsumer = $con->query("SELECT * FROM bill_consumer, transaction WHER
           this.checked = false;
         });
       }
+    });
+    $(document).ready(function() {
+      <?php while ($row1 = $resultBillConsumer1->fetch_assoc()) : ?>
+        $("#print<?php echo $row1['transaction_id'] ?>").click(function() {
+          window.print();
+        });
+      <?php endwhile; ?>
     });
   </script>
   <?php

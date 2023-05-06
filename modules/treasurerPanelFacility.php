@@ -30,10 +30,9 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
-
   <!-- calendar script and bootstrap -->
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="css/calendar.css">
@@ -43,10 +42,131 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+ 
   <title>SUNNYVALE</title>
 </head>
 <style>
+   .container-calendar {
+    width: 100%;
+    max-width: 90%;
+    max-height: 100%;
+    /* margin: 0; */
+    justify-self: center;
+    align-self: center;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .calendar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2vw;
+    margin-top: 2vw;
+  }
+
+  .calendar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: black;
+    border-radius: 5px;
+    background-color: #fff;
+    /* max-width: 90%; */
+  }
+
+
+
+
+  .calendar {
+    background-color: rgb(170, 192, 175, 0);
+  }
+
+  #calendar-days {
+    font-size: 0.8vw;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 1vw;
+    margin-left: 2vw;
+  }
+
+  #calendar-header {
+    font-size: 1.5vw;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .btn-default-calendar {
+    font-size: 1vw !important;
+    font-family: 'Poppins', sans-serif !important;
+    background-color: rgb(0 142 255) !important;
+    color: white !important;
+  }
+
+  .btn-primary-calendar {
+    font-size: 1vw !important;
+    font-family: 'Poppins', sans-serif !important;
+    background-color: rgba(106, 153, 78) !important;
+    color: white !important;
+  }
+
+  .btn-warning-calendar {
+    border-radius: 0.5em !important;
+    font-size: 1vw !important;
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(248, 186, 55) !important;
+    color: white !important;
+  }
+
+  .btn-group {
+    margin: 0 0.5em;
+
+  }
+
+  .calendar-month-year {
+    font-size: 2vw;
+
+  }
+
+  button:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .page-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    margin-top: 1vw;
+    margin-left: 2vw;
+  }
+
+  #eventlist li {
+    font-size: 1em;
+    width: 100%;
+    padding: 0.5vw;
+    border-radius: 0.5vw;
+  }
+
+  #eventlist li:hover {
+    background-color: lightgray;
+  }
+
+  #eventlist a:hover {
+    text-decoration: none;
+  }
+
+  .unstyled li {
+    display: flex;
+  }
   * {
     margin: 0;
   }
@@ -208,7 +328,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   }
 
   .tblAmenity {
-
     width: 100%;
     margin-bottom: 2vw;
     overflow-x: auto;
@@ -286,123 +405,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     border-bottom: 1px solid lightgray;
   }
 
-  .container {
-    width: 100%;
-    max-width: 90%;
-    max-height: 100%;
-    margin: 0;
-    justify-self: center;
-    align-self: center;
-  }
-
-  body {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .calendar-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 2vw;
-    margin-top: 2vw;
-  }
-
-  .calendar {
-    position: relative;
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    color: black;
-    border-radius: 5px;
-    background-color: #fff;
-    /* max-width: 90%; */
-  }
-
-
-
-
-  .calendar {
-    background-color: rgb(170, 192, 175, 0);
-  }
-
-  #calendar-days {
-    font-size: 0.8vw;
-    font-family: 'Poppins', sans-serif;
-  }
-
-  #calendar-header {
-    font-size: 1.5vw;
-    font-family: 'Poppins', sans-serif;
-  }
-
-  .btn-default-calendar {
-    font-size: 1vw;
-    font-family: 'Poppins', sans-serif;
-    background-color: rgb(0 142 255);
-    color: white;
-  }
-
-  .btn-primary-calendar {
-    font-size: 1vw;
-    font-family: 'Poppins', sans-serif;
-    background-color: rgba(106, 153, 78);
-    color: white;
-  }
-
-  .btn-warning-calendar {
-    border-radius: 0.5em;
-    font-size: 1vw;
-    font-family: 'Poppins', sans-serif;
-    background-color: rgb(248, 186, 55);
-    color: white;
-  }
-
-  .btn-group {
-    margin: 0 0.5em;
-
-  }
-
-  .calendar-month-year {
-    font-size: 2vw;
-
-  }
-
-  button:focus {
-    outline: none;
-    box-shadow: none;
-  }
-
-  .page-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 2vw;
-    padding-bottom: 2vw;
-  }
-
-  #eventlist li {
-    font-size: 1em;
-    width: 100%;
-    padding: 0.5vw;
-    border-radius: 0.5vw;
-  }
-
-  #eventlist li:hover {
-    background-color: lightgray;
-  }
-
-  #eventlist a:hover {
-    text-decoration: none;
-  }
-
-  .unstyled li {
-    display: flex;
-  }
+ 
 </style>
 <script type="text/javascript">
   if (window.history.replaceState) {
@@ -541,33 +544,34 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     <div class="treasurerPanel">
       <label class="lblSettings" id="amenity">Amenity Renting</label>
       <div class="container">
-        <div class="page-header">
-          <h3 class="calendar-month-year"></h3>
-          <div class="pull-right form-inline">
-            <div class="btn-group">
-              <button class="btn btn-primary-calendar" data-calendar-nav="prev">
-                << Prev</button>
-                  <button class="btn btn-default-calendar" data-calendar-nav="today">Today</button>
-                  <button class="btn btn-primary-calendar" data-calendar-nav="next">Next >></button>
-            </div>
-            <div class="btn-group">
-              <button class="btn btn-warning-calendar" data-calendar-view="year">Year</button>
-              <button class="btn btn-warning-calendar active" data-calendar-view="month">Month</button>
-              <button class="btn btn-warning-calendar" data-calendar-view="week">Week</button>
-              <button class="btn btn-warning-calendar" data-calendar-view="day">Day</button>
-            </div>
-          </div>
+    <div class="page-header">
+      <h3 class="calendar-month-year"></h3>
+      <div class="pull-right form-inline">
+        <div class="btn-group">
+          <button class="btn btn-primary-calendar" data-calendar-nav="prev">
+            << Prev</button>
+              <button class="btn btn-default-calendar" data-calendar-nav="today">Today</button>
+              <button class="btn btn-primary-calendar" data-calendar-nav="next">Next >></button>
         </div>
-        <div class="row" id="calendar-days">
-          <div class="col-md-9">
-            <div id="showEventCalendar"></div>
-          </div>
-          <div class="col-md-3">
-            <h4>All Events List</h4>
-            <ul id="eventlist" class="nav nav-list"></ul>
-          </div>
+        <div class="btn-group">
+          <button class="btn btn-warning-calendar" data-calendar-view="year">Year</button>
+          <button class="btn btn-warning-calendar active" data-calendar-view="month">Month</button>
+          <button class="btn btn-warning-calendar" data-calendar-view="week">Week</button>
+          <button class="btn btn-warning-calendar" data-calendar-view="day">Day</button>
         </div>
       </div>
+
+    </div>
+    <div class="row" id="calendar-days">
+      <div class="col-md-9">
+        <div id="showEventCalendar"></div>
+      </div>
+      <div class="col-md-3">
+        <h4>All Events List</h4>
+        <ul id="eventlist" class="nav nav-list"></ul>
+      </div>
+    </div>
+  </div>
 
       <form method="post" enctype="multipart/form-data">
         <div class='amenities'>
