@@ -698,11 +698,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
           </div>
         </div>
       </div>
-
-      <!-- </div>
-    </div> -->
-
-
     </form>
   </div>
 

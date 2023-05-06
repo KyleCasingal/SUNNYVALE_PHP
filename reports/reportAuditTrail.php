@@ -1,6 +1,6 @@
 <?php
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
-$result = $con->query("SELECT user, action, DATE(datetime) AS DATE, TIME(datetime) AS TIME FROM audit_trail ");
+$result = $con->query("SELECT user, action, DATE(datetime) AS DATE, TIME(datetime) AS TIME FROM audit_trail order by DATE(datetime) DESC ");
 
 
 ?>
@@ -31,6 +31,7 @@ $result = $con->query("SELECT user, action, DATE(datetime) AS DATE, TIME(datetim
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/datetime/1.4.0/js/dataTables.dateTime.min.js"></script>
 
@@ -158,9 +159,10 @@ $result = $con->query("SELECT user, action, DATE(datetime) AS DATE, TIME(datetim
         .print-button,
         .dataTables_info,
         .tblReportData_filter,
-        .dataTables_paginate{
-        visibility: hidden;
-    }
+        .dataTables_filter,
+        .dataTables_paginate {
+            visibility: hidden;
+        }
     }
 </style>
 <script>
@@ -188,8 +190,10 @@ $result = $con->query("SELECT user, action, DATE(datetime) AS DATE, TIME(datetim
                 <label class="reportSubtext">Sunnyvale Subdivision Compound, Binangonan, Rizal</label>
             </div>
         </div>
+        <label class="tblTitle">Audit Trail</label>
+
+
         <div class="reportContainer">
-            <label class="tblTitle">Audit Trail</label>
 
             <table border="0" cellspacing="5" cellpadding="5" class="noprint">
                 <tbody>
@@ -203,9 +207,6 @@ $result = $con->query("SELECT user, action, DATE(datetime) AS DATE, TIME(datetim
                     </tr>
                 </tbody>
             </table>
-
-
-
             <table class="tblReportData" id="tblReportData">
 
                 <thead>
@@ -254,7 +255,9 @@ $result = $con->query("SELECT user, action, DATE(datetime) AS DATE, TIME(datetim
     //       }
     //     }
     //   };
-
+    $(document).ready( function () {
+    $('#tblReportData').DataTable();
+} );
     var minDate, maxDate;
 
     // Custom filtering function which will search data in column four between two values
@@ -291,6 +294,12 @@ $result = $con->query("SELECT user, action, DATE(datetime) AS DATE, TIME(datetim
         // Refilter the table
         $('#min, #max').on('change', function() {
             table.draw();
+        });
+    });
+
+    $(document).ready(function() {
+        $('#reportContainer').dataTable({
+            "LengthChange": false,
         });
     });
 </script>

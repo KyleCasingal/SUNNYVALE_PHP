@@ -1,7 +1,7 @@
 <?php
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
 $result0 = $con->query("SELECT DISTINCT transaction_type  FROM transaction  WHERE 1");
-$result = $con->query("SELECT * FROM transaction");
+$result = $con->query("SELECT *, DATE(datetime) AS DATE, TIME(datetime) AS TIME FROM transaction");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -147,7 +147,11 @@ $result = $con->query("SELECT * FROM transaction");
 
     .tblFilter,
     .noprint,
-    .print-button {
+    .print-button,
+    .dataTables_info,
+    .tblReportData_filter,
+    .dataTables_filter,
+    .dataTables_paginate {
       visibility: hidden;
     }
   }
@@ -185,7 +189,7 @@ $result = $con->query("SELECT * FROM transaction");
     <div class="reportContainer">
       <label class="tblTitle">Transactions</label>
 
-
+      <br>
       <label class="tblFilter" for="">filter by transaction type:</label>
       <select name="tblFilter" class="noprint" id="tblFilter" onclick="myFunction1()">
         <option value="">Select...</option>
@@ -195,6 +199,20 @@ $result = $con->query("SELECT * FROM transaction");
         }
         ?>
       </select>
+      <table border="0" cellspacing="5" cellpadding="5" class="noprint">
+        <tbody>
+          <tr>
+            <td>Minimum date:</td>
+            <td><input type="text" id="min" name="min"></td>
+          </tr>
+          <tr>
+            <td>Maximum date:</td>
+            <td><input type="text" id="max" name="max"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      
 
       <table class="tblReportData" id="tblReportData">
         <thead>
@@ -202,12 +220,16 @@ $result = $con->query("SELECT * FROM transaction");
           <th>Renter Name</th>
           <th>Transaction Type</th>
           <th>Total Cost</th>
+          <th>Date</th>
+          <th>Time</th>
         </thead>
         <?php while ($row = $result->fetch_assoc()) : ?>
           <tr>
             <td><?php echo $row['name']; ?></td>
             <td><?php echo $row['transaction_type']; ?></td>
             <td><?php echo $row['total_cost']; ?></td>
+            <td><?php echo $row['DATE']; ?></td>
+            <td><?php echo $row['TIME']; ?></td>
           </tr>
         <?php endwhile; ?>
 
@@ -238,6 +260,53 @@ $result = $con->query("SELECT * FROM transaction");
       }
     }
   };
+  $(document).ready(function() {
+    $('#tblReportData').DataTable();
+  });
+  var minDate, maxDate;
+
+  // Custom filtering function which will search data in column four between two values
+  $.fn.dataTable.ext.search.push(
+    function(settings, data, dataIndex) {
+      var min = minDate.val();
+      var max = maxDate.val();
+      var date = new Date(data[2]);
+
+      if (
+        (min === null && max === null) ||
+        (min === null && date <= max) ||
+        (min <= date && max === null) ||
+        (min <= date && date <= max)
+      ) {
+        return true;
+      }
+      return false;
+    }
+  );
+
+  $(document).ready(function() {
+    // Create date inputs
+    minDate = new DateTime($('#min'), {
+      format: 'MMMM Do YYYY'
+    });
+    maxDate = new DateTime($('#max'), {
+      format: 'MMMM Do YYYY'
+    });
+
+    // DataTables initialisation
+    var table = $('#tblReportData').DataTable();
+
+    // Refilter the table
+    $('#min, #max').on('change', function() {
+      table.draw();
+    });
+  });
+
+  $(document).ready(function() {
+    $('#reportContainer').dataTable({
+      "LengthChange": false,
+    });
+  });
 </script>
 
 </html>

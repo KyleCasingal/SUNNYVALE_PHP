@@ -22,7 +22,8 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> -->
+  
   <title>SUNNYVALE</title>
 </head>
 <style>
@@ -187,7 +188,6 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
   }
 
   .tblAmenity {
-
     width: 100%;
     margin-bottom: 2vw;
     overflow-x: auto;

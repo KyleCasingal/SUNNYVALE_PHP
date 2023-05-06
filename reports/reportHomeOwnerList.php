@@ -33,7 +33,7 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
     }
 
     .reportPage {
-        width: 80%px;
+        width: 1000px;
     }
 
     .head {
@@ -69,7 +69,6 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
     }
 
     .tblReportData {
-        table-layout: fixed;
         margin-top: 2vw;
         width: 100%;
         border-collapse: collapse;
@@ -133,18 +132,15 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
         width: 9vw;
     }
 
-    .ID-column {
-        width: 8%;
-        white-space: nowrap;
-    }
-
     @media only print {
-
+        #search,
         .tblFilter,
         .noprint,
         .print-button,
-        .print-button,
-        .fab-wrapper {
+        .dataTables_info,
+        .tblReportData_filter,
+        .dataTables_filter,
+        .dataTables_paginate {
             visibility: hidden;
         }
     }
@@ -178,7 +174,7 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
         <div class="reportContainer">
             <label class="tblTitle">Homeowner List</label>
             <div>
-                <label class="tblFilter" for="">filter by transaction type:</label>
+                <label class="tblFilter" for="">Filter Subdivision:</label>
                 <select name="tblFilter" class="noprint" id="tblFilter" onclick="myFunction1()">
                     <option value="">Select...</option>
                     <?php
@@ -187,6 +183,10 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
                     }
                     ?>
                 </select>
+                <br>
+                <label id="search">Search:</label>
+                <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names..">
+
             </div>
             <div class="tblContainer">
                 <table class="tblReportData" id="tblReportData">
@@ -220,7 +220,7 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
                             <!-- <td>
                                 <a href="homeownerRegistration.php?homeowner_id=<?php echo $row['homeowner_id']; ?>" class="btnEdit">Edit</a>
                             </td> -->
-                            <td >
+                            <td>
                                 <?php echo $row['homeowner_id']; ?>
                             </td>
                             <td>
@@ -270,6 +270,28 @@ $result0 = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
             }
         }
     };
+
+    function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tblReportData");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
 </script>
 
 </html>
