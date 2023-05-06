@@ -226,7 +226,7 @@ if (isset($_POST['register'])) {
 
 // LOGGING IN
 if (isset($_POST['login'])) {
-  
+
   $email_address = $_POST['email_address'];
   $password = $_POST['password'];
   $sql = "SELECT * FROM user WHERE BINARY email_address = '$email_address' AND BINARY password = '$password' AND account_status = 'Activated' ";
@@ -235,7 +235,7 @@ if (isset($_POST['login'])) {
   $result1 = mysqli_query($con, $sql1);
 
   if (mysqli_num_rows($result) == 1) {
-    
+
     $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
     $result = $con->query("SELECT * FROM user WHERE email_address = '$email_address'");
     $row = $result->fetch_assoc();
@@ -815,7 +815,7 @@ if (isset($_POST['sysAccAdd'])) {
   $userType = $_POST['user_type'];
 
 
-  $sql1 = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer, display_picture) VALUES ('', '$systemAccount', NULL, NULL,'' , '', '', '', NULL, NULL, '', NULL, NULL, NULL, 'default.png')";
+  $sql1 = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer, display_picture) VALUES ('', '$systemAccount', NULL, NULL,'' , '', '" . $_SESSION['subdivision'] . "', '', NULL, NULL, '', NULL, NULL, NULL, 'default.png')";
   mysqli_query($con, $sql1);
   $result = $con->query("SELECT * FROM homeowner_profile WHERE first_name = '$systemAccount'");
   if ($result->num_rows) {
