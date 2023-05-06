@@ -534,6 +534,21 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
   .receipt-transaction {
     align-self: flex-start;
   }
+  @media only print {
+    title,
+    .navigation,
+    .topleft,
+    .topbarNav,
+    .footer,
+    .treasurer,
+    .modal-footer,
+    .modal-header{
+      visibility: hidden;
+    }
+    .modal-body{
+      visibility: visible;
+    }
+}
 </style>
 <script type="text/javascript">
 
@@ -698,7 +713,7 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
                   <div class="receipt-footer"></div>
                 </div>
                 <div class="modal-footer">
-                  <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
+                  <button class="btn btn-primary" id="print" >Open second modal</button>
                 </div>
               </div>
             </div>
@@ -758,6 +773,11 @@ $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction 
     //     $('#approve').modal('show');
     //   });
     // });
+    $(document).ready(function() {
+    $("#print").click(function() {
+      window.print();
+    });
+  });
   </script>
   <?php
   require '../marginals/footer2.php';
