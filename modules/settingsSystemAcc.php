@@ -1,15 +1,22 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Admin') {
+if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Super Admin') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
 }
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
-$resultSubdivision_table = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
-$resultSubdivision_selectSysAcc = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
-$resultSysAcc = $con->query("SELECT * FROM user, homeowner_profile WHERE (user_type = 'Secretary' OR user_type = 'Treasurer' OR user_type = 'Admin' OR user_type = 'Guard') AND user_homeowner_id = homeowner_id AND subdivision = '" . $_SESSION['subdivision'] . "' ORDER BY full_name ASC") or die($mysqli->error);
+if ($_SESSION['subdivision'] != '') {
+    $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
+    $resultSubdivision_table = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
+    $resultSubdivision_selectSysAcc = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
+    $resultSysAcc = $con->query("SELECT * FROM user, homeowner_profile WHERE (user_type = 'Secretary' OR user_type = 'Treasurer' OR user_type = 'Admin' OR user_type = 'Guard') AND user_homeowner_id = homeowner_id AND subdivision = '" . $_SESSION['subdivision'] . "' ORDER BY full_name ASC") or die($mysqli->error);
+} else {
+    $resultSubdivision = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
+    $resultSubdivision_table = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
+    $resultSubdivision_selectSysAcc = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
+    $resultSysAcc = $con->query("SELECT * FROM user WHERE (user_type = 'Secretary' OR user_type = 'Treasurer' OR user_type = 'Admin' OR user_type = 'Guard' OR user_type = 'Super Admin') ORDER BY full_name ASC") or die($mysqli->error);
+}
 $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error);
 ?>
 
@@ -433,12 +440,12 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                                                     }
                                                                     ?>>Treasurer</option>
                                         <option value="Guard" <?php
-                                                                    if (isset($_GET['user_id'])) {
-                                                                        if ($account_type == "Guard") {
-                                                                            echo 'selected="selected"';
-                                                                        }
+                                                                if (isset($_GET['user_id'])) {
+                                                                    if ($account_type == "Guard") {
+                                                                        echo 'selected="selected"';
                                                                     }
-                                                                    ?>>Guard</option>
+                                                                }
+                                                                ?>>Guard</option>
                                     </select>
                                 </td>
                             </tr>

@@ -1,15 +1,22 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Admin' AND $_SESSION['user_type'] != 'Secretary') {
+if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary' and $_SESSION['user_type'] != 'Super Admin') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
 }
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
-$resultSubdivision_selectPurpose = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
-$resultAmenities = $con->query("SELECT * FROM amenities WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY subdivision_name ASC, amenity_name") or die($mysqli->error);
-$resultPurpose = $con->query("SELECT * FROM amenity_purpose INNER JOIN amenities ON amenity_purpose.amenity_id = amenities.amenity_id WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY subdivision_name ASC, amenity_name") or die($mysqli->error);
+if ($_SESSION['subdivision'] != '') {
+    $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
+    $resultSubdivision_selectPurpose = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
+    $resultAmenities = $con->query("SELECT * FROM amenities WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY subdivision_name ASC, amenity_name") or die($mysqli->error);
+    $resultPurpose = $con->query("SELECT * FROM amenity_purpose INNER JOIN amenities ON amenity_purpose.amenity_id = amenities.amenity_id WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY subdivision_name ASC, amenity_name") or die($mysqli->error);
+} else {
+    $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
+    $resultSubdivision_selectPurpose = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
+    $resultAmenities = $con->query("SELECT * FROM amenities ORDER BY subdivision_name ASC, amenity_name") or die($mysqli->error);
+    $resultPurpose = $con->query("SELECT * FROM amenity_purpose INNER JOIN amenities ON amenity_purpose.amenity_id = amenities.amenity_id ORDER BY subdivision_name ASC, amenity_name") or die($mysqli->error);
+}
 $resultAmenities_selectAmenities = $con->query("SELECT * FROM amenities ORDER BY amenity_name ASC") or die($mysqli->error);
 if (isset($_GET['amenity_purpose_id'])) {
     $resultAmenities_selectAmenities = $con->query("SELECT * FROM amenities WHERE subdivision_id ='$subdivision_id' ORDER BY amenity_name ASC") or die($mysqli->error);
@@ -438,7 +445,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                     <select name="subdivision_id" id="" required>
                                         <option value="">Select...</option>
                                         <?php while ($row = $resultSubdivision_selectAmenities->fetch_assoc()) : ?>
-                                            <option value="<?php echo $row['subdivision_id'] ?>"<?php
+                                            <option value="<?php echo $row['subdivision_id'] ?>" <?php
                                                                                                     if (isset($_GET['amenity_id'])) {
                                                                                                         if ($subdivision_id == $row['subdivision_id']) {
                                                                                                             echo 'selected="selected"';

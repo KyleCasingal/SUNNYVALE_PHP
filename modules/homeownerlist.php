@@ -1,13 +1,20 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Admin' AND $_SESSION['user_type'] != 'Secretary') {
+if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary' and $_SESSION['user_type'] != 'Super Admin') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
 }
-$res = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
-$row = $res->fetch_assoc();
-$result = $con->query("SELECT * FROM homeowner_profile WHERE email_address != '' AND subdivision = '" . $_SESSION['subdivision'] . "' ORDER BY homeowner_id ASC ") or die($mysqli->error);
-$resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC") or die($mysqli->error);
+if ($_SESSION['subdivision'] != '') {
+    $res = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
+    $row = $res->fetch_assoc();
+    $result = $con->query("SELECT * FROM homeowner_profile WHERE email_address != '' AND subdivision = '" . $_SESSION['subdivision'] . "' ORDER BY homeowner_id ASC ") or die($mysqli->error);
+    $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC") or die($mysqli->error);
+} else {
+    $res = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
+    $row = $res->fetch_assoc();
+    $result = $con->query("SELECT * FROM homeowner_profile WHERE email_address != '' ORDER BY homeowner_id ASC ") or die($mysqli->error);
+    $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC") or die($mysqli->error);
+}
 ?>
 
 <!DOCTYPE html>

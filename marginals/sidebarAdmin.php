@@ -200,7 +200,7 @@
                         <ul class="dropdown-menu">
                             <li id="Amenities" onclick="location.href='../modules/settingsAmenity.php'">Amenities</li>
                             <?php
-                            if ($row['user_type'] == 'Admin') {
+                            if ($row['user_type'] == 'Super Admin') {
                                 echo "<li id='billing-period' onclick=";
                                 echo '"';
                                 echo "location.href='../modules/settingsBillingPeriod.php'";
@@ -208,18 +208,30 @@
                                 echo ">Billing Period</li>";
                             }
                             ?>
-                            <li id='Collection Report' onclick="location.href='../Backup/backup.php'" target='_blank'>Backup</li>
                             <?php
-                            if ($row['user_type'] == 'Admin') { ?>
-                            <li id="missionVision" onclick="location.href='../modules/settingsContact.php'">Contact Information</li>
+                            if ($row['user_type'] == 'Super Admin') {
+                            ?>
+                                <li id='Collection Report' onclick="location.href='../Backup/backup.php'" target='_blank'>Backup</li>
                             <?php
                             }
                             ?>
-                            <li id="missionVision" onclick="location.href='../modules/settingsMissionVision.php'">Mission/Vision</li>
+                            <?php
+                            if ($row['user_type'] == 'Admin' or $row['user_type'] == 'Super Admin' or $row['user_type'] == 'Secretary') { ?>
+                                <li id="missionVision" onclick="location.href='../modules/settingsContact.php'">Contact Information</li>
+                            <?php
+                            }
+                            ?>
+                            <?php
+                            if ($row['user_type'] == 'Super Admin') {
+                            ?>
+                                <li id="missionVision" onclick="location.href='../modules/settingsMissionVision.php'">Mission/Vision</li>
+                            <?php
+                            }
+                            ?>
                             <li id="MonthlyDues" onclick="location.href='../modules/settingsMonthlydues.php'">Monthly Dues</li>
 
                             <?php
-                            if ($row['user_type'] == 'Admin') {
+                            if ($row['user_type'] == 'Super Admin') {
                                 echo "<li id='Subdivision' onclick=";
                                 echo '"';
                                 echo "location.href='../modules/settingsSubdivision.php'";
@@ -231,7 +243,7 @@
                             ?>
                             <li id="Subdivision Officers" onclick="location.href='../modules/settingsSubdivisionOfficer.php'">Subdivision Officers</li>
                             <?php
-                            if ($row['user_type'] == 'Admin') {
+                            if ($row['user_type'] == 'Admin' or $row['user_type'] == 'Super Admin') {
                                 echo "<li id='System Accounts' onclick=";
                                 echo '"';
                                 echo "location.href='../modules/settingsSystemAcc.php'";

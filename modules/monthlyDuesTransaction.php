@@ -1,10 +1,14 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin') {
+if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Super Admin') {
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
-$resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Monthly Dues' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "'");
+if ($_SESSION['subdivision'] != '') {
+  $resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Monthly Dues' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "'");
+} else {
+  $resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Monthly Dues' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "'");
+}
 $resultBillConsumer = $con->query("SELECT * FROM bill_consumer, transaction WHERE bill_consumer.transaction_id = transaction.transaction_id");
 $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id FROM bill_consumer, transaction WHERE bill_consumer.transaction_id = transaction.transaction_id");
 
@@ -536,23 +540,24 @@ $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id
   .receipt-transaction {
     align-self: flex-start;
   }
+
   @media only print {
 
-title,
-.navigation,
-.topleft,
-.topbarNav,
-.footer,
-.treasurer,
-.modal-footer,
-.modal-header {
-  visibility: hidden;
-}
+    title,
+    .navigation,
+    .topleft,
+    .topbarNav,
+    .footer,
+    .treasurer,
+    .modal-footer,
+    .modal-header {
+      visibility: hidden;
+    }
 
-.modal-body {
-  visibility: visible;
-}
-}
+    .modal-body {
+      visibility: visible;
+    }
+  }
 </style>
 <script type="text/javascript">
 </script>
@@ -715,8 +720,8 @@ title,
             </div>
             <div class="modal-footer">
               <button class="btn btn-primary" id="print<?php
-                                                            echo $row1['transaction_id']
-                                                            ?>">Print Receipt</button>
+                                                        echo $row1['transaction_id']
+                                                        ?>">Print Receipt</button>
             </div>
           </div>
         </div>
