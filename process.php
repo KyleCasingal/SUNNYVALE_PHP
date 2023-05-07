@@ -1734,3 +1734,37 @@ if (isset($_POST['tenant_submit'])) {
 
   header("Location: tenantHomeowner.php");
 }
+
+// TOTAL COST STICKER
+if (isset($_POST['quantity'])) {
+  $quantity = $_POST['quantity'];
+
+  $result = $con->query("SELECT * FROM sticker WHERE subdivision = '" . $_SESSION['subdivision'] . "'");
+  $row = $result->fetch_assoc();
+  $cost = $row['cost'];
+  $total = $quantity * $cost;
+
+  if (mysqli_num_rows($result) > 0) {
+    echo '<script type="text/javascript">
+  document.getElementById("cost").setAttribute("value",' . $total . ');
+</script>';
+  }
+}
+
+// BUYING VEHICLE STICKER
+if (isset($_POST['stickerVehicle'])) {
+  $resultUserID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+  $rowUserID = $resultUserID->fetch_assoc();
+
+  $quantity = $_POST['quantity'];
+  $total_cost = $_POST['total_cost'];
+
+  $targetDir = '../media/paymentProof/';
+  $fileName = '' . $_FILES['image']['name'];
+  $targetFilePath = $targetDir . $fileName;
+
+  if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
+    $sql1 = "INSERT INTO transaction (user_id, name, total_cost, quantity, payment_proof, transaction_type, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', '$quantity', '$fileName', 'Vehicle Sticker', 'Pending')";
+    $result1 = mysqli_query($con, $sql1);
+  }
+}

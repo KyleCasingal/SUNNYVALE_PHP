@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: May 07, 2023 at 08:25 AM
+-- Generation Time: May 07, 2023 at 11:17 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1615 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1623 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -1770,7 +1770,15 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (1611, 'SV1_Secretary', 'logged in', '2023-05-07 08:22:16'),
 (1612, 'SV1_Secretary', 'logged out', '2023-05-07 08:23:12'),
 (1613, 'SV1_Treasurer', 'logged in', '2023-05-07 08:23:15'),
-(1614, 'SV1_Treasurer', 'logged out', '2023-05-07 08:24:40');
+(1614, 'SV1_Treasurer', 'logged out', '2023-05-07 08:24:40'),
+(1615, 'SV1_Guard', 'logged in', '2023-05-07 08:26:59'),
+(1616, 'Super_Admin', 'logged in', '2023-05-07 22:28:32'),
+(1617, 'Super_Admin', 'logged out', '2023-05-07 22:29:51'),
+(1618, 'Mon Carlo Delima', 'logged in', '2023-05-07 22:29:57'),
+(1619, 'Mon Carlo Delima', 'logged out', '2023-05-07 22:31:20'),
+(1620, 'Mon Carlo Delima', 'logged in', '2023-05-07 22:31:23'),
+(1621, 'Mon Carlo Delima', 'logged out', '2023-05-07 22:52:11'),
+(1622, 'Mon Carlo Delima', 'logged in', '2023-05-07 22:52:14');
 
 -- --------------------------------------------------------
 
@@ -2827,6 +2835,30 @@ INSERT INTO `privacy` (`privacy_id`, `type`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sticker`
+--
+
+DROP TABLE IF EXISTS `sticker`;
+CREATE TABLE IF NOT EXISTS `sticker` (
+  `sticker_id` int(11) NOT NULL AUTO_INCREMENT,
+  `subdivision` varchar(50) NOT NULL,
+  `cost` int(11) NOT NULL,
+  PRIMARY KEY (`sticker_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `sticker`
+--
+
+INSERT INTO `sticker` (`sticker_id`, `subdivision`, `cost`) VALUES
+(1, 'Sunnyvale 1', 150),
+(2, 'Sunnyvale 2', 200),
+(3, 'Sunnyvale 3', 180),
+(4, 'Sunnyvale 4', 240);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `subdivision`
 --
 
@@ -2889,27 +2921,29 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `user_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `total_cost` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
   `payment_proof` varchar(255) DEFAULT NULL,
   `transaction_type` varchar(50) NOT NULL,
   `status` varchar(10) NOT NULL,
   `datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`transaction_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `transaction`
 --
 
-INSERT INTO `transaction` (`transaction_id`, `user_id`, `name`, `total_cost`, `payment_proof`, `transaction_type`, `status`, `datetime`) VALUES
-(1, 1, 'Mon Carlo Delima', 1500, '315887907_1137649846869408_655406644278059076_n.png', 'Amenity Renting', 'Approved', '2023-05-06 07:59:14'),
-(2, 48, 'SV1_Treasurer', 180, '315887907_1137649846869408_655406644278059076_n.png', 'Amenity Renting', 'Approved', '2023-05-06 08:00:25'),
-(3, 1, 'Mon Carlo Delima', 2150, '328148270_726681382138928_1391919010667224674_n.png', 'Amenity Renting', 'Approved', '2023-05-06 08:00:27'),
-(4, 1, 'Mon Carlo Delima', 600, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid', '2023-05-06 08:07:37'),
-(5, 55, 'Kyle Andrei Casingal', 1500, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid', '2023-05-06 07:28:09'),
-(6, 55, 'Kyle Andrei Casingal', 1500, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid', '2023-05-06 07:27:54'),
-(9, 48, 'SV1_Treasurer', 800, NULL, 'Monthly Dues', 'Paid', '2023-05-06 07:28:16'),
-(10, 48, 'SV1_Treasurer', 1000, NULL, 'Monthly Dues', 'Paid', '2023-05-06 07:28:17'),
-(11, 1, 'Mon Carlo Delima', 50, '328148270_726681382138928_1391919010667224674_n.png', 'Amenity Renting', 'Approved', '2023-05-06 08:00:29');
+INSERT INTO `transaction` (`transaction_id`, `user_id`, `name`, `total_cost`, `quantity`, `payment_proof`, `transaction_type`, `status`, `datetime`) VALUES
+(1, 1, 'Mon Carlo Delima', 1500, NULL, '315887907_1137649846869408_655406644278059076_n.png', 'Amenity Renting', 'Approved', '2023-05-06 07:59:14'),
+(2, 48, 'SV1_Treasurer', 180, NULL, '315887907_1137649846869408_655406644278059076_n.png', 'Amenity Renting', 'Approved', '2023-05-06 08:00:25'),
+(3, 1, 'Mon Carlo Delima', 2150, NULL, '328148270_726681382138928_1391919010667224674_n.png', 'Amenity Renting', 'Approved', '2023-05-06 08:00:27'),
+(4, 1, 'Mon Carlo Delima', 600, NULL, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid', '2023-05-06 08:07:37'),
+(5, 55, 'Kyle Andrei Casingal', 1500, NULL, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid', '2023-05-06 07:28:09'),
+(6, 55, 'Kyle Andrei Casingal', 1500, NULL, '328148270_726681382138928_1391919010667224674_n.png', 'Monthly Dues', 'Paid', '2023-05-06 07:27:54'),
+(9, 48, 'SV1_Treasurer', 800, NULL, NULL, 'Monthly Dues', 'Paid', '2023-05-06 07:28:16'),
+(10, 48, 'SV1_Treasurer', 1000, NULL, NULL, 'Monthly Dues', 'Paid', '2023-05-06 07:28:17'),
+(11, 1, 'Mon Carlo Delima', 50, NULL, '328148270_726681382138928_1391919010667224674_n.png', 'Amenity Renting', 'Approved', '2023-05-06 08:00:29'),
+(12, 1, 'Mon Carlo Delima', 150, 1, 'drawSQL-sunnyvale-export-2023-04-10.png', 'Vehicle Sticker', 'Pending', NULL);
 
 -- --------------------------------------------------------
 
