@@ -5,12 +5,14 @@ if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin' 
   exit;
 }
 if ($_SESSION['subdivision'] != '') {
-  $resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Amenity Renting' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "'");
+  $resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Vehicle Sticker' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "'");
 } else {
-  $resultTransaction = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Amenity Renting'");
+  $resultTransaction = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Vehicle Sticker'");
 }
 $resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction WHERE amenity_renting.transaction_id = transaction.transaction_id");
 $resultAmenityRenting1 = $con->query("SELECT DISTINCT amenity_renting.transaction_id FROM amenity_renting, transaction WHERE amenity_renting.transaction_id = transaction.transaction_id ");
+
+$resultTransaction1 = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Vehicle Sticker'");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -579,17 +581,15 @@ $resultAmenityRenting1 = $con->query("SELECT DISTINCT amenity_renting.transactio
 
     <div class="treasurerPanel">
 
-      <?php while ($row1 = $resultAmenityRenting->fetch_assoc()) : ?>
+      <?php while ($row1 = $resultTransaction1->fetch_assoc()) : ?>
         <form action="" method="POST">
           <div class="modal fade" id="complaintModal<?php
                                                     echo $row1['transaction_id'];
                                                     ?>" aria-labelledby="exampleModalToggleLabel" tabindex="-1" style="display: none;" aria-hidden="true">
-            <?php $resultAmenityRenting2 = $con->query("SELECT * FROM amenity_renting, amenity_purpose WHERE amenity_renting.transaction_id = " . $row1['transaction_id'] . " AND amenity_renting.amenity_purpose = amenity_purpose.amenity_purpose_id"); ?>
-            <?php $resultAmenityRenting3 = $con->query("SELECT * FROM amenity_renting, amenity_purpose WHERE amenity_renting.transaction_id = " . $row1['transaction_id'] . " AND amenity_renting.amenity_purpose = amenity_purpose.amenity_purpose_id"); ?>
             <div class="modal-dialog  modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Reservation Details</h1>
+                  <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Vehicle Sticker Transaction Details</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -603,26 +603,9 @@ $resultAmenityRenting1 = $con->query("SELECT DISTINCT amenity_renting.transactio
                       <td id="" colspan="5"><?php echo $row1['name'] ?></td>
                     </tr>
                     <tr>
-                      <td id="" style="font-weight: bold;">Subdivision</td>
-                      <td id="" style="font-weight: bold;">Amenity</td>
-                      <td id="" style="font-weight: bold;">Purpose</td>
-                      <td id="" style="font-weight: bold;">From</td>
-                      <td id="" style="font-weight: bold;">To</td>
-                      <td id="" style="font-weight: bold;">Cost</td>
+                    <td style="font-weight: bold;">Quantity:</td>
+                      <td><?php echo $row1['quantity'] ?></td>
                     </tr>
-                    <?php while ($row2 = $resultAmenityRenting2->fetch_assoc()) : ?>
-                      <input type="hidden" name="concern_id" value="<?php echo $row2['amenity_renting_id'] ?>">
-                      <tr>
-                        <td id=""><?php echo $row2['subdivision_name'] ?></td>
-                        <td id=""><?php echo $row2['amenity_name'] ?></td>
-                        <td id=""><?php echo $row2['amenity_purpose'] ?></td>
-                        <td id=""><?php $datetime = strtotime($row2['date_from']);
-                                  echo $phptime = date("m/d/y g:i A", $datetime); ?></td>
-                        <td id=""><?php $datetime = strtotime($row2['date_to']);
-                                  echo $phptime = date("m/d/y g:i A ", $datetime); ?></td>
-                        <td id=""><?php echo $row2['cost'] ?></td>
-                      </tr>
-                    <?php endwhile; ?>
                     <tr>
                       <td style="font-weight: bold;">Total Cost:</td>
                       <td><?php echo $row1['total_cost'] ?></td>
@@ -707,21 +690,17 @@ $resultAmenityRenting1 = $con->query("SELECT DISTINCT amenity_renting.transactio
                         <th>Cost</td>
                       </thead>
                       <tbody>
-                        <?php while ($row = $resultAmenityRenting3->fetch_assoc()) : ?>
                           <tr>
-                            <td id=""><?php echo $row['subdivision_name'] ?></td>
-                            <td id=""><?php echo $row['amenity_name'] ?></td>
-                            <td id=""><?php echo $row['amenity_purpose'] ?></td>
-                            <td id=""><?php $datetime = strtotime($row['date_from']);
-                                      echo $phptime = date("m/d/y g:i A", $datetime); ?></td>
-                            <td id=""><?php $datetime = strtotime($row['date_to']);
-                                      echo $phptime = date("m/d/y g:i A ", $datetime); ?></td>
-                            <td id=""><?php echo $row['cost'] ?></td>
+                            <td id=""></td>
+                            <td id=""></td>
+                            <td id=""></td>
+                            <td id=""></td>
+                            <td id=""></td>
+                            <td id=""></td>
                           </tr>
-                        <?php endwhile; ?>
                         <tr>
                           <td colspan="5" class="amount-total-label">Total:</td>
-                          <td class="total-amount-td"><?php echo $row1['total_cost'] ?></td>
+                          <td class="total-amount-td"></td>
                         </tr>
                       </tbody>
                     </table>
@@ -739,15 +718,12 @@ $resultAmenityRenting1 = $con->query("SELECT DISTINCT amenity_renting.transactio
         </form>
       <?php endwhile; ?>
 
-      <label class="lblSettings" id="amenity">Reservation List</label>
+      <label class="lblSettings" id="amenity">Vehicle Sticker Transaction List</label>
       <div class="complaintManagement">
         <div class="inboxContainer">
           <table class="tblComplaints">
             <?php while ($row = $resultTransaction->fetch_assoc()) : ?>
               <tr class="trComplaints">
-                <!-- <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
-                                                                                                    echo $row['transaction_id']
-                                                                                                    ?>"><?php echo $row['transaction_id'] ?></td> -->
                 <td class="renter-name" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
                                                                                               echo $row['transaction_id']
                                                                                               ?>"><?php echo $row['name'] ?></td>
