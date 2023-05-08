@@ -584,7 +584,7 @@ $rowGcash = $resultGcash->fetch_assoc();
     <div class='amenities'>
       <div class="amenitiesForm">
         <label>Name</label>
-        <input type="text" name="full_name" value="<?php echo $_POST['full_name'] ?? '' ?>" id="name" required />
+        <input type="text" name="full_name" value="<?php echo  $_SESSION['guestName'] ?? '' ?>" id="name" required readonly />
         <label>Subdivision</label>
         <select name="subdivision" id="subdivision_id" required>
           <option selected="selected">Select...</option>
