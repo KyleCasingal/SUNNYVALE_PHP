@@ -1823,17 +1823,8 @@ if (isset($_POST['tenant_submit'])) {
   $row = $resultSession->fetch_assoc();
   $homeowner_id = $row['user_homeowner_id'];
 
-  if ($middle_name == 'N/A' and $suffix == 'N/A') {
-    $full_name = $first_name . " " . $last_name;
-  } else if ($suffix == 'N/A') {
-    $full_name = $first_name . " " . $middle_name . " " . $last_name;
-  } else if ($middle_name == 'N/A') {
-    $full_name = $first_name . " " . $last_name . " " . $suffix;
-  } else {
-    $full_name = $first_name . " " . $middle_name . " " . $last_name . " " . $suffix;
-  }
-
-  $sql = "INSERT INTO tenant(homeowner_id, full_name, subdivision, birthdate, sex, email, mobile_no, display_picture) VALUES ('$homeowner_id', '$full_name', '$subdivision', '$birthdate', '$sex', '$email_address', '$mobile_number', 'default.png')";
+  
+  $sql = "INSERT INTO tenant(homeowner_id, first_name, middle_name, last_name, subdivision, birthdate, sex, email, mobile_no, display_picture) VALUES ('$homeowner_id', '$first_name', '$middle_name', '$last_name', '$subdivision', '$birthdate', '$sex', '$email_address', '$mobile_number', 'default.png')";
   $result = mysqli_query($con, $sql);
   $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Added a tenant', NOW())";
   mysqli_query($con, $sqlAudit);
@@ -1914,4 +1905,73 @@ if (isset($_POST['stickerVehicleAdmin'])) {
 if (isset($_POST['sessionName'])) {
   $_SESSION['guestName'] = $_POST['guestName'];
   header("Location: ./modules/amenitiesGuest.php");
+}
+
+
+
+if (isset($_GET['tenant_id'])) {
+  $update = true;
+  $tenant_id = $_GET['tenant_id'];
+  
+  $result = $con->query("SELECT * FROM tenant WHERE tenant_id = '$tenant_id'");
+  if ($result->num_rows) {
+    $row = $result->fetch_array();
+    $first_name = $row['first_name'];
+    $middle_name = $row['middle_name'];
+    $last_name = $row['last_name'];
+    $subdivision_name = $row['subdivision'];
+    $birthdate = $row['birthdate'];
+    $sex = $row['sex'];
+    $email_address = $row['email'];
+    $mobile_number = $row['mobile_no'];
+    // $suffix = $row['suffix'];
+    // $street = $row['street'];
+    // $lot = substr($street, 4, 1);
+    // $block = substr($street, 12, 1);
+
+    // $resultLot = $con->query("SELECT * FROM lot INNER JOIN block ON lot.block_id = block.block_id WHERE block.block = '$block' AND lot.lot = '$lot'") or die($mysqli->error);
+    // $rowLot = $resultLot->fetch_assoc();
+    // $lot_id = $rowLot['lot_id'];
+    // $block_id = $rowLot['block_id'];
+
+    // $subdivision_name = $row['subdivision'];
+    // $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '$subdivision_name'");
+    // $rowSubdivision = $resultSubdivision->fetch_assoc();
+    // $subdivision_id = $rowSubdivision['subdivision_id'];
+
+    // $business_address = $row['business_address'];
+    // $occupation = $row['occupation'];
+    // $employer = $row['employer'];
+    // $birthdate = $row['birthdate'];
+    // $sex = $row['sex'];
+    // $email_address = $row['email_address'];
+    // $mobile_number = $row['mobile_number'];
+    // $vehicle_registration = $row['vehicle_registration'];
+  }
+}
+if (isset($_POST['tenant_update'])) {
+  $tenant_id = $_POST['tenant_id'];
+  $first_name = $_POST['first_name'];
+  $middle_name = $_POST['middle_name'];
+  $last_name = $_POST['last_name'];
+ 
+  
+  $mobile_number = $_POST['mobile_number'];
+  
+  $birthdate = strtotime($_POST['birthdate']);
+  $birthdate = date('Y-m-d', $birthdate);
+  $sex = $_POST['sex'];
+  $email_address = $_POST['email_address'];
+  $full_name = $first_name . ' ' . $last_name;
+
+
+  
+  $sql = "UPDATE homeowner_profile SET first_name =  '$first_name', middle_name = '$middle_name', last_name = '$last_name', sex = '$sex', subdivision = '$subdivision_name', barangay = '$barangay', email_address = '$email_address', birthdate = '$birthdate', mobile_number = '$mobile_number' WHERE tenant_id = '$tenant_id'";
+  $result = mysqli_query($con, $sql);
+  // $sql2 = "UPDATE user SET full_name = '$full_name', email_address = '$email_address' WHERE user_homeowner_id = '$homeowner_id'";
+  // $result2 = mysqli_query($con, $sql2);
+
+  $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Update a tenant profile', NOW())";
+  mysqli_query($con, $sqlAudit);
+  header("Location: homeownerRegistration.php");
 }

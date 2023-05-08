@@ -42,11 +42,11 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
- 
+
   <title>SUNNYVALE</title>
 </head>
 <style>
-   .container-calendar {
+  .container-calendar {
     width: 100%;
     max-width: 90%;
     max-height: 100%;
@@ -83,10 +83,11 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   }
 
 
-.col-md-3{
-  overflow-y: scroll !important;
-  height: 30% !important; 
-}
+  .col-md-3 {
+    overflow-y: scroll !important;
+    height: 30% !important;
+    resize: both;
+  }
 
   .calendar {
     background-color: rgb(170, 192, 175, 0);
@@ -170,6 +171,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   .unstyled li {
     display: flex;
   }
+
   * {
     margin: 0;
   }
@@ -407,8 +409,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     cursor: pointer;
     border-bottom: 1px solid lightgray;
   }
-
- 
 </style>
 <script type="text/javascript">
   if (window.history.replaceState) {
@@ -542,45 +542,45 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
 
 <body>
   <div class="treasurer">
-    
+
 
     <div class="treasurerPanel">
       <label class="lblSettings" id="amenity">Amenity Renting</label>
       <div class="container">
-    <div class="page-header">
-      <h3 class="calendar-month-year"></h3>
-      <div class="pull-right form-inline">
-        <div class="btn-group">
-          <button class="btn btn-primary-calendar" data-calendar-nav="prev">
-            << Prev</button>
-              <button class="btn btn-default-calendar" data-calendar-nav="today">Today</button>
-              <button class="btn btn-primary-calendar" data-calendar-nav="next">Next >></button>
-        </div>
-        <div class="btn-group">
-          <button class="btn btn-warning-calendar" data-calendar-view="year">Year</button>
-          <button class="btn btn-warning-calendar active" data-calendar-view="month">Month</button>
-          <button class="btn btn-warning-calendar" data-calendar-view="week">Week</button>
-          <button class="btn btn-warning-calendar" data-calendar-view="day">Day</button>
-        </div>
-      </div>
+        <div class="page-header">
+          <h3 class="calendar-month-year"></h3>
+          <div class="pull-right form-inline">
+            <div class="btn-group">
+              <button class="btn btn-primary-calendar" data-calendar-nav="prev">
+                << Prev</button>
+                  <button class="btn btn-default-calendar" data-calendar-nav="today">Today</button>
+                  <button class="btn btn-primary-calendar" data-calendar-nav="next">Next >></button>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-warning-calendar" data-calendar-view="year">Year</button>
+              <button class="btn btn-warning-calendar active" data-calendar-view="month">Month</button>
+              <button class="btn btn-warning-calendar" data-calendar-view="week">Week</button>
+              <button class="btn btn-warning-calendar" data-calendar-view="day">Day</button>
+            </div>
+          </div>
 
-    </div>
-    <div class="row" id="calendar-days">
-      <div class="col-md-9">
-        <div id="showEventCalendar"></div>
+        </div>
+        <div class="row" id="calendar-days">
+          <div class="col-md-9">
+            <div id="showEventCalendar"></div>
+          </div>
+          <div class="col-md-3">
+            <h4>All Events List</h4>
+            <ul id="eventlist" class="nav nav-list"></ul>
+          </div>
+        </div>
       </div>
-      <div class="col-md-3">
-        <h4>All Events List</h4>
-        <ul id="eventlist" class="nav nav-list"></ul>
-      </div>
-    </div>
-  </div>
 
       <form method="post" enctype="multipart/form-data">
         <div class='amenities'>
           <div class="amenitiesForm">
             <label>Name</label>
-            <input type="text" name="renter_name" id="name"  value="<?php echo $row['full_name'] ?>" required />
+            <input type="text" name="renter_name" id="name" value="<?php echo $row['full_name'] ?>" required />
 
             <label>Subdivision</label>
             <select name="subdivision" id="subdivision_id" required>

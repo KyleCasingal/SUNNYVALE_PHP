@@ -475,14 +475,14 @@ $resultComplaints1 = $con->query("SELECT * FROM tenant WHERE homeowner_id = '$ho
                                     <select name="sex" id="sex_id" required>
                                         <option value="">Select...</option>
                                         <option value="Male" <?php
-                                                                if (isset($_GET['homeowner_id'])) {
+                                                                if (isset($_GET['tenant_id'])) {
                                                                     if ($sex == "Male") {
                                                                         echo 'selected="selected"';
                                                                     }
                                                                 }
                                                                 ?>>Male</option>
                                         <option value="Female" <?php
-                                                                if (isset($_GET['homeowner_id'])) {
+                                                                if (isset($_GET['tenant_id'])) {
                                                                     if ($sex == "Female") {
                                                                         echo 'selected="selected"';
                                                                     }
@@ -502,11 +502,7 @@ $resultComplaints1 = $con->query("SELECT * FROM tenant WHERE homeowner_id = '$ho
                                 </td>
                             </tr>
                             <tr>
-                                <td>Suffix:</td>
-                                <td>
-                                    <input type="text" name="suffix" id="suffix_id" placeholder="suffix" value="<?php echo $suffix ?? ''; ?>" required />
-                                    <p class="lblNA">*write N/A if not applicable*</p>
-                                </td>
+                                
                                 <td>Mobile Number:</td>
                                 <td>
                                     <input type="text" name="mobile_number" id="mobile_id" placeholder="mobile no." value="<?php echo $mobile_number ?? ''; ?>" required />
@@ -541,7 +537,7 @@ $resultComplaints1 = $con->query("SELECT * FROM tenant WHERE homeowner_id = '$ho
                                             Do you really want to update this tenant?
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="homeowner_update" type="submit" class="btn btn-primary">Save changes</button>
+                                            <button name="tenant_update" type="submit" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </div>
                                 </div>
@@ -575,7 +571,9 @@ $resultComplaints1 = $con->query("SELECT * FROM tenant WHERE homeowner_id = '$ho
                                                     <table>
                                                         <tr>
                                                             <td></td>
-                                                            <td>Tenant Name</td>
+                                                            <td>First Name</td>
+                                                            <td>Middle Name</td>
+                                                            <td>Last Name</td>
                                                             <td>Birthdate</td>
                                                             <td>Sex</td>
                                                             <td>Email</td>
@@ -584,9 +582,11 @@ $resultComplaints1 = $con->query("SELECT * FROM tenant WHERE homeowner_id = '$ho
                                                         <?php while ($row1 = $resultComplaints1->fetch_assoc()) : ?>
                                                             <tr>
                                                                 <td>
-                                                                    <a href="homeownerRegistration.php?homeowner_id=<?php echo $row['homeowner_id']; ?>" class="btnEdit">Edit</a>
+                                                                    <a href="tenantHomeowner.php?tenant_id=<?php echo $row['homeowner_id']; ?>" class="btnEdit">Edit</a>
                                                                 </td>
-                                                                <td id=""><?php echo $row1['full_name'] ?></td>
+                                                                <td id=""><?php echo $row1['first_name'] ?></td>
+                                                                <td id=""><?php echo $row1['middle_name'] ?></td>
+                                                                <td id=""><?php echo $row1['last_name'] ?></td>
                                                                 <td><?php echo $row1['birthdate'] ?></td>
                                                                 <td><?php echo $row1['sex'] ?></td>
                                                                 <td><?php echo $row1['email'] ?></td>
