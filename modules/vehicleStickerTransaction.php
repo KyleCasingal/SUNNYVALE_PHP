@@ -450,7 +450,7 @@ $resultTransaction1 = $con->query("SELECT * FROM transaction WHERE transaction_t
     border-bottom: 1px solid lightgray;
   }
 
-  .proof-img {
+  .postImg {
     max-width: 20vw;
     max-height: 20vw;
   }
