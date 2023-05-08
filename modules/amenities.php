@@ -83,7 +83,9 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   }
 
 
-
+.col-md-3{
+  overflow-y: scroll !important; 
+}
 
   .calendar {
     background-color: rgb(170, 192, 175, 0);
