@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 08, 2023 at 10:21 AM
+-- Generation Time: May 08, 2023 at 03:44 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `amenity_renting` (
   `cost` int(11) DEFAULT NULL,
   `cart` varchar(10) NOT NULL,
   PRIMARY KEY (`amenity_renting_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `amenity_renting`
@@ -123,7 +123,11 @@ INSERT INTO `amenity_renting` (`amenity_renting_id`, `transaction_id`, `user_id`
 (23, 2, 48, 'SV1_Treasurer', 'Sunnyvale 2', 'Court', '11', '2023-04-08 08:00:00', '2023-04-08 10:00:00', 40, 'Approved'),
 (24, 2, 48, 'SV1_Treasurer', 'Sunnyvale 2', 'Court', '12', '2023-04-08 10:00:00', '2023-04-08 12:00:00', 140, 'Approved'),
 (27, NULL, 1, 'Mon Carlo Delima', 'Sunnyvale 1', 'Court', '10', '2023-05-02 12:00:00', '2023-05-02 18:00:00', 480, 'Yes'),
-(28, NULL, 18, 'Test', 'Sunnyvale 1', 'Swimming Pool', '5', '2023-05-05 01:00:00', '2023-05-05 02:00:00', 50, 'Yes');
+(28, NULL, 18, 'Test', 'Sunnyvale 1', 'Swimming Pool', '5', '2023-05-05 01:00:00', '2023-05-05 02:00:00', 50, 'Yes'),
+(29, NULL, 18, 'aaaaaa', 'Sunnyvale 1', 'Swimming Pool', '5', NULL, NULL, NULL, 'Yes'),
+(30, NULL, 3, 'aa', 'Sunnyvale 2', 'Court', '12', NULL, NULL, NULL, 'Removed'),
+(31, NULL, 3, 'Jeune Paolus Flores', 'Sunnyvale 1', 'Swimming Pool', '5', NULL, NULL, NULL, 'Yes'),
+(32, NULL, 3, 'Jeune Paolus Flores', 'Sunnyvale 1', 'Swimming Pool', '5', NULL, NULL, NULL, 'Yes');
 
 -- --------------------------------------------------------
 
@@ -163,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=102 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=125 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -270,7 +274,30 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (98, 'Super_Admin', 'Added a sticker price', '2023-05-08 18:08:54'),
 (99, 'Super_Admin', 'Logged out', '2023-05-08 18:09:35'),
 (100, 'SV1_Admin', 'Added a gcash number', '2023-05-08 18:13:02'),
-(101, 'SV1_Admin', 'Added a gcash number', '2023-05-08 18:17:32');
+(101, 'SV1_Admin', 'Added a gcash number', '2023-05-08 18:17:32'),
+(102, 'SV1_Admin', 'Logged out', '2023-05-08 20:46:48'),
+(103, 'Jeune Paolus Flores', 'Logged in', '2023-05-08 20:54:18'),
+(104, 'Jeune Paolus Flores', 'Logged out', '2023-05-08 20:56:27'),
+(105, 'Jeune Paolus Flores', 'Logged in', '2023-05-08 21:06:11'),
+(106, 'Jeune Paolus Flores', 'Logged out', '2023-05-08 21:09:39'),
+(107, 'Jeune Paolus Flores', 'Logged in', '2023-05-08 22:01:17'),
+(108, 'Jeune Paolus Flores', 'Logged out', '2023-05-08 22:01:25'),
+(109, 'Jeune Paolus Flores', 'Logged in', '2023-05-08 22:23:10'),
+(110, 'Jeune Paolus Flores', 'Logged out', '2023-05-08 22:24:24'),
+(111, 'SV1_Admin', 'Logged in', '2023-05-08 22:24:29'),
+(112, 'SV1_Admin', 'Logged out', '2023-05-08 22:25:30'),
+(113, 'Jeune Paolus Flores', 'Logged in', '2023-05-08 22:25:39'),
+(114, 'Jeune Paolus Flores', 'Logged out', '2023-05-08 23:04:58'),
+(115, 'Mon Carlo Delima', 'Logged in', '2023-05-08 23:05:33'),
+(116, 'Mon Carlo Delima', 'Logged out', '2023-05-08 23:10:36'),
+(117, 'SV1_Admin', 'Logged in', '2023-05-08 23:10:42'),
+(118, 'SV1_Admin', 'Logged out', '2023-05-08 23:11:21'),
+(119, 'Mon Carlo Delima', 'Logged in', '2023-05-08 23:11:58'),
+(120, 'Mon Carlo Delima', 'Added a tenant', '2023-05-08 23:17:36'),
+(121, 'Mon Carlo Delima', 'Added a tenant', '2023-05-08 23:28:09'),
+(122, 'Mon Carlo Delima', 'Added a tenant', '2023-05-08 23:29:10'),
+(123, 'Mon Carlo Delima', 'Update a homeowner profile', '2023-05-08 23:29:34'),
+(124, 'Mon Carlo Delima', 'Update a tenant profile', '2023-05-08 23:38:49');
 
 -- --------------------------------------------------------
 
@@ -1317,8 +1344,7 @@ INSERT INTO `post` (`post_id`, `user_id`, `full_name`, `title`, `content`, `publ
 (35, 18, 'SV1_Admin', 'Volleyball Tryouts', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-03-17 21:43:35', 30, '', 'Yes', 'Active'),
 (36, 18, 'SV1_Admin', 'Swimming Lessons', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-01-04 21:43:46', 30, '', 'Yes', 'Active'),
 (37, 18, 'SV1_Admin', 'Founding Anniv. Celebration', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-02-01 21:44:01', 30, '', 'Yes', 'Active'),
-(38, 1, 'Mon Carlo Delima', 'Sun and Moon', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-14 14:19:37', NULL, 'dsa.jpg', 'No', 'Active'),
-(39, 61, 'Monkey D. Luffy', 'Japanese Street', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-14 14:23:15', NULL, 'lockscreen.png', 'No', 'Active');
+(38, 1, 'Mon Carlo Delima', 'Sun and Moon', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue ipsum, porttitor eleifend condimentum nec, sollicitudin id mi. Aenean aliquet, mauris sit amet ultricies luctus, arcu ex facilisis lorem, eu lacinia ante sem id erat. Praesent quis blandit.', '2023-04-14 14:19:37', NULL, 'dsa.jpg', 'No', 'Active');
 
 -- --------------------------------------------------------
 
@@ -1406,7 +1432,9 @@ DROP TABLE IF EXISTS `tenant`;
 CREATE TABLE IF NOT EXISTS `tenant` (
   `tenant_id` int(11) NOT NULL AUTO_INCREMENT,
   `homeowner_id` int(11) NOT NULL,
-  `full_name` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
+  `first_name` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
+  `middle_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
   `subdivision` varchar(50) DEFAULT NULL,
   `birthdate` date NOT NULL,
   `sex` varchar(10) CHARACTER SET utf8mb4 NOT NULL,
@@ -1414,16 +1442,18 @@ CREATE TABLE IF NOT EXISTS `tenant` (
   `mobile_no` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
   `display_picture` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
   PRIMARY KEY (`tenant_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tenant`
 --
 
-INSERT INTO `tenant` (`tenant_id`, `homeowner_id`, `full_name`, `subdivision`, `birthdate`, `sex`, `email`, `mobile_no`, `display_picture`) VALUES
-(1, 1, 'Monkey D. Luffy', 'Sunnyvale 1', '2023-04-12', 'Male', 'monkeydluffy@gmail.com', '09123456789', 'default.png'),
-(2, 1, 'Bogart D. Explorer', 'Sunnyvale 1', '2023-03-01', 'Male', 'bogartdexplorer@gmail.com', '09123456789', 'default.png'),
-(3, 1, 'Portgas D. Ace', 'Sunnyvale 1', '2023-04-13', 'Male', 'donut@gmail.com', '09123456789', 'default.png');
+INSERT INTO `tenant` (`tenant_id`, `homeowner_id`, `first_name`, `middle_name`, `last_name`, `subdivision`, `birthdate`, `sex`, `email`, `mobile_no`, `display_picture`) VALUES
+(1, 1, 'Monkey', 'D.', 'Luffy', 'Sunnyvale 1', '2023-04-12', 'Male', 'monkeydluffy@gmail.com', '09123456789', 'default.png'),
+(2, 1, 'Bogart', 'D.', 'Explorer', 'Sunnyvale 1', '2023-03-01', 'Male', 'bogartdexplorer@gmail.com', '09123456789', 'default.png'),
+(3, 1, 'Portgas', 'D.', 'Ace', 'Sunnyvale 1', '2023-04-13', 'Male', 'donut@gmail.com', '09123456789', 'default.png'),
+(4, 1, 'Mon', 'Bogart', 'D', 'Sunnyvale 1', '2023-05-09', 'Male', '123@gmail.com', '12121212', 'default.png'),
+(5, 1, 'Mon', '22', 'forever', 'Sunnyvale 1', '2023-05-03', 'Male', '12223@gmail.com', '2222222', 'default.png');
 
 -- --------------------------------------------------------
 
@@ -1503,7 +1533,6 @@ INSERT INTO `user` (`user_id`, `user_homeowner_id`, `user_tenant_id`, `full_name
 (52, 39, NULL, 'Marco Ivan Sta. Maria', 'Homeowner', '123', 'marcoivanstamaria@gmail.com', 'Activated', '257545', '2022-12-01 06:31:28'),
 (53, 8, NULL, 'Krishtalene BendaÃ±a', 'Homeowner', '123', 'tissabendana@gmail.com', 'Activated', '573856', '2022-12-01 06:37:48'),
 (59, 51, NULL, 'SV1_Guard', 'Guard', '123', 'SV1_Guard', 'Activated', NULL, NULL),
-(61, NULL, 1, 'Monkey D. Luffy', 'Tenant', '12345', 'monkeydluffy@gmail.com', 'Activated', '665824', '2023-04-14 22:46:46'),
 (63, 44, NULL, 'test test', 'Homeowner', '622896', 'dmoncarlo@gmail.com', 'Activated', '622896', '2023-05-06 08:05:53'),
 (64, 54, NULL, 'Super_Admin', 'Super Admin', 'password', 'Super_Admin', 'Activated', NULL, NULL);
 
