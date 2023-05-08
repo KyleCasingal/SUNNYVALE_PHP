@@ -31,8 +31,8 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
   <!-- calendar script and bootstrap -->
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="css/calendar.css">
@@ -243,6 +243,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     justify-self: center;
     align-self: center;
   }
+  
 
   body {
     display: flex;
@@ -271,14 +272,18 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     /* max-width: 90%; */
   }
 
+
+
+
   .calendar {
     background-color: rgb(170, 192, 175, 0);
   }
 
-
   #calendar-days {
     font-size: 0.8vw;
     font-family: 'Poppins', sans-serif;
+    margin-top: 1vw;
+    margin-left: 2vw;
   }
 
   #calendar-header {
@@ -287,29 +292,29 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   }
 
   .btn-default-calendar {
-    font-size: 1vw;
-    font-family: 'Poppins', sans-serif;
-    background-color: rgb(0 142 255);
-    color: white;
+    font-size: 1vw !important;
+    font-family: 'Poppins', sans-serif !important;
+    background-color: rgb(0 142 255) !important;
+    color: white !important;
   }
 
   .btn-primary-calendar {
-    font-size: 1vw;
-    font-family: 'Poppins', sans-serif;
-    background-color: rgba(106, 153, 78);
-    color: white;
+    font-size: 1vw !important;
+    font-family: 'Poppins', sans-serif !important;
+    background-color: rgba(106, 153, 78) !important;
+    color: white !important;
   }
 
   .btn-warning-calendar {
-    border-radius: 0.5em;
-    font-size: 1vw;
+    border-radius: 0.5em !important;
+    font-size: 1vw !important;
     font-family: 'Poppins', sans-serif;
-    background-color: rgb(248, 186, 55);
-    color: white;
+    background-color: rgb(248, 186, 55) !important;
+    color: white !important;
   }
 
   .btn-group {
-    margin: 0 0.5em;
+    margin: 0 0.5em !important;
 
   }
 
@@ -330,6 +335,8 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     justify-content: space-between;
     padding-top: 2vw;
     padding-bottom: 2vw;
+    margin-top: 1vw;
+    margin-left: 2vw;
   }
 
   #eventlist li {

@@ -152,7 +152,7 @@
     <div class="topCenterLanding">
       <ul class="topListLanding">
         <li class="topListItemLanding">HOME</li>
-        <li class="topListItemLanding" onclick="location.href='./modules/amenitiesGuest.php'">AMENITIES</li>
+        <li class="topListItemLanding"  onclick="location.href='./modules/amenitiesGuest.php'">AMENITIES</li>
 
         <button class="registerButtonLanding" name="registerButtonLanding" id="registerButtonLanding">
           Activate your Account

@@ -5,6 +5,9 @@ $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision
 $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date_from)=curdate()");
 $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
 $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
+$resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . " AND cart='Yes'") or die($mysqli->error);
+$resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . " AND cart='Yes'") or die($mysqli->error);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,13 +26,13 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
-  <!-- calendar -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
-  <!-- JS for jQuery -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <!-- JS for full calender -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+  <!-- calendar script and bootstrap -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="css/calendar.css">
+
   <!-- bootstrap css and js -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
@@ -343,6 +346,127 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
   .fc-toolbar {
     background-color: rgb(170, 192, 175, 0.3);
   }
+  .container {
+    width: 100%;
+    max-width: 90%;
+    max-height: 100%;
+    /* margin: 0; */
+    justify-self: center;
+    align-self: center;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .calendar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2vw;
+    margin-top: 2vw;
+  }
+
+  .calendar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: black;
+    border-radius: 5px;
+    background-color: #fff;
+    /* max-width: 90%; */
+  }
+
+
+
+
+  .calendar {
+    background-color: rgb(170, 192, 175, 0);
+  }
+
+  #calendar-days {
+    font-size: 0.8vw;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 1vw;
+    margin-left: 2vw;
+  }
+
+  #calendar-header {
+    font-size: 1.5vw;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .btn-default-calendar {
+    font-size: 1vw !important;
+    font-family: 'Poppins', sans-serif !important;
+    background-color: rgb(0 142 255) !important;
+    color: white !important;
+  }
+
+  .btn-primary-calendar {
+    font-size: 1vw !important;
+    font-family: 'Poppins', sans-serif !important;
+    background-color: rgba(106, 153, 78) !important;
+    color: white !important;
+  }
+
+  .btn-warning-calendar {
+    border-radius: 0.5em !important;
+    font-size: 1vw !important;
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(248, 186, 55) !important;
+    color: white !important;
+  }
+
+  .btn-group {
+    margin: 0 0.5em;
+
+  }
+
+  .calendar-month-year {
+    font-size: 2vw;
+
+  }
+
+  button:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .page-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    margin-top: 1vw;
+    margin-left: 2vw;
+  }
+
+  #eventlist li {
+    font-size: 1em;
+    width: 100%;
+    padding: 0.5vw;
+    border-radius: 0.5vw;
+  }
+
+  #eventlist li:hover {
+    background-color: lightgray;
+  }
+
+  #eventlist a:hover {
+    text-decoration: none;
+  }
+
+  .unstyled li {
+    display: flex;
+  }
 </style>
 
 <script>
@@ -413,133 +537,45 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
       }
     });
   });
-
-  $(document).ready(function() {
-    $("#hrFromId").on('click', function() {
-      var hrFromId = $(this).val();
-      if (hrFromId) {
-        $.ajax({
-          type: 'POST',
-          url: '../process.php/',
-          data: 'hrFromId=' + hrFromId,
-          success: function(html) {
-
-            $(document).ready(function() {
-              $("#minsFromId").on('click', function() {
-                var minsFromId = $(this).val();
-                if (minsFromId) {
-                  $.ajax({
-                    type: 'POST',
-                    url: '../process.php/',
-                    data: 'minsFromId=' + minsFromId,
-                    success: function(html) {
-
-                      $(document).ready(function() {
-                        $("#ampmFromId").on('click', function() {
-                          var ampmFromId = $(this).val();
-                          if (ampmFromId) {
-                            $.ajax({
-                              type: 'POST',
-                              url: '../process.php/',
-                              data: 'ampmFromId=' + ampmFromId,
-                              success: function(html) {
-
-                                $(document).ready(function() {
-                                  $("#hrToId").on('click', function() {
-                                    var hrToId = $(this).val();
-                                    if (hrToId) {
-                                      $.ajax({
-                                        type: 'POST',
-                                        url: '../process.php/',
-                                        data: 'hrToId=' + hrToId,
-                                        success: function(html) {
-
-                                          $(document).ready(function() {
-                                            $("#minsToId").on('click', function() {
-                                              var minsToId = $(this).val();
-                                              if (minsToId) {
-                                                $.ajax({
-                                                  type: 'POST',
-                                                  url: '../process.php/',
-                                                  data: 'minsToId=' + minsToId,
-                                                  success: function(html) {
-
-                                                    $(document).ready(function() {
-                                                      $("#ampmToId").on('click', function() {
-                                                        var ampmToId = $(this).val();
-                                                        if (ampmToId) {
-                                                          $.ajax({
-                                                            type: 'POST',
-                                                            url: '../process.php/',
-                                                            data: 'ampmToId=' + ampmToId,
-                                                            success: function(html) {
-                                                              $("#cost_id").html(html);
-                                                            }
-                                                          });
-                                                        }
-                                                      });
-                                                    });
-
-                                                  }
-                                                });
-                                              }
-                                            });
-                                          });
-
-                                        }
-                                      });
-                                    }
-                                  });
-                                });
-
-                              }
-                            });
-                          }
-                        });
-                      });
-
-                    }
-                  });
-                }
-              });
-            });
-
-          }
-        });
-      }
-    });
-  });
 </script>
 
 <body>
 
-  </div>
-  <form method="post" enctype="multipart/form-data">
 
-    <div class="fab-wrapper">
-      <label class="fab" for="showcalendarmodal">
-        <center>
-          <i style="font-size:2vw" class="fa fa-calendar" id="showcalendarmodal"></i>
-        </center>
-      </label>
-    </div>
-
-    <div class="modal modal_outer left_modal fade" id="calendarmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content ">
-          <div class="modal-header">
-            <button type="button" class="close" id="modalclose" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body get_quote_view_modal_body">
-            <div class="calendar-container">
-              <div id="calendar" class="calendar"></div>
-            </div>
-          </div>
+  <div class="container">
+    <div class="page-header">
+      <h3 class="calendar-month-year"></h3>
+      <div class="pull-right form-inline">
+        <div class="btn-group">
+          <button class="btn btn-primary-calendar" data-calendar-nav="prev">
+            << Prev</button>
+              <button class="btn btn-default-calendar" data-calendar-nav="today">Today</button>
+              <button class="btn btn-primary-calendar" data-calendar-nav="next">Next >></button>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-warning-calendar" data-calendar-view="year">Year</button>
+          <button class="btn btn-warning-calendar active" data-calendar-view="month">Month</button>
+          <button class="btn btn-warning-calendar" data-calendar-view="week">Week</button>
+          <button class="btn btn-warning-calendar" data-calendar-view="day">Day</button>
         </div>
       </div>
+
     </div>
+    <div class="row" id="calendar-days">
+      <div class="col-md-9">
+        <div id="showEventCalendar"></div>
+      </div>
+      <div class="col-md-3">
+        <h4>All Events List</h4>
+        <ul id="eventlist" class="nav nav-list"></ul>
+      </div>
+    </div>
+  </div>
+
+
+
+  <form method="post" enctype="multipart/form-data">
+
 
     <div class='amenities'>
       <div class="amenitiesForm">
@@ -562,74 +598,158 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
         <select name="purpose" id="purpose_id" required>
           <option>Select Amenity first...</option>
         </select>
-        <label>Rate per Hour</label>
-        <div>
-          <label>Day</label>
-          <input type="text" id="day_id" size="6" readonly>
-          <label>Night</label>
-          <input type="text" id="night_id" size="6" readonly>
-          <label>Night rate starts at 6pm</label>
-        </div>
-        <div class="timeinput">
-          <label>Time</label>
-          <select name="hrFrom" id="hrFromId" required>
-            <option value="">hr</option>
-            <?php
-            for ($x = 1; $x <= 12; $x++) {
-              $x = sprintf("%02d", $x);
-              echo "<option value='$x'>$x</option>";
-            }
-            ?>
-          </select>
-          <select name="minsFrom" id="minsFromId" required>
-            <option>mins</option>
-            <?php
-            for ($x = 0; $x <= 59; $x = $x + 1) {
-              $x = sprintf("%02d", $x);
-              echo "<option value='$x'>$x</option>";
-            }
-            ?>
-          </select>
-          <select name="ampmFrom" id="ampmFromId" required>
-            <option>am/pm</option>
-            <option value="am">am</option>
-            <option value="pm">pm</option>
-          </select>
-          <label>To</label>
-          <select name="hrTo" id="hrToId" required>
-            <option value="">hr</option>
-            <?php
-            for ($x = 1; $x <= 12; $x++) {
-              $x = sprintf("%02d", $x);
-              echo "<option value='$x'>$x</option>";
-            }
-            ?>
-          </select>
-          </option>
-          </select>
-          <select name="minsTo" id="minsToId" required>
-            <option value="">mins</option>
-            <?php
-            for ($x = 0; $x <= 59; $x = $x + 1) {
-              $x = sprintf("%02d", $x);
-              echo "<option value='$x'>$x</option>";
-            }
-            ?>
-          </select>
-          <select name="ampmTo" id="ampmToId" required>
-            <option value="">am/pm</option>
-            <option value="am">am</option>
-            <option value="pm">pm</option>
-          </select>
-        </div>
-        <label>Date</label>
-        <input required type="date" name="date">
-        <label>Total Cost</label>
-        <input name="cost" type="text" id="cost_id" readOnly required />
-        <br>
+        
+        
         <button class="btnSubmit" name="submitReservation" id="submitPost">Submit Reservation</button>
       </div>
       <div class="paymentForm">
+     
+          <label>Availed Services</label>
+          <table class="tblAmenity">
+            <tr>
+              <th><input type="checkbox" name="select-all" id="select-all" /></th>
+              <th>Renter</th>
+              <th>Subdivision</th>
+              <th>Amenity</th>
+              <th>Purpose</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Cost</th>
+            </tr>
+            <?php while ($row = $resultRes->fetch_assoc()) : ?>
+              <tr>
+                <td>
+                  <input type="checkbox" value=<?php echo $row['amenity_renting_id']; ?> name="checkbox[]" id="checkbox">
+                </td>
+                <td>
+                  <?php echo $row['renter_name'] ?>
+                </td>
+                <td>
+                  <?php echo $row['subdivision_name'] ?>
+                </td>
+                <td>
+                  <?php echo $row['amenity_name'] ?>
+                </td>
+                <td>
+                  <?php
+                  $amenity_purpose_id = $row['amenity_purpose'];
+                  $resultPurpose = $con->query("SELECT * FROM amenity_purpose WHERE amenity_purpose_id = '$amenity_purpose_id'");
+                  $rowPurpose = $resultPurpose->fetch_assoc();
+                  echo $rowPurpose['amenity_purpose'];
+                  ?>
+                </td>
+                <td>
+                  <?php
+                  if ($row['date_from'] != NULL) {
+                    $date = $row['date_from'];
+                    echo date('m/d/Y h:ia ', strtotime($date));
+                  } else {
+                    echo $row['date_from'];
+                  }
+                  ?>
+                </td>
+                <td>
+                  <?php
+                  if ($row['date_to'] != NULL) {
+                    $date = $row['date_to'];
+                    echo date('m/d/Y h:ia ', strtotime($date));
+                  } else {
+                    echo $row['date_to'];
+                  }
+                  ?>
+                </td>
+                <td>
+                  <?php echo $row['cost'] ?>
+                </td>
+              </tr>
+            <?php endwhile; ?>
+            <div><label>Date</label>
+              <input required id="date1" type="date" name="date" <?php
+                                                                  if (isset($_POST['compute'])) {
+                                                                    $date = $_POST['date'];
+                                                                    echo "value = '$date'";
+                                                                  }
+                                                                  $date = date('Y-m-d', strtotime('today'));
+                                                                  echo "min='$date'"
+                                                                  ?>>
+            </div>
+            <div class="timeinput">
+              <label>Time</label>
+              <select name="hrFrom" id="from1" required>
+                <option value="">hr</option>
+                <?php
+                for ($x = 1; $x <= 12; $x++) {
+                  $x = sprintf("%02d", $x);
+                  echo "<option value='$x'>$x";
+                }
+                ?>
+              </select>
+              <select name="minsFrom" id="from3" required>
+                <option value="">mins</option>
+                <?php
+                for ($x = 0; $x <= 59; $x++) {
+                  $x = sprintf("%02d", $x);
+                  echo "<option value='$x'>$x";
+                }
+                ?>
+              </select>
+              <select name="ampmFrom" id="from2" required>
+                <option value="">am/pm</option>
+                <option value="am">am</option>
+                <option value="pm">pm</option>
+              </select>
+              <label>To</label>
+              <select name="hrTo" id="to1" required>
+                <option value="">hr</option>
+                <?php
+                for ($x = 1; $x <= 12; $x++) {
+                  $x = sprintf("%02d", $x);
+                  echo "<option value='$x'> $x ";
+                }
+                ?>
+              </select>
+              <select name="minsTo" id="to3" required>
+                <option value="">mins</option>
+                <?php
+                for ($x = 0; $x <= 59; $x++) {
+                  $x = sprintf("%02d", $x);
+                  echo "<option value='$x'>$x";
+                }
+                ?>
+              </select>
+              </option>
+              <select name="ampmTo" id="to2" required>
+                <option value="">am/pm</option>
+                <option value="am">am</option>
+                <option value="pm">pm</option>
+              </select>
+            </div>
+            <div>
+              <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>
+              <button class="btnCompute" name="removeSelected" id="removeID">Remove Selected</button>
+            </div>
+          </table>
+          <div>
+            <label>Gcash Number:</label>
+            <label><?php echo $rowGcash['mobile_no'] ?></label>
+          </div>
+          <div>
+            <label>Total Cost:</label>
+            <input type="text" id="total_id" size="6" value="<?php
+                                                              $rowTotal = $resultTotal->fetch_assoc();
+                                                              echo $rowTotal['total_cost'];
+                                                              ?>" readonly>
+            <div class="paymentForm">
+              <label class="writeText">Upload proof of payment here:</label>
+              <div class="BlogWrite">
+                <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()" required></input>
+                <img class="imagePrev" id="imagePreview" src=# alt="" />
+              </div>
+              <label for="image" class="upload">Upload Photo</label>
+            </div>
+            <button class="btnSubmit" name="checkout" id="checkout_id">Checkout All</button>
+          </div>
+        
         <label class="writeText">Upload proof of payment here:</label>
         <div class="BlogWrite">
           <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()" required></input>
@@ -645,6 +765,9 @@ $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error)
 </body>
 
 </html>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script type="text/javascript" src="js/calendar.js"></script>
+<script type="text/javascript" src="js/events.js"></script>
 <!-- SCRIPTS -->
 <script>
   function readURL(input, id) {
