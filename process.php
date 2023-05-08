@@ -1219,25 +1219,39 @@ if (isset($_POST['purpose_id'])) {
 // ADDING TO CART AMENITIES
 
 if (isset($_POST['addToCart'])) {
-  $renter_name = $_POST['renter_name'];
-  $subdivision_id = $_POST['subdivision'];
-  $amenity_id = $_POST['amenity'];
-  $amenity_purpose_id = $_POST['purpose'];
+  if (isset($_SESSION['guestName'])) {
+    $renter_name = $_POST['renter_name'];
+    $subdivision_id = $_POST['subdivision'];
+    $amenity_id = $_POST['amenity'];
+    $amenity_purpose_id = $_POST['purpose'];
 
-  $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_id = '$subdivision_id'");
-  $rowSubdivision = $resultSubdivision->fetch_assoc();
+    $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_id = '$subdivision_id'");
+    $rowSubdivision = $resultSubdivision->fetch_assoc();
 
-  $resultAmenity = $con->query("SELECT * FROM amenities WHERE amenity_id = '$amenity_id'");
-  $rowAmenity = $resultAmenity->fetch_assoc();
+    $resultAmenity = $con->query("SELECT * FROM amenities WHERE amenity_id = '$amenity_id'");
+    $rowAmenity = $resultAmenity->fetch_assoc();
 
-  // $resultPurpose = $con->query("SELECT * FROM amenity_purpose WHERE amenity_purpose_id = '$amenity_purpose_id'");
-  // $rowPurpose = $resultPurpose->fetch_assoc();
 
-  $resultID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
-  $rowID = $resultID->fetch_assoc();
+    $sql = "INSERT INTO amenity_renting (user_id, renter_name, subdivision_name, amenity_name, amenity_purpose, cart) VALUES(NULL, '$renter_name', '" . $rowSubdivision['subdivision_name'] . "', '" . $rowAmenity['amenity_name'] . "', '$amenity_purpose_id', 'Yes')";
+    $result = mysqli_query($con, $sql);
+  } else {
+    $renter_name = $_POST['renter_name'];
+    $subdivision_id = $_POST['subdivision'];
+    $amenity_id = $_POST['amenity'];
+    $amenity_purpose_id = $_POST['purpose'];
 
-  $sql = "INSERT INTO amenity_renting (user_id, renter_name, subdivision_name, amenity_name, amenity_purpose, cart) VALUES('" . $rowID['user_id'] . "', '$renter_name', '" . $rowSubdivision['subdivision_name'] . "', '" . $rowAmenity['amenity_name'] . "', '$amenity_purpose_id', 'Yes')";
-  $result = mysqli_query($con, $sql);
+    $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_id = '$subdivision_id'");
+    $rowSubdivision = $resultSubdivision->fetch_assoc();
+
+    $resultAmenity = $con->query("SELECT * FROM amenities WHERE amenity_id = '$amenity_id'");
+    $rowAmenity = $resultAmenity->fetch_assoc();
+
+    $resultID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+    $rowID = $resultID->fetch_assoc();
+
+    $sql = "INSERT INTO amenity_renting (user_id, renter_name, subdivision_name, amenity_name, amenity_purpose, cart) VALUES('" . $rowID['user_id'] . "', '$renter_name', '" . $rowSubdivision['subdivision_name'] . "', '" . $rowAmenity['amenity_name'] . "', '$amenity_purpose_id', 'Yes')";
+    $result = mysqli_query($con, $sql);
+  }
 }
 
 // REMOVING FROM CART AMENITIES
@@ -1321,30 +1335,74 @@ if (isset($_POST['applyDateTime'])) {
 // AMENITY RENTING CHECKOUT
 
 if (isset($_POST['checkout'])) {
-  $targetDir = '../media/paymentProof/';
-  $fileName = '' . $_FILES['image']['name'];
-  $targetFilePath = $targetDir . $fileName;
 
-  $resultID = $con->query("SELECT MAX(transaction_id) AS max FROM transaction");
-  $rowID = $resultID->fetch_assoc();
-  $max = $rowID['max'];
+  if ($_SESSION['user_type'] == 'Treasurer' or $_SESSION['user_type'] == 'Admin' or $_SESSION['user_type'] == 'Super Admin') {
+    $resultID = $con->query("SELECT MAX(transaction_id) AS max FROM transaction");
+    $rowID = $resultID->fetch_assoc();
+    $max = $rowID['max'];
 
-  $resultUserID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
-  $rowUserID = $resultUserID->fetch_assoc();
+    $resultUserID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+    $rowUserID = $resultUserID->fetch_assoc();
 
-  $resultSumTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting WHERE user_id = '" . $_SESSION['user_id'] . "' AND cart='Yes'");
-  $rowSumTotal = $resultSumTotal->fetch_assoc();
-  $total_cost = $rowSumTotal['total_cost'];
+    $resultSumTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting WHERE user_id = '" . $_SESSION['user_id'] . "' AND cart='Yes'");
+    $rowSumTotal = $resultSumTotal->fetch_assoc();
+    $total_cost = $rowSumTotal['total_cost'];
 
-  if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
-    $sql = "UPDATE amenity_renting SET cart = 'Pending', transaction_id = $max + 1 WHERE cart='Yes' AND user_id= '" . $_SESSION['user_id'] . "'";
+    $sql = "UPDATE amenity_renting SET cart = 'Approved', transaction_id = $max + 1 WHERE cart='Yes' AND user_id= '" . $_SESSION['user_id'] . "'";
     $result = mysqli_query($con, $sql);
 
-    $sql1 = "INSERT INTO transaction (user_id, name, total_cost, payment_proof, transaction_type, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', '$fileName', 'Amenity Renting', 'Pending')";
+    $sql1 = "INSERT INTO transaction (user_id, name, total_cost, payment_proof, transaction_type, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', NULL, 'Amenity Renting', 'Approved')";
     $result1 = mysqli_query($con, $sql1);
 
     $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Checkout', NOW())";
     mysqli_query($con, $sqlAudit);
+  }
+  if (isset($_SESSION['guestName'])) {
+    $targetDir = '../media/paymentProof/';
+    $fileName = '' . $_FILES['image']['name'];
+    $targetFilePath = $targetDir . $fileName;
+
+    $resultID = $con->query("SELECT MAX(transaction_id) AS max FROM transaction");
+    $rowID = $resultID->fetch_assoc();
+    $max = $rowID['max'];
+
+    $resultSumTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting WHERE renter_name= '" . $_SESSION['guestName'] . "' AND cart='Yes'");
+    $rowSumTotal = $resultSumTotal->fetch_assoc();
+    $total_cost = $rowSumTotal['total_cost'];
+
+    if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
+      $sql = "UPDATE amenity_renting SET cart = 'Pending', transaction_id = $max + 1 WHERE cart='Yes' AND renter_name= '" . $_SESSION['guestName'] . "'";
+      $result = mysqli_query($con, $sql);
+
+      $sql1 = "INSERT INTO transaction (user_id, name, total_cost, payment_proof, transaction_type, status) VALUES(NULL, '" . $_SESSION['guestName'] . "', '$total_cost', '$fileName', 'Amenity Renting', 'Pending')";
+      $result1 = mysqli_query($con, $sql1);
+    }
+  } else {
+    $targetDir = '../media/paymentProof/';
+    $fileName = '' . $_FILES['image']['name'];
+    $targetFilePath = $targetDir . $fileName;
+
+    $resultID = $con->query("SELECT MAX(transaction_id) AS max FROM transaction");
+    $rowID = $resultID->fetch_assoc();
+    $max = $rowID['max'];
+
+    $resultUserID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+    $rowUserID = $resultUserID->fetch_assoc();
+
+    $resultSumTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting WHERE user_id = '" . $_SESSION['user_id'] . "' AND cart='Yes'");
+    $rowSumTotal = $resultSumTotal->fetch_assoc();
+    $total_cost = $rowSumTotal['total_cost'];
+
+    if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
+      $sql = "UPDATE amenity_renting SET cart = 'Pending', transaction_id = $max + 1 WHERE cart='Yes' AND user_id= '" . $_SESSION['user_id'] . "'";
+      $result = mysqli_query($con, $sql);
+
+      $sql1 = "INSERT INTO transaction (user_id, name, total_cost, payment_proof, transaction_type, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', '$fileName', 'Amenity Renting', 'Pending')";
+      $result1 = mysqli_query($con, $sql1);
+
+      $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Checkout', NOW())";
+      mysqli_query($con, $sqlAudit);
+    }
   }
 }
 
@@ -1853,7 +1911,7 @@ if (isset($_POST['stickerVehicleAdmin'])) {
 }
 
 // CREATE SESSION FOR GUEST IN AMENITY
-if (isset($_POST['sessionName'])){
+if (isset($_POST['sessionName'])) {
   $_SESSION['guestName'] = $_POST['guestName'];
   header("Location: ./modules/amenitiesGuest.php");
 }

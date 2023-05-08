@@ -243,7 +243,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     justify-self: center;
     align-self: center;
   }
-  
+
 
   body {
     display: flex;
@@ -476,7 +476,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
       $("#to1").removeAttr("required");
       $("#to2").removeAttr("required");
       $("#to3").removeAttr("required");
-
       $("#amenity_id").removeAttr("required");
       $("#purpose_id").removeAttr("required");
     });
@@ -517,12 +516,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
 
   <div class="amenity-forms">
     <form method="post" enctype="multipart/form-data">
-
-
-
-
-
-
       <div class='amenities'>
         <div class="amenitiesForm">
           <label>Name</label>
@@ -553,8 +546,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
             <input type="text" id="night_id" size="6" readonly>
             <label>Night rate starts at 6pm</label>
           </div>
-          <button class="btnSubmit" name="addToCart" id="add">Add</button>
-
+          <button type="submit" class="btnSubmit" name="addToCartHomeowner" id="add">Add</button>
           <br>
         </div>
         <div class='amenitiesForm'>

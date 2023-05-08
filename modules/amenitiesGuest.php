@@ -541,6 +541,59 @@ $rowGcash = $resultGcash->fetch_assoc();
       }
     });
   });
+
+  $(document).ready(function() {
+    $("#add").click(function() {
+      $("#date1").removeAttr("required");
+      $("#from1").removeAttr("required");
+      $("#from2").removeAttr("required");
+      $("#from3").removeAttr("required");
+      $("#to1").removeAttr("required");
+      $("#to2").removeAttr("required");
+      $("#to3").removeAttr("required");
+      $("#image").removeAttr("required");
+    });
+  });
+
+  $(document).ready(function() {
+    $("#dateTime").click(function() {
+      $("#subdivision_id").removeAttr("required");
+      $("#amenity_id").removeAttr("required");
+      $("#purpose_id").removeAttr("required");
+      $("#image").removeAttr("required");
+    });
+  });
+
+  $(document).ready(function() {
+    $("#removeID").click(function() {
+      $("#date1").removeAttr("required");
+      $("#from1").removeAttr("required");
+      $("#from2").removeAttr("required");
+      $("#from3").removeAttr("required");
+      $("#to1").removeAttr("required");
+      $("#to2").removeAttr("required");
+      $("#to3").removeAttr("required");
+      $("#subdivision_id").removeAttr("required");
+      $("#amenity_id").removeAttr("required");
+      $("#purpose_id").removeAttr("required");
+      $("#image").removeAttr("required");
+    });
+  });
+
+  $(document).ready(function() {
+    $("#checkout_id").click(function() {
+      $("#date1").removeAttr("required");
+      $("#from1").removeAttr("required");
+      $("#from2").removeAttr("required");
+      $("#from3").removeAttr("required");
+      $("#to1").removeAttr("required");
+      $("#to2").removeAttr("required");
+      $("#to3").removeAttr("required");
+
+      $("#amenity_id").removeAttr("required");
+      $("#purpose_id").removeAttr("required");
+    });
+  });
 </script>
 
 <body>
@@ -584,7 +637,7 @@ $rowGcash = $resultGcash->fetch_assoc();
     <div class='amenities'>
       <div class="amenitiesForm">
         <label>Name</label>
-        <input type="text" name="full_name" value="<?php echo  $_SESSION['guestName'] ?? '' ?>" id="name" required readonly />
+        <input type="text" name="renter_name" value="<?php echo  $_SESSION['guestName'] ?? '' ?>" id="name" required readonly />
         <label>Subdivision</label>
         <select name="subdivision" id="subdivision_id" required>
           <option selected="selected">Select...</option>
@@ -604,14 +657,14 @@ $rowGcash = $resultGcash->fetch_assoc();
         </select>
 
         <label>Rate per Hour</label>
-          <div>
-            <label>Day</label>
-            <input type="text" id="day_id" size="6" readonly>
-            <label>Night</label>
-            <input type="text" id="night_id" size="6" readonly>
-            <label>Night rate starts at 6pm</label>
-          </div>
-          <button class="btnSubmit" name="addToCart" id="add">Add</button>
+        <div>
+          <label>Day</label>
+          <input type="text" id="day_id" size="6" readonly>
+          <label>Night</label>
+          <input type="text" id="night_id" size="6" readonly>
+          <label>Night rate starts at 6pm</label>
+        </div>
+        <button class="btnSubmit" name="addToCart" id="add">Add</button>
 
 
         <!-- <button class="btnSubmit" name="submitReservation" id="submitPost">Submit Reservation</button> -->
@@ -764,12 +817,6 @@ $rowGcash = $resultGcash->fetch_assoc();
           <button class="btnSubmit" name="checkout" id="checkout_id">Checkout All</button>
         </div>
 
-        <label class="writeText">Upload proof of payment here:</label>
-        <div class="BlogWrite">
-          <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()" required></input>
-          <img class="imagePrev" id="imagePreview" src=# alt="" />
-        </div>
-        <label for="image" class="upload">Upload Photo</label>
       </div>
     </div>
   </form>
