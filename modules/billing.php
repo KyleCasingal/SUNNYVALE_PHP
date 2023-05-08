@@ -1,17 +1,24 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin') {
+if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Super Admin') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
 }
 $rowZ = $result->fetch_assoc();
 $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
-$resultSubdivision = $con->query("SELECT * FROM monthly_dues WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY monthly_dues_id ASC");
-$resultSubdivision1 = $con->query("SELECT * FROM monthly_dues WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY monthly_dues_id ASC");
-$resultSubdivision2 = $con->query("SELECT * FROM monthly_dues WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY monthly_dues_id ASC");
-$resultSubdivision3 = $con->query("SELECT * FROM monthly_dues WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY monthly_dues_id ASC");
-$resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ");
-$resultHomeowners1 = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM `homeowner_profile` WHERE `subdivision` != '' ");
+if ($_SESSION['subdivision'] != '') {
+    $resultSubdivision = $con->query("SELECT * FROM monthly_dues WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY monthly_dues_id ASC");
+    $resultSubdivision1 = $con->query("SELECT * FROM monthly_dues WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY monthly_dues_id ASC");
+    $resultSubdivision2 = $con->query("SELECT * FROM monthly_dues WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY monthly_dues_id ASC");
+    $resultSubdivision3 = $con->query("SELECT * FROM monthly_dues WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY monthly_dues_id ASC");
+} else {
+    $resultSubdivision = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
+    $resultSubdivision1 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
+    $resultSubdivision2 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
+    $resultSubdivision3 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
+}
+$resultHomeowners = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM homeowner_profile WHERE `last_name` != '' ");
+$resultHomeowners1 = $con->query("SELECT CONCAT(first_name, ' ', last_name)  AS fullname, subdivision, email_address FROM homeowner_profile WHERE `last_name` != '' ");
 
 //homeowner
 $resultYearToday = $con->query("SELECT * FROM billing_period WHERE year= '" . date('Y') . "'  ORDER BY billingPeriod_id ASC");
@@ -260,7 +267,8 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
     .secretarySideBar li:hover {
         background-color: rgb(236, 235, 226);
     }
-    .year-text{
+
+    .year-text {
         margin-left: 1em;
     }
 </style>
@@ -535,9 +543,9 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
                                                         <?php endwhile; ?>
                                                     </select></td>
                                                 <td><input class="year-text" type="text" <?php
-                                                                        $dateYear = date('Y');
-                                                                        echo "value = '$dateYear'";
-                                                                        ?> id="" readonly></td>
+                                                                                            $dateYear = date('Y');
+                                                                                            echo "value = '$dateYear'";
+                                                                                            ?> id="" readonly></td>
                                             </tr>
                                             <tr>
                                                 <td>
@@ -623,9 +631,9 @@ $resultYearToday5 = $con->query("SELECT * FROM billing_period WHERE year=  '" . 
 
                                                 </td>
                                                 <td><input class="year-text" type="text" name="yearNow" value="<?php
-                                                                                                $dateYear = date('Y');
-                                                                                                echo $dateYear;
-                                                                                                ?>" id="yearNow" readonly></td>
+                                                                                                                $dateYear = date('Y');
+                                                                                                                echo $dateYear;
+                                                                                                                ?>" id="yearNow" readonly></td>
                                             </tr>
                                             <tr>
                                                 <td>

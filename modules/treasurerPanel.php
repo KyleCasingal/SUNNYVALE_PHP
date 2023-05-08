@@ -1,6 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin') {
+if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Super Admin') {
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
@@ -8,7 +8,11 @@ $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con
 $resultDues = $con->query("SELECT * FROM monthly_dues_bill");
 $resultSubd = $con->query("SELECT * FROM subdivision");
 $resultSubdivision3 = $con->query("SELECT * FROM monthly_dues ORDER BY monthly_dues_id ASC");
-$resultBilling = $con->query("SELECT * FROM bill_consumer INNER JOIN homeowner_profile ON bill_consumer.homeowner_id = homeowner_profile.homeowner_id INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id WHERE status = 'UNPAID' AND subdivision = '" . $_SESSION['subdivision'] . "'");
+if ($_SESSION['subdivision'] != '') {
+  $resultBilling = $con->query("SELECT * FROM bill_consumer INNER JOIN homeowner_profile ON bill_consumer.homeowner_id = homeowner_profile.homeowner_id INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id WHERE status = 'UNPAID' AND subdivision = '" . $_SESSION['subdivision'] . "'");
+} else {
+  $resultBilling = $con->query("SELECT * FROM bill_consumer INNER JOIN homeowner_profile ON bill_consumer.homeowner_id = homeowner_profile.homeowner_id INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id WHERE status = 'UNPAID'");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

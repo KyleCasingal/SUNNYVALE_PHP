@@ -1,6 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Admin' AND $_SESSION['user_type'] != 'Secretary') {
+if ($_SESSION['user_type'] != 'Super Admin') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
 }
@@ -429,11 +429,11 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
                                         </div>
                                         <div class="modal-body">
                                             <input type="hidden" name="missionVisionID" value="<?php
-                                                                        echo $rowMissionVision['id'];
-                                                                        ?>">
+                                                                                                echo $rowMissionVision['id'];
+                                                                                                ?>">
                                             <textarea type="text" name="description" id="" cols="30" rows="10"><?php
-                                                                                                    echo $rowMissionVision['description'];
-                                                                                                    ?></textarea>
+                                                                                                                echo $rowMissionVision['description'];
+                                                                                                                ?></textarea>
                                         </div>
                                         <div class="modal-footer">
                                             <button name="missionVision" type="submit" class="btn btn-primary">Save Changes</button>

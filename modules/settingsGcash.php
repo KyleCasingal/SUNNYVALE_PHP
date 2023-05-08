@@ -1,23 +1,18 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Super Admin') {
+if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary' and $_SESSION['user_type'] != 'Super Admin') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
 }
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
 if ($_SESSION['subdivision'] != '') {
-    $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
-    $resultSubdivision_table = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
-    $resultSubdivision_selectSysAcc = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
-    $resultSysAcc = $con->query("SELECT * FROM user, homeowner_profile WHERE (user_type = 'Secretary' OR user_type = 'Treasurer' OR user_type = 'Admin' OR user_type = 'Guard') AND user_homeowner_id = homeowner_id AND subdivision = '" . $_SESSION['subdivision'] . "' ORDER BY full_name ASC") or die($mysqli->error);
+    $resultSubdivision_selectMonthly = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
+    $resultMonthly = $con->query("SELECT * FROM gcash WHERE subdivision = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
 } else {
-    $resultSubdivision = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
-    $resultSubdivision_table = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
-    $resultSubdivision_selectSysAcc = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
-    $resultSysAcc = $con->query("SELECT * FROM user WHERE (user_type = 'Secretary' OR user_type = 'Treasurer' OR user_type = 'Admin' OR user_type = 'Guard' OR user_type = 'Super Admin') ORDER BY full_name ASC") or die($mysqli->error);
+    $resultSubdivision_selectMonthly = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
+    $resultMonthly = $con->query("SELECT * FROM gcash") or die($mysqli->error);
 }
-$resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error);
 ?>
 
 <!DOCTYPE html>
@@ -266,6 +261,20 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
         cursor: pointer;
     }
 
+    .btnSubmitReg {
+        background-color: darkseagreen;
+        border: 0;
+        padding: 0.5vw;
+        max-width: 50vw;
+        width: 10vw;
+        font-family: "Poppins", sans-sans-serif;
+        font-size: 1vw;
+        margin-top: 2vw;
+        color: white;
+        border-radius: 0.8vw;
+        cursor: pointer;
+    }
+
     .btnSubmitReg:hover {
         background-color: rgb(93, 151, 93);
     }
@@ -394,87 +403,40 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
             <?php require '../marginals/sidebarAdmin.php'; ?>
         </div>
         <div class="secretaryPanel">
-            <!-- SETTINGS SYSTEM ACCOUNTS -->
-            <label class="lblSettings">System Accounts</label>
-            <div class="settingsSystemAccounts" id="settingsSystemAccounts">
+            <!-- SETTINGS MONTHLY DUES -->
+            <label class="lblSettings">Gcash</label>
+            <div class="settingsMonthlyDues" id="settingsMonthlyDues">
                 <div class="addAmenityForm">
-                    <form method="post" autocomplete="off">
-                        <input type="hidden" name="user_id" value="<?php echo $account_id ?? ''; ?>">
+                <form action="" method="POST">
+                        <input type="hidden" name="gcash_id" value="<?php echo $gcash_id ?? ''; ?>">
                         <table class="tblAmenityForm">
                             <tr>
-                                <td>System Account:</td>
+                                <td>Subdivision:</td>
                                 <td>
-                                    <input name="account_name" value="<?php echo $account_name ?? '' ?>" type="text" placeholder="account name" required />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Password:</td>
-                                <td>
-                                    <input name="password" value="<?php echo $password ?? '' ?>" type="text" placeholder="password" required />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Account Type:</td>
-                                <td>
-                                    <select name="user_type" id="" required>
+                                    <select name="subdivision" id="" required>
                                         <option value="">Select...</option>
-                                        <option value="Admin" <?php
-                                                                if (isset($_GET['user_id'])) {
-                                                                    if ($account_type == "Admin") {
-                                                                        echo 'selected="selected"';
-                                                                    }
-                                                                }
-                                                                ?>>Admin</option>
-                                        <option value="Secretary" <?php
-                                                                    if (isset($_GET['user_id'])) {
-                                                                        if ($account_type == "Secretary") {
-                                                                            echo 'selected="selected"';
-                                                                        }
-                                                                    }
-                                                                    ?>>Secretary</option>
-                                        <option value="Treasurer" <?php
-                                                                    if (isset($_GET['user_id'])) {
-                                                                        if ($account_type == "Treasurer") {
-                                                                            echo 'selected="selected"';
-                                                                        }
-                                                                    }
-                                                                    ?>>Treasurer</option>
-                                        <option value="Guard" <?php
-                                                                if (isset($_GET['user_id'])) {
-                                                                    if ($account_type == "Guard") {
-                                                                        echo 'selected="selected"';
-                                                                    }
-                                                                }
-                                                                ?>>Guard</option>
+                                        <?php while ($row = $resultSubdivision_selectMonthly->fetch_assoc()) : ?>
+                                            <option value="<?php echo $row['subdivision_name'] ?>" <?php
+                                                                                                    if (isset($_GET['gcash_id'])) {
+                                                                                                        if ($subdivision_name == $row['subdivision_name']) {
+                                                                                                            echo 'selected="selected"';
+                                                                                                        }
+                                                                                                    }
+                                                                                                    ?>><?php echo $row['subdivision_name'] ?></option>
+                                        <?php endwhile; ?>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Account Status:</td>
+                                <td>Gcash Number:</td>
                                 <td>
-                                    <select name="account_status" id="" required>
-                                        <option value="">Select...</option>
-                                        <option value="Activated" <?php
-                                                                    if (isset($_GET['user_id'])) {
-                                                                        if ($account_status == "Activated") {
-                                                                            echo 'selected="selected"';
-                                                                        }
-                                                                    }
-                                                                    ?>>Activated</option>
-                                        <option value="Deactivated" <?php
-                                                                    if (isset($_GET['user_id'])) {
-                                                                        if ($account_status == "Deactivated") {
-                                                                            echo 'selected="selected"';
-                                                                        }
-                                                                    }
-                                                                    ?>>Deactivated</option>
-                                    </select>
+                                    <input name="gcash_no" value="<?php echo $gcash_no ?? '' ?>" type="text" placeholder="gcash number" id="gcash" required />
                                 </td>
                             </tr>
                         </table>
 
-                        <!-- MODAL ADD SYSTEM ACCOUNT -->
-                        <div class="modal fade" id="addSysAcc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <!-- MODAL ADD MONTHLY DUES -->
+                        <div class="modal fade" id="addMonthlyDuesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -482,26 +444,26 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Do you really want to add this new system account?
+                                        Do you really want to add this new gcash number?
                                     </div>
                                     <div class="modal-footer">
-                                        <button name="sysAccAdd" type="submit" class="btn btn-primary">Save Changes</button>
+                                        <button name="gcashAdd" type="submit" class="btn btn-primary">Save Changes</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="btnArea">
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#addSysAcc" class="btnSubmitReg" <?php
-                                                                                                                            if ($account_id ?? '') {
-                                                                                                                                echo "disabled";
-                                                                                                                            } else {
-                                                                                                                                echo "";
-                                                                                                                            } ?>>
-                                Add Account
+                            <button type="button" class="btnSubmitReg" data-bs-toggle="modal" data-bs-target="#addMonthlyDuesModal" <?php
+                                                                                                                                    if ($gcash_id ?? '') {
+                                                                                                                                        echo "disabled";
+                                                                                                                                    } else {
+                                                                                                                                        echo "";
+                                                                                                                                    } ?>>
+                                Add gcash number
                             </button>
 
-                            <!-- MODAL UPDATE SYSTEM ACCOUNT -->
-                            <div class="modal fade" id="updateSysAcc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <!-- MODAL UPDATE MONTHLY DUES -->
+                            <div class="modal fade" id="updateMonthlyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -509,21 +471,21 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            Do you really want to update this existing account?
+                                            Do you really want to update this gcash number?
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="sysAccUpdate" type="submit" class="btn btn-primary">Save Changes</button>
+                                            <button name="gcashUpdate" type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateSysAcc" class="btnSubmitReg" <?php
-                                                                                                                                                    if ($account_id ?? '') {
-                                                                                                                                                        echo "";
-                                                                                                                                                    } else {
-                                                                                                                                                        echo "disabled";
-                                                                                                                                                    } ?>>
-                                Update Account
+                            <button type="button" class="btnClearReg" data-bs-toggle="modal" data-bs-target="#updateMonthlyModal" <?php
+                                                                                                                                    if ($gcash_id ?? '') {
+                                                                                                                                        echo "";
+                                                                                                                                    } else {
+                                                                                                                                        echo "disabled";
+                                                                                                                                    } ?>>
+                                Update gcash number
                             </button>
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -536,7 +498,7 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                             This will clear all fields!
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" onclick="location.href='settingsSystemAcc.php'">Clear</button>
+                                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" onclick="location.href='settingsGcash.php'">Clear</button>
                                         </div>
                                     </div>
                                 </div>
@@ -548,25 +510,23 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                     </form>
                 </div>
 
-                <!-- TABLE SYSTEM ACCOUNTS  -->
+                <!-- TABLE MONTHLY DUES -->
                 <div class="tblAmenityContainer">
                     <table class="table tblAmenity">
                         <thead>
                             <th></th>
-                            <th>Account Name</th>
-                            <th>Password</th>
-                            <th>Account Type</th>
-                            <th>Account Status</th>
+                            <th>Subdivision</th>
+                            <th>Gcash Number</th>
                         </thead>
-                        <?php while ($row = $resultSysAcc->fetch_assoc()) : ?>
+                        <?php while ($row = $resultMonthly->fetch_assoc()) : ?>
                             <tr>
                                 <td>
-                                    <a href="settingsSystemAcc.php?user_id=<?php echo $row['user_id']; ?>" class="btnEdit">Edit</a>
+                                    <a href="settingsGcash.php?gcash_id=<?php echo $row['gcash_id']; ?>" class="btnEdit">Edit</a>
                                 </td>
-                                <td><?php echo $row['full_name'] ?></td>
-                                <td><?php echo $row['password'] ?></td>
-                                <td><?php echo $row['user_type'] ?></td>
-                                <td><?php echo $row['account_status'] ?></td>
+                                <td>
+                                    <?php echo $row['subdivision'] ?>
+                                </td>
+                                <td><?php echo $row['mobile_no'] ?></td>
                             </tr>
                         <?php endwhile; ?>
                     </table>
@@ -574,6 +534,15 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
             </div>
         </div>
     </div>
+    <script>
+        var el = document.getElementById("gcash");
+    el.addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        // alert(event.key  + " " + event.which);
+        event.preventDefault();
+      }
+    });
+    </script>
     <?php
     require '../marginals/footer2.php'
     ?>

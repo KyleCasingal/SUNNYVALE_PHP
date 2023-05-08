@@ -42,11 +42,11 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
- 
+
   <title>SUNNYVALE</title>
 </head>
 <style>
-   .container-calendar {
+  .container-calendar {
     width: 100%;
     max-width: 90%;
     max-height: 100%;
@@ -167,6 +167,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   .unstyled li {
     display: flex;
   }
+
   * {
     margin: 0;
   }
@@ -404,8 +405,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     cursor: pointer;
     border-bottom: 1px solid lightgray;
   }
-
- 
 </style>
 <script type="text/javascript">
   if (window.history.replaceState) {
@@ -523,11 +522,14 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
 
   $(document).ready(function() {
     $("#checkout_id").click(function() {
+      $("#name").removeAttr("required");
       $("#date1").removeAttr("required");
       $("#from1").removeAttr("required");
       $("#from2").removeAttr("required");
+      $("#from3").removeAttr("required");
       $("#to1").removeAttr("required");
       $("#to2").removeAttr("required");
+      $("#to3").removeAttr("required");
       $("#subdivision_id").removeAttr("required");
       $("#amenity_id").removeAttr("required");
       $("#purpose_id").removeAttr("required");
@@ -544,34 +546,34 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     <div class="treasurerPanel">
       <label class="lblSettings" id="amenity">Amenity Renting</label>
       <div class="container">
-    <div class="page-header">
-      <h3 class="calendar-month-year"></h3>
-      <div class="pull-right form-inline">
-        <div class="btn-group">
-          <button class="btn btn-primary-calendar" data-calendar-nav="prev">
-            << Prev</button>
-              <button class="btn btn-default-calendar" data-calendar-nav="today">Today</button>
-              <button class="btn btn-primary-calendar" data-calendar-nav="next">Next >></button>
-        </div>
-        <div class="btn-group">
-          <button class="btn btn-warning-calendar" data-calendar-view="year">Year</button>
-          <button class="btn btn-warning-calendar active" data-calendar-view="month">Month</button>
-          <button class="btn btn-warning-calendar" data-calendar-view="week">Week</button>
-          <button class="btn btn-warning-calendar" data-calendar-view="day">Day</button>
-        </div>
-      </div>
+        <div class="page-header">
+          <h3 class="calendar-month-year"></h3>
+          <div class="pull-right form-inline">
+            <div class="btn-group">
+              <button class="btn btn-primary-calendar" data-calendar-nav="prev">
+                << Prev</button>
+                  <button class="btn btn-default-calendar" data-calendar-nav="today">Today</button>
+                  <button class="btn btn-primary-calendar" data-calendar-nav="next">Next >></button>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-warning-calendar" data-calendar-view="year">Year</button>
+              <button class="btn btn-warning-calendar active" data-calendar-view="month">Month</button>
+              <button class="btn btn-warning-calendar" data-calendar-view="week">Week</button>
+              <button class="btn btn-warning-calendar" data-calendar-view="day">Day</button>
+            </div>
+          </div>
 
-    </div>
-    <div class="row" id="calendar-days">
-      <div class="col-md-9">
-        <div id="showEventCalendar"></div>
+        </div>
+        <div class="row" id="calendar-days">
+          <div class="col-md-9">
+            <div id="showEventCalendar"></div>
+          </div>
+          <div class="col-md-3">
+            <h4>All Events List</h4>
+            <ul id="eventlist" class="nav nav-list"></ul>
+          </div>
+        </div>
       </div>
-      <div class="col-md-3">
-        <h4>All Events List</h4>
-        <ul id="eventlist" class="nav nav-list"></ul>
-      </div>
-    </div>
-  </div>
 
       <form method="post" enctype="multipart/form-data">
         <div class='amenities'>
@@ -728,10 +730,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
                   <option value="am">am</option>
                   <option value="pm">pm</option>
                 </select>
-              </div>
-              <div>
-                <label>Total Hours:</label>
-                <input type="text" id="total_id" size="6">
               </div>
               <div>
                 <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>

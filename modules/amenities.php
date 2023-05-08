@@ -1,6 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Homeowner' and $_SESSION['user_type'] != 'Tenant') {
+if ($_SESSION['user_type'] != 'Homeowner') {
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
@@ -10,7 +10,6 @@ $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") o
 $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
 $resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . " AND cart='Yes'") or die($mysqli->error);
 $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . " AND cart='Yes'") or die($mysqli->error);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,13 +25,14 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
+
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
   <!-- calendar script and bootstrap -->
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="css/calendar.css">
@@ -42,9 +42,134 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ 
   <title>SUNNYVALE</title>
 </head>
 <style>
+   .container-calendar {
+    width: 100%;
+    max-width: 90%;
+    max-height: 100%;
+    /* margin: 0; */
+    justify-self: center;
+    align-self: center;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .calendar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2vw;
+    margin-top: 2vw;
+  }
+
+  .calendar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: black;
+    border-radius: 5px;
+    background-color: #fff;
+    /* max-width: 90%; */
+  }
+
+
+.col-md-3{
+  overflow-y: scroll !important;
+  height: 30% !important; 
+}
+
+  .calendar {
+    background-color: rgb(170, 192, 175, 0);
+  }
+
+  #calendar-days {
+    font-size: 0.8vw;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 1vw;
+    margin-left: 2vw;
+  }
+
+  #calendar-header {
+    font-size: 1.5vw;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .btn-default-calendar {
+    font-size: 1vw !important;
+    font-family: 'Poppins', sans-serif !important;
+    background-color: rgb(0 142 255) !important;
+    color: white !important;
+  }
+
+  .btn-primary-calendar {
+    font-size: 1vw !important;
+    font-family: 'Poppins', sans-serif !important;
+    background-color: rgba(106, 153, 78) !important;
+    color: white !important;
+  }
+
+  .btn-warning-calendar {
+    border-radius: 0.5em !important;
+    font-size: 1vw !important;
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(248, 186, 55) !important;
+    color: white !important;
+  }
+
+  .btn-group {
+    margin: 0 0.5em;
+
+  }
+
+  .calendar-month-year {
+    font-size: 2vw;
+
+  }
+
+  button:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .page-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    margin-top: 1vw;
+    margin-left: 2vw;
+  }
+
+  #eventlist li {
+    font-size: 1em;
+    width: 100%;
+    padding: 0.5vw;
+    border-radius: 0.5vw;
+  }
+
+  #eventlist li:hover {
+    background-color: lightgray;
+  }
+
+  #eventlist a:hover {
+    text-decoration: none;
+  }
+
+  .unstyled li {
+    display: flex;
+  }
   * {
     margin: 0;
   }
@@ -77,7 +202,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     border: 0;
     border-radius: 0.8vw;
     font-family: 'Poppins', sans-serif;
-    /* margin-bottom: 1vw; */
+    margin-bottom: 1vw;
   }
 
   select {
@@ -96,7 +221,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   }
 
   label {
-    font-size: 1.5vw;
+    font-size: 2vw;
     padding: 0.5vw;
   }
 
@@ -130,16 +255,17 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     flex-direction: column;
     background-color: rgb(170, 192, 175, 0.3);
     font-family: 'Poppins', sans-serif;
+    overflow: auto;
   }
 
   .paymentForm {
     display: flex;
-    padding: 0;
-    margin: 0;
-    width: 100%;
+    padding: 2vw;
+    margin: 1.5vw;
+    width: 40%;
     border-radius: 1vw;
     flex-direction: column;
-    background-color: rgb(170, 192, 175, 0.0);
+    background-color: rgb(170, 192, 175, 0.3);
     font-family: 'Poppins', sans-serif;
   }
 
@@ -162,7 +288,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     border-radius: 0.8vw;
     cursor: pointer;
   }
-
 
   .btnCompute {
     background-color: rgb(248, 186, 55);
@@ -199,7 +324,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     border-radius: 0.8vw;
     cursor: pointer;
     margin-bottom: 1vw;
-    font-weight: normal;
   }
 
   .upload:hover {
@@ -207,7 +331,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
   }
 
   .tblAmenity {
-    width: 90%;
+    width: 100%;
     margin-bottom: 2vw;
     overflow-x: auto;
     overflow-y: auto;
@@ -218,7 +342,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
 
   .tblAmenity thead,
   th {
-    /* padding: 0.5vw; */
+    padding: 0.5vw;
     text-align: center;
     font-size: 1.2vw;
     background-color: rgb(170, 192, 175, 0.3);
@@ -235,121 +359,56 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     background-color: rgb(211, 211, 211);
   }
 
-  .container {
+  .treasurer {
     width: 100%;
-    max-width: 90%;
-    max-height: 100%;
-    margin: 0;
-    justify-self: center;
-    align-self: center;
-  }
-
-  body {
     display: flex;
-    flex-direction: column;
   }
 
-  .calendar-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 2vw;
-    margin-top: 2vw;
-  }
-
-  .calendar {
-    position: relative;
+  .treasurerPanel {
+    flex: 8;
     width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    color: black;
-    border-radius: 5px;
-    background-color: #fff;
-    /* max-width: 90%; */
+    overflow-y: scroll;
   }
 
-  .calendar {
-    background-color: rgb(170, 192, 175, 0);
-  }
-
-
-  #calendar-days {
-    font-size: 0.8vw;
-    font-family: 'Poppins', sans-serif;
-  }
-
-  #calendar-header {
-    font-size: 1.5vw;
-    font-family: 'Poppins', sans-serif;
-  }
-
-  .btn-default-calendar {
-    font-size: 1vw;
-    font-family: 'Poppins', sans-serif;
-    background-color: rgb(0 142 255);
-    color: white;
-  }
-
-  .btn-primary-calendar {
-    font-size: 1vw;
-    font-family: 'Poppins', sans-serif;
-    background-color: rgba(106, 153, 78);
-    color: white;
-  }
-
-  .btn-warning-calendar {
-    border-radius: 0.5em;
-    font-size: 1vw;
-    font-family: 'Poppins', sans-serif;
-    background-color: rgb(248, 186, 55);
-    color: white;
-  }
-
-  .btn-group {
-    margin: 0 0.5em;
-
-  }
-
-  .calendar-month-year {
+  .lblSettings {
     font-size: 2vw;
-
+    font-family: "Poppins", sans-serif;
+    margin-top: 1vw;
+    margin-left: 2vw;
+    margin-bottom: -2vw;
+    padding: 0;
+    color: rgb(89, 89, 89);
+    font-weight: 800;
   }
 
-  button:focus {
-    outline: none;
-    box-shadow: none;
+  .sideBar {
+    background-color: rgb(248, 245, 227);
+    flex: 2;
+    color: black;
   }
 
-  .page-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 2vw;
-    padding-bottom: 2vw;
+  .secretarySideBar {
+    display: inline;
+    justify-content: flex-end;
+    margin-top: 5px;
+    margin-bottom: 0;
+    padding: 0;
+    list-style: none;
   }
 
-  #eventlist li {
-    font-size: 1em;
-    width: 100%;
-    padding: 0.5vw;
-    border-radius: 0.5vw;
+  .secretarySideBar li {
+    color: rgb(89, 89, 89);
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    padding: 1.5vw;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    font-size: max(1.5vw, min(10px));
+    cursor: pointer;
+    border-bottom: 1px solid lightgray;
   }
 
-  #eventlist li:hover {
-    background-color: lightgray;
-  }
-
-  #eventlist a:hover {
-    text-decoration: none;
-  }
-
-  .unstyled li {
-    display: flex;
-  }
+ 
 </style>
 <script type="text/javascript">
   if (window.history.replaceState) {
@@ -431,6 +490,9 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
       $("#to1").removeAttr("required");
       $("#to2").removeAttr("required");
       $("#to3").removeAttr("required");
+      $("#subdivision_id").removeAttr("required");
+      $("#amenity_id").removeAttr("required");
+      $("#purpose_id").removeAttr("required");
       $("#image").removeAttr("required");
     });
   });
@@ -441,6 +503,8 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
       $("#amenity_id").removeAttr("required");
       $("#purpose_id").removeAttr("required");
       $("#image").removeAttr("required");
+      $("#name").removeAttr("required");
+
     });
   });
 
@@ -457,6 +521,8 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
       $("#amenity_id").removeAttr("required");
       $("#purpose_id").removeAttr("required");
       $("#image").removeAttr("required");
+      $("#name").removeAttr("required");
+
     });
   });
 
@@ -465,11 +531,9 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
       $("#date1").removeAttr("required");
       $("#from1").removeAttr("required");
       $("#from2").removeAttr("required");
-      $("#from3").removeAttr("required");
       $("#to1").removeAttr("required");
       $("#to2").removeAttr("required");
-      $("#to3").removeAttr("required");
-
+      $("#subdivision_id").removeAttr("required");
       $("#amenity_id").removeAttr("required");
       $("#purpose_id").removeAttr("required");
     });
@@ -477,8 +541,12 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
 </script>
 
 <body>
+  <div class="treasurer">
+    
 
-  <div class="container">
+    <div class="treasurerPanel">
+      <label class="lblSettings" id="amenity">Amenity Renting</label>
+      <div class="container">
     <div class="page-header">
       <h3 class="calendar-month-year"></h3>
       <div class="pull-right form-inline">
@@ -508,239 +576,216 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     </div>
   </div>
 
-  <div class="amenity-forms">
-    <form method="post" enctype="multipart/form-data">
+      <form method="post" enctype="multipart/form-data">
+        <div class='amenities'>
+          <div class="amenitiesForm">
+            <label>Name</label>
+            <input type="text" name="renter_name" id="name"  value="<?php echo $row['full_name'] ?>" required />
 
+            <label>Subdivision</label>
+            <select name="subdivision" id="subdivision_id" required>
+              <option value="0" selected="selected">Select...</option>
+              <?php
+              while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
+                echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
+              }
+              ?>
+            </select>
+            <label>Amenity</label>
+            <select name="amenity" id="amenity_id" required>
+              <option value="0">Select Subdivision first...</option>
+            </select>
+            <label>Purpose</label>
+            <select name="purpose" id="purpose_id" required>
+              <option value="0">Select Amenity first...</option>
+            </select>
+            <label>Rate per Hour</label>
+            <div>
+              <label>Day</label>
+              <input type="text" id="day_id" size="6" readonly>
+              <label>Night</label>
+              <input type="text" id="night_id" size="6" readonly>
+              <label>Night rate starts at 6pm</label>
+            </div>
+            <button class="btnSubmit" name="addToCart" id="add">Add</button>
 
-
-
-
-
-      <div class='amenities'>
-        <div class="amenitiesForm">
-          <label>Name</label>
-          <input type="text" name="renter_name" id="name" value="<?php echo $row['full_name'] ?>" readonly />
-
-          <label>Subdivision</label>
-          <select name="subdivision" id="subdivision_id" required>
-            <option value="0" selected="selected">Select...</option>
-            <?php
-            while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
-              echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
-            }
-            ?>
-          </select>
-          <label>Amenity</label>
-          <select name="amenity" id="amenity_id" required>
-            <option value="0">Select Subdivision first...</option>
-          </select>
-          <label>Purpose</label>
-          <select name="purpose" id="purpose_id" required>
-            <option value="0">Select Amenity first...</option>
-          </select>
-          <label>Rate per Hour</label>
-          <div>
-            <label>Day</label>
-            <input type="text" id="day_id" size="6" readonly>
-            <label>Night</label>
-            <input type="text" id="night_id" size="6" readonly>
-            <label>Night rate starts at 6pm</label>
+            <br>
           </div>
-          <button class="btnSubmit" name="addToCart" id="add">Add</button>
-
-          <br>
-        </div>
-        <div class='amenitiesForm'>
-          <label>Availed Services</label>
-          <table class="tblAmenity">
-            <tr>
-              <th><input type="checkbox" name="select-all" id="select-all" /></th>
-              <th>Renter</th>
-              <th>Subdivision</th>
-              <th>Amenity</th>
-              <th>Purpose</th>
-              <th>From</th>
-              <th>To</th>
-              <th>Cost</th>
-            </tr>
-            <?php while ($row = $resultRes->fetch_assoc()) : ?>
+          <div class='amenitiesForm'>
+            <label>Availed Services</label>
+            <table class="tblAmenity">
               <tr>
-                <td>
-                  <input type="checkbox" value=<?php echo $row['amenity_renting_id']; ?> name="checkbox[]" id="checkbox">
-                </td>
-                <td>
-                  <?php echo $row['renter_name'] ?>
-                </td>
-                <td>
-                  <?php echo $row['subdivision_name'] ?>
-                </td>
-                <td>
-                  <?php echo $row['amenity_name'] ?>
-                </td>
-                <td>
-                  <?php
-                  $amenity_purpose_id = $row['amenity_purpose'];
-                  $resultPurpose = $con->query("SELECT * FROM amenity_purpose WHERE amenity_purpose_id = '$amenity_purpose_id'");
-                  $rowPurpose = $resultPurpose->fetch_assoc();
-                  echo $rowPurpose['amenity_purpose'];
-                  ?>
-                </td>
-                <td>
-                  <?php
-                  if ($row['date_from'] != NULL) {
-                    $date = $row['date_from'];
-                    echo date('m/d/Y h:ia ', strtotime($date));
-                  } else {
-                    echo $row['date_from'];
-                  }
-                  ?>
-                </td>
-                <td>
-                  <?php
-                  if ($row['date_to'] != NULL) {
-                    $date = $row['date_to'];
-                    echo date('m/d/Y h:ia ', strtotime($date));
-                  } else {
-                    echo $row['date_to'];
-                  }
-                  ?>
-                </td>
-                <td>
-                  <?php echo $row['cost'] ?>
-                </td>
+                <th><input type="checkbox" name="select-all" id="select-all" /></th>
+                <th>Renter</th>
+                <th>Subdivision</th>
+                <th>Amenity</th>
+                <th>Purpose</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Cost</th>
               </tr>
-            <?php endwhile; ?>
-            <div><label>Date</label>
-              <input required id="date1" type="date" name="date" <?php
-                                                                  if (isset($_POST['compute'])) {
-                                                                    $date = $_POST['date'];
-                                                                    echo "value = '$date'";
-                                                                  }
-                                                                  $date = date('Y-m-d', strtotime('today'));
-                                                                  echo "min='$date'"
-                                                                  ?>>
-            </div>
-            <div class="timeinput">
-              <label>Time</label>
-              <select name="hrFrom" id="from1" required>
-                <option value="">hr</option>
-                <?php
-                for ($x = 1; $x <= 12; $x++) {
-                  $x = sprintf("%02d", $x);
-                  echo "<option value='$x'>$x";
-                }
-                ?>
-              </select>
-              <select name="minsFrom" id="from3" required>
-                <option value="">mins</option>
-                <?php
-                for ($x = 0; $x <= 59; $x++) {
-                  $x = sprintf("%02d", $x);
-                  echo "<option value='$x'>$x";
-                }
-                ?>
-              </select>
-              <select name="ampmFrom" id="from2" required>
-                <option value="">am/pm</option>
-                <option value="am">am</option>
-                <option value="pm">pm</option>
-              </select>
-              <label>To</label>
-              <select name="hrTo" id="to1" required>
-                <option value="">hr</option>
-                <?php
-                for ($x = 1; $x <= 12; $x++) {
-                  $x = sprintf("%02d", $x);
-                  echo "<option value='$x'> $x ";
-                }
-                ?>
-              </select>
-              <select name="minsTo" id="to3" required>
-                <option value="">mins</option>
-                <?php
-                for ($x = 0; $x <= 59; $x++) {
-                  $x = sprintf("%02d", $x);
-                  echo "<option value='$x'>$x";
-                }
-                ?>
-              </select>
-              </option>
-              <select name="ampmTo" id="to2" required>
-                <option value="">am/pm</option>
-                <option value="am">am</option>
-                <option value="pm">pm</option>
-              </select>
-            </div>
-            <div>
-              <label>Total Hours:</label>
-              <input type="text" id="total_id" size="6">
-            </div>
-            <div>
-              <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>
-              <button class="btnCompute" name="removeSelected" id="removeID">Remove Selected</button>
-            </div>
-          </table>
-          <div>
-            <label>Total Cost:</label>
-            <input type="text" id="total_id" size="6" value="<?php
-                                                              $rowTotal = $resultTotal->fetch_assoc();
-                                                              echo $rowTotal['total_cost'];
-                                                              ?>" readonly>
-            <div class="paymentForm">
-              <label class="writeText">Upload proof of payment here:</label>
-              <div class="BlogWrite">
-                <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()" required></input>
-                <img class="imagePrev" id="imagePreview" src=# alt="" />
+              <?php while ($row = $resultRes->fetch_assoc()) : ?>
+                <tr>
+                  <td>
+                    <input type="checkbox" value=<?php echo $row['amenity_renting_id']; ?> name="checkbox[]" id="checkbox">
+                  </td>
+                  <td>
+                    <?php echo $row['renter_name'] ?>
+                  </td>
+                  <td>
+                    <?php echo $row['subdivision_name'] ?>
+                  </td>
+                  <td>
+                    <?php echo $row['amenity_name'] ?>
+                  </td>
+                  <td>
+                    <?php
+                    $amenity_purpose_id = $row['amenity_purpose'];
+                    $resultPurpose = $con->query("SELECT * FROM amenity_purpose WHERE amenity_purpose_id = '$amenity_purpose_id'");
+                    $rowPurpose = $resultPurpose->fetch_assoc();
+                    echo $rowPurpose['amenity_purpose'];
+                    ?>
+                  </td>
+                  <td>
+                    <?php
+                    if ($row['date_from'] != NULL) {
+                      $date = $row['date_from'];
+                      echo date('m/d/Y h:ia ', strtotime($date));
+                    } else {
+                      echo $row['date_from'];
+                    }
+                    ?>
+                  </td>
+                  <td>
+                    <?php
+                    if ($row['date_to'] != NULL) {
+                      $date = $row['date_to'];
+                      echo date('m/d/Y h:ia ', strtotime($date));
+                    } else {
+                      echo $row['date_to'];
+                    }
+                    ?>
+                  </td>
+                  <td>
+                    <?php echo $row['cost'] ?>
+                  </td>
+                </tr>
+              <?php endwhile; ?>
+              <div><label>Date</label>
+                <input required id="date1" type="date" name="date" <?php
+                                                                    if (isset($_POST['compute'])) {
+                                                                      $date = $_POST['date'];
+                                                                      echo "value = '$date'";
+                                                                    }
+                                                                    $date = date('Y-m-d', strtotime('today'));
+                                                                    echo "min='$date'"
+                                                                    ?>>
               </div>
-              <label for="image" class="upload">Upload Photo</label>
+              <div class="timeinput">
+                <label>Time</label>
+                <select name="hrFrom" id="from1" required>
+                  <option value="">hr</option>
+                  <?php
+                  for ($x = 1; $x <= 12; $x++) {
+                    $x = sprintf("%02d", $x);
+                    echo "<option value='$x'>$x";
+                  }
+                  ?>
+                </select>
+                <select name="minsFrom" id="from3" required>
+                  <option value="">mins</option>
+                  <?php
+                  for ($x = 0; $x <= 59; $x++) {
+                    $x = sprintf("%02d", $x);
+                    echo "<option value='$x'>$x";
+                  }
+                  ?>
+                </select>
+                <select name="ampmFrom" id="from2" required>
+                  <option value="">am/pm</option>
+                  <option value="am">am</option>
+                  <option value="pm">pm</option>
+                </select>
+                <label>To</label>
+                <select name="hrTo" id="to1" required>
+                  <option value="">hr</option>
+                  <?php
+                  for ($x = 1; $x <= 12; $x++) {
+                    $x = sprintf("%02d", $x);
+                    echo "<option value='$x'> $x ";
+                  }
+                  ?>
+                </select>
+                <select name="minsTo" id="to3" required>
+                  <option value="">mins</option>
+                  <?php
+                  for ($x = 0; $x <= 59; $x++) {
+                    $x = sprintf("%02d", $x);
+                    echo "<option value='$x'>$x";
+                  }
+                  ?>
+                </select>
+                </option>
+                <select name="ampmTo" id="to2" required>
+                  <option value="">am/pm</option>
+                  <option value="am">am</option>
+                  <option value="pm">pm</option>
+                </select>
+              </div>
+              <div>
+                <label>Total Hours:</label>
+                <input type="text" id="total_id" size="6">
+              </div>
+              <div>
+                <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>
+                <button class="btnCompute" name="removeSelected" id="removeID">Remove Selected</button>
+              </div>
+            </table>
+            <div>
+              <label>Total Cost:</label>
+              <input type="text" id="total_id" size="6" value="<?php
+                                                                $rowTotal = $resultTotal->fetch_assoc();
+                                                                echo $rowTotal['total_cost'];
+                                                                ?>" readonly>
+              <!-- <div class="paymentForm">
+                <label class="writeText">Upload proof of payment here:</label>
+                <div class="BlogWrite">
+                  <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()" required></input>
+                  <img class="imagePrev" id="imagePreview" src=# alt="" />
+                </div>
+                <label for="image" class="upload">Upload Photo</label>
+              </div> -->
+              <button class="btnSubmit" name="checkout" id="checkout_id">Checkout All</button>
             </div>
-            <button class="btnSubmit" name="checkout" id="checkout_id">Checkout All</button>
           </div>
         </div>
-      </div>
+
+    </div>
     </form>
   </div>
 
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  <script type="text/javascript" src="js/calendar.js"></script>
+  <script type="text/javascript" src="js/events.js"></script>
+  <script>
+    $('#select-all').click(function(event) {
+      if (this.checked) {
+        // Iterate each checkbox
+        $(':checkbox').each(function() {
+          this.checked = true;
+        });
+      } else {
+        $(':checkbox').each(function() {
+          this.checked = false;
+        });
+      }
+    });
+  </script>
   <?php
   require '../marginals/footer2.php';
   ?>
 
-
 </body>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-<script type="text/javascript" src="js/calendar.js"></script>
-<script type="text/javascript" src="js/events.js"></script>
-<script>
-  $('#select-all').click(function(event) {
-    if (this.checked) {
-      // Iterate each checkbox
-      $(':checkbox').each(function() {
-        this.checked = true;
-      });
-    } else {
-      $(':checkbox').each(function() {
-        this.checked = false;
-      });
-    }
-  });
-
-  function readURL(input, id) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-
-      reader.onload = function(e) {
-        $('#' + id).attr('src', e.target.result);
-      }
-
-      reader.readAsDataURL(input.files[0]);
-    }
-  }
-
-  $("#image").change(function() {
-    readURL(this, 'imagePreview');
-  });
-
-  //calendar
-</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
 </html>

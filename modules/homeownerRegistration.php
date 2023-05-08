@@ -1,13 +1,17 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary') {
+if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary' and $_SESSION['user_type'] != 'Super Admin') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
 }
 $res = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $res->fetch_assoc();
 $result = $con->query("SELECT * FROM homeowner_profile WHERE email_address != '' ORDER BY homeowner_id ASC ") or die($mysqli->error);
-$resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC") or die($mysqli->error);
+if ($_SESSION['subdivision'] != '') {
+    $resultSubd = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" . $_SESSION['subdivision'] .   "' ORDER BY subdivision_id ASC") or die($mysqli->error);
+} else {
+    $resultSubd = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC") or die($mysqli->error);
+}
 $resultLot_selectBlock = $con->query("SELECT * FROM lot INNER JOIN block ON lot.block_id = block.block_id INNER JOIN subdivision ON block.subdivision_id = subdivision.subdivision_id ORDER BY block.block") or die($mysqli->error);
 if (isset($_GET['homeowner_id'])) {
     $resultUpdateBlock = $con->query("SELECT * FROM block WHERE subdivision_id ='$subdivision_id' ORDER BY block ASC") or die($mysqli->error);

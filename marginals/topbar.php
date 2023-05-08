@@ -4,6 +4,7 @@ if (empty($_SESSION)) {
   header("Location: ../index.php");
   exit;
 }
+
 if ($_SESSION['user_type'] == 'Tenant') {
   $result = $con->query("SELECT * FROM user, tenant WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND user.full_name = tenant.full_name") or die($mysqli->error);
   $result1 = $con->query("SELECT * FROM user, tenant WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND user.full_name = tenant.full_name")  or die($mysqli->error);
@@ -27,6 +28,8 @@ if ($_SESSION['user_type'] == 'Tenant') {
   $subdivision_name1 = $rowSubdivision['subdivision'];
   $resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivision ='$subdivision_name1' AND homeowner_id != '$homeowner_id_profile' ORDER BY first_name");
 }
+$resultGcash = $con->query("SELECT * FROM gcash WHERE subdivision = '" . $_SESSION['subdivision'] . "'");
+$rowGcash = $resultGcash->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,10 +42,8 @@ if ($_SESSION['user_type'] == 'Tenant') {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
-  <script>
-
-  </script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <title>SUNNYVALE</title>
 </head>
 <style>
@@ -374,6 +375,21 @@ if ($_SESSION['user_type'] == 'Tenant') {
   if (window.history.replaceState) {
     window.history.replaceState(null, null, window.location.href);
   }
+  $(document).ready(function() {
+    $("#quantity").on('click', function() {
+      var quantity = $(this).val();
+      if (quantity) {
+        $.ajax({
+          type: 'POST',
+          url: '../process.php/',
+          data: 'quantity=' + quantity,
+          success: function(html) {
+            $("#cost").html(html);
+          }
+        });
+      }
+    });
+  });
 </script>
 
 <body>
@@ -390,7 +406,6 @@ if ($_SESSION['user_type'] == 'Tenant') {
           if ($user_type == 'Homeowner' or $user_type == 'Tenant') {
           ?>
             <li onclick="location.href='../modules/amenities.php'" class="topListItem1">AMENITIES</li>
-
           <?php
           }
           ?>
@@ -401,7 +416,6 @@ if ($_SESSION['user_type'] == 'Tenant') {
           <?php
           }
           ?>
-        </ul>
       </div>
       <div class="topRight">
         <div class='menu-trigger'>
@@ -431,13 +445,11 @@ if ($_SESSION['user_type'] == 'Tenant') {
               <?php
               if ($row['user_type'] == 'Homeowner' or $row['user_type'] == 'Tenant') {
                 echo ' <a data-bs-toggle="modal" data-bs-target="#raiseConcern" class="dropdown-item" href="#raiseConcern">Submit a Complaint</a>';
+                echo ' <a data-bs-toggle="modal" data-bs-target="#buySticker" class="dropdown-item" href="#raiseConcern">Vehicle Sticker</a>';
               }
               ?>
               <?php
-              if ($row['user_type'] == 'Admin') {
-                echo '<a class="dropdown-item" href="../modules/accManagement.php">Admin Panel</a>';
-              }
-              if ($row['user_type'] == 'Super Admin') {
+              if ($row['user_type'] == 'Admin' or $row['user_type'] == 'Super Admin') {
                 echo '<a class="dropdown-item" href="../modules/accManagement.php">Admin Panel</a>';
               }
               if ($row['user_type'] == 'Treasurer') {
@@ -500,6 +512,50 @@ if ($_SESSION['user_type'] == 'Tenant') {
       </div>
     </div>
   </form>
+  <form action="" method="post" enctype='multipart/form-data'>
+    <div class="modal fade" id="buySticker" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">
+              Buy Sticker for Vehicle
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modalConcernBody">
+            <div class="concernSubject">
+              <label class="lbl-concern-text">Quantity:</label>
+              <input type="number" min="00" name="quantity" id="quantity" class="subjectText" required>
+            </div>
+            <div class="concernSubject">
+              <label class="lbl-concern-text">Total Cost:</label>
+              <input name="total_cost" id="cost" class="subjectText" required readonly>
+            </div>
+            <div class="concernSubject">
+              <label class="lbl-concern-text">Gcash Number:</label>
+              <label class="lbl-concern-text"><?php echo $rowGcash['mobile_no'] ?></label>
+            </div>
+            <div class="concernSubject">
+              <label class="lbl-concern-text">Proof of Payment:</label>
+              <input class='attInput' type='file' name='image' id='image' accept='image/*' onchange='preview()' required></input>
+              <img class='imagePrev' id='imagePreview' src=# alt='' />
+            </div>
+            <div class="concernSubject">
+              <label for='image' class='upload'>Upload Photo</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="submit" name="stickerVehicle" class="btn btn-primary">
+              Buy
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
   <div class="modal fade" id="confirmLogout" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -520,5 +576,8 @@ if ($_SESSION['user_type'] == 'Tenant') {
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
+<script>
+  document.getElementById("quantity").addEventListener("keydown", e => e.keyCode != 38 && e.keyCode != 40 && e.preventDefault());
+</script>
 
 </html>

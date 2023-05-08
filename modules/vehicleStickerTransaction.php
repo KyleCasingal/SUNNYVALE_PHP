@@ -1,17 +1,16 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Super Admin') {
+if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Super Admin') {
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
 if ($_SESSION['subdivision'] != '') {
-  $resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Monthly Dues' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "'");
+  $resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Vehicle Sticker' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "'");
 } else {
-  $resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Monthly Dues' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id");
+  $resultTransaction = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Vehicle Sticker'");
 }
-$resultBillConsumer = $con->query("SELECT * FROM bill_consumer, transaction WHERE bill_consumer.transaction_id = transaction.transaction_id");
-$resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id FROM bill_consumer, transaction WHERE bill_consumer.transaction_id = transaction.transaction_id");
-
+$resultTransaction1 = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Vehicle Sticker'");
+$resultTransaction2 = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Vehicle Sticker'");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +24,9 @@ $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id
   <link href="https://fonts.googleapis.com/css2?family=Poppins:opsz@6..72&family=Poppins:wght@400;800&family=Special+Elite&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   <title>SUNNYVALE</title>
 </head>
 <style>
@@ -33,9 +34,6 @@ $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id
     margin: 0;
   }
 
-  body {
-    font-family: 'Poppins', sans-serif;
-  }
 
   .messageSuccess {
     display: flex;
@@ -408,14 +406,6 @@ $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id
     font-weight: 800;
   }
 
-  .modal-header,
-  .modalConcernBody {
-    background-color: rgba(170, 192, 175, 0.3);
-  }
-
-  .modal-footer {
-    background-color: rgba(170, 192, 175, 0);
-  }
 
   .renter-name {
     font-weight: bold;
@@ -428,7 +418,7 @@ $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id
   }
 
   .availed-amenity-list td {
-    padding: 1vw;
+    padding: 0.5vw;
   }
 
   .sideBar {
@@ -456,6 +446,15 @@ $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id
     font-size: max(1.5vw, min(10px));
     cursor: pointer;
     border-bottom: 1px solid lightgray;
+  }
+
+  .postImg {
+    max-width: 20vw;
+    max-height: 20vw;
+  }
+
+  .modal-footer {
+    background-color: rgba(170, 192, 175, 0.3);
   }
 
   .receipt-head {
@@ -494,6 +493,7 @@ $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id
 
   .receipt-table th {
     border: 1px solid black;
+    font-size: 1em;
   }
 
   .receipt-table td,
@@ -509,6 +509,7 @@ $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id
 
   .amount-total-label {
     border: 1px solid black;
+    text-align: right;
   }
 
   .modal-body {
@@ -534,11 +535,17 @@ $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id
 
   .receipt-number {
     align-self: flex-start;
-    padding-bottom: 1em;
+    margin: 0;
+  }
+
+  .receipt-date {
+    align-self: flex-start;
+    padding-bottom: 0.5rem;
   }
 
   .receipt-transaction {
     align-self: flex-start;
+    margin: 0;
   }
 
   @media only print {
@@ -560,6 +567,7 @@ $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id
   }
 </style>
 <script type="text/javascript">
+
 </script>
 
 <body>
@@ -568,16 +576,146 @@ $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id
       <?php require '../marginals/sidebarAdmin.php'; ?>
     </div>
 
+
     <div class="treasurerPanel">
-      <label class="lblSettings" id="amenity">Monthly Dues Payment</label>
+
+      <?php while ($row1 = $resultTransaction1->fetch_assoc()) : ?>
+        <form action="" method="POST">
+          <div class="modal fade" id="complaintModal<?php
+                                                    echo $row1['transaction_id'];
+                                                    ?>" aria-labelledby="exampleModalToggleLabel" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog  modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Vehicle Sticker Transaction Details</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                  <table class="availed-amenity-list">
+                    <tr>
+                      <input type="hidden" name="transaction_id" value="<?php echo $row1['transaction_id'] ?>">
+                    </tr>
+                    <tr>
+                      <td style="font-weight: bold;">Name: </td>
+                      <td id="" colspan="5"><?php echo $row1['name'] ?></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: bold;">Quantity:</td>
+                      <td><?php echo $row1['quantity'] ?></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: bold;">Total Cost:</td>
+                      <td><?php echo $row1['total_cost'] ?></td>
+                    </tr>
+                    <tr>
+                      <td>Payment Proof:</td>
+                      <td>
+                        <img class="postImg" <?php
+                                              $imageURL = '../media/paymentProof/' . $row1['payment_proof'];
+                                              ?> src="<?= $imageURL ?>" alt="">
+                        </img>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                  </button>
+                  <button type="button" id="approveReservation1" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approve<?php echo $row1['transaction_id']; ?>">
+                    Approve
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="approve<?php echo $row1['transaction_id']; ?>" aria-labelledby="exampleModalToggleLabel2" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Confirmation</h1>
+                </div>
+                <div class="modal-body">
+                  Do you really want to approve this transaction?
+                </div>
+                <div class="modal-footer">
+                  <button name="approveVehicleSticker" type="submit" class="btn btn-success">Yes</button>
+                  <button class="btn btn-primary" data-bs-target="#complaintModal<?php
+                                                                                  echo $row1['transaction_id'];
+                                                                                  ?>" data-bs-toggle="modal">No</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="exampleModalToggle<?php
+                                                        echo $row1['transaction_id']
+                                                        ?>" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Receipt</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="receipt-head">
+                    <label class="head-title" for="">Sunnyvale Home Owners Association</label>
+                    <label class="head-subtext" for="">Sunnyvale Subdivision Compound, Binangonan Rizal</label>
+                  </div>
+                  <div class="receipt-body">
+                    <div class="receipt-transaction">
+                      <label class="receipt-label">Transaction:</label>
+                      <label class="receipt-text">Amenity Renting</label>
+                    </div>
+
+                    <div class="receipt-number">
+                      <label class="receipt-label">Receipt Number:</label>
+                      <label class="receipt-text">SNNVL-STCKR-<?php echo $row1['transaction_id'] ?></label>
+                    </div>
+
+                    <div class="receipt-date">
+                      <label class="receipt-label">Date Paid:</label>
+                      <label class="receipt-text"><?php echo $row1['datetime'] ?></label>
+                    </div>
+
+                    <table class="receipt-table">
+                      <thead>
+                        <th>Name</td>
+                        <th>Status</td>
+                        <th>Quantity</td>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td id=""><?php echo $row1['name'] ?></td>
+                          <td id=""><?php echo $row1['status'] ?></td>
+                          <td id=""><?php echo $row1['quantity'] ?></td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" class="amount-total-label">Total:</td>
+                          <td class="total-amount-td"><?php echo $row1['total_cost'] ?></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="receipt-footer"></div>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-primary" id="print<?php
+                                                            echo $row1['transaction_id']
+                                                            ?>">Print Receipt</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      <?php endwhile; ?>
+
+      <label class="lblSettings" id="amenity">Vehicle Sticker Transaction List</label>
       <div class="complaintManagement">
         <div class="inboxContainer">
           <table class="tblComplaints">
             <?php while ($row = $resultTransaction->fetch_assoc()) : ?>
               <tr class="trComplaints">
-                <!-- <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
-                                                                                                    echo $row['transaction_id']
-                                                                                                    ?>"><?php echo $row['transaction_id'] ?></td> -->
                 <td class="renter-name" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
                                                                                               echo $row['transaction_id']
                                                                                               ?>"><?php echo $row['name'] ?></td>
@@ -599,135 +737,9 @@ $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id
       </div>
     </div>
   </div>
-  <?php while ($row1 = $resultBillConsumer->fetch_assoc()) : ?>
-    <form action="" method="POST">
-      <div class="modal fade" id="complaintModal<?php
-                                                echo $row1['transaction_id'];
-                                                ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <?php $resultBillConsumer2 = $con->query("SELECT * FROM bill_consumer, billing_period WHERE transaction_id = " . $row1['transaction_id'] . " AND billing_period.billingPeriod_id = bill_consumer.billingPeriod_id"); ?>
-        <?php $resultBillConsumer3 = $con->query("SELECT * FROM bill_consumer, billing_period WHERE transaction_id = " . $row1['transaction_id'] . " AND billing_period.billingPeriod_id = bill_consumer.billingPeriod_id"); ?>
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">
-                Monthly Dues Payment Details
-              </h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modalConcernBody">
-              <table class="availed-amenity-list">
-                <tr>
-                  <input type="hidden" name="transaction_id" value="<?php echo $row1['transaction_id'] ?>">
-                </tr>
-                <tr>
-                  <td style="font-weight: bold;">Name: </td>
-                  <td id="" colspan="5"><?php echo $row1['name'] ?></td>
-                </tr>
-                <tr>
-                  <td id="" style="font-weight: bold;">Name</td>
-                  <td id="" style="font-weight: bold;">Month</td>
-                  <td id="" style="font-weight: bold;">Year</td>
-                  <td id="" style="font-weight: bold;">Amount</td>
-                  <td id="" style="font-weight: bold;">Status</td>
-                </tr>
-                <?php while ($row2 = $resultBillConsumer2->fetch_assoc()) : ?>
-                  <input type="hidden" name="concern_id" value="<?php echo $row2['billConsumer_id'] ?>">
-                  <tr>
-                    <td id=""><?php echo $row2['fullname'] ?></td>
-                    <td id=""><?php echo $row2['month'] ?></td>
-                    <td id=""><?php echo $row2['year'] ?></td>
-                    <td id=""><?php echo $row2['amount'] ?></td>
-                    <td id=""><?php echo $row2['status'] ?></td>
-                  <?php endwhile; ?>
-                  <tr>
-                    <td style="font-weight: bold;">Total Cost:</td>
-                    <td><?php echo $row1['total_cost'] ?></td>
-                  </tr>
-                  <tr>
-                    <td>Payment Proof:</td>
-                    <td>
-                      <img class="postImg" <?php
-                                            $imageURL = '../media/paymentProof/' . $row1['payment_proof'];
-                                            ?> src="<?= $imageURL ?>" alt="">
-                      </img>
-                    </td>
-                  </tr>
-              </table>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                  Close
-                </button>
-                <button type="submit" name="approveMonthlyDuesPayment" class="btn btn-success">
-                  Paid
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal fade" id="exampleModalToggle<?php
-                                                    echo $row1['transaction_id']
-                                                    ?>" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Receipt</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <div class="receipt-head">
-                <label class="head-title" for="">Sunnyvale Home Owners Association</label>
-                <label class="head-subtext" for="">Sunnyvale Subdivision Compound, Binangonan Rizal</label>
-              </div>
-              <div class="receipt-body">
-                <div class="receipt-transaction">
-                  <label class="receipt-label">Transaction:</label>
-                  <label class="receipt-text">Monthly Dues</label>
-                </div>
 
-                <div class="receipt-number">
-                  <label class="receipt-label">Receipt Number:</label>
-                  <label class="receipt-text">SNNVL-MNTH-<?php echo $row1['transaction_id'] ?></label>
-                </div>
 
-                <div class="receipt-number">
-                  <label class="receipt-label">Date Paid:</label>
-                  <label class="receipt-text"><?php echo $row1['datetime'] ?></label>
-                </div>
 
-                <table class="receipt-table">
-                  <thead>
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th>Amount</th>
-                  </thead>
-                  <tbody>
-                    <?php while ($row = $resultBillConsumer3->fetch_assoc()) : ?>
-                      <tr>
-                        <td class="receipt-content"><?php echo $row['fullname'] ?></td>
-                        <td class="receipt-content"><?php echo $row['status'] ?></td>
-                        <td class="amount-td"><?php echo $row['amount'] ?></td>
-                      </tr>
-                    <?php endwhile; ?>
-                    <tr>
-                      <td colspan="2" class="amount-total-label">Total:</td>
-                      <td class="total-amount-td"><?php echo $row1['total_cost'] ?></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="receipt-footer"></div>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-primary" id="print<?php
-                                                        echo $row1['transaction_id']
-                                                        ?>">Print Receipt</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-  <?php endwhile; ?>
   <script>
     $('#select-all').click(function(event) {
       if (this.checked) {
@@ -741,8 +753,15 @@ $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id
         });
       }
     });
+
+    // $(document).ready(function() {
+    //   $("#approveReservation1").click(function() {
+    //     $('#approve').modal('show');
+    //   });
+    // });.
+
     $(document).ready(function() {
-      <?php while ($row1 = $resultBillConsumer1->fetch_assoc()) : ?>
+      <?php while ($row1 = $resultTransaction2->fetch_assoc()) : ?>
         $("#print<?php echo $row1['transaction_id'] ?>").click(function() {
           window.print();
         });
@@ -754,6 +773,6 @@ $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id
   ?>
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script> -->
 
 </html>

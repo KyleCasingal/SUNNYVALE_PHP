@@ -1,12 +1,16 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary') {
+if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary' and $_SESSION['user_type'] != 'Super Admin') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
 }
 $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
 $row = $result->fetch_assoc();
-$resultComplaints = $con->query("SELECT * FROM concern, homeowner_profile WHERE (status = 'Pending' OR status = 'Processing') AND concern.complainant_homeowner_id = homeowner_profile.homeowner_id AND subdivision = '" . $_SESSION['subdivision'] . "'");
+if ($_SESSION['subdivision'] != '') {
+    $resultComplaints = $con->query("SELECT * FROM concern, homeowner_profile WHERE (status = 'Pending' OR status = 'Processing') AND concern.complainant_homeowner_id = homeowner_profile.homeowner_id AND subdivision = '" . $_SESSION['subdivision'] . "'");
+} else {
+    $resultComplaints = $con->query("SELECT * FROM concern, homeowner_profile WHERE (status = 'Pending' OR status = 'Processing') AND concern.complainant_homeowner_id = homeowner_profile.homeowner_id");
+}
 $resultComplaints1 = $con->query("SELECT * FROM concern WHERE status = 'Pending' OR status = 'Processing'");
 ?>
 
@@ -370,7 +374,7 @@ $resultComplaints1 = $con->query("SELECT * FROM concern WHERE status = 'Pending'
     ?>
     <?php while ($row1 = $resultComplaints1->fetch_assoc()) : ?>
         <form action="" method="POST">
-           
+
             <div class="modal fade " id="complaintModal<?php
                                                         echo $row1['concern_id']
                                                         ?>" data-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -446,8 +450,8 @@ $resultComplaints1 = $con->query("SELECT * FROM concern WHERE status = 'Pending'
                         <div class="modal-footer">
                             <button name="concernProcess" type="submit" class="btn btn-success">Yes</button>
                             <button class="btn btn-secondary" data-bs-target="#complaintModal<?php
-                                                                                  echo $row1['concern_id'];
-                                                                                  ?>" data-bs-toggle="modal">No</button>
+                                                                                                echo $row1['concern_id'];
+                                                                                                ?>" data-bs-toggle="modal">No</button>
                         </div>
                     </div>
                 </div>
@@ -465,8 +469,8 @@ $resultComplaints1 = $con->query("SELECT * FROM concern WHERE status = 'Pending'
                         <div class="modal-footer">
                             <button name="concernResolved" type="submit" class="btn btn-success">Yes</button>
                             <button class="btn btn-secondary" data-bs-target="#complaintModal<?php
-                                                                                  echo $row1['concern_id'];
-                                                                                  ?>" data-bs-toggle="modal">No</button>
+                                                                                                echo $row1['concern_id'];
+                                                                                                ?>" data-bs-toggle="modal">No</button>
                         </div>
                     </div>
                 </div>
@@ -481,7 +485,6 @@ $resultComplaints1 = $con->query("SELECT * FROM concern WHERE status = 'Pending'
     //         $('#processing').modal('hide');
     //     });
     // });
- 
 </script>
 
 </html>

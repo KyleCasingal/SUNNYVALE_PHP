@@ -1,13 +1,20 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary') {
+if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary' and $_SESSION['user_type'] != 'Super Admin') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
 }
-$result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
-$row = $result->fetch_assoc();
-$resultComplaints = $con->query("SELECT *, SUM(tenant.homeowner_id) AS total FROM tenant, user WHERE tenant.homeowner_id = user.user_homeowner_id AND tenant.subdivision =  '". $_SESSION['subdivision'] . "'");
-$resultComplaints1 = $con->query("SELECT * FROM tenant, user WHERE tenant.homeowner_id = user.user_homeowner_id");
+if ($_SESSION['subdivision'] != '') {
+    $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
+    $row = $result->fetch_assoc();
+    $resultComplaints = $con->query("SELECT *, SUM(tenant.homeowner_id) AS total FROM tenant, user WHERE tenant.homeowner_id = user.user_homeowner_id AND tenant.subdivision =  '" . $_SESSION['subdivision'] . "'");
+    $resultComplaints1 = $con->query("SELECT * FROM tenant, user WHERE tenant.homeowner_id = user.user_homeowner_id");
+} else {
+    $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
+    $row = $result->fetch_assoc();
+    $resultComplaints = $con->query("SELECT *, SUM(tenant.homeowner_id) AS total FROM tenant, user WHERE tenant.homeowner_id = user.user_homeowner_id");
+    $resultComplaints1 = $con->query("SELECT * FROM tenant, user WHERE tenant.homeowner_id = user.user_homeowner_id");
+}
 ?>
 
 <!DOCTYPE html>
