@@ -5,8 +5,8 @@ $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision
 $resultReservation = $con->query("SELECT * FROM facility_renting WHERE date(date_from)=curdate()");
 $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
 $resultAmenities = $con->query("SELECT * FROM amenities") or die($mysqli->error);
-$resultRes = $con->query("SELECT * FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . " AND cart='Yes'") or die($mysqli->error);
-$resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting WHERE user_id= " . $_SESSION['user_id'] . " AND cart='Yes'") or die($mysqli->error);
+$resultRes = $con->query("SELECT * FROM amenity_renting WHERE full_name= " . $_SESSION['full_name'] . " AND cart='Yes'") or die($mysqli->error);
+$resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting WHERE full_name= " . $_SESSION['full_name'] . " AND cart='Yes'") or die($mysqli->error);
 
 ?>
 <!DOCTYPE html>
