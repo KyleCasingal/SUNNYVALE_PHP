@@ -586,7 +586,7 @@ $resultAmenityRenting1 = $con->query("SELECT DISTINCT amenity_renting.transactio
                                                     ?>" aria-labelledby="exampleModalToggleLabel" tabindex="-1" style="display: none;" aria-hidden="true">
             <?php $resultAmenityRenting2 = $con->query("SELECT * FROM amenity_renting, amenity_purpose WHERE amenity_renting.transaction_id = " . $row1['transaction_id'] . " AND amenity_renting.amenity_purpose = amenity_purpose.amenity_purpose_id"); ?>
             <?php $resultAmenityRenting3 = $con->query("SELECT * FROM amenity_renting, amenity_purpose WHERE amenity_renting.transaction_id = " . $row1['transaction_id'] . " AND amenity_renting.amenity_purpose = amenity_purpose.amenity_purpose_id"); ?>
-            <div class="modal-dialog  modal-lg">
+            <div class="modal-dialog  modal-xl">
               <div class="modal-content">
                 <div class="modal-header">
                   <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Reservation Details</h1>
@@ -630,7 +630,7 @@ $resultAmenityRenting1 = $con->query("SELECT DISTINCT amenity_renting.transactio
                     <tr>
                       <td>Payment Proof:</td>
                       <td>
-                        <img class="postImg" <?php
+                        <img class="proof-img" <?php
                                               $imageURL = '../media/paymentProof/' . $row1['payment_proof'];
                                               ?> src="<?= $imageURL ?>" alt="">
                         </img>

@@ -24,7 +24,7 @@ $resultContact2 = $con->query("SELECT * FROM contact INNER JOIN subdivision WHER
 <style>
   .footer {
     width: 100%;
-    height: 12vmax;
+    height: 15vmax;
     background-color: rgb(33, 37, 41);
     top: 0;
     margin-top: 0;
@@ -37,7 +37,7 @@ $resultContact2 = $con->query("SELECT * FROM contact INNER JOIN subdivision WHER
   }
 
   .footerCenter {
-
+    margin: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -47,9 +47,9 @@ $resultContact2 = $con->query("SELECT * FROM contact INNER JOIN subdivision WHER
     display: flex;
     justify-content: center;
     align-self: center;
-    margin: 10px;
+    margin: 0, 5vmax;
     padding: 0;
-    max-width: 7vw;
+    max-width: 6vmax;
   }
 
   .footerIcon {
@@ -83,7 +83,7 @@ $resultContact2 = $con->query("SELECT * FROM contact INNER JOIN subdivision WHER
     display: flex;
     justify-content: center;
     align-self: center;
-    font-size: 3vw;
+    font-size: 3vmax;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -94,9 +94,9 @@ $resultContact2 = $con->query("SELECT * FROM contact INNER JOIN subdivision WHER
   }
 
   .footerListItem {
-    margin: 0.8vw;
-    margin-top: -0.8vw;
-    font-size: 1vw;
+    margin: 0.8vmax;
+    margin-top: 1vmax;
+    font-size: 1vmax;
     font-weight: 300;
     cursor: pointer;
   }
@@ -158,7 +158,7 @@ $resultContact2 = $con->query("SELECT * FROM contact INNER JOIN subdivision WHER
     color: rgb(89, 89, 89);
     margin: 0.8vw;
     margin-top: 0.5vw;
-    font-size: 1vw;
+    font-size: 1vmax;
     font-weight: 300;
   }
 

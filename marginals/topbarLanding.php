@@ -7,7 +7,7 @@
     margin-bottom: 0;
     padding: 0;
     width: 100%;
-    height: 6vw;
+    height: 5vmax;
     background-color: rgba(255, 253, 245, 0);
     position: sticky;
     top: 0;
@@ -19,6 +19,11 @@
 
   }
 
+  .topLanding.scrolled {
+    background-color: #2a9d8f !important;
+    transition: background-color 200ms linear;
+  }
+
   .topLeftLanding {
     flex: 3;
     display: flex;
@@ -28,11 +33,11 @@
   }
 
   .topLeftLanding img {
-    max-height: 5vw;
+    max-height: 5vmax;
   }
 
   .topIconLanding {
-    font-size: 2.5vw;
+    font-size: 2vmax;
     margin-right: 10px;
     color: white;
     font-family: "Poppins", sans-serif;
@@ -89,7 +94,7 @@
     color: white;
     padding: 0.8vw;
     margin-right: 0.2vw;
-    font-size: 1vw;
+    font-size: 1vmax;
     font-weight: 300;
     cursor: pointer;
   }
@@ -107,19 +112,19 @@
   }
 
   .registerButtonLanding {
-    font-size: 0.9vw;
+    font-size: 1vmax;
     cursor: pointer;
     height: 3em;
     background-color: lightcoral;
     border: none;
     color: white;
     border-radius: 0.6vw;
-    padding: 0.8em;
+    padding: 0.5vmax;
     margin-right: 1vw;
   }
 
   .loginButtonLanding {
-    font-size: 0.9vw;
+    font-size: 1vmax;
     cursor: pointer;
     height: 3em;
     background-color: darkseagreen;
@@ -137,7 +142,8 @@
   .loginButtonLanding:hover {
     background-color: rgb(93, 151, 93);
   }
-  .topCenterLanding{
+
+  .topCenterLanding {
     display: flex;
     max-height: 4.5vw;
   }

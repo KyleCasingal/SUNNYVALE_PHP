@@ -26,7 +26,7 @@
   }
 
   .footerCenter {
-
+    margin: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -36,9 +36,9 @@
     display: flex;
     justify-content: center;
     align-self: center;
-    margin: 10px;
+    margin: 0,5vmax;
     padding: 0;
-    max-width: 7vw;
+    max-width: 6vmax;
   }
 
   .footerIcon {
@@ -72,7 +72,7 @@
     display: flex;
     justify-content: center;
     align-self: center;
-    font-size: 3vw;
+    font-size: 3vmax;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -83,9 +83,9 @@
   }
 
   .footerListItem {
-    margin: 0.8vw;
-    margin-top: -0.8vw;
-    font-size: 1vw;
+    margin: 0.8vmax;
+    margin-top: 1vmax;
+    font-size: 1vmax;
     font-weight: 300;
     cursor: pointer;
   }

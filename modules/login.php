@@ -35,27 +35,27 @@ if (isset($_SESSION['user_id'])) {
   .loginPage {
     height: calc(100vh - 50px);
     display: flex;
-    margin-top: -6vw;
+    margin-top: -6rem;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-size: cover;
-    background-image: url("../img/landingBG.png");
+    background-image: url("../img/landingBG2.jpg");
     font-family: "Poppins", sans-serif;
     color: white;
   }
 
   .loginTitle {
-    font-size: 3.5vw;
+    font-size: 3vmax;
   }
 
   .loginForm {
-    font-size: 1.5vw;
+    /* font-size: 1.5vw; */
     padding-top: 2vw;
     padding-bottom: 3.5vw;
     padding-left: 5vw;
     padding-right: 5vw;
-    border-radius: 0.8vw;
+    border-radius: 1rem;
     background-color: rgba(255, 255, 255, 0.15);
     margin-top: px;
     display: flex;
@@ -68,14 +68,15 @@ if (isset($_SESSION['user_id'])) {
   }
 
   .loginForm label {
-    font-size: 1.5vw;
+    font-size: 1.5vmax;
   }
 
   .loginInput {
-    padding: 10px;
+    padding: 0.8rem;
     background-color: white;
     border: none;
-    font-size: 1vw;
+    border-radius: 0.5rem;
+    font-size: 1.5vmax;
   }
 
   .loginButton {
@@ -84,9 +85,9 @@ if (isset($_SESSION['user_id'])) {
     background-color: lightcoral;
     border: none;
     color: white;
-    border-radius: 0.5vw;
+    border-radius: 0.5rem;
     padding: 0.6vw;
-    font-size: 1vw;
+    font-size: 1.5vmax;
   }
 
   .loginBtn:disabled {
@@ -115,10 +116,10 @@ if (isset($_SESSION['user_id'])) {
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 1vw;
+    font-size: 1.5vmax;
     height: auto;
     text-decoration: none;
-    color: #F6E70C;
+    color: #fd9616;
   }
 
   .verifyLinkLbl {
@@ -129,7 +130,7 @@ if (isset($_SESSION['user_id'])) {
   }
 
   .verifyLinkLbl p {
-    font-size: 1vw;
+    font-size: 1.5vmax;
     margin-top: 1vw;
     text-decoration: none;
     color: white;

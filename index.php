@@ -35,7 +35,7 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
 
     .landingPage {
         max-width: 100%;
-        margin-top: -6vw;
+        margin-top: ;
         top: 0;
         position: relative;
         text-align: center;
@@ -57,7 +57,7 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
     }
 
     .landingTitle p {
-        font-size: 1.1vw;
+        font-size: 1vmax;
     }
 
     .landingPage img {
@@ -80,7 +80,7 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
     }
 
     .landingTitles {
-        font-size: 1.5vw;
+        font-size: 1.5vmax;
         color: rgb(50, 50, 50);
     }
 
@@ -93,7 +93,7 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
     .blogPost {
         align-items: center;
         justify-content: center;
-        width: 40%;
+        width: 80%;
         margin-left: 5%;
         margin-top: 20px;
         margin-bottom: 50px;
@@ -149,7 +149,7 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
         color: var(--text);
         margin: 0;
         text-align: right;
-        font-size: 1vw;
+        font-size: 1vmax;
     }
 
     .postImg {
@@ -164,16 +164,19 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
         font-weight: bold;
         font-family: "Poppins", sans-serif;
         margin-top: 1vw;
-        font-size: 1.5vw;
+        font-size: 1.5vmax;
     }
 
     .blogBody {
-        font-size: clamp(1vw, 10px, 5px);
+        margin-bottom: 1vw;
+        font-size: clamp(1vmax, 10px, 5px);
         margin-top: 0;
         text-align: justify;
     }
 
     .announcementFlex {
+        padding: 0;
+        margin: 0;
         display: flex;
         flex-wrap: wrap;
     }
@@ -197,11 +200,11 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 2em 10em;
+        margin: 2vmax;
     }
 
     .nav-item {
-        font-size: 1.5vw;
+        font-size: 1.5vmax;
     }
 
     .tab-content {
@@ -219,15 +222,6 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
     }
 </style>
 
-<script>
-    $(function() {
-        $(document).scroll(function() {
-            var $nav = $(".navbar-fixed-top");
-            $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
-        });
-    });
-</script>
-
 <body>
     <div class="navbar-fixed-top">
         <?php
@@ -237,7 +231,7 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
     </div>
     <div class="landingPage">
         <input type="hidden" value=<?php echo $verified ?? ''; ?> />
-        <img src="./img/landingBG.png" alt="" />
+        <img src="./img/landingBG2.jpg" alt="" />
         <div class="landingTitle">
             Sunnyvale
             <p>Where dreams come home.</p>
@@ -335,7 +329,14 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <script>
+        $(function() {
+            $(document).scroll(function() {
+                var $nav = $(".topLanding");
+                $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+            });
+        });
+    </script>
 </body>
 
 </html>

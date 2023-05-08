@@ -29,7 +29,7 @@
     align-items: center;
     justify-content: center;
     background-size: cover;
-    background-image: url("../img/landingBG.png");
+    background-image: url("../img/landingBG2.jpg");
     font-family: "Poppins", sans-serif;
     color: white;
   }

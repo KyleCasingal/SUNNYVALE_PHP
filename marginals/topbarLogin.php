@@ -18,7 +18,7 @@
     margin-bottom: 0;
     padding: 0;
     width: 100%;
-    height: 6vw;
+    height: 6rem;
     background-color: rgba(255, 253, 245, 0);
     position: sticky;
     top: 0;
@@ -31,7 +31,7 @@
   }
 
   .topLeftLogin {
-    flex: 3;
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -39,12 +39,12 @@
   }
 
   .topLeftLogin img {
-    max-height: 5vw;
+    max-height: 4rem;
   }
 
   .topIconLogin {
     color: white;
-    font-size: 2.5vw;
+    font-size: 3vmax;
     margin-right: 10px;
     font-family: "Poppins", sans-serif;
     font-style: normal;
@@ -69,9 +69,12 @@
     justify-content: flex-end;
 
   }
+  .topRightLogin{
+    width: 100%;
+  }
 
   .topRightLogin p {
-    font-size: 1vw;
+    font-size: 1vmax;
   }
 
 
@@ -207,14 +210,13 @@
   }
 
   .registerButtonTop {
-    font-size: 0.9vw;
+    font-size: 1vmax;
     cursor: pointer;
     background-color: darkseagreen;
     border: none;
     color: white;
-    border-radius: 10px;
-    border-radius: 0.6vw;
-    padding: 0.8em;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
   }
 </style>
 
