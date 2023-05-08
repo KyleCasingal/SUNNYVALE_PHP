@@ -84,7 +84,8 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
 
 
 .col-md-3{
-  overflow-y: scroll !important; 
+  overflow-y: scroll !important;
+  height: 30% !important; 
 }
 
   .calendar {
