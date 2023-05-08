@@ -1,7 +1,7 @@
 <?php
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
 $result0 = $con->query("SELECT DISTINCT transaction_type  FROM transaction  WHERE 1");
-$result = $con->query("SELECT *, DATE(datetime) AS DATE, TIME(datetime) AS TIME FROM transaction");
+$result = $con->query("SELECT *, DATE(datetime) AS DATE, TIME(datetime) AS TIME FROM transaction WHERE status = 'Approved' OR status= 'Paid'");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -190,7 +190,7 @@ $result = $con->query("SELECT *, DATE(datetime) AS DATE, TIME(datetime) AS TIME 
       <label class="tblTitle">Transactions</label>
 
       <br>
-      <label class="tblFilter" for="">filter by transaction type:</label>
+      <label class="tblFilter" for="">Filter by transaction type:</label>
       <select name="tblFilter" class="noprint" id="tblFilter" onclick="myFunction1()">
         <option value="">Select...</option>
         <?php
