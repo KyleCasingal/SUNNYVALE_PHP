@@ -28,7 +28,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-size: auto;
+    background-size: cover;
     background-image: url("../img/landingBG2.jpg");
     font-family: "Poppins", sans-serif;
     color: white;
@@ -139,8 +139,8 @@
     </form>
   </div>
   <!-- <?php
-  require '../marginals/footer2.php';
-  ?> -->
+        require '../marginals/footer2.php';
+        ?> -->
 </body>
 
 </html>

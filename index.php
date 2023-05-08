@@ -76,8 +76,8 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
     }
 
     .landingIntroduction {
-        margin-left: 2vw;
-        margin-right:2vw;
+        margin-left: 10vw;
+        margin-right:10vw;
     }
 
     .landingTitles {
