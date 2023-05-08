@@ -107,7 +107,7 @@ $rowGcash = $resultGcash->fetch_assoc();
 
   .amenitiesForm {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     padding: 2vw;
     margin: 1.5vw;
     width: 60%;
@@ -603,8 +603,18 @@ $rowGcash = $resultGcash->fetch_assoc();
           <option>Select Amenity first...</option>
         </select>
 
+        <label>Rate per Hour</label>
+          <div>
+            <label>Day</label>
+            <input type="text" id="day_id" size="6" readonly>
+            <label>Night</label>
+            <input type="text" id="night_id" size="6" readonly>
+            <label>Night rate starts at 6pm</label>
+          </div>
+          <button class="btnSubmit" name="addToCart" id="add">Add</button>
 
-        <button class="btnSubmit" name="submitReservation" id="submitPost">Submit Reservation</button>
+
+        <!-- <button class="btnSubmit" name="submitReservation" id="submitPost">Submit Reservation</button> -->
       </div>
       <div class="paymentForm">
 
