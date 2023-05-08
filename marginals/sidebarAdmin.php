@@ -252,8 +252,22 @@
                             }
                             ?>
                         </ul>
+                        <?php if ($row['user_type'] != 'Secretary') { ?>
                     </li>
                 <?php } ?>
+            <?php } ?>
+            <?php if ($row['user_type'] != 'Secretary') { ?>
+                <li id="facility">
+                    <button type="button" class="btnSettings" data-bs-toggle="dropdown" aria-expanded="false">
+                        Vehicle Sticker <i class="fa-sharp fa-solid fa-chevron-right"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li id="Amenities" onclick="location.href='../modules/vehicleSticker.php'">Vehicle Sticker</li>
+                        <li id="Amenities" onclick="location.href='../modules/vehicleStickerTransaction.php'">Vehicle Sticker Transaction</li>
+                    </ul>
+                </li>
+                </li>
+            <?php } ?>
             </ul>
         </form>
     </div>
