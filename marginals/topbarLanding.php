@@ -1,3 +1,4 @@
+
 <?php
 // include "./process.php";
 
@@ -152,7 +153,7 @@
     <div class="topCenterLanding">
       <ul class="topListLanding">
         <li class="topListItemLanding">HOME</li>
-        <li class="topListItemLanding"  onclick="location.href='./modules/amenitiesGuest.php'">AMENITIES</li>
+        <li data-bs-toggle="modal" data-bs-target="#raiseConcern" class="topListItemLanding" href="#raiseConcern">Amenities</li>
 
         <button class="registerButtonLanding" name="registerButtonLanding" id="registerButtonLanding">
           Activate your Account
