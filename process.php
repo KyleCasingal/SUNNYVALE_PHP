@@ -1851,3 +1851,9 @@ if (isset($_POST['stickerVehicleAdmin'])) {
   mysqli_query($con, $sqlAudit);
   header("Location: vehicleSticker.php");
 }
+
+// CREATE SESSION FOR GUEST IN AMENITY
+if (isset($_POST['sessionName'])){
+  $_SESSION['guestName'] = $_POST['guestName'];
+  header("Location: ./modules/amenitiesGuest.php");
+}

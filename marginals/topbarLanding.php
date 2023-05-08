@@ -153,7 +153,7 @@
     <div class="topCenterLanding">
       <ul class="topListLanding">
         <li class="topListItemLanding">HOME</li>
-        <li data-bs-toggle="modal" data-bs-target="#raiseConcern" class="topListItemLanding" href="#raiseConcern">Amenities</li>
+        <li data-bs-toggle="modal" data-bs-target="#raiseConcern" class="topListItemLanding" href="#raiseConcern">AMENITIES</li>
 
         <button class="registerButtonLanding" name="registerButtonLanding" id="registerButtonLanding">
           Activate your Account

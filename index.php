@@ -4,6 +4,7 @@ if (isset($_SESSION['user_id'])) {
     header("Location: ./modules/blogHome.php");
 }
 $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysqli->error);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -229,32 +230,34 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
 </script>
 
 <body>
-   
+
     <div class="navbar-fixed-top">
-    
+
         <?php
         require './marginals/topbarLanding.php';
         $resultOfficer = $con->query("SELECT * FROM post WHERE officer_post = 'Yes' AND post_status = 'Active' ORDER BY post_id DESC") or die($mysqli->error);
         ?>
     </div>
-    <div class="modal fade" id="raiseConcern" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Amenities</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <form action="" method="post">
+        <div class="modal fade" id="raiseConcern" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Amenities</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="message-text" class="col-form-label">Enter your Full Name:</label>
+                        <input type="text" class="form-control" name="guestName" id="recipient-name" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" name="sessionName" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-        <label for="message-text" class="col-form-label">Enter your Name:</label>
-        <input type="text" class="form-control" name="guestName" id="recipient-name">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" name="sessionName" class="btn btn-primary">Submit</button>
-        </div>
-      </div>
-    </div>
-  </div>
+    </form>
     <div class="landingPage">
         <input type="hidden" value=<?php echo $verified ?? ''; ?> />
         <img src="./img/landingBG.png" alt="" />
