@@ -584,7 +584,6 @@ if ($_SESSION['subdivision'] != '') {
                     url: '../process.php/',
                     data: 'subdivisionSticker=' + subdivisionSticker,
                     success: function(html) {
-                        $("#cost1").html(html);
                     }
                 });
             }
@@ -638,14 +637,14 @@ if ($_SESSION['subdivision'] != '') {
                         </div>
                         <div class="concernSubject">
                             <label class="lbl-concern-text">Quantity:</label>
-                            <input type="number" value="0" min="00" name="quantity" id="quantity1" class="subjectText" required>
+                            <input type="number" value="0" min="00" name="quantity1" id="quantity1" class="subjectText" required>
                         </div>
                         <div class="concernSubject">
                             <label class="lbl-concern-text">Total Cost:</label>
-                            <input name="total_cost" id="cost1" class="subjectText" value="0" required readonly>
+                            <input name="total_cost1" id="cost1" class="subjectText" value="0" required readonly>
                         </div>
 
-                        <button type="submit" name="stickerVehicle" class="btn btn-primary">
+                        <button type="submit" name="stickerVehicleAdmin" class="btn btn-primary">
                             Buy
                         </button>
                     </div>

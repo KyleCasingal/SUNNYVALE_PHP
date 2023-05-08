@@ -1728,9 +1728,14 @@ if (isset($_POST['quantity'])) {
   }
 }
 
+if (isset($_POST['subdivisionSticker'])) {
+  $subdivision = $_POST['subdivisionSticker'];
+  $_SESSION['subdivisionVehicle'] = $subdivision;
+}
+
 if (isset($_POST['quantity1'])) {
   $quantity = $_POST['quantity1'];
-  $result = $con->query("SELECT * FROM sticker WHERE subdivision = '" . $_SESSION['subdivision'] . "'");
+  $result = $con->query("SELECT * FROM sticker WHERE subdivision = '" . $_SESSION['subdivisionVehicle'] . "'");
   $row = $result->fetch_assoc();
   $cost = $row['cost'];
   $total = $quantity * $cost;
@@ -1761,4 +1766,18 @@ if (isset($_POST['stickerVehicle'])) {
     $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Bought a vehicle sticker', NOW())";
     mysqli_query($con, $sqlAudit);
   }
+}
+
+if (isset($_POST['stickerVehicleAdmin'])) {
+  $resultUserID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
+  $rowUserID = $resultUserID->fetch_assoc();
+
+  $quantity1 = $_POST['quantity1'];
+  $total_cost = $_POST['total_cost1'];
+
+    $sql1 = "INSERT INTO transaction (user_id, name, total_cost, quantity, payment_proof, transaction_type, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', '$quantity', NULL, 'Vehicle Sticker', 'Paid')";
+    $result1 = mysqli_query($con, $sql1);
+    $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Bought a vehicle sticker', NOW())";
+    mysqli_query($con, $sqlAudit);
+    header("Location: vehicleSticker.php");
 }
