@@ -7,7 +7,7 @@ if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Treasurer' 
 if ($_SESSION['subdivision'] != '') {
   $resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Monthly Dues' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "'");
 } else {
-  $resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Monthly Dues' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "'");
+  $resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Monthly Dues' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id");
 }
 $resultBillConsumer = $con->query("SELECT * FROM bill_consumer, transaction WHERE bill_consumer.transaction_id = transaction.transaction_id");
 $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id FROM bill_consumer, transaction WHERE bill_consumer.transaction_id = transaction.transaction_id");

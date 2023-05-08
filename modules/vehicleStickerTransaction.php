@@ -9,10 +9,8 @@ if ($_SESSION['subdivision'] != '') {
 } else {
   $resultTransaction = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Vehicle Sticker'");
 }
-$resultAmenityRenting = $con->query("SELECT * FROM amenity_renting, transaction WHERE amenity_renting.transaction_id = transaction.transaction_id");
-$resultAmenityRenting1 = $con->query("SELECT DISTINCT amenity_renting.transaction_id FROM amenity_renting, transaction WHERE amenity_renting.transaction_id = transaction.transaction_id ");
-
 $resultTransaction1 = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Vehicle Sticker'");
+$resultTransaction2 = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Vehicle Sticker'");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -599,11 +597,11 @@ $resultTransaction1 = $con->query("SELECT * FROM transaction WHERE transaction_t
                       <input type="hidden" name="transaction_id" value="<?php echo $row1['transaction_id'] ?>">
                     </tr>
                     <tr>
-                      <td style="font-weight: bold;">Renter Name: </td>
+                      <td style="font-weight: bold;">Name: </td>
                       <td id="" colspan="5"><?php echo $row1['name'] ?></td>
                     </tr>
                     <tr>
-                    <td style="font-weight: bold;">Quantity:</td>
+                      <td style="font-weight: bold;">Quantity:</td>
                       <td><?php echo $row1['quantity'] ?></td>
                     </tr>
                     <tr>
@@ -639,10 +637,10 @@ $resultTransaction1 = $con->query("SELECT * FROM transaction WHERE transaction_t
                   <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Confirmation</h1>
                 </div>
                 <div class="modal-body">
-                  Do you really want to approve this Reservation?
+                  Do you really want to approve this transaction?
                 </div>
                 <div class="modal-footer">
-                  <button name="approveReservation" type="submit" class="btn btn-success">Yes</button>
+                  <button name="approveVehicleSticker" type="submit" class="btn btn-success">Yes</button>
                   <button class="btn btn-primary" data-bs-target="#complaintModal<?php
                                                                                   echo $row1['transaction_id'];
                                                                                   ?>" data-bs-toggle="modal">No</button>
@@ -672,7 +670,7 @@ $resultTransaction1 = $con->query("SELECT * FROM transaction WHERE transaction_t
 
                     <div class="receipt-number">
                       <label class="receipt-label">Receipt Number:</label>
-                      <label class="receipt-text">SNNVL-RNTNG-<?php echo $row1['transaction_id'] ?></label>
+                      <label class="receipt-text">SNNVL-STCKR-<?php echo $row1['transaction_id'] ?></label>
                     </div>
 
                     <div class="receipt-date">
@@ -682,25 +680,19 @@ $resultTransaction1 = $con->query("SELECT * FROM transaction WHERE transaction_t
 
                     <table class="receipt-table">
                       <thead>
-                        <th>Subdivision</td>
-                        <th>Amenity</td>
-                        <th>Purpose</td>
-                        <th>From</td>
-                        <th>To</td>
-                        <th>Cost</td>
+                        <th>Name</td>
+                        <th>Status</td>
+                        <th>Quantity</td>
                       </thead>
                       <tbody>
-                          <tr>
-                            <td id=""></td>
-                            <td id=""></td>
-                            <td id=""></td>
-                            <td id=""></td>
-                            <td id=""></td>
-                            <td id=""></td>
-                          </tr>
                         <tr>
-                          <td colspan="5" class="amount-total-label">Total:</td>
-                          <td class="total-amount-td"></td>
+                          <td id=""><?php echo $row1['name'] ?></td>
+                          <td id=""><?php echo $row1['status'] ?></td>
+                          <td id=""><?php echo $row1['quantity'] ?></td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" class="amount-total-label">Total:</td>
+                          <td class="total-amount-td"><?php echo $row1['total_cost'] ?></td>
                         </tr>
                       </tbody>
                     </table>
@@ -733,7 +725,7 @@ $resultTransaction1 = $con->query("SELECT * FROM transaction WHERE transaction_t
                 <td class="use-address" data-bs-toggle="modal" data-bs-target="#complaintModal<?php
                                                                                               echo $row['transaction_id']
                                                                                               ?>"><?php echo $row['status'] ?></td>
-                <?php if ($row['status'] == 'Approved') { ?>
+                <?php if ($row['status'] == 'Paid') { ?>
                   <td class="use-address" data-bs-toggle="modal" data-bs-target="#exampleModalToggle<?php
                                                                                                     echo $row['transaction_id']
                                                                                                     ?>">Print Receipt</td>
@@ -769,7 +761,7 @@ $resultTransaction1 = $con->query("SELECT * FROM transaction WHERE transaction_t
     // });.
 
     $(document).ready(function() {
-      <?php while ($row1 = $resultAmenityRenting1->fetch_assoc()) : ?>
+      <?php while ($row1 = $resultTransaction2->fetch_assoc()) : ?>
         $("#print<?php echo $row1['transaction_id'] ?>").click(function() {
           window.print();
         });
