@@ -36,7 +36,7 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
 
     .landingPage {
         max-width: 100%;
-        margin-top: ;
+        /* margin-top: ; */
         top: 0;
         position: relative;
         text-align: center;
