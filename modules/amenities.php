@@ -1,9 +1,9 @@
 <?php
 require '../marginals/topbar.php';
-// if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Super Admin') {
-//   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
-//   exit;
-// }
+if ($_SESSION['user_type'] != 'Homeowner') {
+  echo '<script>window.location.href = "../modules/blogHome.php";</script>';
+  exit;
+}
 $result = $con->query("SELECT * FROM amenities WHERE availability =  'Available' ORDER BY subdivision_name ASC") or die($mysqli->error);
 $resultSubdivision = $con->query("SELECT * FROM subdivision ORDER BY subdivision_id ASC");
 $resultSubdivision_selectAmenities = $con->query("SELECT * FROM subdivision ") or die($mysqli->error);
