@@ -1728,6 +1728,35 @@ if (isset($_POST['quantity'])) {
   }
 }
 
+if (isset($_POST['quantity1'])) {
+  $quantity = $_POST['quantity1'];
+  $result = $con->query("SELECT * FROM sticker WHERE subdivision = '" . $_SESSION['subdivision'] . "'");
+  $row = $result->fetch_assoc();
+  $cost = $row['cost'];
+  $total = $quantity * $cost;
+
+  if (mysqli_num_rows($result) > 0) {
+    echo '<script type="text/javascript">
+  document.getElementById("cost1").setAttribute("value",' . $total . ');
+</script>';
+  }
+}
+
+if (isset($_POST['quantity1'])) {
+  $quantity = $_POST['quantity1'];
+
+  $result = $con->query("SELECT * FROM sticker WHERE subdivision = '" . $_SESSION['subdivision'] . "'");
+  $row = $result->fetch_assoc();
+  $cost = $row['cost'];
+  $total = $quantity * $cost;
+
+  if (mysqli_num_rows($result) > 0) {
+    echo '<script type="text/javascript">
+  document.getElementById("cost1").setAttribute("value",' . $total . ');
+</script>';
+  }
+}
+
 // BUYING VEHICLE STICKER
 if (isset($_POST['stickerVehicle'])) {
   $resultUserID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");

@@ -4,13 +4,6 @@ if ($_SESSION['user_type'] != 'Treasurer' and $_SESSION['user_type'] != 'Admin' 
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
 }
-if ($_SESSION['subdivision'] != '') {
-    $resultTransaction = $con->query("SELECT * FROM transaction, user, homeowner_profile WHERE transaction_type = 'Vehicle Sticker' AND transaction.user_id = user.user_id AND user.user_homeowner_id = homeowner_profile.homeowner_id AND homeowner_profile.subdivision = '" . $_SESSION['subdivision'] . "'");
-} else {
-    $resultTransaction = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Vehicle Sticker'");
-}
-$resultTransaction1 = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Vehicle Sticker'");
-$resultTransaction2 = $con->query("SELECT * FROM transaction WHERE transaction_type = 'Vehicle Sticker'");
 
 if ($_SESSION['subdivision'] != '') {
     $result0 = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "' ORDER BY subdivision_id ASC ");
@@ -33,6 +26,7 @@ if ($_SESSION['subdivision'] != '') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <title>SUNNYVALE</title>
 </head>
 <style>
@@ -576,20 +570,37 @@ if ($_SESSION['subdivision'] != '') {
         float: right;
     }
 </style>
-<script type="text/javascript">
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
+<script>
+    // if (window.history.replaceState) {
+    //     window.history.replaceState(null, null, window.location.href);
+    // }
+
     $(document).ready(function() {
-        $("#quantity").on('click', function() {
-            var quantity = $(this).val();
-            if (quantity) {
+        $("#subdivisionSticker").on('click', function() {
+            var subdivisionSticker = $(this).val();
+            if (subdivisionSticker) {
                 $.ajax({
                     type: 'POST',
                     url: '../process.php/',
-                    data: 'quantity=' + quantity,
+                    data: 'subdivisionSticker=' + subdivisionSticker,
                     success: function(html) {
-                        $("#cost").html(html);
+                        $("#cost1").html(html);
+                    }
+                });
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $("#quantity1").on('click', function() {
+            var quantity1 = $(this).val();
+            if (quantity1) {
+                $.ajax({
+                    type: 'POST',
+                    url: '../process.php/',
+                    data: 'quantity1=' + quantity1,
+                    success: function(html) {
+                        $("#cost1").html(html);
                     }
                 });
             }
@@ -616,7 +627,7 @@ if ($_SESSION['subdivision'] != '') {
                     <div class="modalConcernBody">
                         <div class="concernSubject">
                             <label class="lbl-concern-text">Subdivision:</label>
-                            <select name="tblFilter" class="noprint" id="tblFilter" onclick="myFunction1()">
+                            <select name="tblFilter" class="noprint" id="subdivisionSticker" onclick="myFunction1()">
                                 <option value="">Select...</option>
                                 <?php
                                 while ($row0 = $result0->fetch_assoc()) {
@@ -627,11 +638,11 @@ if ($_SESSION['subdivision'] != '') {
                         </div>
                         <div class="concernSubject">
                             <label class="lbl-concern-text">Quantity:</label>
-                            <input type="number" min="00" name="quantity" id="quantity" class="subjectText" required>
+                            <input type="number" value="0" min="00" name="quantity" id="quantity1" class="subjectText" required>
                         </div>
                         <div class="concernSubject">
                             <label class="lbl-concern-text">Total Cost:</label>
-                            <input name="total_cost" id="cost" class="subjectText" required readonly>
+                            <input name="total_cost" id="cost1" class="subjectText" value="0" required readonly>
                         </div>
 
                         <button type="submit" name="stickerVehicle" class="btn btn-primary">
@@ -642,10 +653,6 @@ if ($_SESSION['subdivision'] != '') {
         </div>
     </div>
 
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <script>
         document.getElementById("quantity").addEventListener("keydown", e => e.keyCode != 38 && e.keyCode != 40 && e.preventDefault());
