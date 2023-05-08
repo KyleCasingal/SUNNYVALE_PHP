@@ -2,8 +2,8 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: May 08, 2023 at 06:42 AM
+-- Host: 127.0.0.1:3307
+-- Generation Time: May 08, 2023 at 06:11 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -163,7 +163,112 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `audit_trail`
+--
+
+INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
+(1, 'Super_Admin', 'Logged in', '2023-05-08 14:49:48'),
+(2, 'Super_Admin', 'Logged out', '2023-05-08 14:59:06'),
+(3, 'SV1_Treasurer', 'Logged in', '2023-05-08 14:59:09'),
+(4, 'SV1_Treasurer', 'Logged out', '2023-05-08 14:59:14'),
+(5, 'Super_Admin', 'Logged in', '2023-05-08 14:59:16'),
+(6, 'Super_Admin', 'Logged out', '2023-05-08 15:04:28'),
+(7, 'SV1_Treasurer', 'Logged in', '2023-05-08 15:04:32'),
+(8, 'SV1_Treasurer', 'Logged out', '2023-05-08 15:06:26'),
+(9, 'SV1_Admin', 'Logged in', '2023-05-08 15:06:29'),
+(10, 'SV1_Admin', 'Logged out', '2023-05-08 15:06:51'),
+(11, 'SV1_Admin', 'Logged in', '2023-05-08 15:06:54'),
+(12, 'SV1_Admin', 'Logged out', '2023-05-08 15:06:58'),
+(13, 'SV1_Secretary', 'Logged in', '2023-05-08 15:07:01'),
+(14, 'SV1_Secretary', 'Logged out', '2023-05-08 15:07:44'),
+(15, 'SV1_Treasurer', 'Logged in', '2023-05-08 15:07:47'),
+(16, 'SV1_Treasurer', 'Approved a vehicle sticker transaction', '2023-05-08 15:38:39'),
+(17, 'SV1_Treasurer', 'Logged out', '2023-05-08 15:39:08'),
+(18, 'SV1_Secretary', 'Logged in', '2023-05-08 15:39:11'),
+(19, 'SV1_Secretary', 'Logged out', '2023-05-08 15:39:27'),
+(20, 'Super_Admin', 'Logged in', '2023-05-08 15:39:32'),
+(21, 'Super_Admin', 'Logged out', '2023-05-08 15:39:47'),
+(22, 'Mon Carlo Delima', 'Logged in', '2023-05-08 15:39:51'),
+(23, 'Mon Carlo Delima', 'Logged out', '2023-05-08 15:41:14'),
+(24, 'Super_Admin', 'Logged in', '2023-05-08 15:41:17'),
+(25, 'Super_Admin', 'Logged out', '2023-05-08 15:44:05'),
+(26, 'SV1_Admin', 'Logged in', '2023-05-08 15:44:08'),
+(27, 'SV1_Admin', 'Logged out', '2023-05-08 15:44:13'),
+(28, 'Super_Admin', 'Logged in', '2023-05-08 15:44:17'),
+(29, 'Super_Admin', 'Logged out', '2023-05-08 15:48:34'),
+(30, 'Mon Carlo Delima', 'Logged in', '2023-05-08 15:48:38'),
+(31, 'Mon Carlo Delima', 'Bought a vehicle sticker', '2023-05-08 15:48:49'),
+(32, 'Mon Carlo Delima', 'Logged out', '2023-05-08 15:48:51'),
+(33, 'Super_Admin', 'Logged in', '2023-05-08 15:48:55'),
+(34, 'Super_Admin', 'Approved a vehicle sticker transaction', '2023-05-08 15:49:05'),
+(35, 'Super_Admin', 'Logged out', '2023-05-08 15:50:29'),
+(36, 'Super_Admin', 'Logged in', '2023-05-08 15:53:22'),
+(37, 'Super_Admin', 'Logged out', '2023-05-08 15:54:07'),
+(38, 'Mon Carlo Delima', 'Logged in', '2023-05-08 15:54:14'),
+(39, 'Mon Carlo Delima', 'Logged out', '2023-05-08 16:36:49'),
+(40, 'Super_Admin', 'Logged in', '2023-05-08 16:37:01'),
+(41, 'Super_Admin', 'Logged out', '2023-05-08 16:43:00'),
+(42, 'SV1_Admin', 'Logged in', '2023-05-08 16:43:02'),
+(43, 'SV1_Admin', 'Logged out', '2023-05-08 16:44:09'),
+(44, 'Mon Carlo Delima', 'Logged in', '2023-05-08 16:44:13'),
+(45, 'Mon Carlo Delima', 'Logged out', '2023-05-08 16:44:47'),
+(46, 'SV1_Admin', 'Logged in', '2023-05-08 16:44:49'),
+(47, 'SV1_Admin', 'Logged out', '2023-05-08 16:50:10'),
+(48, 'SV1_Admin', 'Logged in', '2023-05-08 16:50:12'),
+(49, 'SV1_Admin', 'Logged out', '2023-05-08 16:55:07'),
+(50, 'Super_Admin', 'Logged in', '2023-05-08 16:55:21'),
+(51, 'Super_Admin', 'Logged out', '2023-05-08 16:55:38'),
+(52, 'SV2_Admin', 'Logged in', '2023-05-08 16:55:42'),
+(53, 'SV2_Admin', 'Logged out', '2023-05-08 16:56:05'),
+(54, 'SV1_Admin', 'Logged in', '2023-05-08 16:56:08'),
+(55, 'SV1_Admin', 'Logged out', '2023-05-08 17:03:58'),
+(56, 'Super_Admin', 'Logged in', '2023-05-08 17:04:02'),
+(57, 'Super_Admin', 'Logged out', '2023-05-08 17:04:48'),
+(58, 'SV1_Admin', 'Logged in', '2023-05-08 17:04:50'),
+(59, 'SV1_Admin', 'Logged out', '2023-05-08 17:11:00'),
+(60, 'Super_Admin', 'Logged in', '2023-05-08 17:11:03'),
+(61, 'Super_Admin', 'Logged out', '2023-05-08 17:12:35'),
+(62, 'Super_Admin', 'Logged in', '2023-05-08 17:12:42'),
+(63, 'Super_Admin', 'Logged out', '2023-05-08 17:13:42'),
+(64, 'Super_Admin', 'Logged in', '2023-05-08 17:13:46'),
+(65, 'Super_Admin', 'Logged out', '2023-05-08 17:15:24'),
+(66, 'SV1_Admin', 'Logged in', '2023-05-08 17:15:27'),
+(67, 'SV1_Admin', 'Logged out', '2023-05-08 17:18:29'),
+(68, 'Super_Admin', 'Logged in', '2023-05-08 17:18:32'),
+(69, 'Super_Admin', 'Bought a vehicle sticker', '2023-05-08 17:18:56'),
+(70, 'Super_Admin', 'Bought a vehicle sticker', '2023-05-08 17:20:00'),
+(71, 'Super_Admin', 'Added a monthly dues', '2023-05-08 17:41:47'),
+(72, 'Super_Admin', 'Added a gcash number', '2023-05-08 17:42:58'),
+(73, 'Super_Admin', 'Added a gcash number', '2023-05-08 17:43:41'),
+(74, 'Super_Admin', 'Added a gcash number', '2023-05-08 17:44:06'),
+(75, 'Super_Admin', 'Updated a gcash number', '2023-05-08 17:47:14'),
+(76, 'Super_Admin', 'Updated a gcash number', '2023-05-08 17:47:30'),
+(77, 'Super_Admin', 'Updated a gcash number', '2023-05-08 17:48:00'),
+(78, 'Super_Admin', 'Logged out', '2023-05-08 17:48:21'),
+(79, 'SV1_Admin', 'Logged in', '2023-05-08 17:48:23'),
+(80, 'SV1_Admin', 'Logged out', '2023-05-08 17:48:54'),
+(81, 'Mon Carlo Delima', 'Logged in', '2023-05-08 17:48:59'),
+(82, 'Mon Carlo Delima', 'Logged out', '2023-05-08 17:55:53'),
+(83, 'Super_Admin', 'Logged in', '2023-05-08 17:55:59'),
+(84, 'Super_Admin', 'Logged out', '2023-05-08 17:57:29'),
+(85, 'SV1_Admin', 'Logged in', '2023-05-08 17:57:32'),
+(86, 'SV1_Admin', 'Logged out', '2023-05-08 17:59:20'),
+(87, 'SV1_Treasurer', 'Logged in', '2023-05-08 17:59:23'),
+(88, 'SV1_Treasurer', 'Logged out', '2023-05-08 17:59:26'),
+(89, 'SV1_Secretary', 'Logged in', '2023-05-08 17:59:30'),
+(90, 'SV1_Secretary', 'Logged out', '2023-05-08 18:02:57'),
+(91, 'Super_Admin', 'Logged in', '2023-05-08 18:03:00'),
+(92, 'Super_Admin', 'Updated a sticker price', '2023-05-08 18:06:22'),
+(93, 'Super_Admin', 'Added a sticker price', '2023-05-08 18:06:24'),
+(94, 'Super_Admin', 'Updated a sticker price', '2023-05-08 18:06:41'),
+(95, 'Super_Admin', 'Added a sticker price', '2023-05-08 18:06:46'),
+(96, 'Super_Admin', 'Added a sticker price', '2023-05-08 18:06:51'),
+(97, 'Super_Admin', 'Added a sticker price', '2023-05-08 18:07:41'),
+(98, 'Super_Admin', 'Added a sticker price', '2023-05-08 18:08:54'),
+(99, 'Super_Admin', 'Logged out', '2023-05-08 18:09:35');
 
 -- --------------------------------------------------------
 
@@ -526,6 +631,30 @@ INSERT INTO `contact` (`contact_id`, `subdivision_id`, `email`, `telephone`) VAL
 (2, 2, 'Sunnyvale2@gmail.com', '+63-929-555-0584'),
 (3, 3, 'Sunnyvale3@gmail.com', '+63-933-555-8050'),
 (4, 4, 'Sunnyvale4@gmail.com', '+63-280-555-7381');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gcash`
+--
+
+DROP TABLE IF EXISTS `gcash`;
+CREATE TABLE IF NOT EXISTS `gcash` (
+  `gcash_id` int(11) NOT NULL AUTO_INCREMENT,
+  `subdivision` varchar(50) NOT NULL,
+  `mobile_no` varchar(20) NOT NULL,
+  PRIMARY KEY (`gcash_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `gcash`
+--
+
+INSERT INTO `gcash` (`gcash_id`, `subdivision`, `mobile_no`) VALUES
+(1, 'Sunnyvale 1', '09123456789'),
+(2, 'Sunnyvale 2', '09987654321'),
+(3, 'Sunnyvale 3', '09123498765'),
+(4, 'Sunnyvale 4', '09987651234');
 
 -- --------------------------------------------------------
 
@@ -1229,7 +1358,7 @@ CREATE TABLE IF NOT EXISTS `sticker` (
   `subdivision` varchar(50) NOT NULL,
   `cost` int(11) NOT NULL,
   PRIMARY KEY (`sticker_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `sticker`
@@ -1239,7 +1368,7 @@ INSERT INTO `sticker` (`sticker_id`, `subdivision`, `cost`) VALUES
 (1, 'Sunnyvale 1', 150),
 (2, 'Sunnyvale 2', 200),
 (3, 'Sunnyvale 3', 180),
-(4, 'Sunnyvale 4', 240);
+(4, 'Sunnyvale 4', 245);
 
 -- --------------------------------------------------------
 
@@ -1312,7 +1441,7 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `status` varchar(10) NOT NULL,
   `datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`transaction_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `transaction`
@@ -1328,7 +1457,10 @@ INSERT INTO `transaction` (`transaction_id`, `user_id`, `name`, `total_cost`, `q
 (9, 48, 'SV1_Treasurer', 800, NULL, NULL, 'Monthly Dues', 'Paid', '2023-05-06 07:28:16'),
 (10, 48, 'SV1_Treasurer', 1000, NULL, NULL, 'Monthly Dues', 'Paid', '2023-05-06 07:28:17'),
 (11, 1, 'Mon Carlo Delima', 50, NULL, '328148270_726681382138928_1391919010667224674_n.png', 'Amenity Renting', 'Approved', '2023-05-06 08:00:29'),
-(12, 1, 'Mon Carlo Delima', 150, 1, 'drawSQL-sunnyvale-export-2023-04-10.png', 'Vehicle Sticker', 'Pending', NULL);
+(12, 1, 'Mon Carlo Delima', 150, 1, 'drawSQL-sunnyvale-export-2023-04-10.png', 'Vehicle Sticker', 'Paid', '2023-05-08 15:38:39'),
+(13, 1, 'Mon Carlo Delima', 450, 3, 'tiktok_PNG1.png', 'Vehicle Sticker', 'Paid', '2023-05-08 15:49:05'),
+(14, 64, 'Super_Admin', 360, 2, NULL, 'Vehicle Sticker', 'Paid', NULL),
+(15, 64, 'Super_Admin', 300, 2, NULL, 'Vehicle Sticker', 'Paid', NULL);
 
 -- --------------------------------------------------------
 
