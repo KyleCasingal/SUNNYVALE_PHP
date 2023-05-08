@@ -28,6 +28,8 @@ if ($_SESSION['user_type'] == 'Tenant') {
   $subdivision_name1 = $rowSubdivision['subdivision'];
   $resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivision ='$subdivision_name1' AND homeowner_id != '$homeowner_id_profile' ORDER BY first_name");
 }
+$resultGcash = $con->query("SELECT * FROM gcash WHERE subdivision = '" . $_SESSION['subdivision'] . "'");
+$rowGcash = $resultGcash->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -528,6 +530,10 @@ if ($_SESSION['user_type'] == 'Tenant') {
             <div class="concernSubject">
               <label class="lbl-concern-text">Total Cost:</label>
               <input name="total_cost" id="cost" class="subjectText" required readonly>
+            </div>
+            <div class="concernSubject">
+              <label class="lbl-concern-text">Gcash Number:</label>
+              <label class="lbl-concern-text"><?php echo $rowGcash['mobile_no'] ?></label>
             </div>
             <div class="concernSubject">
               <label class="lbl-concern-text">Proof of Payment:</label>

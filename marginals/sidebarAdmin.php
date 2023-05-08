@@ -218,6 +218,7 @@
                             <?php
                             if ($row['user_type'] == 'Admin' or $row['user_type'] == 'Super Admin' or $row['user_type'] == 'Secretary') { ?>
                                 <li id="missionVision" onclick="location.href='../modules/settingsContact.php'">Contact Information</li>
+                                <li id="missionVision" onclick="location.href='../modules/settingsGcash.php'">Gcash</li>
                             <?php
                             }
                             ?>
@@ -251,6 +252,7 @@
                                 echo ">System Accounts</li>";
                             }
                             ?>
+                            <li id="missionVision" onclick="location.href='../modules/settingsSticker.php'">Vehicle Sticker</li>
                         </ul>
                         <?php if ($row['user_type'] != 'Secretary') { ?>
                     </li>

@@ -291,6 +291,10 @@ $resultBilling = $con->query(
               <?php endwhile; ?>
             </table>
           </div>
+          <div>
+              <label>Gcash Number:</label>
+              <label><?php echo $rowGcash['mobile_no'] ?></label>
+            </div>
           <div class="paymentForm">
             <label class="writeText">Upload proof of payment here:</label>
             <div class="BlogWrite">

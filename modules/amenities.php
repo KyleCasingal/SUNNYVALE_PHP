@@ -672,14 +672,14 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
               </select>
             </div>
             <div>
-              <label>Total Hours:</label>
-              <input type="text" id="total_id" size="6">
-            </div>
-            <div>
               <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>
               <button class="btnCompute" name="removeSelected" id="removeID">Remove Selected</button>
             </div>
           </table>
+          <div>
+            <label>Gcash Number:</label>
+            <label><?php echo $rowGcash['mobile_no'] ?></label>
+          </div>
           <div>
             <label>Total Cost:</label>
             <input type="text" id="total_id" size="6" value="<?php

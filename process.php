@@ -812,6 +812,76 @@ if (isset($_POST['monthlyDuesUpdate'])) {
   header("Location: settingsMonthlydues.php");
 }
 
+// GCASH NUMBER ADD
+if (isset($_POST['gcashAdd'])) {
+  $subdivision = $_POST['subdivision'];
+  $gcash_no = $_POST['gcash_no'];
+
+  $sql = "INSERT INTO gcash(subdivision, mobile_no) VALUES ('$subdivision','$gcash_no')";
+  $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Added a gcash number', NOW())";
+  mysqli_query($con, $sqlAudit);
+  mysqli_query($con, $sql);
+  header("Location: settingsGcash.php");
+}
+
+// SELECTING A ROW TO EDIT GCASH NUMBER
+if (isset($_GET['gcash_id'])) {
+  $gcash_id = $_GET['gcash_id'];
+  $result = $con->query("SELECT * FROM gcash WHERE gcash_id = '$gcash_id'");
+  if ($result->num_rows) {
+    $row = $result->fetch_array();
+    $subdivision_name = $row['subdivision'];
+    $gcash_no = $row['mobile_no'];
+  }
+}
+
+// UPDATING A ROW GCASH NUMBER
+if (isset($_POST['gcashUpdate'])) {
+  $gcash_id = $_POST['gcash_id'];
+  $subdivision_name = $_POST['subdivision'];
+  $gcash_no = $_POST['gcash_no'];
+
+  $con->query("UPDATE gcash SET subdivision = '$subdivision_name', mobile_no = '$gcash_no' WHERE gcash_id = '$gcash_id'");
+  $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Updated a gcash number', NOW())";
+  mysqli_query($con, $sqlAudit);
+  header("Location: settingsGcash.php");
+}
+
+// STICKER PRICE ADD
+if (isset($_POST['stickerAdd'])) {
+  $subdivision = $_POST['subdivision'];
+  $sticker_price = $_POST['sticker_price'];
+
+  $sql = "INSERT INTO sticker(subdivision, cost) VALUES ('$subdivision','$sticker_price')";
+  $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Added a sticker price', NOW())";
+  mysqli_query($con, $sqlAudit);
+  mysqli_query($con, $sql);
+  header("Location: settingsSticker.php");
+}
+
+// SELECTING A ROW TO EDIT STICKER PRICE
+if (isset($_GET['sticker_id'])) {
+  $sticker_id = $_GET['sticker_id'];
+  $result = $con->query("SELECT * FROM sticker WHERE sticker_id = '$sticker_id'");
+  if ($result->num_rows) {
+    $row = $result->fetch_array();
+    $subdivision_name = $row['subdivision'];
+    $sticker_price = $row['cost'];
+  }
+}
+
+// UPDATING A ROW STICKER PRICE
+if (isset($_POST['stickerUpdate'])) {
+  $sticker_id = $_POST['sticker_id'];
+  $subdivision_name = $_POST['subdivision'];
+  $sticker_price = $_POST['sticker_price'];
+
+  $con->query("UPDATE sticker SET subdivision = '$subdivision_name', cost = '$sticker_price' WHERE sticker_id = '$sticker_id'");
+  $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Updated a sticker price', NOW())";
+  mysqli_query($con, $sqlAudit);
+  header("Location: settingsSticker.php");
+}
+
 
 // SYSTEM ACCOUNT ADD
 if (isset($_POST['sysAccAdd'])) {
@@ -1775,9 +1845,9 @@ if (isset($_POST['stickerVehicleAdmin'])) {
   $quantity1 = $_POST['quantity1'];
   $total_cost = $_POST['total_cost1'];
 
-    $sql1 = "INSERT INTO transaction (user_id, name, total_cost, quantity, payment_proof, transaction_type, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', '$quantity', NULL, 'Vehicle Sticker', 'Paid')";
-    $result1 = mysqli_query($con, $sql1);
-    $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Bought a vehicle sticker', NOW())";
-    mysqli_query($con, $sqlAudit);
-    header("Location: vehicleSticker.php");
+  $sql1 = "INSERT INTO transaction (user_id, name, total_cost, quantity, payment_proof, transaction_type, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', '$quantity', NULL, 'Vehicle Sticker', 'Paid')";
+  $result1 = mysqli_query($con, $sql1);
+  $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Bought a vehicle sticker', NOW())";
+  mysqli_query($con, $sqlAudit);
+  header("Location: vehicleSticker.php");
 }
