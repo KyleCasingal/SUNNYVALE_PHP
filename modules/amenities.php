@@ -358,15 +358,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
 
   .treasurer {
     width: 100%;
-    max-width: 90%;
-    max-height: 100%;
-    margin: 0;
-    justify-self: center;
-    align-self: center;
-  }
-  
-
-  body {
     display: flex;
   }
 
@@ -539,8 +530,7 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
       $("#from2").removeAttr("required");
       $("#to1").removeAttr("required");
       $("#to2").removeAttr("required");
-      $("#to3").removeAttr("required");
-
+      $("#subdivision_id").removeAttr("required");
       $("#amenity_id").removeAttr("required");
       $("#purpose_id").removeAttr("required");
     });
@@ -583,196 +573,191 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
     </div>
   </div>
 
-  <div class="amenity-forms">
-    <form method="post" enctype="multipart/form-data">
+      <form method="post" enctype="multipart/form-data">
+        <div class='amenities'>
+          <div class="amenitiesForm">
+            <label>Name</label>
+            <input type="text" name="renter_name" id="name"  value="<?php echo $row['full_name'] ?>" required />
 
-
-
-
-
-
-      <div class='amenities'>
-        <div class="amenitiesForm">
-          <label>Name</label>
-          <input type="text" name="renter_name" id="name" value="<?php echo $row['full_name'] ?>" readonly />
-
-          <label>Subdivision</label>
-          <select name="subdivision" id="subdivision_id" required>
-            <option value="0" selected="selected">Select...</option>
-            <?php
-            while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
-              echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
-            }
-            ?>
-          </select>
-          <label>Amenity</label>
-          <select name="amenity" id="amenity_id" required>
-            <option value="0">Select Subdivision first...</option>
-          </select>
-          <label>Purpose</label>
-          <select name="purpose" id="purpose_id" required>
-            <option value="0">Select Amenity first...</option>
-          </select>
-          <label>Rate per Hour</label>
-          <div>
-            <label>Day</label>
-            <input type="text" id="day_id" size="6" readonly>
-            <label>Night</label>
-            <input type="text" id="night_id" size="6" readonly>
-            <label>Night rate starts at 6pm</label>
-          </div>
-          <button class="btnSubmit" name="addToCart" id="add">Add</button>
-
-          <br>
-        </div>
-        <div class='amenitiesForm'>
-          <label>Availed Services</label>
-          <table class="tblAmenity">
-            <tr>
-              <th><input type="checkbox" name="select-all" id="select-all" /></th>
-              <th>Renter</th>
-              <th>Subdivision</th>
-              <th>Amenity</th>
-              <th>Purpose</th>
-              <th>From</th>
-              <th>To</th>
-              <th>Cost</th>
-            </tr>
-            <?php while ($row = $resultRes->fetch_assoc()) : ?>
-              <tr>
-                <td>
-                  <input type="checkbox" value=<?php echo $row['amenity_renting_id']; ?> name="checkbox[]" id="checkbox">
-                </td>
-                <td>
-                  <?php echo $row['renter_name'] ?>
-                </td>
-                <td>
-                  <?php echo $row['subdivision_name'] ?>
-                </td>
-                <td>
-                  <?php echo $row['amenity_name'] ?>
-                </td>
-                <td>
-                  <?php
-                  $amenity_purpose_id = $row['amenity_purpose'];
-                  $resultPurpose = $con->query("SELECT * FROM amenity_purpose WHERE amenity_purpose_id = '$amenity_purpose_id'");
-                  $rowPurpose = $resultPurpose->fetch_assoc();
-                  echo $rowPurpose['amenity_purpose'];
-                  ?>
-                </td>
-                <td>
-                  <?php
-                  if ($row['date_from'] != NULL) {
-                    $date = $row['date_from'];
-                    echo date('m/d/Y h:ia ', strtotime($date));
-                  } else {
-                    echo $row['date_from'];
-                  }
-                  ?>
-                </td>
-                <td>
-                  <?php
-                  if ($row['date_to'] != NULL) {
-                    $date = $row['date_to'];
-                    echo date('m/d/Y h:ia ', strtotime($date));
-                  } else {
-                    echo $row['date_to'];
-                  }
-                  ?>
-                </td>
-                <td>
-                  <?php echo $row['cost'] ?>
-                </td>
-              </tr>
-            <?php endwhile; ?>
-            <div><label>Date</label>
-              <input required id="date1" type="date" name="date" <?php
-                                                                  if (isset($_POST['compute'])) {
-                                                                    $date = $_POST['date'];
-                                                                    echo "value = '$date'";
-                                                                  }
-                                                                  $date = date('Y-m-d', strtotime('today'));
-                                                                  echo "min='$date'"
-                                                                  ?>>
-            </div>
-            <div class="timeinput">
-              <label>Time</label>
-              <select name="hrFrom" id="from1" required>
-                <option value="">hr</option>
-                <?php
-                for ($x = 1; $x <= 12; $x++) {
-                  $x = sprintf("%02d", $x);
-                  echo "<option value='$x'>$x";
-                }
-                ?>
-              </select>
-              <select name="minsFrom" id="from3" required>
-                <option value="">mins</option>
-                <?php
-                for ($x = 0; $x <= 59; $x++) {
-                  $x = sprintf("%02d", $x);
-                  echo "<option value='$x'>$x";
-                }
-                ?>
-              </select>
-              <select name="ampmFrom" id="from2" required>
-                <option value="">am/pm</option>
-                <option value="am">am</option>
-                <option value="pm">pm</option>
-              </select>
-              <label>To</label>
-              <select name="hrTo" id="to1" required>
-                <option value="">hr</option>
-                <?php
-                for ($x = 1; $x <= 12; $x++) {
-                  $x = sprintf("%02d", $x);
-                  echo "<option value='$x'> $x ";
-                }
-                ?>
-              </select>
-              <select name="minsTo" id="to3" required>
-                <option value="">mins</option>
-                <?php
-                for ($x = 0; $x <= 59; $x++) {
-                  $x = sprintf("%02d", $x);
-                  echo "<option value='$x'>$x";
-                }
-                ?>
-              </select>
-              </option>
-              <select name="ampmTo" id="to2" required>
-                <option value="">am/pm</option>
-                <option value="am">am</option>
-                <option value="pm">pm</option>
-              </select>
-            </div>
+            <label>Subdivision</label>
+            <select name="subdivision" id="subdivision_id" required>
+              <option value="0" selected="selected">Select...</option>
+              <?php
+              while ($rowSubdivision = $resultSubdivision->fetch_assoc()) {
+                echo '<option value="' . $rowSubdivision['subdivision_id'] . '">' . $rowSubdivision['subdivision_name'] . '</option>';
+              }
+              ?>
+            </select>
+            <label>Amenity</label>
+            <select name="amenity" id="amenity_id" required>
+              <option value="0">Select Subdivision first...</option>
+            </select>
+            <label>Purpose</label>
+            <select name="purpose" id="purpose_id" required>
+              <option value="0">Select Amenity first...</option>
+            </select>
+            <label>Rate per Hour</label>
             <div>
-              <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>
-              <button class="btnCompute" name="removeSelected" id="removeID">Remove Selected</button>
+              <label>Day</label>
+              <input type="text" id="day_id" size="6" readonly>
+              <label>Night</label>
+              <input type="text" id="night_id" size="6" readonly>
+              <label>Night rate starts at 6pm</label>
             </div>
-          </table>
-          <div>
-            <label>Gcash Number:</label>
-            <label><?php echo $rowGcash['mobile_no'] ?></label>
+            <button class="btnSubmit" name="addToCart" id="add">Add</button>
+
+            <br>
           </div>
-          <div>
-            <label>Total Cost:</label>
-            <input type="text" id="total_id" size="6" value="<?php
-                                                              $rowTotal = $resultTotal->fetch_assoc();
-                                                              echo $rowTotal['total_cost'];
-                                                              ?>" readonly>
-            <div class="paymentForm">
-              <label class="writeText">Upload proof of payment here:</label>
-              <div class="BlogWrite">
-                <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()" required></input>
-                <img class="imagePrev" id="imagePreview" src=# alt="" />
+          <div class='amenitiesForm'>
+            <label>Availed Services</label>
+            <table class="tblAmenity">
+              <tr>
+                <th><input type="checkbox" name="select-all" id="select-all" /></th>
+                <th>Renter</th>
+                <th>Subdivision</th>
+                <th>Amenity</th>
+                <th>Purpose</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Cost</th>
+              </tr>
+              <?php while ($row = $resultRes->fetch_assoc()) : ?>
+                <tr>
+                  <td>
+                    <input type="checkbox" value=<?php echo $row['amenity_renting_id']; ?> name="checkbox[]" id="checkbox">
+                  </td>
+                  <td>
+                    <?php echo $row['renter_name'] ?>
+                  </td>
+                  <td>
+                    <?php echo $row['subdivision_name'] ?>
+                  </td>
+                  <td>
+                    <?php echo $row['amenity_name'] ?>
+                  </td>
+                  <td>
+                    <?php
+                    $amenity_purpose_id = $row['amenity_purpose'];
+                    $resultPurpose = $con->query("SELECT * FROM amenity_purpose WHERE amenity_purpose_id = '$amenity_purpose_id'");
+                    $rowPurpose = $resultPurpose->fetch_assoc();
+                    echo $rowPurpose['amenity_purpose'];
+                    ?>
+                  </td>
+                  <td>
+                    <?php
+                    if ($row['date_from'] != NULL) {
+                      $date = $row['date_from'];
+                      echo date('m/d/Y h:ia ', strtotime($date));
+                    } else {
+                      echo $row['date_from'];
+                    }
+                    ?>
+                  </td>
+                  <td>
+                    <?php
+                    if ($row['date_to'] != NULL) {
+                      $date = $row['date_to'];
+                      echo date('m/d/Y h:ia ', strtotime($date));
+                    } else {
+                      echo $row['date_to'];
+                    }
+                    ?>
+                  </td>
+                  <td>
+                    <?php echo $row['cost'] ?>
+                  </td>
+                </tr>
+              <?php endwhile; ?>
+              <div><label>Date</label>
+                <input required id="date1" type="date" name="date" <?php
+                                                                    if (isset($_POST['compute'])) {
+                                                                      $date = $_POST['date'];
+                                                                      echo "value = '$date'";
+                                                                    }
+                                                                    $date = date('Y-m-d', strtotime('today'));
+                                                                    echo "min='$date'"
+                                                                    ?>>
               </div>
-              <label for="image" class="upload">Upload Photo</label>
+              <div class="timeinput">
+                <label>Time</label>
+                <select name="hrFrom" id="from1" required>
+                  <option value="">hr</option>
+                  <?php
+                  for ($x = 1; $x <= 12; $x++) {
+                    $x = sprintf("%02d", $x);
+                    echo "<option value='$x'>$x";
+                  }
+                  ?>
+                </select>
+                <select name="minsFrom" id="from3" required>
+                  <option value="">mins</option>
+                  <?php
+                  for ($x = 0; $x <= 59; $x++) {
+                    $x = sprintf("%02d", $x);
+                    echo "<option value='$x'>$x";
+                  }
+                  ?>
+                </select>
+                <select name="ampmFrom" id="from2" required>
+                  <option value="">am/pm</option>
+                  <option value="am">am</option>
+                  <option value="pm">pm</option>
+                </select>
+                <label>To</label>
+                <select name="hrTo" id="to1" required>
+                  <option value="">hr</option>
+                  <?php
+                  for ($x = 1; $x <= 12; $x++) {
+                    $x = sprintf("%02d", $x);
+                    echo "<option value='$x'> $x ";
+                  }
+                  ?>
+                </select>
+                <select name="minsTo" id="to3" required>
+                  <option value="">mins</option>
+                  <?php
+                  for ($x = 0; $x <= 59; $x++) {
+                    $x = sprintf("%02d", $x);
+                    echo "<option value='$x'>$x";
+                  }
+                  ?>
+                </select>
+                </option>
+                <select name="ampmTo" id="to2" required>
+                  <option value="">am/pm</option>
+                  <option value="am">am</option>
+                  <option value="pm">pm</option>
+                </select>
+              </div>
+              <div>
+                <label>Total Hours:</label>
+                <input type="text" id="total_id" size="6">
+              </div>
+              <div>
+                <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>
+                <button class="btnCompute" name="removeSelected" id="removeID">Remove Selected</button>
+              </div>
+            </table>
+            <div>
+              <label>Total Cost:</label>
+              <input type="text" id="total_id" size="6" value="<?php
+                                                                $rowTotal = $resultTotal->fetch_assoc();
+                                                                echo $rowTotal['total_cost'];
+                                                                ?>" readonly>
+              <!-- <div class="paymentForm">
+                <label class="writeText">Upload proof of payment here:</label>
+                <div class="BlogWrite">
+                  <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()" required></input>
+                  <img class="imagePrev" id="imagePreview" src=# alt="" />
+                </div>
+                <label for="image" class="upload">Upload Photo</label>
+              </div> -->
+              <button class="btnSubmit" name="checkout" id="checkout_id">Checkout All</button>
             </div>
-            <button class="btnSubmit" name="checkout" id="checkout_id">Checkout All</button>
           </div>
         </div>
-      </div>
+
+    </div>
     </form>
   </div>
 
