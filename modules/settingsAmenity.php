@@ -459,7 +459,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                             <tr>
                                 <td>Amenity:</td>
                                 <td>
-                                    <input name="newAmenity" value="<?php echo $amenity_name ?? ''; ?>" type="text" placeholder="new amenity" required />
+                                    <input name="newAmenity" value="<?php echo $amenity_name ?? ''; ?>" type="text" placeholder="new amenity"  required />
                                 </td>
                             </tr>
                             <tr>
@@ -774,6 +774,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
             </div>
         </div>
     </div>
+    
     <?php
     require '../marginals/footer2.php'
     ?>

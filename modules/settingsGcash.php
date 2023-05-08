@@ -407,7 +407,7 @@ if ($_SESSION['subdivision'] != '') {
             <label class="lblSettings">Gcash</label>
             <div class="settingsMonthlyDues" id="settingsMonthlyDues">
                 <div class="addAmenityForm">
-                    <form method="post" autocomplete="off">
+                <form action="" method="POST">
                         <input type="hidden" name="gcash_id" value="<?php echo $gcash_id ?? ''; ?>">
                         <table class="tblAmenityForm">
                             <tr>
@@ -430,7 +430,7 @@ if ($_SESSION['subdivision'] != '') {
                             <tr>
                                 <td>Gcash Number:</td>
                                 <td>
-                                    <input name="gcash_no" value="<?php echo $gcash_no ?? '' ?>" type="text" placeholder="gcash number" required />
+                                    <input name="gcash_no" value="<?php echo $gcash_no ?? '' ?>" type="text" placeholder="gcash number" id="gcash" required />
                                 </td>
                             </tr>
                         </table>
@@ -534,6 +534,15 @@ if ($_SESSION['subdivision'] != '') {
             </div>
         </div>
     </div>
+    <script>
+        var el = document.getElementById("gcash");
+    el.addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        // alert(event.key  + " " + event.which);
+        event.preventDefault();
+      }
+    });
+    </script>
     <?php
     require '../marginals/footer2.php'
     ?>

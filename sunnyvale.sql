@@ -2,8 +2,8 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3307
--- Generation Time: May 08, 2023 at 06:11 PM
+-- Host: 127.0.0.1:3306
+-- Generation Time: May 08, 2023 at 10:21 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `audit_trail` (
   `action` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`audit_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=102 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `audit_trail`
@@ -268,7 +268,9 @@ INSERT INTO `audit_trail` (`audit_id`, `user`, `action`, `datetime`) VALUES
 (96, 'Super_Admin', 'Added a sticker price', '2023-05-08 18:06:51'),
 (97, 'Super_Admin', 'Added a sticker price', '2023-05-08 18:07:41'),
 (98, 'Super_Admin', 'Added a sticker price', '2023-05-08 18:08:54'),
-(99, 'Super_Admin', 'Logged out', '2023-05-08 18:09:35');
+(99, 'Super_Admin', 'Logged out', '2023-05-08 18:09:35'),
+(100, 'SV1_Admin', 'Added a gcash number', '2023-05-08 18:13:02'),
+(101, 'SV1_Admin', 'Added a gcash number', '2023-05-08 18:17:32');
 
 -- --------------------------------------------------------
 
@@ -644,7 +646,7 @@ CREATE TABLE IF NOT EXISTS `gcash` (
   `subdivision` varchar(50) NOT NULL,
   `mobile_no` varchar(20) NOT NULL,
   PRIMARY KEY (`gcash_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `gcash`
