@@ -26,7 +26,7 @@ if (isset($_SESSION['user_id'])) {
         margin-bottom: 0;
         padding: 0;
         width: 100%;
-        height: 6vw;
+        height: 6rem;
         background-color: rgba(255, 253, 245, 0);
         position: sticky;
         top: 0;
@@ -39,7 +39,7 @@ if (isset($_SESSION['user_id'])) {
 
 
     .topLeftRegister {
-        flex: 3;
+        flex: 1;
         display: flex;
         align-items: center;
         justify-content: flex-start;
@@ -47,7 +47,7 @@ if (isset($_SESSION['user_id'])) {
     }
 
     .topLeftRegister img {
-        max-height: 5vw;
+        max-height: 4rem;
     }
 
     .topRightRegister {
@@ -61,8 +61,12 @@ if (isset($_SESSION['user_id'])) {
 
     }
 
+    .topRightRegister {
+        width: 100%;
+    }
+
     .topRightRegister p {
-        font-size: 1vw;
+        font-size: 1vmax;
         margin: 0;
     }
 
@@ -75,8 +79,8 @@ if (isset($_SESSION['user_id'])) {
 
     .topIconRegister {
         color: white;
-        font-size: 2.5vw;
-        margin-right: 1vw;
+        font-size: 3vmax;
+        margin-right: 10px;
         font-family: "Poppins", sans-serif;
         font-style: normal;
         cursor: pointer;
@@ -206,14 +210,13 @@ if (isset($_SESSION['user_id'])) {
     }
 
     .loginButtonReg {
-        font-size: 0.9vw;
+        font-size: 1vmax;
         cursor: pointer;
         background-color: darkseagreen;
         border: none;
         color: white;
-        border-radius: 10px;
-        border-radius: 0.6vw;
-        padding: 0.8em;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
     }
 
     .loginButtonReg:focus {
