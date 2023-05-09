@@ -390,7 +390,10 @@ if ($_SESSION['subdivision'] != '') {
                                     <td id=""><?php echo $row1['full_name'] ?></td>
                                 </tr>
                                 <tr>
-                                    <td>Tenant Name</td>
+                           
+                                    <td>First Name</td>
+                                    <td>Middle Name</td>
+                                    <td>Last Name</td>
                                     <td>Birthdate</td>
                                     <td>Sex</td>
                                     <td>Email</td>
@@ -398,7 +401,9 @@ if ($_SESSION['subdivision'] != '') {
                                 </tr>
                                 <?php while ($row1 = $resultComplaints1->fetch_assoc()) : ?>
                                     <tr>
-                                        <td id=""><?php echo $row1['full_name'] ?></td>
+                                        <td id=""><?php echo $row1['first_name'] ?></td>
+                                        <td id=""><?php echo $row1['middle_name'] ?></td>
+                                        <td id=""><?php echo $row1['last_name'] ?></td>
                                         <td><?php echo $row1['birthdate'] ?></td>
                                         <td><?php echo $row1['sex'] ?></td>
                                         <td><?php echo $row1['email'] ?></td>

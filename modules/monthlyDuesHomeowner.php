@@ -274,7 +274,7 @@ $resultBilling = $con->query(
           <div class="table-area">
             <table class="Homeowner-table" id="Homeowner_table">
               <thead class="thead-bills-table">
-                <th> <input type="checkbox" name="" id=""> </th>
+                <th> <input type="checkbox" name="" id="select-all"> </th>
                 <th>Month</th>
                 <th>Year</th>
                 <th>Amount</th>
@@ -375,6 +375,18 @@ $resultBilling = $con->query(
   $("#image").change(function() {
     readURL(this, 'imagePreview');
   });
+  $('#select-all').click(function(event) {
+      if (this.checked) {
+        // Iterate each checkbox
+        $(':checkbox').each(function() {
+          this.checked = true;
+        });
+      } else {
+        $(':checkbox').each(function() {
+          this.checked = false;
+        });
+      }
+    });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 

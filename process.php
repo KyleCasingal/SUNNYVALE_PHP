@@ -1894,7 +1894,7 @@ if (isset($_POST['stickerVehicleAdmin'])) {
   $quantity1 = $_POST['quantity1'];
   $total_cost = $_POST['total_cost1'];
 
-  $sql1 = "INSERT INTO transaction (user_id, name, total_cost, quantity, payment_proof, transaction_type, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', '$quantity', NULL, 'Vehicle Sticker', 'Paid')";
+  $sql1 = "INSERT INTO transaction (user_id, name, total_cost, quantity, payment_proof, transaction_type, status, datetime) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', '$quantity', NULL, 'Vehicle Sticker', 'Paid', NOW())";
   $result1 = mysqli_query($con, $sql1);
   $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Bought a vehicle sticker', NOW())";
   mysqli_query($con, $sqlAudit);
