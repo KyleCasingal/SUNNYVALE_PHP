@@ -531,8 +531,10 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
       $("#date1").removeAttr("required");
       $("#from1").removeAttr("required");
       $("#from2").removeAttr("required");
+      $("#from3").removeAttr("required");
       $("#to1").removeAttr("required");
       $("#to2").removeAttr("required");
+      $("#to3").removeAttr("required");
       $("#subdivision_id").removeAttr("required");
       $("#amenity_id").removeAttr("required");
       $("#purpose_id").removeAttr("required");
@@ -732,10 +734,6 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
                     <option value="am">am</option>
                     <option value="pm">pm</option>
                   </select>
-                </div>
-                <div>
-                  <label>Total Hours:</label>
-                  <input type="text" id="total_id" size="6">
                 </div>
                 <div>
                   <button class="btnSubmit" name="applyDateTime" id="dateTime">Apply to Selected</button>
