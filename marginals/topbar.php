@@ -537,11 +537,11 @@ $rowGcash = $resultGcash->fetch_assoc();
             </div>
             <div class="concernSubject">
               <label class="lbl-concern-text">Proof of Payment:</label>
-              <input class='attInput' type='file' name='image' id='image' accept='image/*' onchange='preview()' required></input>
+              <input class='attInput' type='file' name='image' id='image1' accept='image/*' onchange='preview()' required></input>
               <img class='imagePrev' id='imagePreview1' src=# alt='' />
             </div>
             <div class="concernSubject">
-              <label for='image' class='upload'>Upload Photo</label>
+              <label for='image1' class='upload'>Upload Photo</label>
             </div>
           </div>
           <div class="modal-footer">
@@ -591,7 +591,7 @@ $rowGcash = $resultGcash->fetch_assoc();
     }
   }
 
-  $("#image").change(function() {
+  $("#image1").change(function() {
     readURL(this, 'imagePreview1');
   });
 </script>

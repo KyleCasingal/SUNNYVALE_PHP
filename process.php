@@ -1137,13 +1137,11 @@ if (isset($_POST['editProfilePhoto'])) {
     copy($_FILES['image']['tmp_name'], $targetFilePath);
   }
 
-  $resultID = $con->query("SELECT * FROM user WHERE user_id = '" . $_SESSION['user_id'] . "'");
-  $rowID = $resultID->fetch_assoc();
 
   $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Updated their profile photo', NOW())";
   mysqli_query($con, $sqlAudit);
 
-  $sql = "UPDATE homeowner_profile SET display_picture = '" . $fileName . "' WHERE homeowner_id = '" . $rowID['user_homeowner_id'] . "'";
+  $sql = "UPDATE user SET display_picture = '" . $fileName . "' WHERE user_id = '" . $_SESSION['user_id'] . "'";
   mysqli_query($con, $sql);
   echo "<div class='messageSuccess'>
         <label >
@@ -1878,10 +1876,10 @@ if (isset($_POST['stickerVehicle'])) {
   $total_cost = $_POST['total_cost'];
 
   $targetDir = '../media/paymentProof/';
-  $fileName = '' . $_FILES['image']['name'];
+  $fileName = '' . $_FILES['image1']['name'];
   $targetFilePath = $targetDir . $fileName;
 
-  if (copy($_FILES['image']['tmp_name'], $targetFilePath)) {
+  if (copy($_FILES['image1']['tmp_name'], $targetFilePath)) {
     $sql1 = "INSERT INTO transaction (user_id, name, total_cost, quantity, payment_proof, transaction_type, status) VALUES('" . $rowUserID['user_id'] . "', '" . $rowUserID['full_name'] . "', '$total_cost', '$quantity', '$fileName', 'Vehicle Sticker', 'Pending')";
     $result1 = mysqli_query($con, $sql1);
     $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Bought a vehicle sticker', NOW())";
