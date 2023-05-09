@@ -758,7 +758,7 @@ if ($_SESSION['subdivision'] != '') {
                                                                                                         echo $phptime = date("g:i A m/d/y", $datetime);
                                                                                                         ?></td>
             <td>
-              
+
             </td>
           </tr>
         <?php endwhile; ?>
@@ -805,30 +805,30 @@ if ($_SESSION['subdivision'] != '') {
             </tr>
           </table>
           <div class="modal-footer footer-announcement">
-          <?php
-              if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary' or $rowUser['user_type'] == 'Super Admin') {
-              ?>
-                <button type="button" class='archive-btn' name="archive" id="archive1" data-bs-toggle="modal" data-bs-target="#confirmArchive<?php echo $row1['post_id'] ?>">ARCHIVE</button>
-                <div class="modal fade" id="confirmArchive<?php echo $row['post_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        Do you really want to Archive?
-                      </div>
-                      <div class="modal-footer">
-                        <a href='../process.php?post_archive=<?php echo $row['post_id'] ?>' class="btn btn-success">Yes</a>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                      </div>
+            <?php
+            if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary' or $rowUser['user_type'] == 'Super Admin') {
+            ?>
+              <button type="button" class='archive-btn' name="" id="archive1" data-bs-toggle="modal" data-bs-target="#confirmArchive<?php echo $row1['post_id'] ?>">ARCHIVE</button>
+              <div class="modal fade" id="confirmArchive<?php echo $row1['post_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Do you really want to Archive?
+                    </div>
+                    <div class="modal-footer">
+                      <a href='../process.php?post_archive=<?php echo $row1['post_id'] ?>' class="btn btn-success">Yes</a>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                     </div>
                   </div>
                 </div>
-              <?php
-              }
-              ?>
+              </div>
+            <?php
+            }
+            ?>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Close
             </button>
