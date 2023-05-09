@@ -137,6 +137,7 @@ $resultBillConsumer1 = $con->query("SELECT DISTINCT bill_consumer.transaction_id
     max-height: 20vw;
     margin-bottom: 1vw;
   }
+  
 
   .btnSubmit {
     background-color: darkseagreen;

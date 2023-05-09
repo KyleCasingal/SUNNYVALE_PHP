@@ -6,14 +6,14 @@ if ($_SESSION['user_type'] != 'Admin' and $_SESSION['user_type'] != 'Secretary' 
 }
 
 if ($_SESSION['subdivision'] != '') {
-    $res = $con->query("SELECT * FROM user, homeowner_profile WHERE user.subdivision = '" . $_SESSION['subdivision'] . "' AND homeowner_id = user_homeowner_id AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+    $res = $con->query("SELECT * FROM user WHERE user.subdivision = '" . $_SESSION['subdivision'] . "'  AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
     //ACCOUNT MANAGEMENT SORT, ACTIVATE, DEACTIVATE
     $status_filter = $_POST['status_filter'] ?? '';
     if (isset($_POST['filterButton'])) {
         if ($status_filter == 'Activated') {
-            $res = $con->query("SELECT * FROM user, homeowner_profile WHERE subdivision = '" . $_SESSION['subdivision'] . "' AND homeowner_id = user_homeowner_id AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+            $res = $con->query("SELECT * FROM user WHERE subdivision = '" . $_SESSION['subdivision'] . "'  AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
         } elseif ($status_filter == 'Deactivated') {
-            $res = $con->query("SELECT * FROM user, homeowner_profile WHERE subdivision = '" . $_SESSION['subdivision'] . "' AND homeowner_id = user_homeowner_id AND account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+            $res = $con->query("SELECT * FROM user WHERE subdivision = '" . $_SESSION['subdivision'] . "'  AND account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
         }
     }
     if (isset($_POST['activate'])) {
@@ -65,20 +65,20 @@ if ($_SESSION['subdivision'] != '') {
             echo 'Please select an account to deactivate!';
         }
         if ($status_filter == 'Activated') {
-            $res = $con->query("SELECT * FROM user, homeowner_profile WHERE subdivision = '" . $_SESSION['subdivision'] . "' AND homeowner_id = user_homeowner_id AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+            $res = $con->query("SELECT * FROM user WHERE subdivision = '" . $_SESSION['subdivision'] . "'  AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
         } else if ($status_filter == 'Deactivated') {
-            $res = $con->query("SELECT * FROM user, homeowner_profile WHERE subdivision = '" . $_SESSION['subdivision'] . "' AND homeowner_id = user_homeowner_id AND account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+            $res = $con->query("SELECT * FROM user WHERE subdivision = '" . $_SESSION['subdivision'] . "'  AND account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
         }
     }
 } else {
-    $res = $con->query("SELECT * FROM user, homeowner_profile WHERE homeowner_id = user_homeowner_id AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER  by user_id ASC") or die($mysqli->error);
+    $res = $con->query("SELECT * FROM user WHERE  account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER  by user_id ASC") or die($mysqli->error);
     //ACCOUNT MANAGEMENT SORT, ACTIVATE, DEACTIVATE
     $status_filter = $_POST['status_filter'] ?? '';
     if (isset($_POST['filterButton'])) {
         if ($status_filter == 'Activated') {
-            $res = $con->query("SELECT * FROM user, homeowner_profile WHERE homeowner_id = user_homeowner_id AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+            $res = $con->query("SELECT * FROM user WHERE  account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
         } elseif ($status_filter == 'Deactivated') {
-            $res = $con->query("SELECT * FROM user, homeowner_profile WHERE homeowner_id = user_homeowner_id AND account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+            $res = $con->query("SELECT * FROM user WHERE  account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
         }
     }
     if (isset($_POST['activate'])) {
@@ -130,9 +130,9 @@ if ($_SESSION['subdivision'] != '') {
             echo 'Please select an account to deactivate!';
         }
         if ($status_filter == 'Activated') {
-            $res = $con->query("SELECT * FROM user, homeowner_profile WHERE homeowner_id = user_homeowner_id AND account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+            $res = $con->query("SELECT * FROM user WHERE  account_status = 'Activated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
         } else if ($status_filter == 'Deactivated') {
-            $res = $con->query("SELECT * FROM user, homeowner_profile WHERE homeowner_id = user_homeowner_id AND account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
+            $res = $con->query("SELECT * FROM user WHERE  account_status = 'Deactivated' AND email_verified_at IS NOT NULL ORDER by user_id ASC") or die($mysqli->error);
         }
     }
 }
