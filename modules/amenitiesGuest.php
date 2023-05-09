@@ -831,6 +831,19 @@ $rowGcash = $resultGcash->fetch_assoc();
 <script type="text/javascript" src="js/events.js"></script>
 <!-- SCRIPTS -->
 <script>
+  $('#select-all').click(function(event) {
+    if (this.checked) {
+      // Iterate each checkbox
+      $(':checkbox').each(function() {
+        this.checked = true;
+      });
+    } else {
+      $(':checkbox').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+
   function readURL(input, id) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();

@@ -1219,7 +1219,7 @@ if (isset($_POST['purpose_id'])) {
 // ADDING TO CART AMENITIES
 
 if (isset($_POST['addToCart'])) {
-  if (isset($_SESSION['guestName'])) {
+  if ($_SESSION['user_type'] == 'Guest') {
     $renter_name = $_POST['renter_name'];
     $subdivision_id = $_POST['subdivision'];
     $amenity_id = $_POST['amenity'];
@@ -1279,52 +1279,57 @@ if (isset($_POST['applyDateTime'])) {
   $dateTimeFrom = $date . " " . $timeFrom;
   $dateTimeTo = $date . " " . $timeTo;
   if (isset($_POST['checkbox'])) {
-    foreach ($_POST['checkbox'] as $amenity_renting_id) {
 
-      $resultID = $con->query("SELECT * FROM amenity_renting WHERE amenity_renting_id = '$amenity_renting_id'");
-      $rowID = $resultID->fetch_assoc();
+    if ($_POST['hrTo'] >= 6 and $_POST['hrTo'] < 12 and $_POST['ampmTo'] == 'pm') {
+      $nightStart = strtotime('18:00');
 
-      $resultRate = $con->query("SELECT * FROM amenity_purpose WHERE amenity_purpose_id = '" . $rowID['amenity_purpose'] . "'");
-      $rowRate = $resultRate->fetch_assoc();
-      if ($_POST['hrTo'] >= 6 and $_POST['hrTo'] < 12 and $_POST['ampmTo'] == 'pm') {
+      $timeTo = strtotime($timeTo);
+      $nightDifference = ($timeTo - $nightStart);
+      $totalNightHrs = ($nightDifference / 3600);
 
-        $nightStart = strtotime('18:00');
+      $timeFrom = strtotime($timeFrom);
+      $dayDifference = ($nightStart - $timeFrom);
+      $totalDayHrs = ($dayDifference / 3600);
 
-        $timeTo = strtotime($timeTo);
-        $nightDifference = ($timeTo - $nightStart);
-        $totalNightHrs = ($nightDifference / 3600);
 
-        $timeFrom = strtotime($timeFrom);
-        $dayDifference = ($nightStart - $timeFrom);
-        $totalDayHrs = ($dayDifference / 3600);
+      foreach ($_POST['checkbox'] as $amenity_renting_id) {
+        $resultRate = $con->query("SELECT * FROM amenity_renting, amenity_purpose WHERE amenity_renting_id = '$amenity_renting_id' AND amenity_renting.amenity_purpose = amenity_purpose.amenity_purpose_id");
+        $rowRate = $resultRate->fetch_assoc();
 
         $nightCost = $totalNightHrs * $rowRate['night_rate'];
         $dayCost = $totalDayHrs * $rowRate['day_rate'];
-        $totalCost = $nightCost + $dayCost;
 
+        $totalCost = $nightCost + $dayCost;
         $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE amenity_renting_id = '$amenity_renting_id'";
         $result = mysqli_query($con, $sql);
-      } else if ($_POST['hrFrom'] >= 6 and $_POST['ampmFrom'] == 'pm' and $_POST['hrTo'] >= 6 and $_POST['ampmTo'] == 'pm') {
+      }
+    } else if ($_POST['hrFrom'] >= 6 and $_POST['ampmFrom'] == 'pm' and $_POST['hrTo'] >= 6 and $_POST['ampmTo'] == 'pm') {
+      $nightStart = strtotime('18:00');
 
-        $nightStart = strtotime('18:00');
+      $timeTo = strtotime($timeTo);
+      $timeFrom = strtotime($timeFrom);
+      $difference = ($timeTo - $timeFrom);
+      $totalHrs = ($difference / 3600);
 
-        $timeTo = strtotime($timeTo);
-        $timeFrom = strtotime($timeFrom);
-        $difference = ($timeTo - $timeFrom);
-        $totalHrs = ($difference / 3600);
+      foreach ($_POST['checkbox'] as $amenity_renting_id) {
+        $resultRate = $con->query("SELECT * FROM amenity_renting, amenity_purpose WHERE amenity_renting_id = '$amenity_renting_id' AND amenity_renting.amenity_purpose = amenity_purpose.amenity_purpose_id");
+        $rowRate = $resultRate->fetch_assoc();
 
         $totalCost = $totalHrs * $rowRate['night_rate'];
-
         $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE amenity_renting_id = '$amenity_renting_id'";
         $result = mysqli_query($con, $sql);
-      } else {
-        $timeTo = strtotime($timeTo);
-        $timeFrom = strtotime($timeFrom);
-        $difference = ($timeTo - $timeFrom);
-        $totalHrs = ($difference / 3600);
+      }
+    } else {
+      $timeTo = strtotime($timeTo);
+      $timeFrom = strtotime($timeFrom);
+      $difference = ($timeTo - $timeFrom);
+      $totalHrs = ($difference / 3600);
+
+      foreach ($_POST['checkbox'] as $amenity_renting_id) {
+        $resultRate = $con->query("SELECT * FROM amenity_renting, amenity_purpose WHERE amenity_renting_id = '$amenity_renting_id' AND amenity_renting.amenity_purpose = amenity_purpose.amenity_purpose_id");
+        $rowRate = $resultRate->fetch_assoc();
 
         $totalCost = $totalHrs * $rowRate['day_rate'];
-
         $sql = "UPDATE amenity_renting SET date_from = '$dateTimeFrom', date_to = '$dateTimeTo', cost='$totalCost' WHERE amenity_renting_id = '$amenity_renting_id'";
         $result = mysqli_query($con, $sql);
       }
@@ -1357,7 +1362,7 @@ if (isset($_POST['checkout'])) {
     $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Checkout', NOW())";
     mysqli_query($con, $sqlAudit);
   }
-  if (isset($_SESSION['guestName'])) {
+  if ($_SESSION['user_type'] == 'Guest') {
     $targetDir = '../media/paymentProof/';
     $fileName = '' . $_FILES['image']['name'];
     $targetFilePath = $targetDir . $fileName;
@@ -1904,6 +1909,8 @@ if (isset($_POST['stickerVehicleAdmin'])) {
 // CREATE SESSION FOR GUEST IN AMENITY
 if (isset($_POST['sessionName'])) {
   $_SESSION['guestName'] = $_POST['guestName'];
+  $_SESSION['user_type'] = 'Guest';
+
   header("Location: ./modules/amenitiesGuest.php");
 }
 
