@@ -33,7 +33,7 @@ if (isset($_SESSION['user_id'])) {
   }
 
   .loginPage {
-    height: calc(100vh - 50px);
+    height: calc(100vh);
     display: flex;
     margin-top: -6rem;
     flex-direction: column;
@@ -76,7 +76,7 @@ if (isset($_SESSION['user_id'])) {
     background-color: white;
     border: none;
     border-radius: 0.5rem;
-    font-size: 1.5vmax;
+    font-size: 1.5vmax !important;
   }
 
   .loginButton {
@@ -160,9 +160,9 @@ if (isset($_SESSION['user_id'])) {
 
     </form>
   </div>
-  <?php
+  <!-- <?php
   require '../marginals/footer2.php';
-  ?>
+  ?> -->
 </body>
 
 </html>

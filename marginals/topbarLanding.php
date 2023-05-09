@@ -1,4 +1,3 @@
-
 <?php
 // include "./process.php";
 
@@ -21,7 +20,7 @@
   }
 
   .topLanding.scrolled {
-    background-color: #2a9d8f !important;
+    background-color: rgba(106, 153, 78) !important;
     transition: background-color 200ms linear;
   }
 
@@ -158,7 +157,7 @@
     </div>
     <div class="topCenterLanding">
       <ul class="topListLanding">
-        <li class="topListItemLanding">HOME</li>
+        <!-- <li class="topListItemLanding">HOME</li> -->
         <li data-bs-toggle="modal" data-bs-target="#raiseConcern" class="topListItemLanding" href="#raiseConcern">AMENITIES</li>
 
         <button class="registerButtonLanding" name="registerButtonLanding" id="registerButtonLanding">

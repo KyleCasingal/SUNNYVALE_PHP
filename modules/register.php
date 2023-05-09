@@ -22,9 +22,9 @@
   }
 
   .register {
-    height: calc(100vh - 50px);
+    height: calc(100vh);
     display: flex;
-    margin-top: -6vw;
+    margin-top: -6rem;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -36,16 +36,15 @@
 
   .registerTitle {
     margin-top: 4.5vw;
-    font-size: 3vw;
+    font-size: 2vmax;
   }
 
   .registerForm {
-    font-size: 0.5vw;
-    padding-top: 0.5vw;
-    padding-bottom: 2vw;
+    padding-top: 2vw;
+    padding-bottom: 3.5vw;
     padding-left: 5vw;
     padding-right: 5vw;
-    border-radius: 0.8vw;
+    border-radius: 1rem;
     background-color: rgba(255, 255, 255, 0.15);
     margin-top: px;
     display: flex;
@@ -54,20 +53,19 @@
   }
 
   .registerForm>label {
-    margin: 0;
+    margin: 0 0;
   }
 
   .registerForm label {
-    margin-top: 0;
-    font-size: 1vw;
+    font-size: 1.5vmax;
   }
 
   .registerInput {
-    margin-bottom: 1vw;
-    padding: 1vw;
+    padding: 0.5rem;
     background-color: white;
     border: none;
-    font-size: 1vw;
+    border-radius: 0.5rem;
+    font-size: 1.5vmax;
   }
 
   .registerButton {
@@ -76,9 +74,9 @@
     background-color: lightcoral;
     border: none;
     color: white;
-    border-radius: 0.5vw;
+    border-radius: 0.5rem;
     padding: 0.6vw;
-    font-size: 1vw;
+    font-size: 1.5vmax;
   }
 
   .registerButton:disabled {
@@ -88,7 +86,6 @@
 
   input {
     border-radius: 0.5vw;
-    height: 1vw;
   }
 
   .guestButtonRegister {
@@ -111,7 +108,8 @@
     background-color: lightcoral;
     color: white;
   }
-  label{
+
+  label {
     padding-top: 1vw;
   }
 </style>
@@ -140,9 +138,9 @@
       </button> -->
     </form>
   </div>
-  <?php
-  require '../marginals/footer2.php';
-  ?>
+  <!-- <?php
+        require '../marginals/footer2.php';
+        ?> -->
 </body>
 
 </html>

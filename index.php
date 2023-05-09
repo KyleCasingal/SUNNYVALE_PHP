@@ -76,18 +76,18 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
     }
 
     .landingIntroduction {
-        margin-left: 30em;
-        margin-right: 30em;
+        margin-left: 10vw;
+        margin-right:10vw;
     }
 
     .landingTitles {
-        font-size: 1.5vmax;
+        font-size: 2vmax;
         color: rgb(50, 50, 50);
     }
 
     .landingText {
         color: rgb(89, 89, 89);
-        font-size: 1em;
+        font-size: 1.5vmax;
         text-align: justify;
     }
 
@@ -96,8 +96,8 @@ $resultMissionVision = $con->query("SELECT * FROM mission_vision") or die($mysql
         justify-content: center;
         width: 80%;
         margin-left: 5%;
-        margin-top: 20px;
-        margin-bottom: 50px;
+        margin-top: 1vw;
+        margin-bottom: 1vw;
         padding: 10px;
         border-radius: 10px;
         background-color: rgba(170, 192, 175, 0.3);
