@@ -58,6 +58,7 @@ if (isset($_POST['register'])) {
   $first_name = $row['first_name'] ?? '';
   $last_name = $row['last_name'] ?? '';
   $full_name = $first_name . " " . $last_name;
+  $subdivision = $row['subdivision'] ?? '';
 
   $sql1 = "SELECT * FROM user WHERE email_address = '$email_address'";
   $result1 = mysqli_query($con, $sql1);
@@ -66,8 +67,11 @@ if (isset($_POST['register'])) {
   $sql2 = "SELECT * FROM tenant WHERE email = '$email_address'";
   $result2 = mysqli_query($con, $sql2);
   $row2 = $result2->fetch_assoc();
-  $fullnameTenant = $row2['full_name'] ?? '';
+  $first_name2 = $row2['first_name'] ?? '';
+  $last_name2 = $row2['last_name'] ?? '';
+  $fullnameTenant = $first_name2 . " " . $last_name2 ?? '';
   $tenant_id = $row2['tenant_id'] ?? '';
+  $subdivision2 = $row2['subdivision'] ?? '';
 
   if (mysqli_num_rows($result1) == 1) {
     echo
@@ -94,7 +98,7 @@ if (isset($_POST['register'])) {
       $mail->Subject = 'Account Activation';
       $mail->Body = '<p>Your temporary password is: <b style="font-size: 30px;">' . $verification_code . '</b></p><p>Please change it immediately after successful login. </p>';
       $mail->send();
-      $sql = "INSERT INTO user (user_homeowner_id, full_name,password,user_type,email_address,account_status,verification_code,email_verified_at) VALUES('$homeowner_id', '$full_name', '$verification_code','Homeowner','$email_address','Activated', '$verification_code', NOW())";
+      $sql = "INSERT INTO user (user_homeowner_id, subdivision, full_name, password, user_type, email_address, account_status, verification_code, email_verified_at, display_picture) VALUES('$homeowner_id', '$subdivision', '$full_name', '$verification_code','Homeowner','$email_address','Activated', '$verification_code', NOW(), 'default.png')";
       $result = mysqli_query($con, $sql);
       $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $first_name . ' ' . $last_name . "' ,  'Created an account', NOW())";
       mysqli_query($con, $sql1);
@@ -121,7 +125,7 @@ if (isset($_POST['register'])) {
       $mail->Subject = 'Account Activation';
       $mail->Body = '<p>Your temporary password is: <b style="font-size: 30px;">' . $verification_code . '</b></p><p>Please change it immediately after successful login. </p>';
       $mail->send();
-      $sql = "INSERT INTO user (user_homeowner_id, user_tenant_id, full_name, password,user_type,email_address,account_status,verification_code,email_verified_at) VALUES(NULL, $tenant_id, '$fullnameTenant', '$verification_code','Tenant','$email_address','Activated', '$verification_code', NOW())";
+      $sql = "INSERT INTO user (user_homeowner_id, user_tenant_id, subdivision, full_name, password,user_type,email_address,account_status,verification_code,email_verified_at) VALUES(NULL, $tenant_id, '$subdivision2', '$fullnameTenant', '$verification_code','Tenant','$email_address','Activated', '$verification_code', NOW())";
       $result = mysqli_query($con, $sql);
       $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('$fullnameTenant' ,  'Created an account', NOW())";
       mysqli_query($con, $sql1);
@@ -241,13 +245,10 @@ if (isset($_POST['login'])) {
     $row = $result->fetch_assoc();
     $homeowner_id = $row['user_homeowner_id'];
 
-    $resultSubdivision = $con->query("SELECT * FROM homeowner_profile WHERE homeowner_id = '$homeowner_id'");
-    $rowSubdivision = $resultSubdivision->fetch_assoc();
-
     $user_type = $row['user_type'];
     $_SESSION['user_id'] = $row['user_id'];
     $_SESSION['user_type'] = $row['user_type'];
-    $_SESSION['subdivision'] = $rowSubdivision['subdivision'];
+    $_SESSION['subdivision'] = $row['subdivision'];
     $_SESSION['user_type'] = $row['user_type'];
     $_SESSION['full_name'] = $row['full_name'];
     $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Logged in', NOW())";
@@ -385,7 +386,7 @@ if (isset($_POST['homeowner_submit'])) {
 
   $street = "Lot " . $lot . " Block " . $block;
 
-  $sql = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer, vehicle_registration, display_picture) VALUES ('$last_name','$first_name','$middle_name','$suffix','$sex', '$street', '$subdivision_name', '$barangay', '$bussiness_address','$occupation','$email_address','$birthdate','$mobile_number','$employer', '$vehicle_registration', 'default.png')";
+  $sql = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer, vehicle_registration) VALUES ('$last_name','$first_name','$middle_name','$suffix','$sex', '$street', '$subdivision_name', '$barangay', '$bussiness_address','$occupation','$email_address','$birthdate','$mobile_number','$employer', '$vehicle_registration')";
   $result = mysqli_query($con, $sql);
 
   $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Registed a homeowner profile', NOW())";
@@ -466,7 +467,7 @@ if (isset($_POST['homeowner_update'])) {
   $street = "Lot " . $lot . " Block " . $block;
   $sql = "UPDATE homeowner_profile SET first_name =  '$first_name', middle_name = '$middle_name', last_name = '$last_name', suffix = '$suffix', sex = '$sex', street = '$street', subdivision = '$subdivision_name', barangay = '$barangay', business_address = '$business_address', occupation = '$occupation', email_address = '$email_address', birthdate = '$birthdate', mobile_number = '$mobile_number', employer = '$employer', vehicle_registration = '$vehicle_registration' WHERE homeowner_id = '$homeowner_id'";
   $result = mysqli_query($con, $sql);
-  $sql2 = "UPDATE user SET full_name = '$full_name', email_address = '$email_address' WHERE user_homeowner_id = '$homeowner_id'";
+  $sql2 = "UPDATE user SET full_name = '$full_name', email_address = '$email_address', subdivision = '$subdivision_name' WHERE user_homeowner_id = '$homeowner_id'";
   $result2 = mysqli_query($con, $sql2);
 
   $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Update a homeowner profile', NOW())";
@@ -888,18 +889,19 @@ if (isset($_POST['sysAccAdd'])) {
   $systemAccount = $_POST['account_name'];
   $password = $_POST['password'];
   $userType = $_POST['user_type'];
+  $account_status = $_POST['account_status'];
 
 
-  $sql1 = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer, display_picture) VALUES ('', '$systemAccount', NULL, NULL,'' , '', '" . $_SESSION['subdivision'] . "', '', NULL, NULL, '', NULL, NULL, NULL, 'default.png')";
+  $sql1 = "INSERT INTO homeowner_profile(last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer) VALUES ('', '$systemAccount', NULL, NULL,'' , '', '" . $_SESSION['subdivision'] . "', '', NULL, NULL, '', NULL, NULL, NULL)";
   mysqli_query($con, $sql1);
   $result = $con->query("SELECT * FROM homeowner_profile WHERE first_name = '$systemAccount'");
   if ($result->num_rows) {
     $row = $result->fetch_array();
     $user_homeowner_id = $row['homeowner_id'];
-    $sql = "INSERT INTO user(user_homeowner_id, full_name, user_type, password, email_address, account_status, verification_code, email_verified_at) VALUES ('$user_homeowner_id', '$systemAccount', '$userType', '$password', '$systemAccount', 'Activated', NULL, NULL)";
+    $sql = "INSERT INTO user(user_homeowner_id, subdivision, full_name, user_type, password, email_address, account_status, verification_code, email_verified_at, display_picture) VALUES ('$user_homeowner_id', '" . $_SESSION['subdivision'] . "', '$systemAccount', '$userType', '$password', '$systemAccount', '$account_status', NULL, NULL, 'default.png')";
+    mysqli_query($con, $sql);
     $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Added a system account', NOW())";
     mysqli_query($con, $sqlAudit);
-    mysqli_query($con, $sql);
     header("Location: settingsSystemAcc.php");
   }
 }
@@ -1823,7 +1825,7 @@ if (isset($_POST['tenant_submit'])) {
   $row = $resultSession->fetch_assoc();
   $homeowner_id = $row['user_homeowner_id'];
 
-  
+
   $sql = "INSERT INTO tenant(homeowner_id, first_name, middle_name, last_name, subdivision, birthdate, sex, email, mobile_no, display_picture) VALUES ('$homeowner_id', '$first_name', '$middle_name', '$last_name', '$subdivision', '$birthdate', '$sex', '$email_address', '$mobile_number', 'default.png')";
   $result = mysqli_query($con, $sql);
   $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Added a tenant', NOW())";
@@ -1912,7 +1914,7 @@ if (isset($_POST['sessionName'])) {
 if (isset($_GET['tenant_id'])) {
   $update = true;
   $tenant_id = $_GET['tenant_id'];
-  
+
   $result = $con->query("SELECT * FROM tenant WHERE tenant_id = '$tenant_id'");
   if ($result->num_rows) {
     $row = $result->fetch_array();
@@ -1954,10 +1956,10 @@ if (isset($_POST['tenant_update'])) {
   $first_name = $_POST['first_name'];
   $middle_name = $_POST['middle_name'];
   $last_name = $_POST['last_name'];
- 
-  
+
+
   $mobile_number = $_POST['mobile_number'];
-  
+
   $birthdate = strtotime($_POST['birthdate']);
   $birthdate = date('Y-m-d', $birthdate);
   $sex = $_POST['sex'];
@@ -1965,7 +1967,7 @@ if (isset($_POST['tenant_update'])) {
   $full_name = $first_name . ' ' . $last_name;
 
 
-  
+
   $sql = "UPDATE homeowner_profile SET first_name =  '$first_name', middle_name = '$middle_name', last_name = '$last_name', sex = '$sex', subdivision = '$subdivision_name', barangay = '$barangay', email_address = '$email_address', birthdate = '$birthdate', mobile_number = '$mobile_number' WHERE tenant_id = '$tenant_id'";
   $result = mysqli_query($con, $sql);
   // $sql2 = "UPDATE user SET full_name = '$full_name', email_address = '$email_address' WHERE user_homeowner_id = '$homeowner_id'";

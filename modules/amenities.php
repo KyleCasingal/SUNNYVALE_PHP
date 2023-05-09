@@ -1,6 +1,6 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Homeowner') {
+if ($_SESSION['user_type'] != 'Homeowner' and $_SESSION['user_type'] != 'Tenant') {
   echo '<script>window.location.href = "../modules/blogHome.php";</script>';
   exit;
 }
@@ -747,14 +747,14 @@ $resultTotal = $con->query("SELECT SUM(cost) AS total_cost FROM amenity_renting 
                                                                 $rowTotal = $resultTotal->fetch_assoc();
                                                                 echo $rowTotal['total_cost'];
                                                                 ?>" readonly>
-              <!-- <div class="paymentForm">
+              <div class="paymentForm">
                 <label class="writeText">Upload proof of payment here:</label>
                 <div class="BlogWrite">
                   <input class="attInput" name="image" type="file" id="image" accept="image/*" onchange="preview()" required></input>
                   <img class="imagePrev" id="imagePreview" src=# alt="" />
                 </div>
                 <label for="image" class="upload">Upload Photo</label>
-              </div> -->
+              </div>
               <button class="btnSubmit" name="checkout" id="checkout_id">Checkout All</button>
             </div>
           </div>

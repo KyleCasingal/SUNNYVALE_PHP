@@ -1,14 +1,22 @@
 <?php
 require '../marginals/topbar.php';
-if ($_SESSION['user_type'] != 'Homeowner') {
+if ($_SESSION['user_type'] != 'Homeowner' and $_SESSION['user_type'] != 'Tenant') {
     echo '<script>window.location.href = "../modules/blogHome.php";</script>';
     exit;
 }
 $con = new mysqli('localhost', 'root', '', 'sunnyvale') or die(mysqli_error($con));
-$result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
-$row = $result->fetch_assoc();
-$user_idAmenityRenting = $row['user_id'];
-$homeowner_id = $row['homeowner_id'];
+if ($_SESSION['user_type'] == 'Tenant') {
+    $result = $con->query("SELECT * FROM user, tenant WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND user_tenant_id = tenant_id") or die($mysqli->error);
+    $row = $result->fetch_assoc();
+    $user_idAmenityRenting = $row['user_id'];
+    $homeowner_id = $row['homeowner_id'];
+} else {
+    $result = $con->query("SELECT * FROM user, homeowner_profile WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
+    $row = $result->fetch_assoc();
+    $user_idAmenityRenting = $row['user_id'];
+    $homeowner_id = $row['homeowner_id'];
+}
+
 $resultComplaints = $con->query("SELECT * FROM concern WHERE complainant_homeowner_id = '$homeowner_id' OR complainee_homeowner_id = '$homeowner_id' AND status = 'Processing' ORDER BY datetime DESC");
 $resultComplaints1 = $con->query("SELECT * FROM concern WHERE complainant_homeowner_id = '$homeowner_id' OR complainee_homeowner_id = '$homeowner_id' AND status = 'Processing' ORDER BY datetime DESC");
 $resultBillConsumer = $con->query("SELECT * FROM bill_consumer INNER JOIN billing_period ON bill_consumer.billingPeriod_id = billing_period.billingPeriod_id  WHERE homeowner_id = '$homeowner_id' AND status = 'UNPAID' || status = 'PENDING' ORDER BY billing_period.billingPeriod_id DESC");
@@ -240,7 +248,6 @@ $resultTransactionAmenity = $con->query("SELECT * FROM amenity_renting WHERE use
     .modal-footer {
         background-color: rgb(170, 192, 175, 0.3);
     }
-
 </style>
 
 <body>

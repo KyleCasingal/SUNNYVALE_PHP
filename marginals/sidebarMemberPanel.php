@@ -79,9 +79,9 @@
         <form method="post">
             <ul class="secretarySideBar">
                 <li id="profile" onclick="location.href='../modules/memberPanel.php'">Profile</li>
+                <li id='inbox' onclick="location.href='../modules/inboxPanel.php'">Inbox</li>
                 <?php
                 if ($row['user_type'] == 'Homeowner') {
-                    echo "<li id='inbox' onclick=" . '"' . "location.href='../modules/inboxPanel.php'" . '"' . ">Inbox</li>";
                     echo "<li id='inbox' onclick=" . '"' . "location.href='../modules/monthlyDuesHomeowner.php'" . '"' . ">Monthly Dues</li>"; 
                     echo "<li id='inbox' onclick=" . '"' . "location.href='../modules/tenantHomeowner.php'" . '"' . ">Tenants</li>";
                 }

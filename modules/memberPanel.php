@@ -1,7 +1,7 @@
 <?php
 require '../marginals/topbar.php';
 if ($_SESSION['user_type'] == 'Tenant') {
-  $result = $con->query("SELECT * FROM user, tenant  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND user.full_name = tenant.full_name") or die($mysqli->error);
+  $result = $con->query("SELECT * FROM user, tenant  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND user_tenant_id = tenant_id") or die($mysqli->error);
   $row = $result->fetch_assoc();
   $user_type = $row['user_type'];
 } else {

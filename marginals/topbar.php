@@ -6,18 +6,18 @@ if (empty($_SESSION)) {
 }
 
 if ($_SESSION['user_type'] == 'Tenant') {
-  $result = $con->query("SELECT * FROM user, tenant WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND user.full_name = tenant.full_name") or die($mysqli->error);
-  $result1 = $con->query("SELECT * FROM user, tenant WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND user.full_name = tenant.full_name")  or die($mysqli->error);
+  $result = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
+  $result1 = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "")  or die($mysqli->error);
   $row1 = $result1->fetch_assoc();
   $homeowner_id_profile = $row1['user_homeowner_id'];
   $fullname_monthlyDues = $row1['full_name'];
   $user_type = $row1['user_type'];
-  $resultSubdivision = $con->query("SELECT * FROM user, tenant, homeowner_profile WHERE user_id = " . $user_id = $_SESSION['user_id'] . " AND user.full_name = tenant.full_name AND homeowner_profile.homeowner_id = tenant.homeowner_id") or die($mysqli->error);
+  $resultSubdivision = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . " AND subdivision = '" . $_SESSION['subdivision'] . "'") or die($mysqli->error);
   $rowSubdivision = $resultSubdivision->fetch_assoc();
-  $subdivision_name1 = $rowSubdivision['subdivision'];
+  $subdivision_name1 = $rowSubdivision['subdivision'] ?? '';
   $resultComplainee = $con->query("SELECT * FROM homeowner_profile WHERE subdivision ='$subdivision_name1' AND homeowner_id != '$homeowner_id_profile' ORDER BY first_name");
 } else {
-  $result = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
+  $result = $con->query("SELECT * FROM user WHERE user_id = " . $user_id = $_SESSION['user_id'] . "") or die($mysqli->error);
   $result1 = $con->query("SELECT * FROM user, homeowner_profile  WHERE user_id = " . $user_id = $_SESSION['user_id'] . "  AND full_name = CONCAT(first_name, ' ', last_name)") or die($mysqli->error);
   $row1 = $result1->fetch_assoc();
   $homeowner_id_profile = $row1['user_homeowner_id'];
@@ -538,7 +538,7 @@ $rowGcash = $resultGcash->fetch_assoc();
             <div class="concernSubject">
               <label class="lbl-concern-text">Proof of Payment:</label>
               <input class='attInput' type='file' name='image' id='image' accept='image/*' onchange='preview()' required></input>
-              <img class='imagePrev' id='imagePreview' src=# alt='' />
+              <img class='imagePrev' id='imagePreview1' src=# alt='' />
             </div>
             <div class="concernSubject">
               <label for='image' class='upload'>Upload Photo</label>
@@ -578,6 +578,22 @@ $rowGcash = $resultGcash->fetch_assoc();
 </body>
 <script>
   document.getElementById("quantity").addEventListener("keydown", e => e.keyCode != 38 && e.keyCode != 40 && e.preventDefault());
+
+  function readURL(input, id) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        $('#' + id).attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#image").change(function() {
+    readURL(this, 'imagePreview1');
+  });
 </script>
 
 </html>

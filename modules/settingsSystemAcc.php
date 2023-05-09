@@ -10,7 +10,7 @@ if ($_SESSION['subdivision'] != '') {
     $resultSubdivision = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
     $resultSubdivision_table = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
     $resultSubdivision_selectSysAcc = $con->query("SELECT * FROM subdivision WHERE subdivision_name = '" .  $_SESSION['subdivision'] . "'") or die($mysqli->error);
-    $resultSysAcc = $con->query("SELECT * FROM user, homeowner_profile WHERE (user_type = 'Secretary' OR user_type = 'Treasurer' OR user_type = 'Admin' OR user_type = 'Guard') AND user_homeowner_id = homeowner_id AND subdivision = '" . $_SESSION['subdivision'] . "' ORDER BY full_name ASC") or die($mysqli->error);
+    $resultSysAcc = $con->query("SELECT * FROM user, homeowner_profile WHERE (user_type = 'Secretary' OR user_type = 'Treasurer' OR user_type = 'Admin' OR user_type = 'Guard') AND user_homeowner_id = homeowner_id AND user.subdivision = '" . $_SESSION['subdivision'] . "' ORDER BY full_name ASC") or die($mysqli->error);
 } else {
     $resultSubdivision = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
     $resultSubdivision_table = $con->query("SELECT * FROM subdivision") or die($mysqli->error);
@@ -418,6 +418,15 @@ $resultPositions = $con->query("SELECT * FROM positions") or die($mysqli->error)
                                 <td>
                                     <select name="user_type" id="" required>
                                         <option value="">Select...</option>
+                                        <?php if ($_SESSION['subdivision'] == '') { ?>
+                                            <option value="Super Admin" <?php
+                                                                        if (isset($_GET['user_id'])) {
+                                                                            if ($account_type == "Super Admin") {
+                                                                                echo 'selected="selected"';
+                                                                            }
+                                                                        }
+                                                                        ?>>Super Admin</option>
+                                        <?php } ?>
                                         <option value="Admin" <?php
                                                                 if (isset($_GET['user_id'])) {
                                                                     if ($account_type == "Admin") {
