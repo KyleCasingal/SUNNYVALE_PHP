@@ -808,7 +808,7 @@ if ($_SESSION['subdivision'] != '') {
           <?php
               if ($rowUser['user_type'] == 'Admin' or $rowUser['user_type'] == 'Secretary' or $rowUser['user_type'] == 'Super Admin') {
               ?>
-                <button type="button" class='archive-btn' name="archive" id="archive1" data-bs-toggle="modal" data-bs-target="#confirmArchive<?php echo $row['post_id'] ?>">ARCHIVE</button>
+                <button type="button" class='archive-btn' name="archive" id="archive1" data-bs-toggle="modal" data-bs-target="#confirmArchive<?php echo $row1['post_id'] ?>">ARCHIVE</button>
                 <div class="modal fade" id="confirmArchive<?php echo $row['post_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
