@@ -333,10 +333,9 @@ if (isset($_POST['importSubmit'])) {
         $birthdate = $line[12];
         $mobile_number = $line[13];
         $employer = $line[14];
-        $display_picture = $line[15];
 
 
-        $sql = "INSERT IGNORE INTO homeowner_profile(homeowner_id, last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer, display_picture) VALUES ('$homeowner_id','$last_name','$first_name','$middle_name','$suffix','$sex', '$street', '$subdivision', '$barangay', '$bussiness_address','$occupation','$email_address','$birthdate','$mobile_number','$employer','$display_picture') ON DUPLICATE KEY UPDATE first_name =  '$first_name', middle_name = '$middle_name', last_name = '$last_name', suffix = '$suffix', sex = '$sex', street = '$street', subdivision = '$subdivision', barangay = '$barangay', business_address = '$barangay', occupation = '$occupation', email_address = '$email_address', birthdate = '$birthdate', mobile_number = '$mobile_number', employer = '$employer', display_picture = '$display_picture'";
+        $sql = "INSERT IGNORE INTO homeowner_profile(homeowner_id, last_name, first_name, middle_name, suffix, sex, street, subdivision, barangay, business_address, occupation, email_address, birthdate, mobile_number, employer) VALUES ('$homeowner_id','$last_name','$first_name','$middle_name','$suffix','$sex', '$street', '$subdivision', '$barangay', '$bussiness_address','$occupation','$email_address','$birthdate','$mobile_number','$employer') ON DUPLICATE KEY UPDATE first_name =  '$first_name', middle_name = '$middle_name', last_name = '$last_name', suffix = '$suffix', sex = '$sex', street = '$street', subdivision = '$subdivision', barangay = '$barangay', business_address = '$barangay', occupation = '$occupation', email_address = '$email_address', birthdate = '$birthdate', mobile_number = '$mobile_number', employer = '$employer'";
         $result = mysqli_query($con, $sql);
 
         $sqlAudit = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $_SESSION['full_name'] . "','Imported csv file', NOW())";
@@ -346,7 +345,7 @@ if (isset($_POST['importSubmit'])) {
         // $row = $resultSession->fetch_assoc();
         // $sql1 = "INSERT INTO audit_trail(user, action, datetime) VALUES ('" . $row['full_name'] . "', '" . 'added homeowner' . ' ' . "$first_name" . ' ' . "$last_name" . "' , NOW())";
         // mysqli_query($con, $sql1);
-        // header("Location: homeownerRegistration.php");
+        header("Location: homeownerlist.php");
       }
     }
   }
